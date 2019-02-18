@@ -14,10 +14,10 @@ module.exports = {
       text: String!
       createdAt: String
       updatedAt: String
-      event: [EventItem]
+      event: EventItem
       comments: [CommentItem]
       likes: [Like]
-      creator: [User]
+      creator: User
     }
 
     extend type Query {
@@ -46,10 +46,10 @@ module.exports = {
 
     Poll: {
       creator: (parent, args) => {
-        return User.find({ _id: parent.userId });
+        return User.findOne({ _id: parent.userId });
       },
       event: (parent, args) => {
-        return EventItem.find({ _id: parent.eventId });
+        return EventItem.findOne({ _id: parent.eventId });
       },
       comments: (parent, args) => {
         return CommentItem.find({ pollId: parent.id });

@@ -27,7 +27,7 @@ module.exports = {
       endTime: String
       createdAt: Date
       updatedAt: Date
-      creator: [User]
+      creator: User
       comments: [CommentItem]
       polls: [Poll]
       likes: [Like]
@@ -129,7 +129,7 @@ module.exports = {
 
     EventItem: {
       creator: (parent, args) => {
-        return User.find({ _id: parent.userId });
+        return User.findOne({ _id: parent.userId });
       },
       comments: (parent, args) => {
         return CommentItem.find({ eventId: parent.id });

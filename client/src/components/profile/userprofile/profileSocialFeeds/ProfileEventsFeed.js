@@ -8,6 +8,7 @@ const ProfileEventsFeed = ({ user }) => {
     <CQuery query={GET_USER_EVENTS} variables={{ id: user }}>
       {({ data: { user } }) => {
         const events = user.events;
+        console.log(events);
         if (events.length === 0)
           return (
             <div className="text-left px-3 py-2 border-top">

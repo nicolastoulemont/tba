@@ -18,7 +18,7 @@ module.exports = {
       linkedin: String
       createdAt: String
       updatedAt: String
-      creator: [User]
+      creator: User
     }
 
     type ProfileResp {
@@ -75,7 +75,7 @@ module.exports = {
 
     Profile: {
       creator: (parent, args) => {
-        return User.find({ _id: parent.userId });
+        return User.findOne({ _id: parent.userId });
       }
     },
 

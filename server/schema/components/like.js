@@ -16,10 +16,10 @@ module.exports = {
       commentId: String
       createdAt: String
       updatedAt: String
-      event: [EventItem]
-      comment: [CommentItem]
+      event: EventItem
+      comment: CommentItem
       poll: [Poll]
-      creator: [User]
+      creator: User
     }
 
     type LikeResp {
@@ -58,16 +58,16 @@ module.exports = {
 
     Like: {
       event: (parent, args) => {
-        return EventItem.find({ _id: parent.eventId });
+        return EventItem.findOne({ _id: parent.eventId });
       },
       comment: (parent, args) => {
-        return CommentItem.find({ _id: parent.commentId });
+        return CommentItem.findOne({ _id: parent.commentId });
       },
       poll: (parent, args) => {
         return Poll.find({ _id: parent.pollId });
       },
       creator: (parent, args) => {
-        return User.find({ _id: parent.userId });
+        return User.findOne({ _id: parent.userId });
       }
     },
 

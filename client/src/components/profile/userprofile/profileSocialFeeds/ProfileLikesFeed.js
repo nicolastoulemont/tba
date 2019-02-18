@@ -16,21 +16,30 @@ const ProfileLikesFeed = ({ user, name }) => {
           );
         return (
           <Fragment>
-            {likes.map(like => (
-              <div className="text-left px-3 py-2 border-top" key={like.id}>
-                <small>
-                  {name} liked{' '}
-                  <Link
-                    to={{
-                      pathname: `/event/${like.event[0].id}`
-                    }}
-                    className="font-weight-bold"
-                  >
-                    {like.event[0].name}
-                  </Link>{' '}
-                </small>
-              </div>
-            ))}
+            {likes.map(like => {
+              if (!like.event) {
+                return (
+                  <div className="text-left px-3 py-2 border-top" key={like.id}>
+                    <small>{name} liked an event that has been deleted</small>
+                  </div>
+                );
+              }
+              return (
+                <div className="text-left px-3 py-2 border-top" key={like.id}>
+                  <small>
+                    {name} liked{' '}
+                    <Link
+                      to={{
+                        pathname: `/event/${like.event.id}`
+                      }}
+                      className="font-weight-bold"
+                    >
+                      {like.event.name}
+                    </Link>{' '}
+                  </small>
+                </div>
+              );
+            })}
           </Fragment>
         );
       }}

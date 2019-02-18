@@ -21,15 +21,15 @@ const ProfileCommentsFeed = ({ user, name }) => {
                 <blockquote className="blockquote mb-1">
                   <footer className="blockquote-footer">
                     <small>{name} commented on </small>
-                    <cite title={comment.event[0].name}>
+                    <cite title={comment.event.name}>
                       {' '}
                       <Link
                         to={{
-                          pathname: `/event/${comment.event[0].id}`
+                          pathname: `/event/${comment.event.id}`
                         }}
                       >
                         <small className="font-weight-bold">
-                          {comment.event[0].name}
+                          {comment.event.name}
                         </small>
                       </Link>
                     </cite>

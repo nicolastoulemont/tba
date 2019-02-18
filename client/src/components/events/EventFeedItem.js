@@ -17,10 +17,10 @@ const EventFeedItem = ({
       <div className="row">
         <div className="d-none d-md-block col-md-1">
           <Link to={{ pathname: `/profile/${userId}` }}>
-            {creator[0].avatar ? (
+            {creator.avatar ? (
               <img
                 className="rounded-circle small-avatar mt-2"
-                src={creator[0].avatar}
+                src={creator.avatar}
                 alt="User Avatar"
               />
             ) : (
@@ -49,10 +49,9 @@ const EventFeedItem = ({
                 to={{ pathname: `/profile/${userId}` }}
                 className="font-weight-bold"
               >
-                {creator[0].profile[0].name}
+                {creator.profile.name}
               </Link>
-              , {creator[0].profile[0].position} at{' '}
-              {creator[0].profile[0].organisation}
+              , {creator.profile.position} at {creator.profile.organisation}
             </small>
           </div>
           <div className="d-flex w-100 justify-content-between">

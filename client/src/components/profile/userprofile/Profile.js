@@ -22,7 +22,7 @@ class Profile extends Component {
       <Fragment>
         <CQuery query={LOGGED_USER}>
           {({ data }) => {
-            const loggedInUser = data.currentuser[0];
+            const loggedInUser = data.currentuser;
             return (
               <Fragment key={loggedInUser.id}>
                 <div className="mt-2 text-center">
@@ -33,7 +33,7 @@ class Profile extends Component {
                         variables={{ id: user }}
                       >
                         {({ data: { user } }) => {
-                          const profile = user.profile[0];
+                          const profile = user.profile;
                           return (
                             <Fragment key={profile.id}>
                               <ProfileHeader
@@ -63,7 +63,7 @@ class Profile extends Component {
                     <div className="d-none d-lg-block col-lg-4 text-center">
                       <DashboardProfile
                         avatar={loggedInUser.avatar}
-                        name={loggedInUser.profile[0].name}
+                        name={loggedInUser.profile.name}
                         user={loggedInUser.id}
                       />
                       <div className="row">

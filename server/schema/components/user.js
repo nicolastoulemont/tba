@@ -24,7 +24,7 @@ module.exports = {
       createdAt: String
       updatedAt: String
       events: [EventItem]
-      profile: [Profile]
+      profile: Profile
       comments: [CommentItem]
       polls: [Poll]
       likes: [Like]
@@ -44,7 +44,7 @@ module.exports = {
 
     extend type Query {
       user(id: ID!): User
-      currentuser: [User]
+      currentuser: User
       users: [User!]!
     }
 
@@ -65,7 +65,7 @@ module.exports = {
       currentuser: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         const logUser = user.user;
-        return User.find({ _id: logUser.id });
+        return User.findOne({ _id: logUser.id });
       },
       users: (parent, args, { user }) => {
         // if (!user) throw new Error('Error : You are not logged in');
@@ -78,7 +78,7 @@ module.exports = {
         return EventItem.find({ userId: parent.id });
       },
       profile: (parent, args) => {
-        return Profile.find({ userId: parent.id });
+        return Profile.findOne({ userId: parent.id });
       },
       comments: (parent, args) => {
         return CommentItem.find({ userId: parent.id });
