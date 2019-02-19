@@ -16,7 +16,7 @@ module.exports = {
       createdAt: String
       updatedAt: String
       event: EventItem
-      comment: CommentItem
+      comments: [CommentItem]
       poll: Poll
       likes: [Like]
       creator: User
@@ -59,8 +59,8 @@ module.exports = {
       event: (parent, args) => {
         return EventItem.findOne({ _id: parent.eventId });
       },
-      comment : (parent, args) => {
-        return CommentItem.findOne({ _id: parent.commentId})
+      comments: (parent, args) => {
+        return CommentItem.find({ _id: parent.commentId });
       },
       poll: (parent, args) => {
         return Poll.findOne({ _id: parent.pollId });
