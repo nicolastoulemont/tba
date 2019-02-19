@@ -11,10 +11,12 @@ module.exports = {
       userId: ID!
       eventId: String
       pollId: String
+      commentId: String
       text: String!
       createdAt: String
       updatedAt: String
       event: EventItem
+      comment: CommentItem
       poll: Poll
       likes: [Like]
       creator: User
@@ -29,6 +31,7 @@ module.exports = {
       addComment(
         userId: String!
         eventId: String
+        commentId: String
         pollId: String
         text: String!
       ): CommentItem
@@ -56,6 +59,9 @@ module.exports = {
       event: (parent, args) => {
         return EventItem.findOne({ _id: parent.eventId });
       },
+      comment : (parent, args) => {
+        return CommentItem.findOne({ _id: parent.commentId})
+      },
       poll: (parent, args) => {
         return Poll.findOne({ _id: parent.pollId });
       },
@@ -69,6 +75,7 @@ module.exports = {
         let comment = new CommentItem({
           userId: args.userId,
           eventId: args.eventId,
+          commentId: args.commentId,
           pollId: args.pollId,
           text: args.text
         });
