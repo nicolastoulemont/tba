@@ -51,6 +51,15 @@ export const GET_USER_COMMENTS = gql`
           id
           name
         }
+        comment {
+          userId
+          text
+          creator {
+            profile {
+              name
+            }
+          }
+        }
       }
     }
   }
@@ -65,6 +74,7 @@ export const GET_USER_LIKES = gql`
         event {
           id
           name
+          ispublic
         }
       }
     }

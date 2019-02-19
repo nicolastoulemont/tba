@@ -24,6 +24,7 @@ const ProfileLikesFeed = ({ user, name }) => {
                   </div>
                 );
               }
+              if (!like.event.ispublic) return null;
               return (
                 <div className="text-left px-3 py-2 border-top" key={like.id}>
                   <small>
