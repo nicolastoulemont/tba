@@ -51,7 +51,6 @@ module.exports = {
         return CommentItem.find({});
       }
     },
-
     CommentItem: {
       creator: (parent, args) => {
         return User.findOne({ _id: parent.userId });
