@@ -69,6 +69,34 @@ class EventFeed extends Component {
     });
   };
 
+  toMinusDayString = x => {
+    const { getDay } = this.state;
+    return new Date(new Date().setDate(getDay.getDate() - x))
+      .toUTCString()
+      .slice(0, 3);
+  };
+
+  toMinusDayNumber = x => {
+    const { getDay } = this.state;
+    return new Date(new Date().setDate(getDay.getDate() - x))
+      .toUTCString()
+      .slice(5, 7);
+  };
+
+  toPlusDayString = x => {
+    const { getDay } = this.state;
+    return new Date(new Date().setDate(getDay.getDate() + x))
+      .toUTCString()
+      .slice(0, 3);
+  };
+
+  toPlusDayNumber = x => {
+    const { getDay } = this.state;
+    return new Date(new Date().setDate(getDay.getDate() + x))
+      .toUTCString()
+      .slice(5, 7);
+  };
+
   render() {
     const { user, interestOne, interestTwo, interestThree } = this.props;
     const { getDay } = this.state;
@@ -77,50 +105,20 @@ class EventFeed extends Component {
     });
     const dayString = getDay.toUTCString().slice(0, 3);
     const dayNumber = getDay.toUTCString().slice(5, 7);
-    const minusOneDayString = new Date(new Date().setDate(getDay.getDate() - 1))
-      .toUTCString()
-      .slice(0, 3);
-    const minusOneDayNumber = new Date(new Date().setDate(getDay.getDate() - 1))
-      .toUTCString()
-      .slice(5, 7);
-    const minusTwoDayString = new Date(new Date().setDate(getDay.getDate() - 2))
-      .toUTCString()
-      .slice(0, 3);
-    const minusTwoDayNumber = new Date(new Date().setDate(getDay.getDate() - 2))
-      .toUTCString()
-      .slice(5, 7);
-    const minusThreeDayString = new Date(
-      new Date().setDate(getDay.getDate() - 3)
-    )
-      .toUTCString()
-      .slice(0, 3);
-    const minusThreeDayNumber = new Date(
-      new Date().setDate(getDay.getDate() - 3)
-    )
-      .toUTCString()
-      .slice(5, 7);
-    const plusOneDayString = new Date(new Date().setDate(getDay.getDate() + 1))
-      .toUTCString()
-      .slice(0, 3);
-    const plusOneDayNumber = new Date(new Date().setDate(getDay.getDate() + 1))
-      .toUTCString()
-      .slice(5, 7);
-    const plusTwoDayString = new Date(new Date().setDate(getDay.getDate() + 2))
-      .toUTCString()
-      .slice(0, 3);
-    const plusTwoDayNumber = new Date(new Date().setDate(getDay.getDate() + 2))
-      .toUTCString()
-      .slice(5, 7);
-    const plusThreeDayString = new Date(
-      new Date().setDate(getDay.getDate() + 3)
-    )
-      .toUTCString()
-      .slice(0, 3);
-    const plusThreeDayNumber = new Date(
-      new Date().setDate(getDay.getDate() + 3)
-    )
-      .toUTCString()
-      .slice(5, 7);
+
+    const minusOneDayString = this.toMinusDayString(1);
+    const minusOneDayNumber = this.toMinusDayNumber(1);
+    const minusTwoDayString = this.toMinusDayString(2);
+    const minusTwoDayNumber = this.toMinusDayNumber(2);
+    const minusThreeDayString = this.toMinusDayString(3);
+    const minusThreeDayNumber = this.toMinusDayNumber(3);
+
+    const plusOneDayString = this.toPlusDayString(1);
+    const plusOneDayNumber = this.toPlusDayNumber(1);
+    const plusTwoDayString = this.toPlusDayString(2);
+    const plusTwoDayNumber = this.toPlusDayNumber(2);
+    const plusThreeDayString = this.toPlusDayString(3);
+    const plusThreeDayNumber = this.toPlusDayNumber(3);
 
     const day = getDay.toISOString().slice(0, 10);
 
