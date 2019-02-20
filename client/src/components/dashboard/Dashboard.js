@@ -10,7 +10,6 @@ const Dashboard = () => {
     <Fragment>
       <CQuery query={LOGGED_USER}>
         {({ data }) => {
-          console.log(data);
           const user = data.currentuser;
           return (
             <Fragment>
