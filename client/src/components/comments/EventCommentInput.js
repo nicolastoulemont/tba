@@ -26,8 +26,8 @@ class CommentEventInput extends Component {
             <div className="input-group input-group-sm py-2 px-4">
               <input
                 type="text"
-                className="form-control sm mx-0"
-                placeholder="Comment this event..."
+                className="form-control mx-0"
+                placeholder="Comment..."
                 onChange={this.onChange}
                 name="text"
                 value={text}

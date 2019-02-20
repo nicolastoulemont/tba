@@ -9,10 +9,11 @@ const EventCommentDisplay = ({
   creatorName,
   creatorId,
   creatorAvatar,
-  refetch
+  refetch,
+  user
 }) => {
   return (
-    <div className="list-group-item border-0 py-2 px-2" key={id}>
+    <div className="list-group-item border-0  py-2 px-2" key={id}>
       <div className="row">
         <div className="col-1">
           <Link to={{ pathname: `/profile/${creatorId}` }}>
@@ -50,26 +51,28 @@ const EventCommentDisplay = ({
           </div>
         </div>
         <div className="col-1 mx-0">
-          <Mutation mutation={DELETE_COMMENT}>
-            {(deleteComment, e) => (
-              <Link
-                to="#"
-                className="m-0 p-0 text-right"
-                onClick={e => {
-                  e.preventDefault();
-                  deleteComment({
-                    variables: {
-                      _id: id
-                    }
-                  }).then(res => {
-                    refetch();
-                  });
-                }}
-              >
-                <i className="fa fa-times mx-0" aria-hidden="true" />
-              </Link>
-            )}
-          </Mutation>
+          {user === creatorId ? (
+            <Mutation mutation={DELETE_COMMENT}>
+              {(deleteComment, e) => (
+                <Link
+                  to="#"
+                  className="m-0 p-0 text-right"
+                  onClick={e => {
+                    e.preventDefault();
+                    deleteComment({
+                      variables: {
+                        _id: id
+                      }
+                    }).then(res => {
+                      refetch();
+                    });
+                  }}
+                >
+                  <i className="fa fa-times mx-0" aria-hidden="true" />
+                </Link>
+              )}
+            </Mutation>
+          ) : null}
         </div>
       </div>
     </div>
