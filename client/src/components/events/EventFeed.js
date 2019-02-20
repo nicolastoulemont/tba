@@ -13,46 +13,43 @@ class EventFeed extends Component {
     };
   }
 
-  addDay = (e, x) => {
+  setDay = (e, x, operator) => {
     const { getDay } = this.state;
-    this.setState({
-      getDay: new Date(getDay.setDate(getDay.getDate() + x))
-    });
+    if (operator === '+') {
+      this.setState({
+        getDay: new Date(getDay.setDate(getDay.getDate() + x))
+      });
+    } else if (operator === '-') {
+      this.setState({
+        getDay: new Date(getDay.setDate(getDay.getDate() - x))
+      });
+    }
   };
 
-  subtractDay = (e, x) => {
+  setMonth = (e, operator) => {
     const { getDay } = this.state;
-    this.setState({
-      getDay: new Date(getDay.setDate(getDay.getDate() - x))
-    });
+    if (operator === '+') {
+      this.setState({
+        getDay: new Date(getDay.setMonth(getDay.getMonth() + 1, 1))
+      });
+    } else if (operator === '-') {
+      this.setState({
+        getDay: new Date(getDay.setMonth(getDay.getMonth() - 1, 1))
+      });
+    }
   };
 
-  addMonth = e => {
+  formatDay = (x, operator, sliceStart, sliceEnd) => {
     const { getDay } = this.state;
-    this.setState({
-      getDay: new Date(getDay.setMonth(getDay.getMonth() + 1, 1))
-    });
-  };
-
-  subtractMonth = e => {
-    const { getDay } = this.state;
-    this.setState({
-      getDay: new Date(getDay.setMonth(getDay.getMonth() - 1, 1))
-    });
-  };
-
-  formatMinusDay = (x, sliceStart, sliceEnd) => {
-    const { getDay } = this.state;
-    return new Date(new Date().setDate(getDay.getDate() - x))
-      .toUTCString()
-      .slice(sliceStart, sliceEnd);
-  };
-
-  formatPlusDay = (x, sliceStart, sliceEnd) => {
-    const { getDay } = this.state;
-    return new Date(new Date().setDate(getDay.getDate() + x))
-      .toUTCString()
-      .slice(sliceStart, sliceEnd);
+    if (operator === '+') {
+      return new Date(new Date().setDate(getDay.getDate() + x))
+        .toUTCString()
+        .slice(sliceStart, sliceEnd);
+    } else if (operator === '-') {
+      return new Date(new Date().setDate(getDay.getDate() - x))
+        .toUTCString()
+        .slice(sliceStart, sliceEnd);
+    }
   };
 
   render() {
@@ -64,19 +61,19 @@ class EventFeed extends Component {
     const dayString = getDay.toUTCString().slice(0, 3);
     const dayNumber = getDay.toUTCString().slice(5, 7);
 
-    const minusOneDayString = this.formatMinusDay(1, 0, 3);
-    const minusOneDayNumber = this.formatMinusDay(1, 5, 7);
-    const minusTwoDayString = this.formatMinusDay(2, 0, 3);
-    const minusTwoDayNumber = this.formatMinusDay(2, 5, 7);
-    const minusThreeDayString = this.formatMinusDay(3, 0, 3);
-    const minusThreeDayNumber = this.formatMinusDay(3, 5, 7);
+    const minusOneDayString = this.formatDay(1, '-', 0, 3);
+    const minusOneDayNumber = this.formatDay(1, '-', 5, 7);
+    const minusTwoDayString = this.formatDay(2, '-', 0, 3);
+    const minusTwoDayNumber = this.formatDay(2, '-', 5, 7);
+    const minusThreeDayString = this.formatDay(3, '-', 0, 3);
+    const minusThreeDayNumber = this.formatDay(3, '-', 5, 7);
 
-    const plusOneDayString = this.formatPlusDay(1, 0, 3);
-    const plusOneDayNumber = this.formatPlusDay(1, 5, 7);
-    const plusTwoDayString = this.formatPlusDay(2, 0, 3);
-    const plusTwoDayNumber = this.formatPlusDay(2, 5, 7);
-    const plusThreeDayString = this.formatPlusDay(3, 0, 3);
-    const plusThreeDayNumber = this.formatPlusDay(3, 5, 7);
+    const plusOneDayString = this.formatDay(1, '+', 0, 3);
+    const plusOneDayNumber = this.formatDay(1, '+', 5, 7);
+    const plusTwoDayString = this.formatDay(2, '+', 0, 3);
+    const plusTwoDayNumber = this.formatDay(2, '+', 5, 7);
+    const plusThreeDayString = this.formatDay(3, '+', 0, 3);
+    const plusThreeDayNumber = this.formatDay(3, '+', 5, 7);
 
     const day = getDay.toISOString().slice(0, 10);
 
@@ -87,7 +84,7 @@ class EventFeed extends Component {
             <div className="row">
               <div className="col-5 pr-0">
                 {' '}
-                <Link to="#" onClick={this.subtractMonth}>
+                <Link to="#" onClick={e => this.setMonth(e, '-')}>
                   <i className="fas fa-chevron-left mt-1" />
                 </Link>
               </div>
@@ -97,7 +94,7 @@ class EventFeed extends Component {
                 </h6>
               </div>
               <div className="col-5 pl-0">
-                <Link to="#" onClick={this.addMonth}>
+                <Link to="#" onClick={e => this.setMonth(e, '+')}>
                   <i className="d-inline fas fa-chevron-right" />
                 </Link>
               </div>
@@ -105,7 +102,7 @@ class EventFeed extends Component {
           </div>
           <div className="row mx-auto">
             <div className="col p-0 m-0">
-              <Link to="#" onClick={e => this.subtractDay(e, 3)}>
+              <Link to="#" onClick={e => this.setDay(e, 3, '-')}>
                 {' '}
                 <h6 className="font-weight-bold text-uppercase lightgrey">
                   {minusThreeDayString}
@@ -116,7 +113,7 @@ class EventFeed extends Component {
               </Link>
             </div>
             <div className="col p-0 m-0">
-              <Link to="#" onClick={e => this.subtractDay(e, 2)}>
+              <Link to="#" onClick={e => this.setDay(e, 2, '-')}>
                 {' '}
                 <h6 className="font-weight-bold text-uppercase lightgrey">
                   {minusTwoDayString}
@@ -128,7 +125,7 @@ class EventFeed extends Component {
             </div>
             <div className="col  p-0 m-0">
               {' '}
-              <Link to="#" onClick={e => this.subtractDay(e, 1)}>
+              <Link to="#" onClick={e => this.setDay(e, 1, '-')}>
                 {' '}
                 <h6 className="font-weight-bold text-uppercase lightgrey">
                   {minusOneDayString}
@@ -144,7 +141,7 @@ class EventFeed extends Component {
             </div>
             <div className="col  p-0 m-0">
               {' '}
-              <Link to="#" onClick={e => this.addDay(e, 1)}>
+              <Link to="#" onClick={e => this.setDay(e, 1, '+')}>
                 <h6 className="font-weight-bold text-uppercase lightgrey">
                   {plusOneDayString}
                 </h6>
@@ -155,7 +152,7 @@ class EventFeed extends Component {
             </div>
             <div className="col  p-0 m-0">
               {' '}
-              <Link to="#" onClick={e => this.addDay(e, 2)}>
+              <Link to="#" onClick={e => this.setDay(e, 2, '+')}>
                 <h6 className="font-weight-bold text-uppercase lightgrey">
                   {plusTwoDayString}
                 </h6>
@@ -166,7 +163,7 @@ class EventFeed extends Component {
             </div>
             <div className="col  p-0 m-0">
               {' '}
-              <Link to="#" onClick={e => this.addDay(e, 3)}>
+              <Link to="#" onClick={e => this.setDay(e, 3, '+')}>
                 <h6 className="font-weight-bold text-uppercase lightgrey">
                   {plusThreeDayString}
                 </h6>
