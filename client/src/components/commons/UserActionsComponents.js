@@ -45,13 +45,26 @@ export const ErrorMsg = ({ path, message }) => {
 
 export const DateLink = ({ string, number, method }) => {
   return (
-    <div className="col p-0 m-0">
-      <Link to="#" onClick={method}>
-        {' '}
-        <h6 className="font-weight-bold text-uppercase lightgrey">{string}</h6>
-        <h6 className="font-weight-bold lightgrey">{number}</h6>
-      </Link>
-    </div>
+    <Fragment>
+      <div className="col d-none d-md-block p-0 m-0">
+        <Link to="#" onClick={method}>
+          {' '}
+          <h6 className="font-weight-bold text-uppercase lightgrey">
+            {string}
+          </h6>
+          <h6 className="font-weight-bold lightgrey">{number}</h6>
+        </Link>
+      </div>
+      <div className="col d-block d-md-none p-0 m-0">
+        <Link to="#" onClick={method}>
+          {' '}
+          <small className="font-weight-bold d-block text-uppercase lightgrey">
+            {string}
+          </small>
+          <small className="font-weight-bold d-block lightgrey">{number}</small>
+        </Link>
+      </div>
+    </Fragment>
   );
 };
 
