@@ -13,9 +13,10 @@ class EventCommentsFeed extends Component {
           <CQuery query={GET_EVENT_COMMENTS} variables={{ id: eventId }}>
             {({ data: { event }, refetch }) => {
               const comments = event.comments;
+              console.log(comments);
               return (
                 <Fragment>
-                  <div className="list-group">
+                  <ul className="list-unstyled">
                     {comments.map(comment => (
                       <EventCommentItem
                         key={comment.id}
@@ -27,7 +28,7 @@ class EventCommentsFeed extends Component {
                         refetch={refetch}
                       />
                     ))}
-                  </div>
+                  </ul>
                   <div className="input-group input-group-sm mt-2 mx-0">
                     <br />
                     <EventCommentInput

@@ -19,3 +19,21 @@ export const GET_EVENT_COMMENTS = gql`
     }
   }
 `;
+
+export const GET_COMMENT_COMMENTS = gql`
+  query Comment($id: ID!) {
+    comment(id: $id) {
+      comments {
+        id
+        userId
+        text
+        creator {
+          avatar
+          profile {
+            name
+          }
+        }
+      }
+    }
+  }
+`;

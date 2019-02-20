@@ -60,6 +60,7 @@ const EventHeader = ({
                 </div>
               ) : (
                 <p className="my-1">
+                  {ispublic ? 'Public event' : 'Private Event'}
                   On {startDate} from {startTime} to {endTime} on {endDate}
                 </p>
               )}

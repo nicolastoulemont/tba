@@ -105,7 +105,7 @@ class EventFeed extends Component {
               number={minusOneDayNumber}
               method={e => this.setDay(e, 1, '-')}
             />
-            <div className="col  p-0 m-0">
+            <div className="col p-0 m-0">
               <h6 className="text-uppercase font-weight-bold">{dayString}</h6>
               <h6 className="font-weight-bold">{dayNumber}</h6>
             </div>
