@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const Loader = () => {
   return (
@@ -39,5 +40,17 @@ export const ErrorMsg = ({ path, message }) => {
     <li className="list-group-item list-group-item-danger" key={path}>
       <small>{message}</small>
     </li>
+  );
+};
+
+export const DateLink = ({ string, number, method }) => {
+  return (
+    <div className="col p-0 m-0">
+      <Link to="#" onClick={method}>
+        {' '}
+        <h6 className="font-weight-bold text-uppercase lightgrey">{string}</h6>
+        <h6 className="font-weight-bold lightgrey">{number}</h6>
+      </Link>
+    </div>
   );
 };

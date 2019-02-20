@@ -2,6 +2,7 @@ import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
+import { DateLink } from '../commons/UserActionsComponents';
 
 import { GET_DAY_EVENTS } from '../graphql/event/Queries';
 
@@ -101,77 +102,40 @@ class EventFeed extends Component {
             </div>
           </div>
           <div className="row mx-auto">
-            <div className="col p-0 m-0">
-              <Link to="#" onClick={e => this.setDay(e, 3, '-')}>
-                {' '}
-                <h6 className="font-weight-bold text-uppercase lightgrey">
-                  {minusThreeDayString}
-                </h6>
-                <h6 className="font-weight-bold lightgrey">
-                  {minusThreeDayNumber}
-                </h6>
-              </Link>
-            </div>
-            <div className="col p-0 m-0">
-              <Link to="#" onClick={e => this.setDay(e, 2, '-')}>
-                {' '}
-                <h6 className="font-weight-bold text-uppercase lightgrey">
-                  {minusTwoDayString}
-                </h6>
-                <h6 className="font-weight-bold lightgrey">
-                  {minusTwoDayNumber}
-                </h6>
-              </Link>
-            </div>
-            <div className="col  p-0 m-0">
-              {' '}
-              <Link to="#" onClick={e => this.setDay(e, 1, '-')}>
-                {' '}
-                <h6 className="font-weight-bold text-uppercase lightgrey">
-                  {minusOneDayString}
-                </h6>
-                <h6 className="font-weight-bold lightgrey">
-                  {minusOneDayNumber}
-                </h6>
-              </Link>
-            </div>
+            <DateLink
+              string={minusThreeDayString}
+              number={minusThreeDayNumber}
+              method={e => this.setDay(e, 3, '-')}
+            />
+            <DateLink
+              string={minusTwoDayString}
+              number={minusTwoDayNumber}
+              method={e => this.setDay(e, 2, '-')}
+            />
+            <DateLink
+              string={minusOneDayString}
+              number={minusOneDayNumber}
+              method={e => this.setDay(e, 1, '-')}
+            />
             <div className="col  p-0 m-0">
               <h6 className="text-uppercase font-weight-bold">{dayString}</h6>
               <h6 className="font-weight-bold">{dayNumber}</h6>
             </div>
-            <div className="col  p-0 m-0">
-              {' '}
-              <Link to="#" onClick={e => this.setDay(e, 1, '+')}>
-                <h6 className="font-weight-bold text-uppercase lightgrey">
-                  {plusOneDayString}
-                </h6>
-                <h6 className="font-weight-bold lightgrey">
-                  {plusOneDayNumber}
-                </h6>
-              </Link>
-            </div>
-            <div className="col  p-0 m-0">
-              {' '}
-              <Link to="#" onClick={e => this.setDay(e, 2, '+')}>
-                <h6 className="font-weight-bold text-uppercase lightgrey">
-                  {plusTwoDayString}
-                </h6>
-                <h6 className="font-weight-bold lightgrey">
-                  {plusTwoDayNumber}
-                </h6>
-              </Link>
-            </div>
-            <div className="col  p-0 m-0">
-              {' '}
-              <Link to="#" onClick={e => this.setDay(e, 3, '+')}>
-                <h6 className="font-weight-bold text-uppercase lightgrey">
-                  {plusThreeDayString}
-                </h6>
-                <h6 className="font-weight-bold lightgrey">
-                  {plusThreeDayNumber}
-                </h6>
-              </Link>
-            </div>
+            <DateLink
+              string={plusOneDayString}
+              number={plusOneDayNumber}
+              method={e => this.setDay(e, 1, '+')}
+            />
+            <DateLink
+              string={plusTwoDayString}
+              number={plusTwoDayNumber}
+              method={e => this.setDay(e, 2, '+')}
+            />
+            <DateLink
+              string={plusThreeDayString}
+              number={plusThreeDayNumber}
+              method={e => this.setDay(e, 3, '+')}
+            />
           </div>
         </div>
 
