@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 export const Loader = () => {
@@ -52,5 +52,28 @@ export const DateLink = ({ string, number, method }) => {
         <h6 className="font-weight-bold lightgrey">{number}</h6>
       </Link>
     </div>
+  );
+};
+
+export const MonthActions = ({ string, methodOne, methodTwo }) => {
+  return (
+    <Fragment>
+      <div className="col-5 pr-0">
+        {' '}
+        <Link to="#" onClick={methodOne}>
+          <i className="fas fa-chevron-left mt-1" />
+        </Link>
+      </div>
+      <div className="col-2 px-0">
+        <h6 className="d-inline font-weight-bold text-uppercase mx-auto">
+          {string}
+        </h6>
+      </div>
+      <div className="col-5 pl-0">
+        <Link to="#" onClick={methodTwo}>
+          <i className="d-inline fas fa-chevron-right" />
+        </Link>
+      </div>
+    </Fragment>
   );
 };

@@ -1,8 +1,7 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
-import { DateLink } from '../commons/UserActionsComponents';
+import { DateLink, MonthActions } from '../commons/UserActionsComponents';
 
 import { GET_DAY_EVENTS } from '../graphql/event/Queries';
 
@@ -83,22 +82,11 @@ class EventFeed extends Component {
         <div className="m-0">
           <div className="d-block mb-2">
             <div className="row">
-              <div className="col-5 pr-0">
-                {' '}
-                <Link to="#" onClick={e => this.setMonth(e, '-')}>
-                  <i className="fas fa-chevron-left mt-1" />
-                </Link>
-              </div>
-              <div className="col-2 px-0">
-                <h6 className="d-inline font-weight-bold text-uppercase mx-auto">
-                  {monthString}
-                </h6>
-              </div>
-              <div className="col-5 pl-0">
-                <Link to="#" onClick={e => this.setMonth(e, '+')}>
-                  <i className="d-inline fas fa-chevron-right" />
-                </Link>
-              </div>
+              <MonthActions
+                string={monthString}
+                methodOne={e => this.setMonth(e, '-')}
+                methodTwo={e => this.setMonth(e, '+')}
+              />
             </div>
           </div>
           <div className="row mx-auto">
