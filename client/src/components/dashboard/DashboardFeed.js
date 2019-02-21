@@ -39,7 +39,7 @@ class DashboardFeed extends Component {
             </Link>
           </div>
         </div>
-        <div className="row justify-content-center m-0 p-0">
+        <div className="row  m-0 p-0">
           <div className="mb-2 mt-2 w-100">
             {newsDisplay ? (
               <NewsFeed user={user} />

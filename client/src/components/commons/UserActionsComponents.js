@@ -68,23 +68,31 @@ export const DateLink = ({ string, number, method }) => {
   );
 };
 
+export const WeekActions = ({ icon, method }) => {
+  return (
+    <div className="col p-0 m-0">
+      <Link to="#" onClick={method}>
+        <i className={icon} />
+      </Link>
+    </div>
+  );
+};
+
 export const MonthActions = ({ string, methodOne, methodTwo }) => {
   return (
     <Fragment>
-      <div className="col-5 pr-0">
+      <div className="col-3 pr-0">
         {' '}
         <Link to="#" onClick={methodOne}>
-          <i className="fas fa-chevron-left mt-1" />
+          <i className="fas fa-chevron-left" />
         </Link>
       </div>
-      <div className="col-2 px-0">
-        <h6 className="d-inline font-weight-bold text-uppercase mx-auto">
-          {string}
-        </h6>
+      <div className="col-6 px-0">
+        <h6 className="font-weight-bold text-uppercase mx-auto">{string}</h6>
       </div>
-      <div className="col-5 pl-0">
+      <div className="col-3 pl-0">
         <Link to="#" onClick={methodTwo}>
-          <i className="d-inline fas fa-chevron-right" />
+          <i className="fas fa-chevron-right" />
         </Link>
       </div>
     </Fragment>

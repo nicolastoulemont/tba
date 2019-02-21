@@ -1,7 +1,11 @@
 import React, { Fragment, Component } from 'react';
 import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
-import { DateLink, MonthActions } from '../commons/UserActionsComponents';
+import {
+  DateLink,
+  WeekActions,
+  MonthActions
+} from '../commons/UserActionsComponents';
 
 import { GET_DAY_EVENTS } from '../graphql/event/Queries';
 
@@ -90,6 +94,10 @@ class EventFeed extends Component {
             </div>
           </div>
           <div className="row mx-auto">
+            <WeekActions
+              icon="fas fa-chevron-left mt-2"
+              method={e => this.setDay(e, 7, '-')}
+            />
             <DateLink
               string={minusThreeDayString}
               number={minusThreeDayNumber}
@@ -123,6 +131,10 @@ class EventFeed extends Component {
               string={plusThreeDayString}
               number={plusThreeDayNumber}
               method={e => this.setDay(e, 3, '+')}
+            />
+            <WeekActions
+              icon="fas fa-chevron-right mt-2"
+              method={e => this.setDay(e, 7, '+')}
             />
           </div>
         </div>
