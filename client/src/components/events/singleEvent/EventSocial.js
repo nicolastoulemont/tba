@@ -6,7 +6,7 @@ const EventSocial = ({ user, eventId }) => {
   return (
     <Fragment>
       <div className="mb-3 pb-5">
-        <div className="row p-4">
+        <div className="row px-4">
           <div className="col-6">
             <LikesFeed user={user} eventId={eventId} />
           </div>

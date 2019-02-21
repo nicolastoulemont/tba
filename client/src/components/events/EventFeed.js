@@ -3,7 +3,7 @@ import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
 import {
   DateLink,
-  WeekActions,
+  WeekAction,
   MonthActions
 } from '../commons/UserActionsComponents';
 
@@ -94,7 +94,7 @@ class EventFeed extends Component {
             </div>
           </div>
           <div className="row mx-auto">
-            <WeekActions
+            <WeekAction
               icon="fas fa-chevron-left mt-2"
               method={e => this.setDay(e, 7, '-')}
             />
@@ -132,7 +132,7 @@ class EventFeed extends Component {
               number={plusThreeDayNumber}
               method={e => this.setDay(e, 3, '+')}
             />
-            <WeekActions
+            <WeekAction
               icon="fas fa-chevron-right mt-2"
               method={e => this.setDay(e, 7, '+')}
             />

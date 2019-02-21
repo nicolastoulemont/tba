@@ -68,7 +68,7 @@ export const DateLink = ({ string, number, method }) => {
   );
 };
 
-export const WeekActions = ({ icon, method }) => {
+export const WeekAction = ({ icon, method }) => {
   return (
     <div className="col p-0 m-0">
       <Link to="#" onClick={method}>

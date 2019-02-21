@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { DELETE_COMMENT } from '../graphql/comment/Mutations';
+import { RespSmallAvatarLink, UserNameLink } from '../commons/CustomLinks';
+import EventCommentActions from './commentActions/EventCommentActions';
 
 const EventCommentDisplay = ({
   id,
@@ -13,41 +15,21 @@ const EventCommentDisplay = ({
   user
 }) => {
   return (
-    <div className="list-group-item border-0  py-2 px-2" key={id}>
+    <div className="list-group-item border-0 py-1 px-2" key={id}>
       <div className="row">
         <div className="col-1">
-          <Link to={{ pathname: `/profile/${creatorId}` }}>
-            {creatorAvatar ? (
-              <div>
-                <img
-                  className="d-none d-md-block rounded-circle border-avatar small-avatar"
-                  src={creatorAvatar}
-                  alt="User Avatar"
-                />
-                <img
-                  className="d-block d-md-none rounded-circle border-avatar ultra-small-avatar"
-                  src={creatorAvatar}
-                  alt="User Avatar"
-                />
-              </div>
-            ) : (
-              <i className="fas fa-user-astronaut fa-3x" />
-            )}
-          </Link>
+          <RespSmallAvatarLink id={creatorId} avatar={creatorAvatar} />
         </div>
         <div className="col-9 col-md-10 mx-0 pr-0">
           <div className="text-left mx-auto">
-            <Link
-              to={{
-                pathname: `/profile/${creatorId}`
-              }}
-              className="d-none d-md-block font-weight-bold text-darkblue"
-            >
-              {creatorName}
-            </Link>
-            {` `}
-            <p className="d-none d-md-block">{text}</p>
-            <p className="d-block d-md-none ml-2">{text}</p>
+            <UserNameLink id={creatorId} name={creatorName} />
+            <span className="d-none d-md-inline-block ml-2">{text}</span>
+            <span className="d-inline-block d-md-none ml-2">{text}</span>
+            <EventCommentActions
+              user={user}
+              creatorId={creatorId}
+              commentId={id}
+            />
           </div>
         </div>
         <div className="col-1 mx-0">

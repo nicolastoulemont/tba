@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import { ADD_COMMENT } from '../graphql/comment/Mutations';
+import { ADD_COMMENT } from '../../graphql/comment/Mutations';
+import { GET_COMMENT_COMMENTS } from '../../graphql/comment/Queries';
 
-class CommentEventInput extends Component {
+class CommentReply extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,13 +18,20 @@ class CommentEventInput extends Component {
   };
 
   render() {
-    const { user, eventId, refetch } = this.props;
+    const { user, commentId } = this.props;
     const { text } = this.state;
     return (
       <Fragment>
-        <Mutation mutation={ADD_COMMENT}>
+        <Mutation
+          mutation={ADD_COMMENT}
+          refetchQueries={() => {
+            return [
+              { query: GET_COMMENT_COMMENTS, variables: { id: commentId } }
+            ];
+          }}
+        >
           {(addComment, e) => (
-            <div className="input-group input-group-sm py-2 px-4">
+            <div className="input-group input-group-sm py-1">
               <input
                 type="text"
                 className="form-control mx-0"
@@ -39,9 +47,8 @@ class CommentEventInput extends Component {
                   onClick={e => {
                     e.preventDefault();
                     addComment({
-                      variables: { userId: user, eventId, text }
+                      variables: { userId: user, commentId, text }
                     }).then(res => {
-                      refetch();
                       this.setState({ text: '' });
                     });
                   }}
@@ -60,4 +67,4 @@ class CommentEventInput extends Component {
   }
 }
 
-export default CommentEventInput;
+export default CommentReply;

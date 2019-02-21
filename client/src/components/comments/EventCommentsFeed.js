@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import EventCommentInput from './EventCommentInput';
+import EventCommentFeedInput from './EventCommentFeedInput';
 import EventCommentItem from './EventCommentItem';
 import CQuery from '../commons/CustomQueryComponent';
 import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
@@ -31,7 +31,7 @@ class EventCommentsFeed extends Component {
                   </ul>
                   <div className="input-group input-group-sm mt-2 mx-0">
                     <br />
-                    <EventCommentInput
+                    <EventCommentFeedInput
                       user={user}
                       eventId={eventId}
                       refetch={refetch}
