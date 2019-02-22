@@ -48,18 +48,18 @@ class EventCommentActions extends Component {
           </Link>
           <span className="mr-2">1</span>
           <Link to="#">
-            <i className="text-secondary far fa-thumbs-down mr-2" />
+            <i className="text-secondary far fa-thumbs-down mr-4" />
           </Link>
           <Link to="#" onClick={this.showReply}>
             {' '}
-            <i className="far fa-comment mx-1" />
+            <i className="far fa-comment mx-2" />
           </Link>{' '}
           <Link to="#" onClick={this.showEdit}>
-            <i className="far fa-edit mx-1" />
+            <i className="far fa-edit mx-2" />
           </Link>{' '}
           <Link to="#" onClick={this.showReport}>
             {' '}
-            <i className="fas fa-flag mx-1" />
+            <i className="fas fa-flag mx-2" />
           </Link>
         </small>
         {showReplyForm ? (
