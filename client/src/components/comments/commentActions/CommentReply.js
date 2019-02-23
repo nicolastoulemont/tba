@@ -31,10 +31,10 @@ class CommentReply extends Component {
           }}
         >
           {(addComment, e) => (
-            <div className="input-group input-group-sm py-1">
+            <div className="input-group input-group-sm py-2">
               <input
                 type="text"
-                className="form-control mx-0"
+                className="form-control"
                 placeholder="Comment..."
                 onChange={this.onChange}
                 name="text"

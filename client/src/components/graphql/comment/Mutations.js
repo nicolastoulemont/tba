@@ -20,6 +20,14 @@ export const ADD_COMMENT = gql`
   }
 `;
 
+export const EDIT_COMMENT = gql`
+  mutation UpdateComment($_id: ID!, $text: String) {
+    updateComment(_id: $_id, text: $text) {
+      id
+    }
+  }
+`;
+
 export const DELETE_COMMENT = gql`
   mutation DeleteComment($_id: ID!) {
     deleteComment(_id: $_id) {
