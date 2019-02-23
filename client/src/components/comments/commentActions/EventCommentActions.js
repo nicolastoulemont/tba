@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import CommentReply from './CommentReply';
+import CommentEdit from './CommentEdit';
 
 class EventCommentActions extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class EventCommentActions extends Component {
 
   render() {
     const { showReplyForm, showEditForm, showReportForm } = this.state;
-    const { user, commentId } = this.props;
+    const { user, commentId, commentText, refetch } = this.props;
     return (
       <Fragment>
         <small className="d-block mt-1">
@@ -67,7 +68,15 @@ class EventCommentActions extends Component {
             <CommentReply user={user} commentId={commentId} />
           </div>
         ) : null}
-        {showEditForm ? <div className="">test2</div> : null}
+        {showEditForm ? (
+          <div className="">
+            <CommentEdit
+              commentId={commentId}
+              text={commentText}
+              refetch={refetch}
+            />
+          </div>
+        ) : null}
         {showReportForm ? <div className="">test3</div> : null}
       </Fragment>
     );

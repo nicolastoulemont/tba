@@ -29,6 +29,8 @@ const EventCommentDisplay = ({
               user={user}
               creatorId={creatorId}
               commentId={id}
+              commentText={text}
+              refetch={refetch}
             />
           </div>
         </div>
