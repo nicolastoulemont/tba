@@ -1,19 +1,22 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import { ADD_LIKE, DELETE_LIKE } from '../graphql/like/Mutations';
+import {
+  ADD_REGISTRATION,
+  DELETE_REGISTRATION
+} from '../graphql/registration/Mutations';
 
-export const LikeEvent = ({ user, eventId, refetch }) => {
+export const RegisterEvent = ({ user, eventId, refetch }) => {
   return (
     <Fragment>
-      <Mutation mutation={ADD_LIKE}>
-        {(addLike, e) => (
+      <Mutation mutation={ADD_REGISTRATION}>
+        {(addRegistration, e) => (
           <Link
             to="#"
             className="mr-2"
             onClick={e => {
               e.preventDefault();
-              addLike({
+              addRegistration({
                 variables: {
                   userId: user,
                   eventId
@@ -23,7 +26,7 @@ export const LikeEvent = ({ user, eventId, refetch }) => {
               });
             }}
           >
-            <i className="text-secondary far fa-thumbs-up" />
+            <i className="text-secondary fas fa-check" />
           </Link>
         )}
       </Mutation>
@@ -31,26 +34,26 @@ export const LikeEvent = ({ user, eventId, refetch }) => {
   );
 };
 
-export const UnlikeEvent = ({ userLike, refetch }) => {
+export const UnRegisterEvent = ({ userRegistration, refetch }) => {
   return (
     <Fragment>
-      <Mutation mutation={DELETE_LIKE}>
-        {(deleteLike, e) => (
+      <Mutation mutation={DELETE_REGISTRATION}>
+        {(deleteRegistration, e) => (
           <Link
             to="#"
             className="ml-2"
             onClick={e => {
               e.preventDefault();
-              deleteLike({
+              deleteRegistration({
                 variables: {
-                  _id: userLike.id
+                  _id: userRegistration.id
                 }
               }).then(res => {
                 refetch();
               });
             }}
           >
-            <i className="text-secondary  far fa-thumbs-down" />
+            <i className="text-secondary far fa-times-circle" />
           </Link>
         )}
       </Mutation>

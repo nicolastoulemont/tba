@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import EventCommentsFeed from '../../comments/EventCommentsFeed';
 import LikesFeed from '../../likes/LikesFeed';
+import RegistrationFeed from '../../registrations/RegistrationFeed';
 
 const EventSocial = ({ user, eventId }) => {
   return (
@@ -11,7 +12,7 @@ const EventSocial = ({ user, eventId }) => {
             <LikesFeed user={user} eventId={eventId} />
           </div>
           <div className="col-6">
-            <div className="text-right align-middle">Register btn</div>
+            <RegistrationFeed user={user} eventId={eventId} />
           </div>
         </div>
         <hr />

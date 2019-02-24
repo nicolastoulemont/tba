@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { LikeEvent, UnlikeEvent } from './LikeActions';
 import CQuery from '../commons/CustomQueryComponent';
-import { GET_EVENT_LIKES } from '../graphql/likes/Queries';
+import { GET_EVENT_LIKES } from '../graphql/like/Queries';
 
 class LikesFeed extends Component {
   getUserLikeId = (likes, user) => {
