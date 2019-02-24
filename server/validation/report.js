@@ -5,7 +5,7 @@ const Validator = require('validator');
 const ValidateAddReport = async data => {
   let errors = [];
 
-  data.text = !isEmpty(date.text) ? data.text : '';
+  data.text = !isEmpty(data.text) ? data.text : '';
 
   if (!Validator.isLength(data.text, { min: 5, max: 500 })) {
     let reportTextError = {

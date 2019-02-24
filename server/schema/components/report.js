@@ -25,7 +25,7 @@ module.exports = {
 
     type ReportResp {
       success: Boolean!
-      like: Like
+      report: Report
       errors: [Error]
     }
 
@@ -37,6 +37,7 @@ module.exports = {
     extend type Mutation {
       addReport(
         userId: String!
+        text: String!
         eventId: String
         pollId: String
         commentId: String
