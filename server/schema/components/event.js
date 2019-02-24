@@ -3,6 +3,7 @@ const CommentItem = require('../../models/Comment');
 const Poll = require('../../models/Poll');
 const Like = require('../../models/Like');
 const Report = require('../../models/Report');
+const Registration = require('../../models/Registration');
 const User = require('../../models/User');
 const { gql } = require('apollo-server-express');
 const {
@@ -33,6 +34,7 @@ module.exports = {
       polls: [Poll]
       likes: [Like]
       reports: [Report]
+      registrations: [Registration]
     }
 
     type EventResp {
@@ -144,6 +146,9 @@ module.exports = {
       },
       reports: (parent, args) => {
         return Report.find({ eventId: parent.id });
+      },
+      registrations: (parent, args) => {
+        return Registration.find({ eventId: parent.id });
       }
     },
 
