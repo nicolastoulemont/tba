@@ -66,7 +66,7 @@ module.exports = {
         return CommentItem.findOne({ _id: parent.commentId });
       },
       poll: (parent, args) => {
-        return Poll.find({ _id: parent.pollId });
+        return Poll.findOne({ _id: parent.pollId });
       },
       creator: (parent, args) => {
         return User.findOne({ _id: parent.userId });

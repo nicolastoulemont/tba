@@ -1,20 +1,7 @@
 import React from 'react';
 
 const Spinner = () => {
-  return (
-    <div className="mx-auto my-4">
-      <div className="lds-roller text-center">
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-      </div>
-    </div>
-  );
+  return <div class="spinner" />;
 };
 
 export default Spinner;
