@@ -7,6 +7,7 @@ const { ProfileType, ProfileRes } = require('./components/profile');
 const { CommentType, CommentRes } = require('./components/comment');
 const { PollType, PollRes } = require('./components/poll');
 const { LikeType, LikeRes } = require('./components/like');
+const { ReportType, ReportRes } = require('./components/report');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const resolvers = {};
@@ -22,7 +23,8 @@ module.exports = schema = makeExecutableSchema({
     ProfileType,
     CommentType,
     PollType,
-    LikeType
+    LikeType,
+    ReportType
   ],
   resolvers: [
     DateRes,
@@ -31,6 +33,7 @@ module.exports = schema = makeExecutableSchema({
     ProfileRes,
     CommentRes,
     PollRes,
-    LikeRes
+    LikeRes,
+    ReportRes
   ]
 });

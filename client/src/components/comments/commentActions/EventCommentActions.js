@@ -64,12 +64,12 @@ class EventCommentActions extends Component {
           </Link>
         </small>
         {showReplyForm ? (
-          <div className="d-block">
+          <div>
             <CommentReply user={user} commentId={commentId} />
           </div>
         ) : null}
         {showEditForm ? (
-          <div className="">
+          <div>
             <CommentEdit
               commentId={commentId}
               text={commentText}
