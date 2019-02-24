@@ -2,6 +2,10 @@ const { rootQuery } = require('./root');
 const { ErrorType, StartType } = require('./errors');
 const { DateType, DateRes } = require('./date');
 const { UserType, UserRes } = require('./components/user');
+const {
+  OrganisationType,
+  OrganisationRes
+} = require('./components/organisation');
 const { EventType, EventRes } = require('./components/event');
 const { ProfileType, ProfileRes } = require('./components/profile');
 const { CommentType, CommentRes } = require('./components/comment');
@@ -23,6 +27,7 @@ module.exports = schema = makeExecutableSchema({
     StartType,
     DateType,
     UserType,
+    OrganisationType,
     EventType,
     ProfileType,
     CommentType,
@@ -34,6 +39,7 @@ module.exports = schema = makeExecutableSchema({
   resolvers: [
     DateRes,
     UserRes,
+    OrganisationRes,
     EventRes,
     ProfileRes,
     CommentRes,
