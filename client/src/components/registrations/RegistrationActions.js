@@ -13,7 +13,7 @@ export const RegisterEvent = ({ user, eventId, refetch }) => {
         {(addRegistration, e) => (
           <Link
             to="#"
-            className="mr-2"
+            className="btn btn-darkblue btn-sm px-2"
             onClick={e => {
               e.preventDefault();
               addRegistration({
@@ -26,7 +26,7 @@ export const RegisterEvent = ({ user, eventId, refetch }) => {
               });
             }}
           >
-            <i className="text-secondary fas fa-check" />
+            Register <i className="text-white fas fa-check ml-2" />
           </Link>
         )}
       </Mutation>
@@ -41,7 +41,7 @@ export const UnRegisterEvent = ({ userRegistration, refetch }) => {
         {(deleteRegistration, e) => (
           <Link
             to="#"
-            className="ml-2"
+            className="btn btn-darkblue btn-sm px-2"
             onClick={e => {
               e.preventDefault();
               deleteRegistration({
@@ -53,7 +53,7 @@ export const UnRegisterEvent = ({ userRegistration, refetch }) => {
               });
             }}
           >
-            <i className="text-secondary far fa-times-circle" />
+            Unregister <i className="text-white far fa-times-circle ml-2" />
           </Link>
         )}
       </Mutation>

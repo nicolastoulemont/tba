@@ -33,6 +33,11 @@ body {
   color: #29456e;
 }
 
+.btn-darkblue {
+  background-color: #29456e;
+  color: white;
+}
+
 .border-avatar {
   border: 3px solid white;
 }
@@ -68,7 +73,7 @@ a {
 }
 a:hover {
   text-decoration: none;
-  color: #29456e;
+  color: white;
 }
 
 .fa:hover,

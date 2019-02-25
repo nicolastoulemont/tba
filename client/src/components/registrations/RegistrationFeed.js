@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { RegisterEvent, UnRegisterEvent } from './RegistrationActions';
 import CQuery from '../commons/CustomQueryComponent';
 import { GET_EVENT_REGISTRATIONS } from '../graphql/registration/Queries';
@@ -29,6 +28,7 @@ class RegistrationFeed extends Component {
             return (
               <Fragment>
                 <div className="text-right align-middle">
+                  <span className="mr-2">{registrations.length} attendees</span>
                   {typeof userRegistration === 'undefined' ? (
                     <RegisterEvent
                       user={user}
@@ -36,20 +36,10 @@ class RegistrationFeed extends Component {
                       refetch={refetch}
                     />
                   ) : (
-                    <Link to="#" className="mr-1">
-                      <i className="text-success fas fa-check" />
-                    </Link>
-                  )}
-                  <span className="mx-2">{registrations.length}</span>
-                  {typeof userRegistration !== 'undefined' ? (
                     <UnRegisterEvent
                       userRegistration={userRegistration}
                       refetch={refetch}
                     />
-                  ) : (
-                    <Link to="#" className="ml-2">
-                      <i className="text-secondary far fa-times-circle" />
-                    </Link>
                   )}
                 </div>
               </Fragment>
