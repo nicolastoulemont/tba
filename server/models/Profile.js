@@ -11,6 +11,8 @@ const profileSchema = new Schema({
     required: true
   },
   organisation: String,
+  organisationId: String,
+  organisationAdminId: String,
   position: {
     type: String,
     required: true

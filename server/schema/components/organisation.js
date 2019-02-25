@@ -1,6 +1,7 @@
 const EventItem = require('../../models/Eventitem');
 const Report = require('../../models/Report');
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 const Organisation = require('../../models/Organisation');
 const { gql } = require('apollo-server-express');
 // const {
@@ -21,7 +22,8 @@ module.exports = {
       createdAt: Date
       updatedAt: Date
       creator: User
-      members: [User]
+      admins: [Profile]
+      members: [Profile]
       events: [EventItem]
       reports: [Report]
     }
@@ -73,8 +75,11 @@ module.exports = {
       creator: (parent, args) => {
         return User.findOne({ _id: parent.userId });
       },
+      admins: (parent, args) => {
+        return Profile.find({ organisationAdminId: parent.id });
+      },
       members: (parent, args) => {
-        return User.find({ orgId: parent.id });
+        return Profile.find({ organisationId: parent.id });
       },
       events: (parent, args) => {
         return EventItem.find({ orgId: parent.id });

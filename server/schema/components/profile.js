@@ -1,4 +1,5 @@
 const Profile = require('../../models/Profile');
+const Organisation = require('../../models/Organisation');
 const User = require('../../models/User');
 const { gql } = require('apollo-server-express');
 
@@ -9,6 +10,8 @@ module.exports = {
       userId: ID!
       name: String!
       organisation: String
+      organisationId: String
+      organisationAdminId: String
       position: String!
       interestOne: String!
       interestTwo: String
@@ -19,6 +22,8 @@ module.exports = {
       createdAt: String
       updatedAt: String
       creator: User
+      member: Organisation
+      admin: Organisation
     }
 
     type ProfileResp {
@@ -37,6 +42,8 @@ module.exports = {
         userId: String!
         name: String!
         organisation: String
+        organisationId: String
+        organisationAdminId: String
         position: String!
         interestOne: String!
         interestTwo: String
@@ -49,6 +56,8 @@ module.exports = {
         _id: ID!
         name: String
         organisation: String
+        organisationId: String
+        organisationAdminId: String
         position: String
         interestOne: String!
         interestTwo: String
@@ -76,6 +85,12 @@ module.exports = {
     Profile: {
       creator: (parent, args) => {
         return User.findOne({ _id: parent.userId });
+      },
+      member: (parent, args) => {
+        return Organisation.findOne({ _id: parent.organisationId });
+      },
+      admin: (parent, args) => {
+        return Organisation.findOne({ _id: parent.organisationAdminId });
       }
     },
 
@@ -85,6 +100,8 @@ module.exports = {
           userId: args.userId,
           name: args.name,
           organisation: args.organisation,
+          organisationId: args.organisationId,
+          organisationAdminId: args.organisationAdminId,
           position: args.position,
           interestOne: args.interestOne,
           interestTwo: args.interestTwo,
@@ -101,6 +118,10 @@ module.exports = {
         let updateProfile = {};
         if (args.name) updateProfile.name = args.name;
         if (args.organisation) updateProfile.organisation = args.organisation;
+        if (args.organisationId)
+          updateProfile.organisationId = args.organisationId;
+        if (args.organisationAdminId)
+          updateProfile.organisationAdminId = args.organisationAdminId;
         if (args.position) updateProfile.position = args.position;
         if (args.interestOne) updateProfile.interestOne = args.interestOne;
         if (args.interestTwo) updateProfile.interestTwo = args.interestTwo;
