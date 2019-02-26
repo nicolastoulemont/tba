@@ -35,6 +35,7 @@ class EventMenu extends Component {
       loggedUser,
       refetch
     } = this.props;
+
     return (
       <div className="text-right mt-0 mr-2">
         <Link

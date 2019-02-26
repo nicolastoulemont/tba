@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import CQuery from '../commons/CustomQueryComponent';
-import { GET_USER_EVENTS } from '../graphql/user/Queries';
+import CQuery from '../../commons/CustomQueryComponent';
+import { GET_USER_EVENTS } from '../../graphql/user/Queries';
 
-const DashboardUserEvents = ({ user }) => {
+const SideBarUserEvents = ({ user }) => {
   return (
     <div className="col pr-0">
       <div className="ml-2 border-0 bg-white">
@@ -50,4 +50,4 @@ const DashboardUserEvents = ({ user }) => {
   );
 };
 
-export default DashboardUserEvents;
+export default SideBarUserEvents;

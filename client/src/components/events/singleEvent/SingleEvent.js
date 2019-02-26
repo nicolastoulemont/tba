@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import { DashboardError } from '../../commons/UserActionsComponents';
 import Spinner from '../../commons/Spinner';
-import DashboardProfile from '../../dashboard/DashboardProfile';
-import DashboardUserEvents from '../../dashboard/DashboardUserEvents';
+import SideBarUserProfile from '../../profile/SideBarUserProfile';
+import SideBarUserEvents from '../sideBarUserEvents/SideBarUserEvents';
 import Event from './Event';
 
 import { LOGGED_USER } from '../../graphql/user/Queries';
@@ -30,13 +30,13 @@ const SingleEvent = ({ match, history }) => {
                       />
                     </div>
                     <div className="d-none d-lg-block col-lg-4 text-center">
-                      <DashboardProfile
+                      <SideBarUserProfile
                         user={user.id}
                         avatar={user.avatar}
                         name={user.profile.name}
                       />
                       <div className="row">
-                        <DashboardUserEvents user={user.id} />
+                        <SideBarUserEvents user={user.id} />
                       </div>
                     </div>
                   </div>

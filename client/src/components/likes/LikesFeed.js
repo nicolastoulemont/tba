@@ -23,7 +23,7 @@ class LikesFeed extends Component {
             let userLike = this.getUserLikeId(likes, user);
             return (
               <Fragment>
-                <div className="text-left align-middle">
+                <div className="text-left align-middle pl-2">
                   {typeof userLike === 'undefined' ? (
                     <LikeEvent
                       user={user}

@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
 import DashboardFeed from './DashboardFeed';
-import DashboardProfile from './DashboardProfile';
-import DashboardUserEvents from './DashboardUserEvents';
+import SideBarUserProfile from '../profile/SideBarUserProfile';
+import SideBarUserEvents from '../events/sideBarUserEvents/SideBarUserEvents';
 
 const Dashboard = () => {
   return (
@@ -24,13 +24,13 @@ const Dashboard = () => {
                     />
                   </div>
                   <div className="d-none d-lg-block col-lg-4 text-center">
-                    <DashboardProfile
+                    <SideBarUserProfile
                       user={user.id}
                       avatar={user.avatar}
                       name={user.profile.name}
                     />
                     <div className="row">
-                      <DashboardUserEvents user={user.id} />
+                      <SideBarUserEvents user={user.id} />
                     </div>
                   </div>
                 </div>

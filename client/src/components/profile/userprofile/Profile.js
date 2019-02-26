@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import CQuery from '../../commons/CustomQueryComponent';
-import DashboardProfile from '../../dashboard/DashboardProfile';
-import DashboardUserEvents from '../../dashboard/DashboardUserEvents';
+import SideBarUserProfile from '../SideBarUserProfile';
+import SideBarUserEvents from '../../events/sideBarUserEvents/SideBarUserEvents';
 import ProfileHeader from './ProfileHeader';
 import ProfileSocial from './ProfileSocial';
 
@@ -50,13 +50,13 @@ const Profile = ({ match }) => {
                     </CQuery>
                   </div>
                   <div className="d-none d-lg-block col-lg-4 text-center">
-                    <DashboardProfile
+                    <SideBarUserProfile
                       avatar={loggedInUser.avatar}
                       name={loggedInUser.profile.name}
                       user={loggedInUser.id}
                     />
                     <div className="row">
-                      <DashboardUserEvents user={loggedInUser.id} />
+                      <SideBarUserEvents user={loggedInUser.id} />
                     </div>
                   </div>
                 </div>
