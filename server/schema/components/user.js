@@ -9,6 +9,7 @@ const gravatar = require('gravatar');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const EventItem = require('../../models/Eventitem');
+const Registration = require('../../models/Registration');
 const CommentItem = require('../../models/Comment');
 const Poll = require('../../models/Poll');
 const Like = require('../../models/Like');
@@ -24,6 +25,7 @@ module.exports = {
       createdAt: String
       updatedAt: String
       events: [EventItem]
+      registrations: [Registration]
       profile: Profile
       comments: [CommentItem]
       polls: [Poll]
@@ -76,6 +78,9 @@ module.exports = {
     User: {
       events: (parent, args) => {
         return EventItem.find({ userId: parent.id });
+      },
+      registrations: (parent, args) => {
+        return Registration.find({ userId: parent.id });
       },
       profile: (parent, args) => {
         return Profile.findOne({ userId: parent.id });

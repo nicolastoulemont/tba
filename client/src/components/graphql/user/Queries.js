@@ -40,6 +40,26 @@ export const GET_USER_EVENTS = gql`
   }
 `;
 
+export const GET_USER_REGISTRATIONS = gql`
+  query User($id: ID!) {
+    user(id: $id) {
+      id
+      registrations {
+        id
+        event {
+          id
+          name
+          location
+          startDate
+          startTime
+          endDate
+          endTime
+        }
+      }
+    }
+  }
+`;
+
 export const GET_USER_COMMENTS = gql`
   query User($id: ID!) {
     user(id: $id) {

@@ -25,13 +25,17 @@ class DashboardFeed extends Component {
       <Fragment>
         <div className="row m-0 p-0">
           <div className="col border-right p-0 py-2">
-            <Link to="#" onClick={this.newsDisplay}>
+            <Link to="#" onClick={this.newsDisplay} className="link-menu">
               <i className="d-inline far fa-paper-plane mr-2" />
               <h6 className="d-inline font-weight-bold text-uppercase">NEWS</h6>
             </Link>
           </div>
           <div className="col p-0 py-2">
-            <Link to="#" onClick={this.eventDisplay} className="align-middle">
+            <Link
+              to="#"
+              onClick={this.eventDisplay}
+              className="align-middle link-menu"
+            >
               <i className="d-inline far fa-calendar mr-2" />
               <h6 className="d-inline font-weight-bold text-uppercase">
                 EVENTS

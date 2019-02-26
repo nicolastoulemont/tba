@@ -76,6 +76,12 @@ a:hover {
   color: white;
 }
 
+.link-menu:hover {
+  text-decoration: none;
+  color: #5a6268;
+  border-bottom: 3px solid #29456e;
+}
+
 .fa:hover,
 .far:hover {
   color: #29456e;
