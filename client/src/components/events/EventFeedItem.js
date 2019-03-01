@@ -62,7 +62,8 @@ const EventFeedItem = ({
                 </small>
               ) : (
                 <small>
-                  On {startDate} from {startTime} to {endTime} on {endDate}
+                  On {new Date(startDate).toDateString()} from {startTime} to{' '}
+                  {endTime} on {new Date(endDate).toDateString()}
                 </small>
               )}
             </div>

@@ -52,7 +52,7 @@ const EventHeader = ({
                   <p className="my-1">
                     {' '}
                     {ispublic ? 'Public event' : 'Private Event'}
-                    {' -'} {startDate}
+                    {' -'} {new Date(startDate).toDateString()}
                   </p>
                   <small>
                     {startTime} to {endTime}
@@ -61,7 +61,8 @@ const EventHeader = ({
               ) : (
                 <p className="my-1">
                   {ispublic ? 'Public event' : 'Private Event'}
-                  On {startDate} from {startTime} to {endTime} on {endDate}
+                  On {new Date(startDate).toDateString()} from {startTime} to{' '}
+                  {endTime} on {new Date(endDate).toDateString()}
                 </p>
               )}
               <p className="my-1">{location}</p>
