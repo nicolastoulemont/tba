@@ -19,7 +19,7 @@ const Profile = ({ match }) => {
             <Fragment key={loggedInUser.id}>
               <div className="mt-2 text-center">
                 <div className="row justify-content-center">
-                  <div className="col-sm-12 col-lg-8 bg-white px-0">
+                  <main className="col-sm-12 col-lg-8 bg-white px-0">
                     <CQuery
                       query={GET_USER_FULL_PROFILE}
                       variables={{ id: user }}
@@ -48,7 +48,7 @@ const Profile = ({ match }) => {
                         );
                       }}
                     </CQuery>
-                  </div>
+                  </main>
                   <div className="d-none d-lg-block col-lg-4 text-center">
                     <SideBarUserProfile
                       avatar={loggedInUser.avatar}

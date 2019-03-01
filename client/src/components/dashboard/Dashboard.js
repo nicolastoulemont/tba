@@ -15,14 +15,14 @@ const Dashboard = () => {
             <Fragment>
               <div className="mt-2 text-center">
                 <div className="row">
-                  <div className="col-sm-12 col-lg-8 bg-white">
+                  <main className="col-sm-12 col-lg-8 bg-white">
                     <DashboardFeed
                       user={user.id}
                       interestOne={user.profile.interestOne}
                       interestTwo={user.profile.interestTwo}
                       interestThree={user.profile.interestThree}
                     />
-                  </div>
+                  </main>
                   <div className="d-none d-lg-block col-lg-4 text-center">
                     <SideBarUserProfile
                       user={user.id}
