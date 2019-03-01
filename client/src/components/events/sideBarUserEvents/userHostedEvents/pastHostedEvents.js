@@ -40,13 +40,14 @@ const PastHostedEvents = ({ user, day }) => {
                         <small className="d-block">{event.location}</small>
                         {event.startDate === event.endDate ? (
                           <small className="d-block">
-                            {event.startDate} from {event.startTime} to{' '}
-                            {event.endTime}
+                            {new Date(event.startDate).toDateString()} from{' '}
+                            {event.startTime} to {event.endTime}
                           </small>
                         ) : (
                           <small className="d-block">
-                            On {event.startDate} from {event.startTime} to{' '}
-                            {event.endTime} on {event.endDate}
+                            On {new Date(event.startDate).toDateString()} from{' '}
+                            {event.startTime} to {event.endTime} on{' '}
+                            {new Date(event.endDate).toDateString()}
                           </small>
                         )}
                       </div>

@@ -21,6 +21,10 @@ const FutureRegistrations = ({ user, day }) => {
                 if (registration.event.startDate < day) {
                   return null;
                 } else {
+                  console.log(
+                    new Date(registration.event.startDate).toDateString()
+                  );
+
                   return (
                     <div
                       className="text-left px-3 py-2 border-top"
@@ -42,8 +46,10 @@ const FutureRegistrations = ({ user, day }) => {
                       {registration.event.startDate ===
                       registration.event.endDate ? (
                         <small className="d-block">
-                          {registration.event.startDate} from{' '}
-                          {registration.event.startTime} to{' '}
+                          {new Date(
+                            registration.event.startDate
+                          ).toDateString()}{' '}
+                          from {registration.event.startTime} to{' '}
                           {registration.event.endTime}
                         </small>
                       ) : (

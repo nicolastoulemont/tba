@@ -42,16 +42,21 @@ const PastRegistrations = ({ user, day }) => {
                       {registration.event.startDate ===
                       registration.event.endDate ? (
                         <small className="d-block">
-                          {registration.event.startDate} from{' '}
+                          {new Date(
+                            registration.event.startDate
+                          ).toDateString()}{' '}
                           {registration.event.startTime} to{' '}
                           {registration.event.endTime}
                         </small>
                       ) : (
                         <small className="d-block">
-                          On {registration.event.startDate} from{' '}
-                          {registration.event.startTime} to{' '}
+                          On{' '}
+                          {new Date(
+                            registration.event.startDate
+                          ).toDateString()}{' '}
+                          from {registration.event.startTime} to{' '}
                           {registration.event.endTime} on{' '}
-                          {registration.event.endDate}
+                          {new Date(registration.event.endDate).toDateString()}{' '}
                         </small>
                       )}
                     </div>

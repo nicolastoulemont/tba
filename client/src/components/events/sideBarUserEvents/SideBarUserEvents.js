@@ -25,7 +25,7 @@ class SideBarUserEvents extends Component {
     return (
       <Fragment>
         <div className="col pr-0">
-          <div className="ml-2 border-0 bg-white">
+          <div className="ml-2 bg-white">
             <div className="row m-0 p-0">
               <div className="col border-right p-0 pt-1">
                 <Link
@@ -51,7 +51,7 @@ class SideBarUserEvents extends Component {
               </div>
             </div>
             <div className="row  m-0 p-0">
-              <div className="mt-2 w-100">
+              <div className="mt-1 w-100">
                 {registrationsDisplay ? (
                   <UserRegistrations user={user} />
                 ) : (
