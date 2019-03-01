@@ -19,7 +19,8 @@ class RegistrationFeed extends Component {
             data: {
               event: { registrations }
             },
-            refetch
+            refetch,
+            client
           }) => {
             let userRegistration = this.getUserRegistrationId(
               registrations,
@@ -34,11 +35,13 @@ class RegistrationFeed extends Component {
                       user={user}
                       eventId={eventId}
                       refetch={refetch}
+                      client={client}
                     />
                   ) : (
                     <UnRegisterEvent
                       userRegistration={userRegistration}
                       refetch={refetch}
+                      client={client}
                     />
                   )}
                 </div>

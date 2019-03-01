@@ -6,7 +6,7 @@ import {
   DELETE_REGISTRATION
 } from '../graphql/registration/Mutations';
 
-export const RegisterEvent = ({ user, eventId, refetch }) => {
+export const RegisterEvent = ({ user, eventId, refetch, client }) => {
   return (
     <Fragment>
       <Mutation mutation={ADD_REGISTRATION}>
@@ -22,7 +22,7 @@ export const RegisterEvent = ({ user, eventId, refetch }) => {
                   eventId
                 }
               }).then(res => {
-                refetch();
+                client.resetStore();
               });
             }}
           >
@@ -34,7 +34,7 @@ export const RegisterEvent = ({ user, eventId, refetch }) => {
   );
 };
 
-export const UnRegisterEvent = ({ userRegistration, refetch }) => {
+export const UnRegisterEvent = ({ userRegistration, refetch, client }) => {
   return (
     <Fragment>
       <Mutation mutation={DELETE_REGISTRATION}>
@@ -49,7 +49,7 @@ export const UnRegisterEvent = ({ userRegistration, refetch }) => {
                   _id: userRegistration.id
                 }
               }).then(res => {
-                refetch();
+                client.resetStore();
               });
             }}
           >
