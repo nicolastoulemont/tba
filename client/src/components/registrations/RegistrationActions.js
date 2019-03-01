@@ -34,7 +34,7 @@ export const RegisterEvent = ({ user, eventId, refetch, client }) => {
   );
 };
 
-export const UnRegisterEvent = ({ userRegistration, refetch, client }) => {
+export const UnRegisterEvent = ({ userRegistration, client }) => {
   return (
     <Fragment>
       <Mutation mutation={DELETE_REGISTRATION}>

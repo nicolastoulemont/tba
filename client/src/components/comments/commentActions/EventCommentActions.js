@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-
+import LikesFeed from '../../likes/commentLikes/LikesFeed';
 import CommentReply from './CommentReply';
 import CommentEdit from './CommentEdit';
 
@@ -44,14 +44,8 @@ class EventCommentActions extends Component {
     return (
       <Fragment>
         <small className="d-block mt-1">
-          <Link to="#">
-            <i className="text-secondary far fa-thumbs-up mr-2" />
-          </Link>
-          <span className="mr-2">1</span>
-          <Link to="#">
-            <i className="text-secondary far fa-thumbs-down mr-2" />
-          </Link>
-          <Link to="#" onClick={this.showReply}>
+          <LikesFeed user={user} commentId={commentId} />
+          <Link to="#" onClick={this.showReply} className="ml-2">
             {' '}
             <i className="far fa-comment mx-1" />
           </Link>{' '}

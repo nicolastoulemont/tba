@@ -32,8 +32,7 @@ const EventCommentItem = ({
           return (
             <Fragment>
               <div className="row">
-                <div className="col-1" />
-                <div className="col-11">
+                <div className="col-12 pl-4">
                   {comments.map(comment => (
                     <EventCommentItem
                       key={comment.id}

@@ -11,3 +11,14 @@ export const GET_EVENT_LIKES = gql`
     }
   }
 `;
+
+export const GET_COMMENT_LIKES = gql`
+  query Comment($id: ID!) {
+    comment(id: $id) {
+      likes {
+        id
+        userId
+      }
+    }
+  }
+`;

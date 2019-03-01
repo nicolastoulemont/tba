@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import { ADD_LIKE, DELETE_LIKE } from '../graphql/like/Mutations';
+import { ADD_LIKE, DELETE_LIKE } from '../../graphql/like/Mutations';
 
-export const LikeEvent = ({ user, eventId, refetch }) => {
+export const LikeComment = ({ user, commentId, refetch }) => {
   return (
     <Fragment>
       <Mutation mutation={ADD_LIKE}>
@@ -16,7 +16,7 @@ export const LikeEvent = ({ user, eventId, refetch }) => {
               addLike({
                 variables: {
                   userId: user,
-                  eventId
+                  commentId
                 }
               }).then(res => {
                 refetch();
@@ -31,7 +31,7 @@ export const LikeEvent = ({ user, eventId, refetch }) => {
   );
 };
 
-export const UnlikeEvent = ({ userLike, refetch }) => {
+export const UnLikeComment = ({ userLike, refetch }) => {
   return (
     <Fragment>
       <Mutation mutation={DELETE_LIKE}>
@@ -50,7 +50,7 @@ export const UnlikeEvent = ({ userLike, refetch }) => {
               });
             }}
           >
-            <i className="text-secondary  far fa-thumbs-down" />
+            <i className="text-secondary far fa-thumbs-down" />
           </Link>
         )}
       </Mutation>

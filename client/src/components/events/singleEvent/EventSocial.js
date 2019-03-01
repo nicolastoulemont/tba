@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import EventCommentsFeed from '../../comments/EventCommentsFeed';
-import LikesFeed from '../../likes/LikesFeed';
+import LikesFeed from '../../likes/eventLikes/LikesFeed';
 import RegistrationFeed from '../../registrations/RegistrationFeed';
 
 const EventSocial = ({ user, eventId }) => {

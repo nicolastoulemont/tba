@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { LikeEvent, UnlikeEvent } from './LikeActions';
-import CQuery from '../commons/CustomQueryComponent';
-import { GET_EVENT_LIKES } from '../graphql/like/Queries';
+import { LikeEvent, UnLikeEvent } from './LikeActions';
+import CQuery from '../../commons/CustomQueryComponent';
+import { GET_EVENT_LIKES } from '../../graphql/like/Queries';
 
 class LikesFeed extends Component {
   getUserLikeId = (likes, user) => {
@@ -35,9 +35,11 @@ class LikesFeed extends Component {
                       <i className="text-darkblue fa fa-thumbs-up" />
                     </Link>
                   )}
-                  <span className="mx-2">{likes.length}</span>
+                  {likes.length !== 0 ? (
+                    <span className="mx-1">{likes.length}</span>
+                  ) : null}
                   {typeof userLike !== 'undefined' ? (
-                    <UnlikeEvent userLike={userLike} refetch={refetch} />
+                    <UnLikeEvent userLike={userLike} refetch={refetch} />
                   ) : (
                     <Link to="#" className="ml-2">
                       <i className="text-secondary far fa-thumbs-down" />
