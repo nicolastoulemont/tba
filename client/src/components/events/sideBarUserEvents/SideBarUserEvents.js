@@ -27,7 +27,7 @@ class SideBarUserEvents extends Component {
         <div className="col pr-0">
           <div className="ml-2 border-0 bg-white">
             <div className="row m-0 p-0">
-              <div className="col border-right p-0 py-2">
+              <div className="col border-right p-0 pt-1">
                 <Link
                   className="link-menu"
                   to="#"
@@ -38,7 +38,7 @@ class SideBarUserEvents extends Component {
                   </h6>
                 </Link>
               </div>
-              <div className="col p-0 py-2">
+              <div className="col p-0 pt-1">
                 <Link
                   to="#"
                   className="link-menu"
@@ -51,7 +51,7 @@ class SideBarUserEvents extends Component {
               </div>
             </div>
             <div className="row  m-0 p-0">
-              <div className="mb-2 mt-2 w-100">
+              <div className="mt-2 w-100">
                 {registrationsDisplay ? (
                   <UserRegistrations user={user} />
                 ) : (

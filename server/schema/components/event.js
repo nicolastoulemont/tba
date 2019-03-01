@@ -93,6 +93,10 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         return EventItem.findById(args.id);
       },
+      events: (parent, args, { user }) => {
+        if (!user) throw new Error('Error : You are not logged in');
+        return EventItem.find({ ispublic: true });
+      },
       onedayevents: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         return EventItem.find({
@@ -124,10 +128,6 @@ module.exports = {
         }).sort({
           startTime: 'ascending'
         });
-      },
-      events: (parent, args, { user }) => {
-        if (!user) throw new Error('Error : You are not logged in');
-        return EventItem.find({ ispublic: true });
       }
     },
 

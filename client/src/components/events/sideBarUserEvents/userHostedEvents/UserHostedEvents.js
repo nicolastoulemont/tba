@@ -1,56 +1,65 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
-import CQuery from '../../../commons/CustomQueryComponent';
-import { GET_USER_EVENTS } from '../../../graphql/user/Queries';
 
-const UserHostedEvents = ({ user }) => {
-  return (
-    <Fragment>
-      <CQuery query={GET_USER_EVENTS} variables={{ id: user }}>
-        {({ data: { user } }) => {
-          const events = user.events;
-          if (events.length === 0)
-            return (
-              <div className="text-left px-3 py-2 border-top">
-                <small>You haven't created an event yet</small>
-              </div>
-            );
-          return (
-            <Fragment>
-              {events.map(event => (
-                <div className="text-left px-3 py-2 border-top" key={event.id}>
-                  <div>
-                    <Link
-                      to={{
-                        pathname: `/event/${event.id}`
-                      }}
-                      className="d-block"
-                    >
-                      <small className="font-weight-bold mr-2">
-                        {event.name}
-                      </small>
-                    </Link>
-                    <small className="d-block">{event.location}</small>
-                    {event.startDate === event.endDate ? (
-                      <small className="d-block">
-                        {event.startDate} from {event.startTime} to{' '}
-                        {event.endTime}
-                      </small>
-                    ) : (
-                      <small className="d-block">
-                        On {event.startDate} from {event.startTime} to{' '}
-                        {event.endTime} on {event.endDate}
-                      </small>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </Fragment>
-          );
-        }}
-      </CQuery>
-    </Fragment>
-  );
-};
+import PastHostedEvents from './pastHostedEvents';
+import FutureHostedEvents from './futureHostedEvents';
+
+class UserHostedEvents extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      futHostedEventsDisplay: true,
+      today: new Date().toISOString().slice(0, 10)
+    };
+  }
+
+  futurHostedEventsDisplay = e => {
+    this.setState({ futHostedEventsDisplay: true });
+  };
+  pastHostedEventsDisplay = e => {
+    this.setState({ futHostedEventsDisplay: false });
+  };
+
+  render() {
+    const { futHostedEventsDisplay, today } = this.state;
+    const { user } = this.props;
+    return (
+      <Fragment>
+        <div className="row m-0 p-0">
+          <div className="col-6 p-0 py-0" />
+          <div className="col-6 p-0 py-0">
+            <Link
+              to="#"
+              onClick={this.futurHostedEventsDisplay}
+              className="link-menu mr-4"
+            >
+              <small className="d-inline text-uppercase font-weight-bold">
+                Upcoming
+              </small>
+            </Link>
+            <Link
+              to="#"
+              onClick={this.pastHostedEventsDisplay}
+              className="link-menu"
+            >
+              <small className="d-inline text-uppercase font-weight-bold">
+                Past
+              </small>
+            </Link>
+          </div>
+        </div>
+        <div className="row m-0 p-0">
+          <div className="my-2 w-100">
+            {futHostedEventsDisplay ? (
+              <FutureHostedEvents user={user} day={today} />
+            ) : (
+              <PastHostedEvents user={user} day={today} />
+            )}
+          </div>
+        </div>
+      </Fragment>
+    );
+  }
+}
 
 export default UserHostedEvents;
