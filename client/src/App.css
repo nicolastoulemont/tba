@@ -73,7 +73,7 @@ a {
 }
 a:hover {
   text-decoration: none;
-  color: white;
+  color: #29456e;
 }
 
 .link-menu:hover {
@@ -85,10 +85,6 @@ a:hover {
 .fa:hover,
 .far:hover {
   color: #29456e;
-}
-
-.list-group-item:hover {
-  background-color: #f5f8fa;
 }
 
 .lightgrey {

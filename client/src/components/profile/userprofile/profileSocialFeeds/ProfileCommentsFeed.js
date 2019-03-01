@@ -41,7 +41,7 @@ const ProfileCommentsFeed = ({ user, name }) => {
                         </cite>
                       </footer>
                       <small className="py-0 my-0">
-                        <small>{comment.text}</small>
+                        <small>{comment.text.substring(0, 100)}</small>
                       </small>
                     </blockquote>
                   </div>
@@ -71,10 +71,12 @@ const ProfileCommentsFeed = ({ user, name }) => {
                         </cite>
                       </footer>
                       <small className="d-block py-0 my-0">
-                        <small>"{comment.comment.text}"</small>
+                        <small className="font-italic">
+                          "{comment.comment.text.substring(0, 150) + '...'}"
+                        </small>
                       </small>
                       <small className="d-block py-0 my-0">
-                        <small>{comment.text}</small>
+                        <small>{comment.text.substring(0, 100)}</small>
                       </small>
                     </blockquote>
                   </div>
