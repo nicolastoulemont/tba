@@ -13,17 +13,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "^2.3.1",
+    "apollo-server-express": "^2.4.8",
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "dayjs": "^1.8.2",
     "express": "^4.16.4",
-    "graphql": "^14.0.2",
+    "graphql": "^14.1.1",
     "graphql-tools": "^4.0.3",
+    "graphqltools": "0.0.1",
     "gravatar": "^1.8.0",
-    "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.3.16",
+    "jsonwebtoken": "^8.5.0",
+    "mongoose": "^5.4.16",
     "validator": "^10.11.0"
   },
   "devDependencies": {
