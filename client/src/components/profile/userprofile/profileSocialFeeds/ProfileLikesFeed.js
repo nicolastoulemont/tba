@@ -17,29 +17,47 @@ const ProfileLikesFeed = ({ user, name }) => {
         return (
           <Fragment>
             {likes.map(like => {
-              if (!like.event) {
+              if (like.event) {
+                if (!like.event.ispublic) {
+                  return null;
+                } else {
+                  return (
+                    <div
+                      className="text-left px-3 py-2 border-top"
+                      key={like.id}
+                    >
+                      <small>
+                        {name} liked the event{' '}
+                        <Link
+                          to={{
+                            pathname: `/event/${like.event.id}`
+                          }}
+                          className="font-weight-bold"
+                        >
+                          {like.event.name}
+                        </Link>{' '}
+                      </small>
+                    </div>
+                  );
+                }
+              } else if (like.comment) {
                 return (
                   <div className="text-left px-3 py-2 border-top" key={like.id}>
-                    <small>{name} liked an event that has been deleted</small>
+                    <small>
+                      {name} liked a comment by
+                      <Link
+                        to={{
+                          pathname: `/profile/${like.comment.userId}`
+                        }}
+                        className="font-weight-bold"
+                      >
+                        {' '}
+                        {like.comment.creator.profile.name}
+                      </Link>{' '}
+                    </small>
                   </div>
                 );
-              }
-              if (!like.event.ispublic) return null;
-              return (
-                <div className="text-left px-3 py-2 border-top" key={like.id}>
-                  <small>
-                    {name} liked{' '}
-                    <Link
-                      to={{
-                        pathname: `/event/${like.event.id}`
-                      }}
-                      className="font-weight-bold"
-                    >
-                      {like.event.name}
-                    </Link>{' '}
-                  </small>
-                </div>
-              );
+              } else return null;
             })}
           </Fragment>
         );

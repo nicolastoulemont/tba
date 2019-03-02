@@ -1,22 +1,18 @@
 import React, { Fragment } from 'react';
-import EventCommentsFeed from '../../comments/EventCommentsFeed';
-import LikesFeed from '../../likes/eventLikes/LikesFeed';
 import RegistrationFeed from '../../registrations/RegistrationFeed';
+import EventSocialSelector from './EventSocialSelector';
 
 const EventSocial = ({ user, eventId }) => {
   return (
     <Fragment>
       <div className="mb-3 pb-5">
-        <div className="row px-2">
-          <div className="col-6">
-            <LikesFeed user={user} eventId={eventId} />
-          </div>
+        <div className="row pl-2 pr-4 pb-2">
+          <div className="col-6" />
           <div className="col-6">
             <RegistrationFeed user={user} eventId={eventId} />
           </div>
         </div>
-        <hr />
-        <EventCommentsFeed user={user} eventId={eventId} />
+        <EventSocialSelector user={user} eventId={eventId} />
       </div>
     </Fragment>
   );

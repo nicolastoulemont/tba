@@ -96,6 +96,15 @@ export const GET_USER_LIKES = gql`
           name
           ispublic
         }
+        comment {
+          id
+          userId
+          creator {
+            profile {
+              name
+            }
+          }
+        }
       }
     }
   }

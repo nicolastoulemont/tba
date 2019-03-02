@@ -20,7 +20,7 @@ const EventCommentDisplay = ({
         <div className="col-1">
           <RespSmallAvatarLink id={creatorId} avatar={creatorAvatar} />
         </div>
-        <div className="col-9 col-md-10 mx-0 pr-0">
+        <div className="col-9 col-md-10 mx-0 pr-0 pl-1">
           <div className="text-left mx-auto">
             <UserNameLink id={creatorId} name={creatorName} />
             <span className="d-none d-md-inline-block ml-2">{text}</span>

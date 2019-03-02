@@ -8,12 +8,25 @@ export const GET_EVENT_REGISTRATIONS = gql`
         id
         userId
         creator {
+          avatar
           profile {
             name
             position
             organisation
           }
         }
+      }
+    }
+  }
+`;
+
+export const GET_EVENT_REGISTRATIONS_IDS = gql`
+  query Event($id: ID!) {
+    event(id: $id) {
+      id
+      registrations {
+        id
+        userId
       }
     }
   }
