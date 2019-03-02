@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from 'graphql-tag';
 
 export const GET_EVENT_COMMENTS = gql`
   query Event($id: ID!) {
