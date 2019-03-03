@@ -14,6 +14,7 @@ const reportSchema = new Schema({
   pollId: String,
   commentId: String,
   organisationId: String,
+  profileId: String,
   createdAt: {
     type: Date,
     default: Date.now()
