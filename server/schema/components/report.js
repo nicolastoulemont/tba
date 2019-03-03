@@ -1,6 +1,7 @@
 const Poll = require('../../models/Poll');
 const EventItem = require('../../models/Eventitem');
 const CommentItem = require('../../models/Comment');
+const Organisation = require('../../models/Organisation');
 const Report = require('../../models/Report');
 const User = require('../../models/User');
 const { gql } = require('apollo-server-express');
@@ -14,12 +15,14 @@ module.exports = {
       text: String!
       eventId: String
       pollId: String
+      organisationId: String
       commentId: String
       createdAt: String
       updatedAt: String
       event: EventItem
       comment: CommentItem
       poll: Poll
+      organisation: Organisation
       creator: User
     }
 
@@ -41,6 +44,7 @@ module.exports = {
         eventId: String
         pollId: String
         commentId: String
+        organisationId: String
       ): ReportResp!
       deleteReport(_id: ID!): Report
     }
@@ -68,6 +72,9 @@ module.exports = {
       poll: (parent, args) => {
         return Poll.findOne({ _id: parent.pollId });
       },
+      organisation: (parent, args) => {
+        return Organisation.findOne({ _id: parent.organisationId });
+      },
       creator: (parent, args) => {
         return User.findOne({ _id: parent.userId });
       }
@@ -84,7 +91,8 @@ module.exports = {
           text: args.text,
           eventId: args.eventId,
           commentId: args.commentId,
-          pollId: args.pollId
+          pollId: args.pollId,
+          organisationId: args.organisationId
         });
         // Save to db
         const report = await newReport.save();

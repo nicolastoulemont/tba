@@ -69,7 +69,6 @@ module.exports = {
         return User.findOne({ _id: parent.userId });
       }
     },
-
     Mutation: {
       addMembership: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');

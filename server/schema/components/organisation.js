@@ -79,21 +79,24 @@ module.exports = {
         return Membership.find({
           organisationId: parent.id,
           admin: true,
-          accepted: true
+          accepted: true,
+          pending: false
         });
       },
       members: (parent, args) => {
         return Membership.find({
           organisationId: parent.id,
           admin: false,
-          accepted: true
+          accepted: true,
+          pending: false
         });
       },
       applicants: (parent, args) => {
         return Membership.find({
           organisationId: parent.id,
           admin: false,
-          accepted: false
+          accepted: false,
+          pending: true
         });
       },
       reports: (parent, args) => {

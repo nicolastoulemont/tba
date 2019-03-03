@@ -13,6 +13,7 @@ const reportSchema = new Schema({
   eventId: String,
   pollId: String,
   commentId: String,
+  organisationId: String,
   createdAt: {
     type: Date,
     default: Date.now()
