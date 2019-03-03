@@ -1,4 +1,4 @@
-const Report = require('../models/Like');
+const Report = require('../models/Report');
 const isEmpty = require('./is-empty');
 const Validator = require('validator');
 
@@ -40,6 +40,34 @@ const ValidateAddReport = async data => {
         message: 'You already reported this comment'
       };
       errors.push(CommentReportedError);
+    }
+  }
+
+  if (data.organisationId) {
+    const OrganisationReported = await Report.findOne({
+      organisationId: data.organisationId,
+      userId: data.userId
+    });
+    if (OrganisationReported) {
+      let OrganisationReportedError = {
+        path: 'organisation',
+        message: 'You already reported this organisation'
+      };
+      errors.push(OrganisationReportedError);
+    }
+  }
+
+  if (data.pollId) {
+    const PollReported = await Report.findOne({
+      pollId: data.pollId,
+      userId: data.userId
+    });
+    if (PollReported) {
+      let PollReportedError = {
+        path: 'poll',
+        message: 'You already reported this poll'
+      };
+      errors.push(PollReportedError);
     }
   }
 

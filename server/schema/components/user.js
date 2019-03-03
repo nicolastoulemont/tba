@@ -14,6 +14,7 @@ const Membership = require('../../models/Membership');
 const CommentItem = require('../../models/Comment');
 const Poll = require('../../models/Poll');
 const Like = require('../../models/Like');
+const Report = require('../../models/Report');
 // Validation
 const validateRegInput = require('../../validation/user');
 
@@ -32,6 +33,7 @@ module.exports = {
       comments: [CommentItem]
       polls: [Poll]
       likes: [Like]
+      reports: [Report]
     }
 
     type RegisterResp {
@@ -98,6 +100,9 @@ module.exports = {
       },
       likes: (parent, args) => {
         return Like.find({ userId: parent.id });
+      },
+      reports: (parent, args) => {
+        return Report.find({ userId: parent.id });
       }
     },
 

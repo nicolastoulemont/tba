@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LikesFeed from '../../likes/commentLikes/LikesFeed';
 import CommentReply from './CommentReply';
 import CommentEdit from './CommentEdit';
+import CommentReport from './CommentReport';
 
 class EventCommentActions extends Component {
   constructor(props) {
@@ -71,7 +72,9 @@ class EventCommentActions extends Component {
             />
           </div>
         ) : null}
-        {showReportForm ? <div className="">test3</div> : null}
+        {showReportForm ? (
+          <CommentReport commentId={commentId} user={user} />
+        ) : null}
       </Fragment>
     );
   }
