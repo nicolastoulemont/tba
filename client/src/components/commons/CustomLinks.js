@@ -12,7 +12,7 @@ export const RespSmallAvatarLink = ({ id, avatar }) => {
             alt="User Avatar"
           />
           <img
-            className="d-block d-md-none rounded-circle border-avatar ultra-small-avatar"
+            className="d-block d-md-none rounded-circle border-avatar ultra-small-avatar mr-2"
             src={avatar}
             alt="User Avatar"
           />

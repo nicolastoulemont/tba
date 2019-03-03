@@ -37,7 +37,11 @@ const EventRegistrationFeed = ({ eventId }) => {
                               name={registration.creator.profile.name}
                             />
                           </div>
-                          <div className="block">
+                          <div className="d-none d-md-block">
+                            {registration.creator.profile.position} at{' '}
+                            {registration.creator.profile.organisation}
+                          </div>
+                          <div className="d-block d-md-none ml-4">
                             {registration.creator.profile.position} at{' '}
                             {registration.creator.profile.organisation}
                           </div>

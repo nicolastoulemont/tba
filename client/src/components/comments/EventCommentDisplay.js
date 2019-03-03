@@ -24,7 +24,7 @@ const EventCommentDisplay = ({
           <div className="text-left mx-auto">
             <UserNameLink id={creatorId} name={creatorName} />
             <span className="d-none d-md-inline-block ml-2">{text}</span>
-            <span className="d-inline-block d-md-none ml-2">{text}</span>
+            <span className="d-inline-block d-md-none ml-4">{text}</span>
             <EventCommentActions
               user={user}
               creatorId={creatorId}
