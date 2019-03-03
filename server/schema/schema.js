@@ -6,6 +6,7 @@ const {
   OrganisationType,
   OrganisationRes
 } = require('./components/organisation');
+const { MembershipType, MembershipRes } = require('./components/membership');
 const { EventType, EventRes } = require('./components/event');
 const { ProfileType, ProfileRes } = require('./components/profile');
 const { CommentType, CommentRes } = require('./components/comment');
@@ -34,7 +35,8 @@ module.exports = schema = makeExecutableSchema({
     PollType,
     LikeType,
     ReportType,
-    RegistrationType
+    RegistrationType,
+    MembershipType
   ],
   resolvers: [
     DateRes,
@@ -46,6 +48,7 @@ module.exports = schema = makeExecutableSchema({
     PollRes,
     LikeRes,
     ReportRes,
-    RegistrationRes
+    RegistrationRes,
+    MembershipRes
   ]
 });

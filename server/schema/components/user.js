@@ -10,6 +10,7 @@ const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const EventItem = require('../../models/Eventitem');
 const Registration = require('../../models/Registration');
+const Membership = require('../../models/Membership');
 const CommentItem = require('../../models/Comment');
 const Poll = require('../../models/Poll');
 const Like = require('../../models/Like');
@@ -27,6 +28,7 @@ module.exports = {
       events: [EventItem]
       registrations: [Registration]
       profile: Profile
+      memberships: [Membership]
       comments: [CommentItem]
       polls: [Poll]
       likes: [Like]
@@ -70,7 +72,7 @@ module.exports = {
         return User.findOne({ _id: logUser.id });
       },
       users: (parent, args, { user }) => {
-        // if (!user) throw new Error('Error : You are not logged in');
+        if (!user) throw new Error('Error : You are not logged in');
         return User.find({});
       }
     },
@@ -81,6 +83,9 @@ module.exports = {
       },
       registrations: (parent, args) => {
         return Registration.find({ userId: parent.id });
+      },
+      memberships: (parent, args) => {
+        return Membership.find({ userId: parent.id });
       },
       profile: (parent, args) => {
         return Profile.findOne({ userId: parent.id });
