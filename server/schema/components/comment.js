@@ -5,6 +5,8 @@ const Report = require('../../models/Report');
 const User = require('../../models/User');
 const { gql } = require('apollo-server-express');
 
+const { validateCommentInput } = require('../../validation/comment');
+
 module.exports = {
   CommentType: gql`
     type CommentItem {
@@ -93,6 +95,8 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
+        const { errors, isValid } = await validateCommentInput(args);
+        if (!isValid) return { success: false, errors };
         try {
           return await new CommentItem({
             userId: args.userId,
@@ -111,6 +115,8 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
+        const { errors, isValid } = await validateCommentInput(args);
+        if (!isValid) return { success: false, errors };
         let updateComment = {};
         if (args.text) updateComment.text = args.text;
         try {
