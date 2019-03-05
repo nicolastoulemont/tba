@@ -135,17 +135,21 @@ module.exports = {
         if (!user) return { success: false, error: 'Invalid Email' };
         const valid = await bcrypt.compare(args.password, user.password);
         if (!valid) return { success: false, error: 'Invalid Password' };
-
-        const token = jwt.sign(
-          {
-            user: {
-              id: user._id
-            }
-          },
-          SECRET,
-          { expiresIn: '1y' }
-        );
-        return { success: true, token };
+        try {
+          const token = await jwt.sign(
+            {
+              user: {
+                id: user._id
+              }
+            },
+            SECRET,
+            { expiresIn: '1y' }
+          );
+          return { success: true, token };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
+        }
       },
       updateUser: async (parent, args, { user }) => {
         if (!user)

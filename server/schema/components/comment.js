@@ -79,7 +79,12 @@ module.exports = {
     },
 
     Mutation: {
-      addComment: (parent, args) => {
+      addComment: (parent, args, { user }) => {
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
         try {
           return new CommentItem({
             userId: args.userId,
@@ -108,7 +113,12 @@ module.exports = {
           console.log(e);
         }
       },
-      deleteComment: async (parent, args) => {
+      deleteComment: async (parent, args, { user }) => {
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
         try {
           return await CommentItem.findByIdAndDelete(args._id);
         } catch (e) {
