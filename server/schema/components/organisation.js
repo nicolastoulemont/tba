@@ -4,10 +4,10 @@ const User = require('../../models/User');
 const Membership = require('../../models/Membership');
 const Organisation = require('../../models/Organisation');
 const { gql } = require('apollo-server-express');
-// const {
-//   validateEventInput,
-//   validateUpdEventIntput
-// } = require('../../validation/event');
+const {
+  validateOrgInput,
+  validateUpdOrgIntput
+} = require('../../validation/organisation');
 
 module.exports = {
   OrganisationType: gql`
@@ -119,8 +119,8 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
-        // const { errors, isValid } = await validateEventInput(args);
-        // if (!isValid) return { success: false, errors };
+        const { errors, isValid } = await validateOrgInput(args);
+        if (!isValid) return { success: false, errors };
         try {
           let organisation = await new Organisation({
             userId: args.userId,
@@ -141,8 +141,9 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
-        // const { errors, isValid } = await validateUpdEventIntput(args);
-        // if (!isValid) return { success: false, errors };
+        const { errors, isValid } = await validateUpdOrgIntput(args);
+        if (!isValid) return { success: false, errors };
+
         let updateOrganisation = {};
         if (args.name) updateEvent.name = args.name;
         if (args.description) updateEvent.description = args.description;
