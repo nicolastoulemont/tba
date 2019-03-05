@@ -58,11 +58,19 @@ module.exports = {
     Query: {
       report: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Report.findById(args.id);
+        try {
+          return Report.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       reports: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Report.find({});
+        try {
+          return Report.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -103,8 +111,8 @@ module.exports = {
             profileId: args.profileId
           }).save();
           return { success: true, report };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       },
@@ -112,8 +120,8 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           return await Report.findByIdAndDelete(args._id);
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       }
     }

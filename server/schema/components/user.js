@@ -66,16 +66,28 @@ module.exports = {
     Query: {
       user: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return User.findById(args.id);
+        try {
+          return User.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       currentuser: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        const logUser = user.user;
-        return User.findOne({ _id: logUser.id });
+        try {
+          const logUser = user.user;
+          return User.findOne({ _id: logUser.id });
+        } catch (err) {
+          console.log(err);
+        }
       },
       users: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return User.find({});
+        try {
+          return User.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -125,8 +137,8 @@ module.exports = {
             password: hashedPwd
           }).save();
           return { success: true, user };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       },
@@ -146,8 +158,8 @@ module.exports = {
             { expiresIn: '1y' }
           );
           return { success: true, token };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       },
@@ -163,8 +175,8 @@ module.exports = {
           return await User.findByIdAndUpdate(args._id, updateUser, {
             new: true
           });
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       },
       deleteUser: async (parent, args, { user }) => {
@@ -175,8 +187,8 @@ module.exports = {
           };
         try {
           return await User.findByIdAndDelete(args._id);
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       }
     }

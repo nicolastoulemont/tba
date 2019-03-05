@@ -91,43 +91,55 @@ module.exports = {
     Query: {
       event: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return EventItem.findById(args.id);
+        try {
+          return EventItem.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       events: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return EventItem.find({ ispublic: true });
+        try {
+          return EventItem.find({ ispublic: true });
+        } catch (err) {
+          console.log(err);
+        }
       },
       onedayevents: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return EventItem.find({
-          startDate: args.day,
-          ispublic: true,
-          $or: [
-            {
-              $or: [
-                { categoryOne: args.interestOne },
-                { categoryOne: args.interestTwo },
-                { categoryOne: args.interestThree }
-              ]
-            },
-            {
-              $or: [
-                { categoryTwo: args.interestOne },
-                { categoryTwo: args.interestTwo },
-                { categoryTwo: args.interestThree }
-              ]
-            },
-            {
-              $or: [
-                { categoryThree: args.interestOne },
-                { categoryThree: args.interestTwo },
-                { categoryThree: args.interestThree }
-              ]
-            }
-          ]
-        }).sort({
-          startTime: 'ascending'
-        });
+        try {
+          return EventItem.find({
+            startDate: args.day,
+            ispublic: true,
+            $or: [
+              {
+                $or: [
+                  { categoryOne: args.interestOne },
+                  { categoryOne: args.interestTwo },
+                  { categoryOne: args.interestThree }
+                ]
+              },
+              {
+                $or: [
+                  { categoryTwo: args.interestOne },
+                  { categoryTwo: args.interestTwo },
+                  { categoryTwo: args.interestThree }
+                ]
+              },
+              {
+                $or: [
+                  { categoryThree: args.interestOne },
+                  { categoryThree: args.interestTwo },
+                  { categoryThree: args.interestThree }
+                ]
+              }
+            ]
+          }).sort({
+            startTime: 'ascending'
+          });
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -177,8 +189,8 @@ module.exports = {
             endTime: args.endTime
           }).save();
           return { success: true, event };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       },
       updateEvent: async (parent, args, { user }) => {
@@ -213,8 +225,8 @@ module.exports = {
             }
           );
           return { success: true, updEvent };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return {
             success: false,
             errors: { path: 'save', message: 'Something went wrong' }
@@ -230,8 +242,8 @@ module.exports = {
         try {
           const deleteEvent = await EventItem.findByIdAndDelete(args._id);
           if (deleteEvent) return { success: true };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       }

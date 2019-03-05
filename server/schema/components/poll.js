@@ -38,11 +38,19 @@ module.exports = {
     Query: {
       poll: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Poll.findById(args.id);
+        try {
+          return Poll.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       polls: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Poll.find({});
+        try {
+          return Poll.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -65,35 +73,36 @@ module.exports = {
     },
 
     Mutation: {
-      addPoll: (parent, args) => {
-        let poll = new Poll({
-          userId: args.userId,
-          eventId: args.eventId,
-          text: args.text
-        });
-        // Save to db
-        return poll.save();
-      },
-      updatePoll: (parent, args) => {
-        let updatePoll = {};
-
-        if (args.text) updatePoll.text = args.text;
-
-        const updPoll = Poll.findByIdAndUpdate(args._id, updatePoll, {
-          new: true
-        });
-        if (!updPoll) {
-          console.log('Update failed');
+      addPoll: async (parent, args, { user }) => {
+        if (!user) throw new Error('Error : You are not logged in');
+        try {
+          return await new Poll({
+            userId: args.userId,
+            eventId: args.eventId,
+            text: args.text
+          }).save();
+        } catch (err) {
+          console.log(err);
         }
-        return updPoll;
       },
-      deletePoll: (parent, args) => {
-        const deletePoll = Poll.findByIdAndDelete(args._id);
-        if (!deletePoll) {
-          console.log('Delete attempt Failed');
-        } else {
-          console.log('Poll deleted');
-          return deletePoll;
+      updatePoll: async (parent, args, { user }) => {
+        if (!user) throw new Error('Error : You are not logged in');
+        let updatePoll = {};
+        if (args.text) updatePoll.text = args.text;
+        try {
+          return await Poll.findByIdAndUpdate(args._id, updatePoll, {
+            new: true
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      deletePoll: async (parent, args, { user }) => {
+        if (!user) throw new Error('Error : You are not logged in');
+        try {
+          return await Poll.findByIdAndDelete(args._id);
+        } catch (err) {
+          console.log(err);
         }
       }
     }

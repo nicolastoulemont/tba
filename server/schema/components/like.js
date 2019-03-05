@@ -48,11 +48,19 @@ module.exports = {
     Query: {
       like: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Like.findById(args.id);
+        try {
+          return Like.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       likes: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Like.find({});
+        try {
+          return Like.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -84,16 +92,16 @@ module.exports = {
             pollId: args.pollId
           }).save();
           return { success: true, like };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       },
       deleteLike: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           return await Like.findByIdAndDelete(args._id);
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       }
     }

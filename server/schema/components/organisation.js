@@ -64,11 +64,19 @@ module.exports = {
     Query: {
       organisation: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Organisation.findById(args.id);
+        try {
+          return Organisation.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       organisations: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Organisation.find({});
+        try {
+          return Organisation.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     Organisation: {
@@ -135,7 +143,6 @@ module.exports = {
           };
         // const { errors, isValid } = await validateUpdEventIntput(args);
         // if (!isValid) return { success: false, errors };
-
         let updateOrganisation = {};
         if (args.name) updateEvent.name = args.name;
         if (args.description) updateEvent.description = args.description;
@@ -143,21 +150,22 @@ module.exports = {
         if (args.type) updateEvent.type = args.type;
         if (args.registryId) updateEvent.registryId = args.registryId;
 
-        const updOrganisation = await Organisation.findByIdAndUpdate(
-          args._id,
-          updateOrganisation,
-          {
-            new: true
-          }
-        );
-        if (!updOrganisation) {
+        try {
+          const updOrganisation = await Organisation.findByIdAndUpdate(
+            args._id,
+            updateOrganisation,
+            {
+              new: true
+            }
+          );
+          return { success: true, updOrganisation };
+        } catch (err) {
+          console.log(err);
           return {
             success: false,
             errors: { path: 'save', message: 'Something went wrong' }
           };
         }
-        // Save to db
-        return { success: true, updOrganisation };
       },
       deleteOrganisation: async (parent, args, { user }) => {
         if (!user)

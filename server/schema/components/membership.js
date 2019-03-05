@@ -53,11 +53,19 @@ module.exports = {
     Query: {
       membership: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Membership.findById(args.id);
+        try {
+          return Membership.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       memberships: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Membership.find({});
+        try {
+          return Membership.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -83,8 +91,8 @@ module.exports = {
             pending: args.pending
           }).save();
           return { success: true, membership };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       },
       updateMembership: async (parent, args, { user }) => {
@@ -103,29 +111,30 @@ module.exports = {
         if (args.accepted) updateEvent.accepted = args.accepted;
         if (args.pending) updateEvent.pending = args.pending;
 
-        const updMembership = await Membership.findByIdAndUpdate(
-          args._id,
-          updateMembership,
-          {
-            new: true
-          }
-        );
-        if (!updMembership) {
+        try {
+          const updMembership = await Membership.findByIdAndUpdate(
+            args._id,
+            updateMembership,
+            {
+              new: true
+            }
+          );
+          return { success: true, updMembership };
+        } catch (err) {
+          console.log(err);
           return {
             success: false,
-            errors: { path: 'save', message: 'Something went wrong' }
+            errors: { path: 'membership', message: 'Something went wrong' }
           };
         }
-        // Save to db
-        return { success: true, updMembership };
       },
       deleteMembership: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           const deleteMembership = await Membership.findByIdAndDelete(args._id);
           if (deleteMembership) return { success: true, deleteMembership };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       }

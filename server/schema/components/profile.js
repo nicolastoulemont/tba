@@ -65,11 +65,19 @@ module.exports = {
     Query: {
       profile: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Profile.findById(args.id);
+        try {
+          return Profile.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       profiles: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Profile.find({});
+        try {
+          return Profile.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -101,8 +109,8 @@ module.exports = {
             linkedin: args.linkedin
           }).save();
           return { success: true, newProfile };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       },
@@ -134,8 +142,8 @@ module.exports = {
             }
           );
           return { success: true, profile };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       },
@@ -148,8 +156,8 @@ module.exports = {
         try {
           const deleteProfile = await Profile.findByIdAndDelete(args._id);
           return { success: true, deleteProfile };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       }

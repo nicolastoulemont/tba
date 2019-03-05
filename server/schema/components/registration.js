@@ -37,11 +37,19 @@ module.exports = {
     Query: {
       registration: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Registration.findById(args.id);
+        try {
+          return Registration.findById(args.id);
+        } catch (err) {
+          console.log(err);
+        }
       },
       registrations: (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-        return Registration.find({});
+        try {
+          return Registration.find({});
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
 
@@ -65,8 +73,8 @@ module.exports = {
             eventId: args.eventId
           }).save();
           return { success: true, newRegistration };
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
           return { success: false, error };
         }
       },
@@ -74,8 +82,8 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           return await Registration.findByIdAndDelete(args._id);
-        } catch (e) {
-          console.log(e);
+        } catch (err) {
+          console.log(err);
         }
       }
     }
