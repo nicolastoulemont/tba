@@ -22,15 +22,15 @@ class UserRegistrations extends Component {
   };
 
   getFutureRegistrations = (registrations, day) => {
-    const futureRegArr = registrations.filter(
-      registration => registration.event.startDate >= day
+    const futureRegArr = registrations.filter(registration =>
+      registration.event ? registration.event.startDate >= day : null
     );
     return futureRegArr;
   };
 
   getPastRegistrations = (registrations, day) => {
-    const PastRegArr = registrations.filter(
-      registration => registration.event.startDate < day
+    const PastRegArr = registrations.filter(registration =>
+      registration.event ? registration.event.startDate < day : null
     );
     return PastRegArr;
   };

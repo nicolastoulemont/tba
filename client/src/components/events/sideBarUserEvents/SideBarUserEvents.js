@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import UserHostedEvents from './userHostedEvents/UserHostedEvents';
 import UserRegistrations from './userRegistrations/UserRegistrations';
 
+
 class SideBarUserEvents extends Component {
   constructor(props) {
     super(props);

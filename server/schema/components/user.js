@@ -111,21 +111,24 @@ module.exports = {
         const { errors, isValid } = await validateRegInput(args);
         if (!isValid) return { success: false, errors };
         const { password } = args;
+        try {
+          const avatar = gravatar.url(args.email, {
+            s: '200',
+            r: 'pg',
+            d: 'mm'
+          });
 
-        const avatar = gravatar.url(args.email, {
-          s: '200',
-          r: 'pg',
-          d: 'mm'
-        });
-
-        const hashedPwd = await bcrypt.hash(password, 12);
-        let newUser = new User({
-          email: args.email,
-          avatar,
-          password: hashedPwd
-        });
-        const user = await newUser.save();
-        return { success: true, user };
+          const hashedPwd = await bcrypt.hash(password, 12);
+          let user = new User({
+            email: args.email,
+            avatar,
+            password: hashedPwd
+          }).save();
+          return { success: true, user };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
+        }
       },
       login: async (parent, args, context) => {
         const user = await User.findOne({ email: args.email });
@@ -144,26 +147,32 @@ module.exports = {
         );
         return { success: true, token };
       },
-      updateUser: (parent, args) => {
-        let updateUser = {};
-
-        if (args.email) updateUser.email = args.email;
-
-        const updUser = User.findByIdAndUpdate(args._id, updateUser, {
-          new: true
-        });
-        if (!updUser) console.log('Update failed');
-        // Save to db
-        return updUser;
+      updateUser: async (parent, args, { user }) => {
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
+        try {
+          let updateUser = {};
+          if (args.email) updateUser.email = args.email;
+          return await User.findByIdAndUpdate(args._id, updateUser, {
+            new: true
+          });
+        } catch (e) {
+          console.log(e);
+        }
       },
-      deleteUser: (parent, args) => {
-        const deleteUser = User.findByIdAndDelete(args._id);
-
-        if (!deleteUser) {
-          console.log('Delete attempt Failed');
-        } else {
-          console.log('User deleted');
-          return deleteUser;
+      deleteUser: async (parent, args, { user }) => {
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
+        try {
+          return await User.findByIdAndDelete(args._id);
+        } catch (e) {
+          console.log(e);
         }
       }
     }

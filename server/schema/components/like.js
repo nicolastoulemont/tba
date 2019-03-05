@@ -76,25 +76,24 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         const { errors, isValid } = await ValidateAddLike(args);
         if (!isValid) return { success: false, errors };
-
-        let newLike = new Like({
-          userId: args.userId,
-          eventId: args.eventId,
-          commentId: args.commentId,
-          pollId: args.pollId
-        });
-        // Save to db
-        const like = await newLike.save();
-        return { success: true, like };
+        try {
+          let like = await new Like({
+            userId: args.userId,
+            eventId: args.eventId,
+            commentId: args.commentId,
+            pollId: args.pollId
+          }).save();
+          return { success: true, like };
+        } catch (e) {
+          console.log(e);
+        }
       },
       deleteLike: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-
-        const deletelike = await Like.findByIdAndDelete(args._id);
-        if (!deletelike) {
-          console.log('Delete attempt Failed');
-        } else {
-          return deletelike;
+        try {
+          return await Like.findByIdAndDelete(args._id);
+        } catch (e) {
+          console.log(e);
         }
       }
     }

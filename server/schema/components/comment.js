@@ -80,39 +80,39 @@ module.exports = {
 
     Mutation: {
       addComment: (parent, args) => {
-        let comment = new CommentItem({
-          userId: args.userId,
-          eventId: args.eventId,
-          commentId: args.commentId,
-          pollId: args.pollId,
-          text: args.text
-        });
-        // Save to db
-        return comment.save();
-      },
-      updateComment: (parent, args) => {
-        let updateComment = {};
-
-        if (args.text) updateComment.text = args.text;
-
-        const updComment = CommentItem.findByIdAndUpdate(
-          args._id,
-          updateComment,
-          {
-            new: true
-          }
-        );
-        if (!updComment) {
-          console.log('Update failed');
+        try {
+          return new CommentItem({
+            userId: args.userId,
+            eventId: args.eventId,
+            commentId: args.commentId,
+            pollId: args.pollId,
+            text: args.text
+          }).save();
+        } catch (e) {
+          console.log(e);
         }
-        return updComment;
       },
-      deleteComment: (parent, args) => {
-        const deleteComment = CommentItem.findByIdAndDelete(args._id);
-        if (!deleteComment) {
-          console.log('Delete attempt Failed');
-        } else {
-          return deleteComment;
+      updateComment: async (parent, args, { user }) => {
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
+        try {
+          let updateComment = {};
+          if (args.text) updateComment.text = args.text;
+          return await CommentItem.findByIdAndUpdate(args._id, updateComment, {
+            new: true
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      deleteComment: async (parent, args) => {
+        try {
+          return await CommentItem.findByIdAndDelete(args._id);
+        } catch (e) {
+          console.log(e);
         }
       }
     }

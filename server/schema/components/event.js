@@ -161,24 +161,25 @@ module.exports = {
           };
         const { errors, isValid } = await validateEventInput(args);
         if (!isValid) return { success: false, errors };
-
-        let newEvent = new EventItem({
-          userId: args.userId,
-          name: args.name,
-          description: args.description,
-          ispublic: args.ispublic,
-          categoryOne: args.categoryOne,
-          categoryTwo: args.categoryTwo,
-          categoryThree: args.categoryThree,
-          location: args.location,
-          startDate: args.startDate,
-          startTime: args.startTime,
-          endDate: args.endDate,
-          endTime: args.endTime
-        });
-        // Save to db
-        const event = await newEvent.save();
-        return { success: true, event };
+        try {
+          let event = await new EventItem({
+            userId: args.userId,
+            name: args.name,
+            description: args.description,
+            ispublic: args.ispublic,
+            categoryOne: args.categoryOne,
+            categoryTwo: args.categoryTwo,
+            categoryThree: args.categoryThree,
+            location: args.location,
+            startDate: args.startDate,
+            startTime: args.startTime,
+            endDate: args.endDate,
+            endTime: args.endTime
+          }).save();
+          return { success: true, event };
+        } catch (e) {
+          console.log(e);
+        }
       },
       updateEvent: async (parent, args, { user }) => {
         if (!user)
@@ -189,34 +190,36 @@ module.exports = {
         const { errors, isValid } = await validateUpdEventIntput(args);
         if (!isValid) return { success: false, errors };
 
-        let updateEvent = {};
-        if (args.name) updateEvent.name = args.name;
-        if (args.description) updateEvent.description = args.description;
-        if (args.ispublic) updateEvent.ispublic = args.ispublic;
-        if (args.categoryOne) updateEvent.categoryOne = args.categoryOne;
-        if (args.categoryTwo) updateEvent.categoryTwo = args.categoryTwo;
-        if (args.categoryThree) updateEvent.categoryThree = args.categoryThree;
-        if (args.location) updateEvent.location = args.location;
-        if (args.startDate) updateEvent.startDate = args.startDate;
-        if (args.startTime) updateEvent.startTime = args.startTime;
-        if (args.endDate) updateEvent.endDate = args.endDate;
-        if (args.endTime) updateEvent.endTime = args.endTime;
+        try {
+          let updateEvent = {};
+          if (args.name) updateEvent.name = args.name;
+          if (args.description) updateEvent.description = args.description;
+          if (args.ispublic) updateEvent.ispublic = args.ispublic;
+          if (args.categoryOne) updateEvent.categoryOne = args.categoryOne;
+          if (args.categoryTwo) updateEvent.categoryTwo = args.categoryTwo;
+          if (args.categoryThree)
+            updateEvent.categoryThree = args.categoryThree;
+          if (args.location) updateEvent.location = args.location;
+          if (args.startDate) updateEvent.startDate = args.startDate;
+          if (args.startTime) updateEvent.startTime = args.startTime;
+          if (args.endDate) updateEvent.endDate = args.endDate;
+          if (args.endTime) updateEvent.endTime = args.endTime;
 
-        const updEvent = await EventItem.findByIdAndUpdate(
-          args._id,
-          updateEvent,
-          {
-            new: true
-          }
-        );
-        if (!updEvent) {
+          const updEvent = await EventItem.findByIdAndUpdate(
+            args._id,
+            updateEvent,
+            {
+              new: true
+            }
+          );
+          return { success: true, updEvent };
+        } catch (e) {
+          console.log(e);
           return {
             success: false,
             errors: { path: 'save', message: 'Something went wrong' }
           };
         }
-        // Save to db
-        return { success: true, updEvent };
       },
       deleteEvent: async (parent, args, { user }) => {
         if (!user)
@@ -224,11 +227,12 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
-        const deleteEvent = await EventItem.findByIdAndDelete(args._id);
-        if (!deleteEvent) {
+        try {
+          const deleteEvent = await EventItem.findByIdAndDelete(args._id);
+          if (deleteEvent) return { success: true };
+        } catch (e) {
+          console.log(e);
           return { success: false, error };
-        } else {
-          return { success: true };
         }
       }
     }

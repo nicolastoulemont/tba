@@ -74,17 +74,18 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         // const { errors, isValid } = await ValidateAddRegistration(args);
         // if (!isValid) return { success: false, errors };
-
-        let newMembership = new Membership({
-          userId: args.userId,
-          organisationId: args.organisationId,
-          admin: args.admin,
-          accepted: args.accepted,
-          pending: args.pending
-        });
-        // Save to db
-        const membership = await newMembership.save();
-        return { success: true, membership };
+        try {
+          let membership = await new Membership({
+            userId: args.userId,
+            organisationId: args.organisationId,
+            admin: args.admin,
+            accepted: args.accepted,
+            pending: args.pending
+          }).save();
+          return { success: true, membership };
+        } catch (e) {
+          console.log(e);
+        }
       },
       updateMembership: async (parent, args, { user }) => {
         if (!user)
@@ -120,12 +121,12 @@ module.exports = {
       },
       deleteMembership: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-
-        const deleteMembership = await Membership.findByIdAndDelete(args._id);
-        if (!deleteMembership) {
-          console.log('Delete attempt Failed');
-        } else {
-          return deleteMembership;
+        try {
+          const deleteMembership = await Membership.findByIdAndDelete(args._id);
+          if (deleteMembership) return { success: true, deleteMembership };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
         }
       }
     }

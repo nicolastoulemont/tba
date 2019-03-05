@@ -59,25 +59,23 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         const { errors, isValid } = await ValidateAddRegistration(args);
         if (!isValid) return { success: false, errors };
-
-        let newRegistration = new Registration({
-          userId: args.userId,
-          eventId: args.eventId
-        });
-        // Save to db
-        const registration = await newRegistration.save();
-        return { success: true, registration };
+        try {
+          let newRegistration = await new Registration({
+            userId: args.userId,
+            eventId: args.eventId
+          }).save();
+          return { success: true, newRegistration };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
+        }
       },
       deleteRegistration: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-
-        const deleteRegistration = await Registration.findByIdAndDelete(
-          args._id
-        );
-        if (!deleteRegistration) {
-          console.log('Delete attempt Failed');
-        } else {
-          return deleteRegistration;
+        try {
+          return await Registration.findByIdAndDelete(args._id);
+        } catch (e) {
+          console.log(e);
         }
       }
     }

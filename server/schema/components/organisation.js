@@ -113,18 +113,19 @@ module.exports = {
           };
         // const { errors, isValid } = await validateEventInput(args);
         // if (!isValid) return { success: false, errors };
-
-        let newOrganisation = new Organisation({
-          userId: args.userId,
-          name: args.name,
-          address: args.address,
-          description: args.description,
-          type: args.type,
-          registryId: args.registryId
-        });
-        // Save to db
-        const organisation = await newOrganisation.save();
-        return { success: true, organisation };
+        try {
+          let organisation = await new Organisation({
+            userId: args.userId,
+            name: args.name,
+            address: args.address,
+            description: args.description,
+            type: args.type,
+            registryId: args.registryId
+          }).save();
+          return { success: true, organisation };
+        } catch (e) {
+          console.log(e);
+        }
       },
       updateOrganisation: async (parent, args, { user }) => {
         if (!user)
@@ -164,13 +165,14 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
-        const deleteOrganisation = await Organisation.findByIdAndDelete(
-          args._id
-        );
-        if (!deleteOrganisation) {
+        try {
+          const deleteOrganisation = await Organisation.findByIdAndDelete(
+            args._id
+          );
+          if (deleteOrganisation) return { success: true };
+        } catch (e) {
+          console.log(e);
           return { success: false, error };
-        } else {
-          return { success: true };
         }
       }
     }

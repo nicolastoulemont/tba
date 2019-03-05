@@ -81,55 +81,76 @@ module.exports = {
 
     Mutation: {
       addProfile: async (parent, args) => {
-        let newProfile = new Profile({
-          userId: args.userId,
-          name: args.name,
-          organisation: args.organisation,
-          position: args.position,
-          interestOne: args.interestOne,
-          interestTwo: args.interestTwo,
-          interestThree: args.interestThree,
-          bio: args.bio,
-          twitter: args.twitter,
-          linkedin: args.linkedin
-        });
-        // Save to db
-        const profile = await newProfile.save();
-        return { success: true, profile };
-      },
-      updateProfile: async (parent, args) => {
-        let updateProfile = {};
-        if (args.name) updateProfile.name = args.name;
-        if (args.organisation) updateProfile.organisation = args.organisation;
-        if (args.position) updateProfile.position = args.position;
-        if (args.interestOne) updateProfile.interestOne = args.interestOne;
-        if (args.interestTwo) updateProfile.interestTwo = args.interestTwo;
-        if (args.interestThree)
-          updateProfile.interestThree = args.interestThree;
-        if (args.bio) updateProfile.bio = args.bio;
-        if (args.twitter) updateProfile.twitter = args.twitter;
-        if (args.linkedin) updateProfile.linkedin = args.linkedin;
-
-        const updProfile = await Profile.findByIdAndUpdate(
-          args._id,
-          updateProfile,
-          {
-            new: true
-          }
-        );
-        if (!updProfile) {
-          console.log('Update failed');
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
+        // TODO : Add input validation function
+        try {
+          let newProfile = new Profile({
+            userId: args.userId,
+            name: args.name,
+            organisation: args.organisation,
+            position: args.position,
+            interestOne: args.interestOne,
+            interestTwo: args.interestTwo,
+            interestThree: args.interestThree,
+            bio: args.bio,
+            twitter: args.twitter,
+            linkedin: args.linkedin
+          }).save();
+          return { success: true, newProfile };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
         }
-        // Save to db
-        return { success: true, profile: updProfile };
       },
-      deleteProfile: (parent, args) => {
-        const deleteProfile = Profile.findByIdAndDelete(args._id);
-        if (!deleteProfile) {
-          console.log('Delete attempt Failed');
-        } else {
-          console.log('Profile deleted');
-          return deleteProfile;
+      updateProfile: async (parent, args, { user }) => {
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
+        // TODO : Add input validation function
+        try {
+          let updateProfile = {};
+          if (args.name) updateProfile.name = args.name;
+          if (args.organisation) updateProfile.organisation = args.organisation;
+          if (args.position) updateProfile.position = args.position;
+          if (args.interestOne) updateProfile.interestOne = args.interestOne;
+          if (args.interestTwo) updateProfile.interestTwo = args.interestTwo;
+          if (args.interestThree)
+            updateProfile.interestThree = args.interestThree;
+          if (args.bio) updateProfile.bio = args.bio;
+          if (args.twitter) updateProfile.twitter = args.twitter;
+          if (args.linkedin) updateProfile.linkedin = args.linkedin;
+
+          const profile = await Profile.findByIdAndUpdate(
+            args._id,
+            updateProfile,
+            {
+              new: true
+            }
+          );
+          return { success: true, profile };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
+        }
+      },
+      deleteProfile: async (parent, args, { user }) => {
+        if (!user)
+          return {
+            success: false,
+            error: 'You are not logged in'
+          };
+        try {
+          const deleteProfile = await Profile.findByIdAndDelete(args._id);
+          return { success: true, deleteProfile };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
         }
       }
     }

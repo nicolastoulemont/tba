@@ -21,11 +21,11 @@ class Login extends Component {
     }
   };
 
-  setToken = token => {
+  setToken = async token => {
     this.props.client.resetStore();
     this.props.client.clearStore();
-    localStorage.setItem('jwtToken', token);
-    const storedToken = localStorage.getItem('jwtToken');
+    await localStorage.setItem('jwtToken', token);
+    const storedToken = await localStorage.getItem('jwtToken');
     if (storedToken) this.props.history.push('/dashboard');
   };
 

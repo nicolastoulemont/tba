@@ -92,28 +92,28 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         const { errors, isValid } = await ValidateAddReport(args);
         if (!isValid) return { success: false, errors };
-
-        let newReport = new Report({
-          userId: args.userId,
-          text: args.text,
-          eventId: args.eventId,
-          commentId: args.commentId,
-          pollId: args.pollId,
-          organisationId: args.organisationId,
-          profileId: args.profileId
-        });
-        // Save to db
-        const report = await newReport.save();
-        return { success: true, report };
+        try {
+          let report = await new Report({
+            userId: args.userId,
+            text: args.text,
+            eventId: args.eventId,
+            commentId: args.commentId,
+            pollId: args.pollId,
+            organisationId: args.organisationId,
+            profileId: args.profileId
+          }).save();
+          return { success: true, report };
+        } catch (e) {
+          console.log(e);
+          return { success: false, error };
+        }
       },
       deleteReport: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
-
-        const deleteReport = await Report.findByIdAndDelete(args._id);
-        if (!deleteReport) {
-          console.log('Delete attempt Failed');
-        } else {
-          return deleteReport;
+        try {
+          return await Report.findByIdAndDelete(args._id);
+        } catch (e) {
+          console.log(e);
         }
       }
     }
