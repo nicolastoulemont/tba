@@ -63,20 +63,20 @@ module.exports = {
   // Resolvers
   ProfileRes: {
     Query: {
-      profile: (parent, args, { user }) => {
+      profile: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Profile.findById(args.id);
+          return await Profile.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      profiles: (parent, args, { user }) => {
+      profiles: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Profile.find({});
+          return await Profile.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

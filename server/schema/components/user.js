@@ -64,29 +64,29 @@ module.exports = {
   // Resolvers
   UserRes: {
     Query: {
-      user: (parent, args, { user }) => {
+      user: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return User.findById(args.id);
+          return await User.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      currentuser: (parent, args, { user }) => {
+      currentuser: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           const logUser = user.user;
-          return User.findOne({ _id: logUser.id });
+          return await User.findOne({ _id: logUser.id });
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      users: (parent, args, { user }) => {
+      users: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return User.find({});
+          return await User.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

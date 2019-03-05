@@ -46,20 +46,20 @@ module.exports = {
   // Resolvers
   LikeRes: {
     Query: {
-      like: (parent, args, { user }) => {
+      like: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Like.findById(args.id);
+          return await Like.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      likes: (parent, args, { user }) => {
+      likes: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Like.find({});
+          return await Like.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

@@ -36,20 +36,20 @@ module.exports = {
   // Resolvers
   PollRes: {
     Query: {
-      poll: (parent, args, { user }) => {
+      poll: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Poll.findById(args.id);
+          return await Poll.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      polls: (parent, args, { user }) => {
+      polls: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Poll.find({});
+          return await Poll.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

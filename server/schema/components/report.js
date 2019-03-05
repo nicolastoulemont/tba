@@ -56,20 +56,20 @@ module.exports = {
   // Resolvers
   ReportRes: {
     Query: {
-      report: (parent, args, { user }) => {
+      report: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Report.findById(args.id);
+          return await Report.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      reports: (parent, args, { user }) => {
+      reports: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Report.find({});
+          return await Report.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

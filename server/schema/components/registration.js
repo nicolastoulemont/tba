@@ -35,20 +35,20 @@ module.exports = {
   // Resolvers
   RegistrationRes: {
     Query: {
-      registration: (parent, args, { user }) => {
+      registration: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Registration.findById(args.id);
+          return await Registration.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      registrations: (parent, args, { user }) => {
+      registrations: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Registration.find({});
+          return await Registration.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

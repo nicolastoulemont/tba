@@ -89,26 +89,26 @@ module.exports = {
   // Resolvers
   EventRes: {
     Query: {
-      event: (parent, args, { user }) => {
+      event: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return EventItem.findById(args.id);
+          return await EventItem.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      events: (parent, args, { user }) => {
+      events: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return EventItem.find({ ispublic: true });
+          return await EventItem.find({ ispublic: true });
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      onedayevents: (parent, args, { user }) => {
+      onedayevents: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return EventItem.find({
+          return await EventItem.find({
             startDate: args.day,
             ispublic: true,
             $or: [
@@ -138,7 +138,7 @@ module.exports = {
             startTime: 'ascending'
           });
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

@@ -51,20 +51,20 @@ module.exports = {
   // Resolvers
   MembershipRes: {
     Query: {
-      membership: (parent, args, { user }) => {
+      membership: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Membership.findById(args.id);
+          return await Membership.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      memberships: (parent, args, { user }) => {
+      memberships: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Membership.find({});
+          return await Membership.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

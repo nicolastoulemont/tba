@@ -62,20 +62,20 @@ module.exports = {
   // Resolvers
   OrganisationRes: {
     Query: {
-      organisation: (parent, args, { user }) => {
+      organisation: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Organisation.findById(args.id);
+          return await Organisation.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      organisations: (parent, args, { user }) => {
+      organisations: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return Organisation.find({});
+          return await Organisation.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },

@@ -45,20 +45,20 @@ module.exports = {
   // Resolvers
   CommentRes: {
     Query: {
-      comment: (parent, args, { user }) => {
+      comment: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return CommentItem.findById(args.id);
+          return await CommentItem.findById(args.id);
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       },
-      comments: (parent, args, { user }) => {
+      comments: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return CommentItem.find({});
+          return await CommentItem.find({});
         } catch (err) {
-          console.log(err);
+          throw new Error('Bad request');
         }
       }
     },
@@ -87,14 +87,14 @@ module.exports = {
     },
 
     Mutation: {
-      addComment: (parent, args, { user }) => {
+      addComment: async (parent, args, { user }) => {
         if (!user)
           return {
             success: false,
             error: 'You are not logged in'
           };
         try {
-          return new CommentItem({
+          return await new CommentItem({
             userId: args.userId,
             eventId: args.eventId,
             commentId: args.commentId,
@@ -111,9 +111,9 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
+        let updateComment = {};
+        if (args.text) updateComment.text = args.text;
         try {
-          let updateComment = {};
-          if (args.text) updateComment.text = args.text;
           return await CommentItem.findByIdAndUpdate(args._id, updateComment, {
             new: true
           });
