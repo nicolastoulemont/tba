@@ -41,7 +41,7 @@ module.exports = {
         text: String!
       ): CommentItem
       updateComment(_id: ID!, text: String): CommentItem
-      deleteComment(_id: ID!): CommentItem
+      deleteComment(_id: ID!, userId: String!, eventId: String!): CommentItem
     }
   `,
   // Resolvers
@@ -134,7 +134,10 @@ module.exports = {
             error: 'You are not logged in'
           };
         try {
-          return await CommentItem.findByIdAndDelete(args._id);
+          const comment = await CommentItem.findById(args._id);
+          const event = await EventItem.findById(args.eventId);
+          if (comment.userId === args.userId || event.userId === args.userId)
+            return await CommentItem.findByIdAndDelete(args._id);
         } catch (err) {
           console.log(err);
         }

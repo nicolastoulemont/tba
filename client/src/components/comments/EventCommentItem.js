@@ -43,6 +43,7 @@ const EventCommentItem = ({
                       creatorAvatar={comment.creator.avatar}
                       refetch={refetch}
                       user={user}
+                      eventId={eventId}
                     />
                   ))}
                 </div>

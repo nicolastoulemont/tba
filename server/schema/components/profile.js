@@ -88,7 +88,7 @@ module.exports = {
     },
 
     Mutation: {
-      addProfile: async (parent, args) => {
+      addProfile: async (parent, args, { user }) => {
         if (!user)
           return {
             success: false,

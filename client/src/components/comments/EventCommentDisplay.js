@@ -12,7 +12,8 @@ const EventCommentDisplay = ({
   creatorId,
   creatorAvatar,
   refetch,
-  user
+  user,
+  eventId
 }) => {
   return (
     <div className="list-group-item border-0 py-1 px-2" key={id}>
@@ -45,7 +46,9 @@ const EventCommentDisplay = ({
                     e.preventDefault();
                     deleteComment({
                       variables: {
-                        _id: id
+                        _id: id,
+                        userId: user,
+                        eventId
                       }
                     }).then(res => {
                       refetch();
