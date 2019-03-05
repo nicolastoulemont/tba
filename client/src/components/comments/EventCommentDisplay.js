@@ -13,7 +13,8 @@ const EventCommentDisplay = ({
   creatorAvatar,
   refetch,
   user,
-  eventId
+  eventId,
+  eventCreator
 }) => {
   return (
     <div className="list-group-item border-0 py-1 px-2" key={id}>
@@ -36,7 +37,7 @@ const EventCommentDisplay = ({
           </div>
         </div>
         <div className="col-1 mx-0">
-          {user === creatorId ? (
+          {user === creatorId || eventCreator ? (
             <Mutation mutation={DELETE_COMMENT}>
               {(deleteComment, e) => (
                 <Link

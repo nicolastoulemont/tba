@@ -4,7 +4,7 @@ import EventCommentsFeed from '../../comments/EventCommentsFeed';
 import LikesFeed from '../../likes/eventLikes/LikesFeed';
 import EventRegistrationsFeed from '../../registrations/EventRegistrationsFeed';
 
-export default class ProfileSocial extends Component {
+export default class EventSocialSelector extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,7 @@ export default class ProfileSocial extends Component {
   };
 
   render() {
-    const { user, eventId } = this.props;
+    const { user, eventId, eventCreator } = this.props;
     const { commentsDisplay, registreeDisplay } = this.state;
 
     return (
@@ -60,7 +60,11 @@ export default class ProfileSocial extends Component {
           <div className="row">
             <div className="col pb-5">
               {commentsDisplay ? (
-                <EventCommentsFeed user={user} eventId={eventId} />
+                <EventCommentsFeed
+                  user={user}
+                  eventId={eventId}
+                  eventCreator={eventCreator}
+                />
               ) : null}
               {registreeDisplay ? (
                 <EventRegistrationsFeed eventId={eventId} />

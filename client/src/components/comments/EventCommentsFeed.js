@@ -6,7 +6,7 @@ import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
 
 class EventCommentsFeed extends Component {
   render() {
-    const { eventId, user } = this.props;
+    const { eventId, user, eventCreator } = this.props;
     return (
       <Fragment>
         <div>
@@ -26,6 +26,7 @@ class EventCommentsFeed extends Component {
                       refetch={refetch}
                       user={user}
                       eventId={eventId}
+                      eventCreator={eventCreator}
                     />
                   ))}
 

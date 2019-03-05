@@ -11,7 +11,8 @@ const EventCommentItem = ({
   creatorAvatar,
   refetch,
   user,
-  eventId
+  eventId,
+  eventCreator
 }) => {
   return (
     <Fragment>
@@ -24,6 +25,7 @@ const EventCommentItem = ({
         refetch={refetch}
         user={user}
         eventId={eventId}
+        eventCreator={eventCreator}
       />
       <CQuery query={GET_COMMENT_COMMENTS} variables={{ id }}>
         {({ data: { comment }, refetch }) => {
@@ -44,6 +46,7 @@ const EventCommentItem = ({
                       refetch={refetch}
                       user={user}
                       eventId={eventId}
+                      eventCreator={eventCreator}
                     />
                   ))}
                 </div>

@@ -5,7 +5,7 @@ import EventSocialSelector from './EventSocialSelector';
 
 import EventReportModal from '../../reports/EventReportModal';
 
-const EventSocial = ({ user, eventId }) => {
+const EventSocial = ({ user, eventId, eventCreator }) => {
   return (
     <Fragment>
       <div className="mb-3 pb-5">
@@ -28,7 +28,11 @@ const EventSocial = ({ user, eventId }) => {
             <RegistrationFeed user={user} eventId={eventId} />
           </div>
         </div>
-        <EventSocialSelector user={user} eventId={eventId} />
+        <EventSocialSelector
+          user={user}
+          eventId={eventId}
+          eventCreator={eventCreator}
+        />
       </div>
     </Fragment>
   );
