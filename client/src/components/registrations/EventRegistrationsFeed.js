@@ -7,8 +7,11 @@ const EventRegistrationFeed = ({ eventId }) => {
   return (
     <Fragment>
       <CQuery query={GET_EVENT_REGISTRATIONS} variables={{ id: eventId }}>
-        {({ data: { event } }) => {
-          const registrations = event.registrations;
+        {({
+          data: {
+            event: { registrations }
+          }
+        }) => {
           if (registrations.length === 0) {
             return <div className="font-italic">No participant yet</div>;
           } else {
