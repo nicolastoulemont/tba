@@ -41,6 +41,7 @@ class RegistrationFeed extends Component {
                       userRegistration={userRegistration}
                       refetch={refetch}
                       client={client}
+                      eventId={eventId}
                     />
                   )}
                 </div>
