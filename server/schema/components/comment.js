@@ -16,6 +16,8 @@ module.exports = {
       pollId: String
       commentId: String
       text: String!
+      edited: Boolean
+      moderated: Boolean
       createdAt: String
       updatedAt: String
       event: EventItem
@@ -41,7 +43,7 @@ module.exports = {
         text: String!
       ): CommentItem
       updateComment(_id: ID!, text: String): CommentItem
-      deleteComment(_id: ID!, userId: String!, eventId: String!): CommentItem
+      moderateComment(_id: ID!, userId: String!, eventId: String!): CommentItem
     }
   `,
   // Resolvers
@@ -117,27 +119,52 @@ module.exports = {
           };
         const { errors, isValid } = await validateCommentInput(args);
         if (!isValid) return { success: false, errors };
-        let updateComment = {};
-        if (args.text) updateComment.text = args.text;
-        try {
-          return await CommentItem.findByIdAndUpdate(args._id, updateComment, {
-            new: true
-          });
-        } catch (err) {
-          console.log(err);
+        const comment = await CommentItem.findById(args._id);
+        if (!comment.moderated) {
+          let updateComment = {
+            edited: true,
+            text: args.text
+          };
+          try {
+            return await CommentItem.findByIdAndUpdate(
+              args._id,
+              updateComment,
+              {
+                new: true
+              }
+            );
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          return null;
         }
       },
-      deleteComment: async (parent, { _id, userId, eventId }, { user }) => {
+      moderateComment: async (parent, { _id, userId, eventId }, { user }) => {
         if (!user)
           return {
             success: false,
             error: 'You are not logged in'
           };
+        let deletedComment = {
+          moderated: true,
+          text: 'Comment deleted'
+        };
+        let moderatedComment = {
+          moderated: true,
+          text: 'Comment moderated'
+        };
         try {
           const comment = await CommentItem.findById(_id);
           const event = await EventItem.findById(eventId);
-          if (comment.userId === userId || event.userId === userId)
-            return await CommentItem.findByIdAndDelete(_id);
+          if (comment.userId === userId)
+            return await CommentItem.findByIdAndUpdate(_id, deletedComment, {
+              new: true
+            });
+          if (event.userId === userId && comment.userId !== userId)
+            return await CommentItem.findByIdAndUpdate(_id, moderatedComment, {
+              new: true
+            });
         } catch (err) {
           console.log(err);
         }

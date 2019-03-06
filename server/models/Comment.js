@@ -13,6 +13,14 @@ const commentSchema = new Schema({
     type: String,
     required: true
   },
+  edited: {
+    type: Boolean,
+    default: false
+  },
+  moderated: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now()

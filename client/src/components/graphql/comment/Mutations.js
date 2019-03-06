@@ -28,9 +28,9 @@ export const EDIT_COMMENT = gql`
   }
 `;
 
-export const DELETE_COMMENT = gql`
-  mutation DeleteComment($_id: ID!, $userId: String!, $eventId: String!) {
-    deleteComment(_id: $_id, userId: $userId, eventId: $eventId) {
+export const MODERATE_COMMENT = gql`
+  mutation ModerateComment($_id: ID!, $userId: String!, $eventId: String!) {
+    moderateComment(_id: $_id, userId: $userId, eventId: $eventId) {
       id
     }
   }

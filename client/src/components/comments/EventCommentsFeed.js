@@ -27,6 +27,8 @@ class EventCommentsFeed extends Component {
                       user={user}
                       eventId={eventId}
                       eventCreator={eventCreator}
+                      edited={comment.edited}
+                      moderated={comment.moderated}
                     />
                   ))}
 

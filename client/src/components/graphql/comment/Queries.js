@@ -8,6 +8,8 @@ export const GET_EVENT_COMMENTS = gql`
         id
         userId
         text
+        edited
+        moderated
         creator {
           avatar
           profile {
@@ -27,6 +29,8 @@ export const GET_COMMENT_COMMENTS = gql`
         id
         userId
         text
+        edited
+        moderated
         creator {
           avatar
           profile {

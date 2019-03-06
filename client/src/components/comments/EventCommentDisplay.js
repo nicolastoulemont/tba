@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import { DELETE_COMMENT } from '../graphql/comment/Mutations';
+import { MODERATE_COMMENT } from '../graphql/comment/Mutations';
 import { RespSmallAvatarLink, UserNameLink } from '../commons/CustomLinks';
 import EventCommentActions from './commentActions/EventCommentActions';
 
@@ -14,7 +14,9 @@ const EventCommentDisplay = ({
   refetch,
   user,
   eventId,
-  eventCreator
+  eventCreator,
+  edited,
+  moderated
 }) => {
   return (
     <div className="list-group-item border-0 py-1 px-2" key={id}>
@@ -25,20 +27,35 @@ const EventCommentDisplay = ({
         <div className="col-9 col-md-10 mx-0 pr-0 pl-1">
           <div className="text-left mx-auto">
             <UserNameLink id={creatorId} name={creatorName} />
-            <span className="d-none d-md-inline-block ml-2">{text}</span>
-            <span className="d-inline-block d-md-none ml-4">{text}</span>
+            {moderated ? (
+              <Fragment>
+                <small className="d-none d-md-inline-block font-italic ml-2">
+                  {text}
+                </small>
+                <small className="d-inline-block d-md-none font-italic ml-4">
+                  {text}
+                </small>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <span className="d-none d-md-inline-block ml-2">{text}</span>
+                <span className="d-inline-block d-md-none ml-4">{text}</span>
+              </Fragment>
+            )}
             <EventCommentActions
               user={user}
               creatorId={creatorId}
               commentId={id}
               commentText={text}
               refetch={refetch}
+              edited={edited}
+              moderated={moderated}
             />
           </div>
         </div>
         <div className="col-1 mx-0">
           {user === creatorId || eventCreator ? (
-            <Mutation mutation={DELETE_COMMENT}>
+            <Mutation mutation={MODERATE_COMMENT}>
               {(deleteComment, e) => (
                 <Link
                   to="#"
