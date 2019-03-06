@@ -26,8 +26,8 @@ export const ADD_LIKE = gql`
 `;
 
 export const DELETE_LIKE = gql`
-  mutation DeleteLike($_id: ID!) {
-    deleteLike(_id: $_id) {
+  mutation DeleteLike($_id: ID!, $userId: String!) {
+    deleteLike(_id: $_id, userId: $userId) {
       id
     }
   }

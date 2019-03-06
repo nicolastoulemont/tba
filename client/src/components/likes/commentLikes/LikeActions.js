@@ -31,7 +31,7 @@ export const LikeComment = ({ user, commentId, refetch }) => {
   );
 };
 
-export const UnLikeComment = ({ userLike, refetch }) => {
+export const UnLikeComment = ({ userLike, refetch, user }) => {
   return (
     <Fragment>
       <Mutation mutation={DELETE_LIKE}>
@@ -43,7 +43,8 @@ export const UnLikeComment = ({ userLike, refetch }) => {
               e.preventDefault();
               deleteLike({
                 variables: {
-                  _id: userLike.id
+                  _id: userLike.id,
+                  userId: user
                 }
               }).then(res => {
                 refetch();

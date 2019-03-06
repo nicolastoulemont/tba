@@ -127,17 +127,17 @@ module.exports = {
           console.log(err);
         }
       },
-      deleteComment: async (parent, args, { user }) => {
+      deleteComment: async (parent, { _id, userId, eventId }, { user }) => {
         if (!user)
           return {
             success: false,
             error: 'You are not logged in'
           };
         try {
-          const comment = await CommentItem.findById(args._id);
-          const event = await EventItem.findById(args.eventId);
-          if (comment.userId === args.userId || event.userId === args.userId)
-            return await CommentItem.findByIdAndDelete(args._id);
+          const comment = await CommentItem.findById(_id);
+          const event = await EventItem.findById(eventId);
+          if (comment.userId === userId || event.userId === userId)
+            return await CommentItem.findByIdAndDelete(_id);
         } catch (err) {
           console.log(err);
         }

@@ -38,7 +38,11 @@ class LikesFeed extends Component {
                   <span className="mx-1">{likes.length}</span>
                 ) : null}
                 {typeof userLike !== 'undefined' ? (
-                  <UnLikeComment userLike={userLike} refetch={refetch} />
+                  <UnLikeComment
+                    userLike={userLike}
+                    refetch={refetch}
+                    user={user}
+                  />
                 ) : (
                   <Link to="#" className="ml-1">
                     <i className="text-secondary far fa-thumbs-down" />

@@ -40,7 +40,7 @@ module.exports = {
         pollId: String
         commentId: String
       ): LikeResp!
-      deleteLike(_id: ID!): Like
+      deleteLike(_id: ID!, userId: String!): Like
     }
   `,
   // Resolvers
@@ -96,10 +96,11 @@ module.exports = {
           console.log(err);
         }
       },
-      deleteLike: async (parent, args, { user }) => {
+      deleteLike: async (parent, { _id, userId }, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return await Like.findByIdAndDelete(args._id);
+          const like = await Like.findById(_id);
+          if (like.userId === userId) return await Like.findByIdAndDelete(_id);
         } catch (err) {
           console.log(err);
         }
