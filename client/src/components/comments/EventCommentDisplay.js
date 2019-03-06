@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { MODERATE_COMMENT } from '../graphql/comment/Mutations';
@@ -24,25 +24,24 @@ const EventCommentDisplay = ({
         <div className="col-1">
           <RespSmallAvatarLink id={creatorId} avatar={creatorAvatar} />
         </div>
-        <div className="col-9 col-md-10 mx-0 pr-0 pl-1">
-          <div className="text-left mx-auto">
-            <UserNameLink id={creatorId} name={creatorName} />
-            {moderated ? (
-              <Fragment>
-                <small className="d-none d-md-inline-block font-italic ml-2">
-                  {text}
-                </small>
-                <small className="d-inline-block d-md-none font-italic ml-4">
-                  {text}
-                </small>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <span className="d-none d-md-inline-block ml-2">{text}</span>
-                <span className="d-inline-block d-md-none ml-4">{text}</span>
-              </Fragment>
-            )}
-            {moderated ? null : (
+        {moderated ? (
+          <div className="col-9 col-md-10 mx-0 pr-0 pl-1 py-0">
+            <div className="text-left mx-auto">
+              <UserNameLink id={creatorId} name={creatorName} />
+              <small className="d-none d-md-inline-block font-italic ml-2 py-0">
+                {text}
+              </small>
+              <small className="d-inline-block d-md-none font-italic ml-4 py-0">
+                {text}
+              </small>
+            </div>
+          </div>
+        ) : (
+          <div className="col-9 col-md-10 mx-0 pr-0 pl-1">
+            <div className="text-left mx-auto">
+              <UserNameLink id={creatorId} name={creatorName} />
+              <span className="d-none d-md-inline-block ml-2">{text}</span>
+              <span className="d-inline-block d-md-none ml-4">{text}</span>
               <EventCommentActions
                 user={user}
                 creatorId={creatorId}
@@ -51,11 +50,12 @@ const EventCommentDisplay = ({
                 refetch={refetch}
                 edited={edited}
               />
-            )}
+            </div>
           </div>
-        </div>
+        )}
+
         <div className="col-1 mx-0">
-          {user === creatorId || eventCreator ? (
+          {!moderated && (user === creatorId || user === eventCreator) ? (
             <Mutation mutation={MODERATE_COMMENT}>
               {(deleteComment, e) => (
                 <Link
