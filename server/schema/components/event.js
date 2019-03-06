@@ -83,7 +83,7 @@ module.exports = {
         endDate: String
         endTime: String
       ): EventResp!
-      deleteEvent(_id: ID!): EventResp!
+      deleteEvent(_id: ID!, userId: String!): EventResp!
     }
   `,
   // Resolvers
@@ -240,8 +240,15 @@ module.exports = {
             error: 'You are not logged in'
           };
         try {
-          const deleteEvent = await EventItem.findByIdAndDelete(args._id);
-          if (deleteEvent) return { success: true };
+          const event = await EventItem.findById(args._id);
+          if (event.userId === args.userId) {
+            return {
+              success: true,
+              deleteEvent: await EventItem.findByIdAndDelete(args._id)
+            };
+          } else {
+            return { success: false, error: new Error('Bad request') };
+          }
         } catch (err) {
           console.log(err);
           return { success: false, error };

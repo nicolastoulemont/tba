@@ -112,14 +112,16 @@ module.exports = {
         if (args.pending) updateEvent.pending = args.pending;
 
         try {
-          const updMembership = await Membership.findByIdAndUpdate(
-            args._id,
-            updateMembership,
-            {
-              new: true
-            }
-          );
-          return { success: true, updMembership };
+          return {
+            success: true,
+            updMembership: await Membership.findByIdAndUpdate(
+              args._id,
+              updateMembership,
+              {
+                new: true
+              }
+            )
+          };
         } catch (err) {
           console.log(err);
           return {

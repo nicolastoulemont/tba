@@ -35,7 +35,7 @@ class EventMenu extends Component {
       loggedUser,
       refetch
     } = this.props;
-
+    console.log(loggedUser);
     return (
       <div className="text-right mt-0 mr-2">
         <Link
@@ -67,7 +67,11 @@ class EventMenu extends Component {
           data-target="#DeleteEventModal"
           to="#"
         />
-        <DeleteEventModal eventId={eventId} history={this.props.history} />
+        <DeleteEventModal
+          eventId={eventId}
+          loggedUser={loggedUser}
+          history={this.props.history}
+        />
       </div>
     );
   }

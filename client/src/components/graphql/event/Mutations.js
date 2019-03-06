@@ -106,8 +106,8 @@ export const UPDATE_EVENT = gql`
 `;
 
 export const DELETE_EVENT = gql`
-  mutation DeleteEvent($_id: ID!) {
-    deleteEvent(_id: $_id) {
+  mutation DeleteEvent($_id: ID!, $userId: String!) {
+    deleteEvent(_id: $_id, userId: $userId) {
       success
       errors {
         path

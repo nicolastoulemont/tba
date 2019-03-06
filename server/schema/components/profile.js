@@ -57,7 +57,7 @@ module.exports = {
         twitter: String
         linkedin: String
       ): ProfileResp
-      deleteProfile(_id: ID!): ProfileResp
+      deleteProfile(_id: ID!, userId: String!): ProfileResp
     }
   `,
   // Resolvers
@@ -134,14 +134,12 @@ module.exports = {
           if (args.twitter) updateProfile.twitter = args.twitter;
           if (args.linkedin) updateProfile.linkedin = args.linkedin;
 
-          const profile = await Profile.findByIdAndUpdate(
-            args._id,
-            updateProfile,
-            {
+          return {
+            success: true,
+            profile: await Profile.findByIdAndUpdate(args._id, updateProfile, {
               new: true
-            }
-          );
-          return { success: true, profile };
+            })
+          };
         } catch (err) {
           console.log(err);
           return { success: false, error };
@@ -154,8 +152,10 @@ module.exports = {
             error: 'You are not logged in'
           };
         try {
-          const deleteProfile = await Profile.findByIdAndDelete(args._id);
-          return { success: true, deleteProfile };
+          return {
+            success: true,
+            deleteProfile: await Profile.findByIdAndDelete(args._id)
+          };
         } catch (err) {
           console.log(err);
           return { success: false, error };
