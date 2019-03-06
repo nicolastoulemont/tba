@@ -41,31 +41,21 @@ class EventCommentActions extends Component {
 
   render() {
     const { showReplyForm, showEditForm, showReportForm } = this.state;
-    const {
-      user,
-      commentId,
-      commentText,
-      refetch,
-      edited,
-      moderated
-    } = this.props;
+    const { user, commentId, commentText, refetch, edited } = this.props;
     return (
       <Fragment>
         <small className="d-block mt-1">
-          {!moderated ? (
-            <Fragment>
-              <LikesFeed user={user} commentId={commentId} />
-              <Link to="#" onClick={this.showReply} className="ml-2">
-                <i className="far fa-comment mx-1" />
-              </Link>
-              <Link to="#" onClick={this.showEdit}>
-                <i className="far fa-edit mx-1" />
-              </Link>
-              <Link to="#" onClick={this.showReport}>
-                <i className="fas fa-flag mx-1" />
-              </Link>
-            </Fragment>
-          ) : null}
+          <LikesFeed user={user} commentId={commentId} />
+          <Link to="#" onClick={this.showReply} className="ml-2">
+            <i className="far fa-comment mx-1" />
+          </Link>
+          <Link to="#" onClick={this.showEdit}>
+            <i className="far fa-edit mx-1" />
+          </Link>
+          <Link to="#" onClick={this.showReport}>
+            <i className="fas fa-flag mx-1" />
+          </Link>
+
           {edited ? <span className="font-italic"> edited</span> : null}
         </small>
         {showReplyForm ? (

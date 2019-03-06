@@ -42,15 +42,16 @@ const EventCommentDisplay = ({
                 <span className="d-inline-block d-md-none ml-4">{text}</span>
               </Fragment>
             )}
-            <EventCommentActions
-              user={user}
-              creatorId={creatorId}
-              commentId={id}
-              commentText={text}
-              refetch={refetch}
-              edited={edited}
-              moderated={moderated}
-            />
+            {moderated ? null : (
+              <EventCommentActions
+                user={user}
+                creatorId={creatorId}
+                commentId={id}
+                commentText={text}
+                refetch={refetch}
+                edited={edited}
+              />
+            )}
           </div>
         </div>
         <div className="col-1 mx-0">
@@ -73,7 +74,11 @@ const EventCommentDisplay = ({
                     });
                   }}
                 >
-                  <i className="fa fa-times mx-0" aria-hidden="true" />
+                  {user === creatorId ? (
+                    <i className="fa fa-times mx-0" aria-hidden="true" />
+                  ) : user === eventCreator ? (
+                    <i className="fas fa-ban mx-0" aria-hidden="true" />
+                  ) : null}
                 </Link>
               )}
             </Mutation>
