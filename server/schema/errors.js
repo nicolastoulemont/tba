@@ -6,11 +6,5 @@ module.exports = {
       path: String
       message: String
     }
-  `,
-  StartType: gql`
-    type Start {
-      startDate: String
-      startTime: String
-    }
   `
 };

@@ -1,5 +1,5 @@
 const { rootQuery } = require('./root');
-const { ErrorType, StartType } = require('./errors');
+const { ErrorType } = require('./errors');
 const { DateType, DateRes } = require('./date');
 const { UserType, UserRes } = require('./components/user');
 const {
@@ -25,7 +25,6 @@ module.exports = schema = makeExecutableSchema({
   typeDefs: [
     rootQuery,
     ErrorType,
-    StartType,
     DateType,
     UserType,
     OrganisationType,

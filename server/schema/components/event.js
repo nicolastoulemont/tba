@@ -45,7 +45,7 @@ module.exports = {
 
     extend type Query {
       event(id: ID!): EventItem
-      events: [EventItem!]!
+      events(first: Int): [EventItem!]!
       onedayevents(
         day: String!
         interestOne: String!
@@ -100,7 +100,7 @@ module.exports = {
       events: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
-          return await EventItem.find({ ispublic: true });
+          return await EventItem.find({ ispublic: true }).limit(args.first);
         } catch (err) {
           throw new Error('Bad request');
         }
@@ -135,7 +135,7 @@ module.exports = {
               }
             ]
           }).sort({
-            startTime: 'ascending'
+            startDate: 'ascending'
           });
         } catch (err) {
           throw new Error('Bad request');
@@ -171,8 +171,8 @@ module.exports = {
             success: false,
             error: 'You are not logged in'
           };
-        const { errors, isValid } = await validateEventInput(args);
-        if (!isValid) return { success: false, errors };
+        // const { errors, isValid } = await validateEventInput(args);
+        // if (!isValid) return { success: false, errors };
         try {
           let event = await new EventItem({
             userId: args.userId,
@@ -187,7 +187,8 @@ module.exports = {
             startTime: args.startTime,
             endDate: args.endDate,
             endTime: args.endTime
-          }).save();
+          });
+          console.log(event);
           return { success: true, event };
         } catch (err) {
           console.log(err);

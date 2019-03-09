@@ -1,5 +1,5 @@
 const { gql } = require('apollo-server-express');
-const { GraphQLScalarType } = require('graphql');
+const { GraphQLScalarType, GraphQLObjectType } = require('graphql');
 const { Kind } = require('graphql/language');
 const dayjs = require('dayjs');
 
