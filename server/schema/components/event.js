@@ -46,6 +46,7 @@ module.exports = {
     extend type Query {
       event(id: ID!): EventItem
       events(first: Int): [EventItem!]!
+      searchEventsByNameOrDescription(search: String, limit: Int): [EventItem!]!
       onedayevents(
         day: String!
         interestOne: String!
@@ -103,6 +104,25 @@ module.exports = {
           return await EventItem.find({ ispublic: true }).limit(args.first);
         } catch (err) {
           throw new Error('Bad request');
+        }
+      },
+      searchEventsByNameOrDescription: async (parent, args, { user }) => {
+        if (!user) throw new Error('Error : You are not logged in');
+        try {
+          return await EventItem.find({
+            $or: [
+              {
+                $or: [{ name: { $regex: new RegExp(args.search) } }]
+              },
+              {
+                $or: [{ description: { $regex: new RegExp(args.search) } }]
+              }
+            ]
+          })
+            .limit(args.limit)
+            .sort({ startDate: 'ascending' });
+        } catch (err) {
+          console.log(err);
         }
       },
       onedayevents: async (parent, args, { user }) => {

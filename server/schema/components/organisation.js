@@ -36,6 +36,7 @@ module.exports = {
 
     extend type Query {
       organisation(id: ID!): Organisation
+      searchOrganisationsByName(search: String, limit: Int): [Organisation!]!
       organisations: [Organisation!]!
     }
 
@@ -66,6 +67,18 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           return await Organisation.findById(args.id);
+        } catch (err) {
+          throw new Error('Bad request');
+        }
+      },
+      searchOrganisationsByName: async (parent, args, { user }) => {
+        if (!user) throw new Error('Error : You are not logged in');
+        try {
+          return await Organisation.find({
+            name: { $regex: new RegExp(args.search) }
+          })
+            .limit(args.limit)
+            .sort({ name: 1 });
         } catch (err) {
           throw new Error('Bad request');
         }

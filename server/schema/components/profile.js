@@ -29,6 +29,7 @@ module.exports = {
 
     extend type Query {
       profile(id: ID!): Profile
+      searchProfilesByName(search: String, limit: Int): [Profile!]!
       profiles: [Profile!]!
     }
 
@@ -67,6 +68,18 @@ module.exports = {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           return await Profile.findById(args.id);
+        } catch (err) {
+          throw new Error('Bad request');
+        }
+      },
+      searchProfilesByName: async (parent, args, { user }) => {
+        if (!user) throw new Error('Error : You are not logged in');
+        try {
+          return await Profile.find({
+            name: { $regex: new RegExp(args.search) }
+          })
+            .limit(args.limit)
+            .sort({ name: 1 });
         } catch (err) {
           throw new Error('Bad request');
         }
