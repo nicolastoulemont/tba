@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const LOGGED_USER = gql`
   {
-    currentuser {
+    currentUser {
       id
       avatar
       profile {
@@ -17,7 +17,7 @@ export const LOGGED_USER = gql`
 
 export const LOGGED_USER_ID = gql`
   {
-    currentuser {
+    currentUser {
       id
     }
   }

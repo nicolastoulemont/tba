@@ -14,7 +14,7 @@ const Profile = ({ match }) => {
     <Fragment>
       <CQuery query={LOGGED_USER}>
         {({ data }) => {
-          const loggedInUser = data.currentuser;
+          const loggedInUser = data.currentUser;
           return (
             <Fragment key={loggedInUser.id}>
               <div className="mt-2 text-center">

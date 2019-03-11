@@ -50,7 +50,7 @@ module.exports = {
 
     extend type Query {
       user(id: ID!): User
-      currentuser: User
+      currentUser: User
       users: [User!]!
     }
 
@@ -72,7 +72,7 @@ module.exports = {
           throw new Error('Bad request');
         }
       },
-      currentuser: async (parent, args, { user }) => {
+      currentUser: async (parent, args, { user }) => {
         if (!user) throw new Error('Error : You are not logged in');
         try {
           const logUser = user.user;

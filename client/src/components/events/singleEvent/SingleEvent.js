@@ -17,7 +17,7 @@ const SingleEvent = ({ match, history }) => {
           if (loading) return <Spinner />;
           if (error) return <DashboardError />;
           if (data) {
-            const user = data.currentuser;
+            const user = data.currentUser;
             return (
               <Fragment key={user.id}>
                 <div className="mt-2 text-center">

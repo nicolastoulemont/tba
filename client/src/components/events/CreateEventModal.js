@@ -106,7 +106,7 @@ class CreateEventModal extends Component {
             <div className="modal-body">
               <CQuery query={LOGGED_USER_ID}>
                 {({ data }) => {
-                  const user = data.currentuser;
+                  const user = data.currentUser;
                   // Trigger the QUERY on every APP state changes...Maybe a passing the user as a prop would be a better idea
                   return (
                     <Fragment key={user.id}>

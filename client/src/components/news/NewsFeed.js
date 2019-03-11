@@ -7,7 +7,7 @@ import { GET_EVENTS } from '../graphql/event/Queries';
 const NewsFeed = ({ user }) => {
   return (
     <Fragment>
-      <CQuery query={GET_EVENTS} fetchPolicy="network-only">
+      <CQuery query={GET_EVENTS}>
         {({ data }) => {
           return (
             <Fragment>

@@ -10,7 +10,7 @@ const Dashboard = () => {
     <Fragment>
       <CQuery query={LOGGED_USER}>
         {({ data }) => {
-          const user = data.currentuser;
+          const user = data.currentUser;
           return (
             <Fragment>
               <div className="mt-2 text-center">
