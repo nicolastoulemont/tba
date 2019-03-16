@@ -5,8 +5,6 @@ const { SECRET } = require('../../config/keys');
 // Utilitary
 const { gql } = require('apollo-server-express');
 const gravatar = require('gravatar');
-// Models
-const { User } = require('../../models/');
 
 // Validation
 const validateRegInput = require('../../validation/user');
@@ -112,7 +110,7 @@ module.exports = {
 		},
 
 		Mutation: {
-			register: async (parent, args) => {
+			register: async (parent, args, { models: { User } }) => {
 				const { errors, isValid } = await validateRegInput(args);
 				if (!isValid) return { success: false, errors };
 				const { password } = args;
@@ -135,7 +133,7 @@ module.exports = {
 					return { success: false, error };
 				}
 			},
-			login: async (parent, args) => {
+			login: async (parent, args, { models: { User } }) => {
 				const user = await User.findOne({ email: args.email });
 				if (!user) return { success: false, error: 'Invalid Email' };
 				const valid = await bcrypt.compare(args.password, user.password);

@@ -1,5 +1,3 @@
-// Models
-const { User, EventItem, Registration } = require('../../models/');
 const { gql } = require('apollo-server-express');
 const { validateEventInput, validateUpdEventIntput } = require('../../validation/event');
 
@@ -77,7 +75,7 @@ module.exports = {
 	// Resolvers
 	EventRes: {
 		Query: {
-			event: async (parent, args, { user }) => {
+			event: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
 					return await EventItem.findById(args.id);
@@ -151,7 +149,7 @@ module.exports = {
 		},
 
 		EventItem: {
-			creator: (parent, args) => {
+			creator: (parent, args, { models: User }) => {
 				return User.findOne({ _id: parent.userId });
 			},
 			comments: (parent, args, { models: CommentItem }) => {
@@ -166,7 +164,7 @@ module.exports = {
 			reports: (parent, args, { models: { Report } }) => {
 				return Report.find({ eventId: parent.id });
 			},
-			registrations: (parent, args) => {
+			registrations: (parent, args, { models: Registration }) => {
 				return Registration.find({ eventId: parent.id });
 			}
 		},

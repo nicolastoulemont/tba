@@ -24,7 +24,7 @@ const server = new ApolloServer({
 			const user = jwt.verify(token, SECRET);
 			return { user, SECRET, models };
 		} catch (err) {
-			return err;
+			return {err, models};
 		}
 	},
 	playground: true
