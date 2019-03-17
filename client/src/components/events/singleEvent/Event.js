@@ -33,10 +33,8 @@ const Event = ({ user, eventId, history }) => {
 							categoryOne={event.categoryOne}
 							categoryTwo={event.categoryTwo}
 							categoryThree={event.categoryThree}
-							startDate={event.startDate}
-							startTime={event.startTime}
-							endDate={event.endDate}
-							endTime={event.endTime}
+							start={event.start}
+							end={event.end}
 						/>
 						<EventAbout description={event.description} />
 						<EventSocial user={user} eventId={event.id} eventCreator={event.userId} />

@@ -25,14 +25,15 @@ const HostedEventsDisplay = ({ events }) => {
 								<small className="font-weight-bold mr-2 link-menu">{event.name}</small>
 							</Link>
 							<small className="d-block">{event.location}</small>
-							{event.startDate === event.endDate ? (
-								<small className="d-block">
-									{new Date(event.startDate).toDateString()} from {event.startTime} to {event.endTime}
+							{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
+								<small>
+									{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
+									{new Date(event.end).toTimeString().slice(0, 5)}
 								</small>
 							) : (
-								<small className="d-block">
-									From {new Date(event.startDate).toDateString()} at {event.startTime} to{' '}
-									{new Date(event.endDate).toDateString()} at {event.endTime}
+								<small>
+									On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
+									{new Date(event.end).toUTCString().slice(0, 22)}
 								</small>
 							)}
 						</div>

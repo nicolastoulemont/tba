@@ -19,10 +19,8 @@ const EventHeader = ({
 	categoryOne,
 	categoryTwo,
 	categoryThree,
-	startDate,
-	startTime,
-	endDate,
-	endTime
+	start,
+	end
 }) => {
 	return (
 		<Fragment>
@@ -32,7 +30,8 @@ const EventHeader = ({
 						<div className="text-center text-md-left my-2 mx-4">
 							<p className="font-weight-bold text-uppercase">{name}</p>
 							<p className="my-1">
-								{categoryOne} | {categoryTwo} | {categoryThree}
+								{categoryOne} {categoryTwo === 'Default' ? null : `| ${categoryTwo}`}
+								{categoryThree === 'Default' ? null : `| ${categoryThree}`}
 							</p>
 							<div className="d-block d-md-none">
 								<div className="d-inline">
@@ -47,23 +46,16 @@ const EventHeader = ({
 									<small>{userOrganisation}</small>
 								</div>
 							</div>
-							{startDate === endDate ? (
-								<div>
-									<p className="my-1">
-										{' '}
-										{ispublic ? 'Public event' : 'Private Event'}
-										{' -'} {new Date(startDate).toDateString()}
-									</p>
-									<small>
-										{startTime} to {endTime}
-									</small>
-								</div>
+							{new Date(start).getDate() === new Date(end).getDate() ? (
+								<small>
+									{new Date(start).toUTCString().slice(0, 22)} -{' '}
+									{new Date(end).toTimeString().slice(0, 5)}
+								</small>
 							) : (
-								<p className="my-1">
-									{ispublic ? 'Public event' : 'Private Event'}
-									On {new Date(startDate).toDateString()} from {startTime} to {endTime} on{' '}
-									{new Date(endDate).toDateString()}
-								</p>
+								<small>
+									On {new Date(start).toUTCString().slice(0, 22)} to{' '}
+									{new Date(end).toUTCString().slice(0, 22)}
+								</small>
 							)}
 							<p className="my-1">{location}</p>
 						</div>
@@ -77,10 +69,8 @@ const EventHeader = ({
 								categoryOne={categoryOne}
 								categoryTwo={categoryTwo}
 								categoryThree={categoryThree}
-								startDate={startDate}
-								startTime={startTime}
-								endDate={endDate}
-								endTime={endTime}
+								start={start}
+								end={end}
 								description={description}
 								location={location}
 								eventCreator={userId}

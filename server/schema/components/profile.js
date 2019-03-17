@@ -94,7 +94,7 @@ module.exports = {
 
 		Profile: {
 			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return User.findById(parent.userId);
 			}
 		},
 

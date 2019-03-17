@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const { gql } = require('apollo-server-express');
 const { validateEventInput, validateUpdEventIntput } = require('../../validation/event');
 
@@ -13,10 +14,8 @@ module.exports = {
 			categoryTwo: String
 			categoryThree: String
 			location: String!
-			startDate: String
-			startTime: String
-			endDate: String
-			endTime: String
+			start: Date!
+			end: Date!
 			createdAt: Date
 			updatedAt: Date
 			creator: User
@@ -36,8 +35,14 @@ module.exports = {
 		extend type Query {
 			event(id: ID!): EventItem
 			events(first: Int): [EventItem!]!
+			searchEventsByDate(date: String): [EventItem!]!
 			searchEventsByNameOrDescription(search: String, limit: Int): [EventItem!]!
-			onedayevents(day: String!, interestOne: String!, interestTwo: String, interestThree: String): [EventItem!]!
+			onedayevents(
+				day: String!
+				interestOne: String!
+				interestTwo: String
+				interestThree: String
+			): [EventItem!]!
 		}
 
 		extend type Mutation {
@@ -50,10 +55,8 @@ module.exports = {
 				categoryTwo: String
 				categoryThree: String
 				location: String!
-				startDate: String
-				startTime: String
-				endDate: String
-				endTime: String
+				start: Date!
+				end: Date!
 			): EventResp!
 			updateEvent(
 				_id: ID!
@@ -64,10 +67,8 @@ module.exports = {
 				categoryTwo: String
 				categoryThree: String
 				location: String!
-				startDate: String
-				startTime: String
-				endDate: String
-				endTime: String
+				start: Date!
+				end: Date!
 			): EventResp!
 			deleteEvent(_id: ID!, userId: String!): EventResp!
 		}
@@ -75,8 +76,7 @@ module.exports = {
 	// Resolvers
 	EventRes: {
 		Query: {
-			event: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+			event: async (parent, args, { models: { EventItem } }) => {
 				try {
 					return await EventItem.findById(args.id);
 				} catch (err) {
@@ -91,30 +91,42 @@ module.exports = {
 					throw new Error('Bad request');
 				}
 			},
+			searchEventsByDate: async (parent, args, { user, models: { EventItem } }) => {
+				if (!user || !EventItem) throw new Error('Error : You are not logged in');
+				const date = new Date(args.date);
+				const dayafter = new Date(new Date(args.date).setDate(new Date(args.date).getDate() + 1));
+				try {
+					return await EventItem.find({
+						start: { $gte: date, $lte: dayafter }
+					})
+						.sort({ start: 'ascending' })
+						.limit(args.limit);
+				} catch (err) {
+					console.log(err);
+				}
+			},
 			searchEventsByNameOrDescription: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user || !EventItem) throw new Error('Error : You are not logged in');
 				try {
 					return await EventItem.find({
 						$or: [
-							{
-								$or: [{ name: { $regex: new RegExp(args.search) } }]
-							},
-							{
-								$or: [{ description: { $regex: new RegExp(args.search) } }]
-							}
+							{ name: { $regex: new RegExp(args.search) } },
+							{ description: { $regex: new RegExp(args.search) } }
 						]
 					})
-						.limit(args.limit)
-						.sort({ startDate: 'ascending' });
+						.sort({ start: 'ascending' })
+						.limit(args.limit);
 				} catch (err) {
 					console.log(err);
 				}
 			},
 			onedayevents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user || !EventItem) throw new Error('Error : You are not logged in');
+				const date = new Date(args.day);
+				const dayafter = new Date(new Date(args.day).setDate(new Date(args.day).getDate() + 1));
 				try {
 					return await EventItem.find({
-						startDate: args.day,
+						start: { $gte: date, $lte: dayafter },
 						ispublic: true,
 						$or: [
 							{
@@ -140,7 +152,7 @@ module.exports = {
 							}
 						]
 					}).sort({
-						startDate: 'ascending'
+						start: 'ascending'
 					});
 				} catch (err) {
 					throw new Error('Bad request');
@@ -149,22 +161,22 @@ module.exports = {
 		},
 
 		EventItem: {
-			creator: (parent, args, { models: User }) => {
+			creator: (parent, args, { models: { User } }) => {
 				return User.findOne({ _id: parent.userId });
 			},
-			comments: (parent, args, { models: CommentItem }) => {
+			comments: (parent, args, { models: { CommentItem } }) => {
 				return CommentItem.find({ eventId: parent.id });
 			},
-			polls: (parent, args, { models: Poll }) => {
+			polls: (parent, args, { models: { Poll } }) => {
 				return Poll.find({ eventId: parent.id });
 			},
-			likes: (parent, args, { models: Like }) => {
+			likes: (parent, args, { models: { Like } }) => {
 				return Like.find({ eventId: parent.id });
 			},
 			reports: (parent, args, { models: { Report } }) => {
 				return Report.find({ eventId: parent.id });
 			},
-			registrations: (parent, args, { models: Registration }) => {
+			registrations: (parent, args, { models: { Registration } }) => {
 				return Registration.find({ eventId: parent.id });
 			}
 		},
@@ -188,12 +200,9 @@ module.exports = {
 						categoryTwo: args.categoryTwo,
 						categoryThree: args.categoryThree,
 						location: args.location,
-						startDate: args.startDate,
-						startTime: args.startTime,
-						endDate: args.endDate,
-						endTime: args.endTime
-					});
-					console.log(event);
+						start: new Date(args.start),
+						end: new Date(args.end)
+					}).save();
 					return { success: true, event };
 				} catch (err) {
 					console.log(err);
@@ -217,10 +226,8 @@ module.exports = {
 					if (args.categoryTwo) updateEvent.categoryTwo = args.categoryTwo;
 					if (args.categoryThree) updateEvent.categoryThree = args.categoryThree;
 					if (args.location) updateEvent.location = args.location;
-					if (args.startDate) updateEvent.startDate = args.startDate;
-					if (args.startTime) updateEvent.startTime = args.startTime;
-					if (args.endDate) updateEvent.endDate = args.endDate;
-					if (args.endTime) updateEvent.endTime = args.endTime;
+					if (args.start) updateEvent.start = new Date(args.start);
+					if (args.end) updateEvent.end = new Date(args.end);
 
 					const updEvent = await EventItem.findByIdAndUpdate(args._id, updateEvent, {
 						new: true

@@ -23,10 +23,8 @@ class CreateEventModal extends Component {
       categoryTwo: '',
       categoryThree: '',
       location: '',
-      startDate: '',
-      startTime: '',
-      endDate: '',
-      endTime: '',
+      start: '',
+      end: '',
       newEvent: false,
       errors: !{}
     };
@@ -49,10 +47,8 @@ class CreateEventModal extends Component {
       categoryTwo: '',
       categoryThree: '',
       location: '',
-      startDate: '',
-      startTime: '',
-      endDate: '',
-      endTime: '',
+      start: '',
+      end: '',
       newEvent: true,
       errors: !{}
     });
@@ -71,10 +67,8 @@ class CreateEventModal extends Component {
       categoryTwo,
       categoryThree,
       location,
-      startDate,
-      startTime,
-      endDate,
-      endTime,
+     start,
+     end,
       errors,
       newEvent
     } = this.state;
@@ -125,10 +119,8 @@ class CreateEventModal extends Component {
                                   categoryTwo,
                                   categoryThree,
                                   location,
-                                  startDate,
-                                  startTime,
-                                  endDate,
-                                  endTime
+                                  start,
+                                  end
                                 }
                               });
                               const {
@@ -203,30 +195,9 @@ class CreateEventModal extends Component {
                                 {' '}
                                 <InputField
                                   type="text"
-                                  placeholder="Start Date : YYYY-MM-DD"
-                                  name="startDate"
-                                  value={startDate}
-                                  onChange={this.onChange}
-                                />
-                              </div>
-                              <div className="col">
-                                <InputField
-                                  type="text"
-                                  placeholder="Start Time: HH:MM"
-                                  name="startTime"
-                                  value={startTime}
-                                  onChange={this.onChange}
-                                />
-                              </div>
-                            </div>
-                            <div className="form-row">
-                              <div className="col">
-                                {' '}
-                                <InputField
-                                  type="text"
-                                  placeholder="End Date: YYYY-MM-DD"
-                                  name="endDate"
-                                  value={endDate}
+                                  placeholder="Event Start :  YYYY-MM-DDTHH-MM"
+                                  name="start"
+                                  value={start}
                                   onChange={this.onChange}
                                 />
                               </div>
@@ -234,9 +205,9 @@ class CreateEventModal extends Component {
                                 {' '}
                                 <InputField
                                   type="text"
-                                  placeholder="End Time: HH:MM"
-                                  name="endTime"
-                                  value={endTime}
+                                  placeholder=" Event End : YYYY-MM-DDTHH-MM"
+                                  name="end"
+                                  value={end}
                                   onChange={this.onChange}
                                 />
                               </div>
