@@ -44,7 +44,6 @@ const loginUser = async user => {
 };
 
 const updateUserInfo = async (args, user, User) => {
-	// check req author and req target matching
 	try {
 		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
 		let updateUser = {};

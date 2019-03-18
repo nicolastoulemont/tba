@@ -1,10 +1,7 @@
 // Password utils
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { SECRET } = require('../../config/keys');
 // Utilitary
 const { gql } = require('apollo-server-express');
-const gravatar = require('gravatar');
 
 // Validation
 const { validateRegInput, validateUpdateInput } = require('../../validation/user');

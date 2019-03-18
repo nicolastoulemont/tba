@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server-express');
 const { validateCommentInput } = require('../../validation/comment');
+const { buildComment } = require('../../builders/comment');
 
 module.exports = {
 	CommentType: gql`
@@ -10,10 +11,9 @@ module.exports = {
 			pollId: String
 			commentId: String
 			text: String!
-			edited: Boolean
 			moderated: Boolean
-			createdAt: String
-			updatedAt: String
+			createdAt: Date
+			updatedAt: Date
 			event: EventItem
 			comment: CommentItem
 			comments: [CommentItem]
@@ -29,7 +29,13 @@ module.exports = {
 		}
 
 		extend type Mutation {
-			addComment(userId: String!, eventId: String, commentId: String, pollId: String, text: String!): CommentItem
+			addComment(
+				userId: String!
+				eventId: String
+				commentId: String
+				pollId: String
+				text: String!
+			): CommentItem
 			updateComment(_id: ID!, text: String): CommentItem
 			moderateComment(_id: ID!, userId: String!, eventId: String!): CommentItem
 		}
@@ -87,17 +93,18 @@ module.exports = {
 					};
 				const { errors, isValid } = await validateCommentInput(args);
 				if (!isValid) return { success: false, errors };
-				try {
-					return await new CommentItem({
-						userId: args.userId,
-						eventId: args.eventId,
-						commentId: args.commentId,
-						pollId: args.pollId,
-						text: args.text
-					}).save();
-				} catch (err) {
-					console.log(err);
-				}
+				return await buildComment(args, CommentItem);
+				// try {
+				// 	return await new CommentItem({
+				// 		userId: args.userId,
+				// 		eventId: args.eventId,
+				// 		commentId: args.commentId,
+				// 		pollId: args.pollId,
+				// 		text: args.text
+				// 	}).save();
+				// } catch (err) {
+				// 	console.log(err);
+				// }
 			},
 			updateComment: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user)
@@ -124,7 +131,11 @@ module.exports = {
 					return null;
 				}
 			},
-			moderateComment: async (parent, { _id, userId, eventId }, { user, models: { CommentItem, EventItem } }) => {
+			moderateComment: async (
+				parent,
+				{ _id, userId, eventId },
+				{ user, models: { CommentItem, EventItem } }
+			) => {
 				if (!user)
 					return {
 						success: false,
