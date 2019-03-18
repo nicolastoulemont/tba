@@ -10,6 +10,10 @@ const eventSchema = new Schema({
 		type: String,
 		required: true
 	},
+	abstract: {
+		type: String,
+		required: true
+	},
 	description: {
 		type: String,
 		required: true

@@ -9,6 +9,8 @@ const gravatar = require('gravatar');
 // Validation
 const validateRegInput = require('../../validation/user');
 
+const { registerUser, loginUser, updateUserInfo } = require('../../builders/user');
+
 module.exports = {
 	UserType: gql`
 		type User {
@@ -113,46 +115,14 @@ module.exports = {
 			register: async (parent, args, { models: { User } }) => {
 				const { errors, isValid } = await validateRegInput(args);
 				if (!isValid) return { success: false, errors };
-				const { password } = args;
-				try {
-					const avatar = gravatar.url(args.email, {
-						s: '200',
-						r: 'pg',
-						d: 'mm'
-					});
-
-					const hashedPwd = await bcrypt.hash(password, 12);
-					let user = new User({
-						email: args.email,
-						avatar,
-						password: hashedPwd
-					}).save();
-					return { success: true, user };
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return await registerUser(args, User);
 			},
 			login: async (parent, args, { models: { User } }) => {
 				const user = await User.findOne({ email: args.email });
 				if (!user) return { success: false, error: 'Invalid Email' };
 				const valid = await bcrypt.compare(args.password, user.password);
 				if (!valid) return { success: false, error: 'Invalid Password' };
-				try {
-					const token = await jwt.sign(
-						{
-							user: {
-								id: user._id
-							}
-						},
-						SECRET,
-						{ expiresIn: '1y' }
-					);
-					return { success: true, token };
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return await loginUser(user);
 			},
 			updateUser: async (parent, args, { user, models: { User } }) => {
 				if (!user)
@@ -160,15 +130,7 @@ module.exports = {
 						success: false,
 						error: 'You are not logged in'
 					};
-				try {
-					let updateUser = {};
-					if (args.email) updateUser.email = args.email;
-					return await User.findByIdAndUpdate(args._id, updateUser, {
-						new: true
-					});
-				} catch (err) {
-					console.log(err);
-				}
+				return await updateUserInfo(args, user, User);
 			},
 			deleteUser: async (parent, args, { user, models: { User } }) => {
 				if (!user)
