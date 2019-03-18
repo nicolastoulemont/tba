@@ -7,7 +7,7 @@ const { gql } = require('apollo-server-express');
 const gravatar = require('gravatar');
 
 // Validation
-const validateRegInput = require('../../validation/user');
+const { validateRegInput, validateUpdateInput } = require('../../validation/user');
 
 const { registerUser, loginUser, updateUserInfo } = require('../../builders/user');
 
@@ -130,6 +130,8 @@ module.exports = {
 						success: false,
 						error: 'You are not logged in'
 					};
+				const { errors, isValid } = await validateUpdateInput(args);
+				if (!isValid) return { success: false, errors };
 				return await updateUserInfo(args, user, User);
 			},
 			deleteUser: async (parent, args, { user, models: { User } }) => {

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const gravatar = require('gravatar');
 const { SECRET } = require('../config/keys');
+const { isAuthorized } = require('../validation/isAuthorized');
 
 const registerUser = async (args, User) => {
 	try {
@@ -45,18 +46,15 @@ const loginUser = async user => {
 const updateUserInfo = async (args, user, User) => {
 	// check req author and req target matching
 	try {
-		const reqAuthor = await User.findOne({ _id: user.user.id });
-		const reqTarget = await User.findOne({ _id: args._id });
-		if (reqAuthor.email == reqTarget.email) {
-			let updateUser = {};
-			if (args.email) updateUser.email = args.email;
-			return await User.findByIdAndUpdate(args._id, updateUser, {
-				new: true
-			});
-		}
+		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
+		let updateUser = {};
+		if (args.email) updateUser.email = args.email;
+		return await User.findByIdAndUpdate(args._id, updateUser, {
+			new: true
+		});
 	} catch (err) {
 		console.log(err);
-		return new Error('You can only modify your user infos');
+		return new Error('An error has occured');
 	}
 };
 

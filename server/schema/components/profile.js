@@ -1,4 +1,5 @@
 const { gql } = require('apollo-server-express');
+const { buildProfile, updateProfile, deleteProfile } = require('../../builders/profile');
 
 module.exports = {
 	ProfileType: gql`
@@ -106,66 +107,25 @@ module.exports = {
 						error: 'You are not logged in'
 					};
 				// TODO : Add input validation function
-				try {
-					let newProfile = new Profile({
-						userId: args.userId,
-						name: args.name,
-						organisation: args.organisation,
-						position: args.position,
-						interestOne: args.interestOne,
-						interestTwo: args.interestTwo,
-						interestThree: args.interestThree,
-						bio: args.bio,
-						twitter: args.twitter,
-						linkedin: args.linkedin
-					}).save();
-					return { success: true, newProfile };
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return buildProfile(args, Profile);
 			},
-			updateProfile: async (parent, args, { user, models: { Profile } }) => {
+			updateProfile: async (parent, args, { user, models: { User, Profile } }) => {
 				if (!user)
 					return {
 						success: false,
 						error: 'You are not logged in'
 					};
 				// TODO : Add input validation function
-				try {
-					let updateProfile = {};
-					if (args.name) updateProfile.name = args.name;
-					if (args.organisation) updateProfile.organisation = args.organisation;
-					if (args.position) updateProfile.position = args.position;
-					if (args.interestOne) updateProfile.interestOne = args.interestOne;
-					if (args.interestTwo) updateProfile.interestTwo = args.interestTwo;
-					if (args.interestThree) updateProfile.interestThree = args.interestThree;
-					if (args.bio) updateProfile.bio = args.bio;
-					if (args.twitter) updateProfile.twitter = args.twitter;
-					if (args.linkedin) updateProfile.linkedin = args.linkedin;
-
-					return {
-						success: true,
-						profile: await Profile.findByIdAndUpdate(args._id, updateProfile, {
-							new: true
-						})
-					};
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return updateProfile(args, user, User, Profile);
 			},
-			deleteProfile: async (parent, args, { user, models: { Profile } }) => {
+			deleteProfile: async (parent, args, { user, models: { User, Profile } }) => {
 				if (!user)
 					return {
 						success: false,
 						error: 'You are not logged in'
 					};
 				try {
-					return {
-						success: true,
-						deleteProfile: await Profile.findByIdAndDelete(args._id)
-					};
+					return await deleteProfile(args, user, User, Profile);
 				} catch (err) {
 					console.log(err);
 					return { success: false, error };
