@@ -13,7 +13,6 @@ class EventCommentsFeed extends Component {
 					<CQuery query={GET_EVENT_COMMENTS} variables={{ id: eventId }}>
 						{({ data: { event }, refetch }) => {
 							const comments = event.comments;
-							console.log(comments);
 							return (
 								<Fragment>
 									{comments.map(comment => (

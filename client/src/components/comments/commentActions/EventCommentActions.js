@@ -62,7 +62,7 @@ class EventCommentActions extends Component {
 					{createdAt !== updatedAt ? (
 						<small className="font-italic"> edited {dayjs(updatedAt).fromNow()}</small>
 					) : (
-						<small className="font-italic">posted {dayjs(createdAt).fromNow()}</small>
+						<small className="font-italic"> posted {dayjs(createdAt).fromNow()}</small>
 					)}
 				</small>
 				{showReplyForm ? (

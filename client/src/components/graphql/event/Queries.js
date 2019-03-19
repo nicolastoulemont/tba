@@ -66,6 +66,8 @@ export const GET_EVENT = gql`
 			categoryThree
 			start
 			end
+			createdAt
+			updatedAt
 			creator {
 				avatar
 				profile {

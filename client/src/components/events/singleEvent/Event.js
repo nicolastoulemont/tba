@@ -37,7 +37,13 @@ const Event = ({ user, eventId, history }) => {
 							end={event.end}
 						/>
 						<EventAbout description={event.description} />
-						<EventSocial user={user} eventId={event.id} eventCreator={event.userId} />
+						<EventSocial
+							user={user}
+							eventId={event.id}
+							eventCreator={event.userId}
+							createdAt={event.createdAt}
+							updatedAt={event.updatedAt}
+						/>
 					</Fragment>
 				);
 			}}
