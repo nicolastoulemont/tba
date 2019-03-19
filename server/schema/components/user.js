@@ -13,6 +13,7 @@ module.exports = {
 		type User {
 			id: ID!
 			email: String!
+			isPro: Boolean
 			avatar: String
 			createdAt: String
 			updatedAt: String

@@ -13,6 +13,10 @@ const userSchema = new Schema({
 		type: String,
 		required: true
 	},
+	isPro: {
+		type: Boolean,
+		default: false
+	},
 	avatar: String,
 	createdAt: {
 		type: Date,
