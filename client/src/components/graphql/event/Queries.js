@@ -38,17 +38,18 @@ export const GET_DAY_EVENTS = gql`
 
 export const GET_EVENTS = gql`
 	{
-		events {
+		events(first: 10) {
 			id
 			userId
 			name
+			abstract
 			ispublic
-			categoryOne
-			categoryTwo
-			categoryThree
 			location
 			start
 			end
+			categoryOne
+			categoryTwo
+			categoryThree
 		}
 	}
 `;

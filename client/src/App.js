@@ -1,13 +1,14 @@
 import ApolloClient from 'apollo-boost';
 import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import logo from './logo.svg';
 import './App.css';
 import PrivateRoute from './components/auth/Auth';
+import IncorrectRoute from './components/commons/IncorrectRoute';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Dashboard from './components/dashboard/Dashboard';
+import Home from './components/home/Home';
 import SingleEvent from './components/events/singleEvent/SingleEvent';
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
@@ -19,38 +20,37 @@ import Config from './config/config';
 const { uri, token } = Config;
 
 const client = new ApolloClient({
-  uri,
-  headers: {
-    authorization: token ? token : ''
-  }
+	uri,
+	headers: {
+		authorization: token ? token : ''
+	}
 });
 
 class App extends Component {
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <Router>
-          <div className="App">
-            <Route component={Navbar} />
-            <div className="container">
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute
-                exact
-                path="/create-profile"
-                component={CreateProfile}
-              />
-              <PrivateRoute exact path="/profile/:id" component={Profile} />
-              <PrivateRoute exact path="/event/:id" component={SingleEvent} />
-            </div>
-            <PrivateRoute component={MobileNav} />
-          </div>
-        </Router>
-      </ApolloProvider>
-    );
-  }
+	render() {
+		return (
+			<ApolloProvider client={client}>
+				<Router>
+					<div className="App">
+						<Route component={Navbar} />
+						<div className="container">
+							<Switch>
+								<Route exact path="/" component={Landing} />
+								<Route exact path="/register" component={Register} />
+								<Route exact path="/login" component={Login} />
+								<PrivateRoute exact path="/home" component={Home} />
+								<PrivateRoute exact path="/create-profile" component={CreateProfile} />
+								<PrivateRoute exact path="/profile/:id" component={Profile} />
+								<PrivateRoute exact path="/event/:id" component={SingleEvent} />
+								<Route component={IncorrectRoute} />
+							</Switch>
+						</div>
+						<PrivateRoute component={MobileNav} />
+					</div>
+				</Router>
+			</ApolloProvider>
+		);
+	}
 }
 
 export default App;

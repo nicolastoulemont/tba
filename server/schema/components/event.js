@@ -89,7 +89,9 @@ module.exports = {
 			events: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
-					return await EventItem.find({ ispublic: true }).limit(args.first);
+					return await EventItem.find({ ispublic: true })
+						.sort({ _id: 'ascending' })
+						.limit(args.first);
 				} catch (err) {
 					throw new Error('Bad request');
 				}

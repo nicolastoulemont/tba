@@ -1,18 +1,18 @@
 import React, { Fragment } from 'react';
 import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
-import DashboardFeed from './DashboardFeed';
+import HomeFeed from './HomeFeed';
 import SideBarUserProfile from '../profile/SideBarUserProfile';
 import SideBarUserEvents from '../events/sideBarUserEvents/SideBarUserEvents';
 
-const Dashboard = () => {
+const Home = () => {
 	const userHasProfile = user => {
 		return (
 			<Fragment>
 				<div className="mt-2 text-center">
 					<div className="row">
 						<main className="col-sm-12 col-lg-8 bg-white">
-							<DashboardFeed
+							<HomeFeed
 								user={user.id}
 								interestOne={user.profile.interestOne}
 								interestTwo={user.profile.interestTwo}
@@ -56,4 +56,4 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default Home;
