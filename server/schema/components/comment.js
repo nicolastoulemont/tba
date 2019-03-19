@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 const { validateCommentInput } = require('../../validation/comment');
-const { buildComment } = require('../../builders/comment');
+const { buildComment, updateComment, moderateComment } = require('../../builders/comment');
 
 module.exports = {
 	CommentType: gql`
@@ -12,6 +12,7 @@ module.exports = {
 			commentId: String
 			text: String!
 			moderated: Boolean
+			moderationMsg: String
 			createdAt: Date
 			updatedAt: Date
 			event: EventItem
@@ -94,19 +95,8 @@ module.exports = {
 				const { errors, isValid } = await validateCommentInput(args);
 				if (!isValid) return { success: false, errors };
 				return await buildComment(args, CommentItem);
-				// try {
-				// 	return await new CommentItem({
-				// 		userId: args.userId,
-				// 		eventId: args.eventId,
-				// 		commentId: args.commentId,
-				// 		pollId: args.pollId,
-				// 		text: args.text
-				// 	}).save();
-				// } catch (err) {
-				// 	console.log(err);
-				// }
 			},
-			updateComment: async (parent, args, { user, models: { CommentItem } }) => {
+			updateComment: async (parent, args, { user, models: { User, CommentItem } }) => {
 				if (!user)
 					return {
 						success: false,
@@ -114,55 +104,15 @@ module.exports = {
 					};
 				const { errors, isValid } = await validateCommentInput(args);
 				if (!isValid) return { success: false, errors };
-				const comment = await CommentItem.findById(args._id);
-				if (!comment.moderated) {
-					let updateComment = {
-						edited: true,
-						text: args.text
-					};
-					try {
-						return await CommentItem.findByIdAndUpdate(args._id, updateComment, {
-							new: true
-						});
-					} catch (err) {
-						console.log(err);
-					}
-				} else {
-					return null;
-				}
+				return await updateComment(args, user, CommentItem);
 			},
-			moderateComment: async (
-				parent,
-				{ _id, userId, eventId },
-				{ user, models: { CommentItem, EventItem } }
-			) => {
+			moderateComment: async (parent, args, { user, models: { CommentItem, EventItem } }) => {
 				if (!user)
 					return {
 						success: false,
 						error: 'You are not logged in'
 					};
-				let deletedComment = {
-					moderated: true,
-					text: 'Comment deleted'
-				};
-				let moderatedComment = {
-					moderated: true,
-					text: 'Comment moderated'
-				};
-				try {
-					const comment = await CommentItem.findById(_id);
-					const event = await EventItem.findById(eventId);
-					if (comment.userId === userId)
-						return await CommentItem.findByIdAndUpdate(_id, deletedComment, {
-							new: true
-						});
-					if (event.userId === userId && comment.userId !== userId)
-						return await CommentItem.findByIdAndUpdate(_id, moderatedComment, {
-							new: true
-						});
-				} catch (err) {
-					console.log(err);
-				}
+				return await moderateComment(args, CommentItem, EventItem);
 			}
 		}
 	}

@@ -17,6 +17,7 @@ const commentSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
+	moderationMsg: String,
 	createdAt: {
 		type: Date,
 		default: Date.now()

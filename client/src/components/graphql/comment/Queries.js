@@ -9,6 +9,7 @@ export const GET_EVENT_COMMENTS = gql`
 				userId
 				text
 				moderated
+				moderationMsg
 				createdAt
 				updatedAt
 				creator {
@@ -31,6 +32,7 @@ export const GET_COMMENT_COMMENTS = gql`
 				userId
 				text
 				moderated
+				moderationMsg
 				createdAt
 				updatedAt
 				creator {

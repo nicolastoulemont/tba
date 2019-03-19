@@ -17,7 +17,8 @@ const EventCommentDisplay = ({
 	user,
 	eventId,
 	eventCreator,
-	moderated
+	moderated,
+	moderationMsg
 }) => {
 	return (
 		<div className="list-group-item border-0 py-1 px-2" key={id}>
@@ -29,8 +30,12 @@ const EventCommentDisplay = ({
 					<div className="col-9 col-md-10 mx-0 pr-0 pl-1 py-0">
 						<div className="text-left mx-auto">
 							<UserNameLink id={creatorId} name={creatorName} />
-							<small className="d-none d-md-inline-block font-italic ml-2 py-0">{text}</small>
-							<small className="d-inline-block d-md-none font-italic ml-4 py-0">{text}</small>
+							<small className="d-none d-md-inline-block font-italic ml-2 py-0">
+								{moderationMsg}
+							</small>
+							<small className="d-inline-block d-md-none font-italic ml-4 py-0">
+								{moderationMsg}
+							</small>
 						</div>
 					</div>
 				) : (

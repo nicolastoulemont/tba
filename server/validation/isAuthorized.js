@@ -10,4 +10,11 @@ const isAuthorized = async (args, user, User) => {
 	}
 };
 
-module.exports = { isAuthorized };
+const isCommentAuthorOrModerated = async (args, user, CommentItem) => {
+	const comment = await CommentItem.findById(args._id);
+	if (comment.moderated) return false;
+	if (comment.userId === user.user.id) return true;
+	return false;
+};
+
+module.exports = { isAuthorized, isCommentAuthorOrModerated };
