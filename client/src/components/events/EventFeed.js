@@ -131,6 +131,7 @@ class EventFeed extends Component {
 
 				<CQuery query={GET_DAY_EVENTS} variables={{ day, interestOne, interestTwo, interestThree }}>
 					{({ data }) => {
+						console.log(data);
 						if (data) {
 							if (data.onedayevents.length === 0) {
 								return <div className="mt-4 pl-4 font-italic ">No events that day</div>;
@@ -145,6 +146,7 @@ class EventFeed extends Component {
 													userId={event.userId}
 													eventId={event.id}
 													name={event.name}
+													abstract={event.abstract}
 													creator={event.creator}
 													categoryOne={event.categoryOne}
 													categoryTwo={event.categoryTwo}

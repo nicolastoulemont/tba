@@ -16,6 +16,7 @@ export const GET_DAY_EVENTS = gql`
 			id
 			userId
 			name
+			abstract
 			ispublic
 			categoryOne
 			categoryTwo
