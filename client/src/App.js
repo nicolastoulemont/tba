@@ -38,7 +38,7 @@ class App extends Component {
 								<Route exact path="/" component={Landing} />
 								<Route exact path="/register" component={Register} />
 								<Route exact path="/login" component={Login} />
-								<PrivateRoute exact path="/home" component={Home} />
+								<PrivateRoute path="/home" component={Home} />
 								<PrivateRoute exact path="/create-profile" component={CreateProfile} />
 								<PrivateRoute exact path="/profile/:id" component={Profile} />
 								<PrivateRoute exact path="/event/:id" component={SingleEvent} />
