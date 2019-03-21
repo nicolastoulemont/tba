@@ -44,6 +44,7 @@ class App extends Component {
 								<PrivateRoute exact path="/profile/create/:id" component={CreateUserProfile} />
 								<PrivateRoute exact path="/profile/:id" component={Profile} />
 								<PrivateRoute exact path="/event/:id" component={SingleEvent} />
+								<PrivateRoute exact path="/event/create/:id" component={SingleEvent} />
 								<Route component={IncorrectRoute} />
 							</Switch>
 						</div>

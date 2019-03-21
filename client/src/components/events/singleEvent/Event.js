@@ -34,15 +34,11 @@ const Event = ({ user, event_ID, history }) => {
 							categoryThree={event.categoryThree}
 							start={event.start}
 							end={event.end}
-						/>
-						<EventAbout description={event.description} />
-						<EventSocial
-							user={user}
-							event_ID={event.id}
-							eventCreator={event.user_ID}
 							createdAt={event.createdAt}
 							updatedAt={event.updatedAt}
 						/>
+						<EventAbout description={event.description} />
+						<EventSocial user={user} event_ID={event.id} eventCreator={event.user_ID} />
 					</Fragment>
 				);
 			}}

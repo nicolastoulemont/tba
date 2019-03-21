@@ -7,7 +7,7 @@ import EventSocialSelector from './EventSocialSelector';
 
 import EventReportModal from '../../reports/EventReportModal';
 
-const EventSocial = ({ user, event_ID, eventCreator, createdAt, updatedAt }) => {
+const EventSocial = ({ user, event_ID, eventCreator }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<Fragment>
@@ -19,17 +19,6 @@ const EventSocial = ({ user, event_ID, eventCreator, createdAt, updatedAt }) => 
 								<i className="fas fa-flag float-left ml-3" />
 							</small>
 						</Link>
-						{createdAt !== updatedAt ? (
-							<small className="float-left ml-3 font-italic">
-								{' '}
-								edited {dayjs(updatedAt).fromNow()}
-							</small>
-						) : (
-							<small className="float-left ml-3 font-italic">
-								{' '}
-								posted {dayjs(createdAt).fromNow()}
-							</small>
-						)}
 						<EventReportModal event_ID={event_ID} />
 					</div>
 
