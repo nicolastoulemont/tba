@@ -5,13 +5,13 @@ module.exports = {
 	ReportType: gql`
 		type Report {
 			id: ID!
-			userId: ID!
+			user_ID: ID!
+			event_ID: String
+			poll_ID: String
+			comment_ID: String
+			organisation_ID: String
+			profile_ID: String
 			text: String!
-			eventId: String
-			pollId: String
-			organisationId: String
-			commentId: String
-			profileId: String
 			createdAt: String
 			updatedAt: String
 			event: EventItem
@@ -35,13 +35,13 @@ module.exports = {
 
 		extend type Mutation {
 			addReport(
-				userId: String!
+				user_ID: String!
+				event_ID: String
+				poll_ID: String
+				comment_ID: String
+				organisation_ID: String
+				profile_ID: String
 				text: String!
-				eventId: String
-				pollId: String
-				commentId: String
-				profileId: String
-				organisationId: String
 			): ReportResp!
 			deleteReport(_id: ID!): Report
 		}
@@ -68,23 +68,23 @@ module.exports = {
 		},
 
 		Report: {
-			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.eventId });
+			creator: (parent, args, { models: { User } }) => {
+				return User.findOne({ _id: parent.user_ID });
 			},
-			comment: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.findOne({ _id: parent.commentId });
+			event: (parent, args, { models: { EventItem } }) => {
+				return EventItem.findOne({ _id: parent.event_ID });
 			},
 			poll: (parent, args, { models: { Poll } }) => {
-				return Poll.findOne({ _id: parent.pollId });
+				return Poll.findOne({ _id: parent.poll_ID });
+			},
+			comment: (parent, args, { models: { CommentItem } }) => {
+				return CommentItem.findOne({ _id: parent.comment_ID });
 			},
 			organisation: (parent, args, { models: { Organisation } }) => {
-				return Organisation.findOne({ _id: parent.organisationId });
+				return Organisation.findOne({ _id: parent.organisation_ID });
 			},
 			profile: (parent, args, { models: { Profile } }) => {
-				return Profile.findOne({ _id: parent.profileId });
-			},
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return Profile.findOne({ _id: parent.profile_ID });
 			}
 		},
 
@@ -95,13 +95,13 @@ module.exports = {
 				if (!isValid) return { success: false, errors };
 				try {
 					let report = await new Report({
-						userId: args.userId,
-						text: args.text,
-						eventId: args.eventId,
-						commentId: args.commentId,
-						pollId: args.pollId,
-						organisationId: args.organisationId,
-						profileId: args.profileId
+						user_ID: args.user_ID,
+						event_ID: args.event_ID,
+						poll_ID: args.poll_ID,
+						comment_ID: args.comment_ID,
+						organisation_ID: args.organisation_ID,
+						profile_ID: args.profile_ID,
+						text: args.text
 					}).save();
 					return { success: true, report };
 				} catch (err) {

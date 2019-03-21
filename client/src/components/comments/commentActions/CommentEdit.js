@@ -16,7 +16,7 @@ class CommentEdit extends Component {
   };
 
   render() {
-    const { commentId, refetch } = this.props;
+    const { comment_ID, refetch } = this.props;
     const { text } = this.state;
     return (
       <Fragment>
@@ -38,7 +38,7 @@ class CommentEdit extends Component {
                   onClick={e => {
                     e.preventDefault();
                     editComment({
-                      variables: { _id: commentId, text }
+                      variables: { _id: comment_ID, text }
                     }).then(res => {
                       refetch();
                       this.setState({ text: '' });

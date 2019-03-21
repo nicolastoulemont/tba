@@ -14,10 +14,10 @@ export const GET_DAY_EVENTS = gql`
 			interestThree: $interestThree
 		) {
 			id
-			userId
+			user_ID
 			name
 			abstract
-			ispublic
+			isPublic
 			categoryOne
 			categoryTwo
 			categoryThree
@@ -25,11 +25,11 @@ export const GET_DAY_EVENTS = gql`
 			start
 			end
 			creator {
-				avatar
 				profile {
 					name
 					position
-					organisation
+					organisation_ID
+					picture_URL
 				}
 			}
 		}
@@ -40,10 +40,10 @@ export const GET_EVENTS = gql`
 	{
 		events(first: 10) {
 			id
-			userId
+			user_ID
 			name
 			abstract
-			ispublic
+			isPublic
 			location
 			start
 			end
@@ -58,8 +58,8 @@ export const GET_EVENT = gql`
 	query Event($id: ID!) {
 		event(id: $id) {
 			id
-			userId
-			ispublic
+			user_ID
+			isPublic
 			name
 			description
 			location
@@ -71,11 +71,11 @@ export const GET_EVENT = gql`
 			createdAt
 			updatedAt
 			creator {
-				avatar
 				profile {
 					name
 					position
-					organisation
+					organisation_ID
+					picture_URL
 				}
 			}
 		}

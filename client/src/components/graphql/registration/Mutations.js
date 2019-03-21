@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const ADD_REGISTRATION = gql`
-  mutation AddRegistration($userId: String!, $eventId: String!) {
-    addRegistration(userId: $userId, eventId: $eventId) {
+  mutation AddRegistration($user_ID: String!, $event_ID: String!) {
+    addRegistration(user_ID: $user_ID, event_ID: $event_ID) {
       success
       errors {
         path

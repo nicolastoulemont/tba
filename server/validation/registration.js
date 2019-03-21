@@ -4,10 +4,10 @@ const isEmpty = require('./is-empty');
 const ValidateAddRegistration = async data => {
   let errors = [];
 
-  if (data.eventId) {
+  if (data.event_ID) {
     const EventRegistered = await Registration.findOne({
-      eventId: data.eventId,
-      userId: data.userId
+      event_ID: data.event_ID,
+      user_ID: data.user_ID
     });
     if (EventRegistered) {
       let EventRegisteredError = {

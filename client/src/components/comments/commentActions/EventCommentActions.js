@@ -43,12 +43,12 @@ class EventCommentActions extends Component {
 
 	render() {
 		const { showReplyForm, showEditForm, showReportForm } = this.state;
-		const { user, commentId, commentText, refetch, createdAt, updatedAt } = this.props;
+		const { user, comment_ID, commentText, refetch, createdAt, updatedAt } = this.props;
 		dayjs.extend(relativeTime);
 		return (
 			<Fragment>
 				<small className="d-block mt-1">
-					<LikesFeed user={user} commentId={commentId} />
+					<LikesFeed user={user} comment_ID={comment_ID} />
 					<Link to="#" onClick={this.showReply} className="ml-2">
 						<i className="far fa-comment mx-1" />
 					</Link>
@@ -67,15 +67,15 @@ class EventCommentActions extends Component {
 				</small>
 				{showReplyForm ? (
 					<div>
-						<CommentReply user={user} commentId={commentId} />
+						<CommentReply user={user} comment_ID={comment_ID} />
 					</div>
 				) : null}
 				{showEditForm ? (
 					<div>
-						<CommentEdit commentId={commentId} text={commentText} refetch={refetch} />
+						<CommentEdit comment_ID={comment_ID} text={commentText} refetch={refetch} />
 					</div>
 				) : null}
-				{showReportForm ? <CommentReport commentId={commentId} user={user} /> : null}
+				{showReportForm ? <CommentReport comment_ID={comment_ID} user={user} /> : null}
 			</Fragment>
 		);
 	}

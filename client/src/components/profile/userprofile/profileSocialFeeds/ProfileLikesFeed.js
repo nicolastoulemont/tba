@@ -47,7 +47,7 @@ const ProfileLikesFeed = ({ user, name }) => {
                       {name} liked a comment by
                       <Link
                         to={{
-                          pathname: `/profile/${like.comment.userId}`
+                          pathname: `/profile/${like.comment.user_ID}`
                         }}
                         className="font-weight-bold"
                       >

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
-	userId: {
+	user_ID: {
 		type: String,
 		required: true
 	},
@@ -18,7 +18,7 @@ const eventSchema = new Schema({
 		type: String,
 		required: true
 	},
-	ispublic: {
+	isPublic: {
 		type: Boolean,
 		default: true,
 		required: true

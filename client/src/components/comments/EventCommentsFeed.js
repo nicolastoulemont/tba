@@ -6,11 +6,11 @@ import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
 
 class EventCommentsFeed extends Component {
 	render() {
-		const { eventId, user, eventCreator } = this.props;
+		const { event_ID, user, eventCreator } = this.props;
 		return (
 			<Fragment>
 				<div>
-					<CQuery query={GET_EVENT_COMMENTS} variables={{ id: eventId }}>
+					<CQuery query={GET_EVENT_COMMENTS} variables={{ id: event_ID }}>
 						{({ data: { event }, refetch }) => {
 							const comments = event.comments;
 							return (
@@ -23,11 +23,11 @@ class EventCommentsFeed extends Component {
 											createdAt={comment.createdAt}
 											updatedAt={comment.updatedAt}
 											creatorName={comment.creator.profile.name}
-											creatorId={comment.userId}
+											creatorId={comment.user_ID}
 											creatorAvatar={comment.creator.avatar}
 											refetch={refetch}
 											user={user}
-											eventId={eventId}
+											event_ID={event_ID}
 											eventCreator={eventCreator}
 											moderated={comment.moderated}
 											moderationMsg={comment.moderationMsg}
@@ -36,7 +36,7 @@ class EventCommentsFeed extends Component {
 
 									<div className="input-group input-group-sm mt-2 mx-0">
 										<br />
-										<EventCommentFeedInput user={user} eventId={eventId} refetch={refetch} />
+										<EventCommentFeedInput user={user} event_ID={event_ID} refetch={refetch} />
 									</div>
 								</Fragment>
 							);

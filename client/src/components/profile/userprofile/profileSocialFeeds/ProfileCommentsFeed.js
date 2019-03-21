@@ -61,7 +61,7 @@ const ProfileCommentsFeed = ({ user, name }) => {
                           {' '}
                           <Link
                             to={{
-                              pathname: `/profile/${comment.comment.userId}`
+                              pathname: `/profile/${comment.comment.user_ID}`
                             }}
                           >
                             <small className="font-weight-bold">

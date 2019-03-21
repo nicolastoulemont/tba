@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import EventMenu from './EventMenu';
 
 const EventHeader = ({
-	userId,
+	user_ID,
 	loggedUser,
 	history,
 	refetch,
-	eventId,
+	event_ID,
 	name,
 	description,
 	location,
@@ -36,7 +36,7 @@ const EventHeader = ({
 							<div className="d-block d-md-none">
 								<div className="d-inline">
 									<Link
-										to={{ pathname: `/profile/${userId}` }}
+										to={{ pathname: `/profile/${user_ID}` }}
 										className="text-white font-weight-bold"
 									>
 										{userName}
@@ -61,10 +61,10 @@ const EventHeader = ({
 						</div>
 					</div>
 					<div className="d-none- col-md-4">
-						{loggedUser === userId ? (
+						{loggedUser === user_ID ? (
 							<EventMenu
 								ispublic={ispublic}
-								eventId={eventId}
+								event_ID={event_ID}
 								name={name}
 								categoryOne={categoryOne}
 								categoryTwo={categoryTwo}
@@ -73,7 +73,7 @@ const EventHeader = ({
 								end={end}
 								description={description}
 								location={location}
-								eventCreator={userId}
+								eventCreator={user_ID}
 								loggedUser={loggedUser}
 								history={history}
 								refetch={refetch}
@@ -82,7 +82,7 @@ const EventHeader = ({
 						<div className="d-none d-md-block my-1">
 							<div className="row">
 								<div className="col-md-1 mr-4">
-									<Link to={{ pathname: `/profile/${userId}` }}>
+									<Link to={{ pathname: `/profile/${user_ID}` }}>
 										{userAvatar ? (
 											<img
 												className="rounded-circle border-avatar small-avatar"
@@ -98,7 +98,7 @@ const EventHeader = ({
 									<div className="text-left">
 										<div className="d-block">
 											<Link
-												to={{ pathname: `/profile/${userId}` }}
+												to={{ pathname: `/profile/${user_ID}` }}
 												className="text-white font-weight-bold"
 											>
 												{userName}

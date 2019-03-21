@@ -3,10 +3,10 @@ import CQuery from '../commons/CustomQueryComponent';
 import { RespSmallAvatarLink, UserNameLink } from '../commons/CustomLinks';
 import { GET_EVENT_REGISTRATIONS } from '../graphql/registration/Queries';
 
-const EventRegistrationFeed = ({ eventId }) => {
+const EventRegistrationFeed = ({ event_ID }) => {
   return (
     <Fragment>
-      <CQuery query={GET_EVENT_REGISTRATIONS} variables={{ id: eventId }}>
+      <CQuery query={GET_EVENT_REGISTRATIONS} variables={{ id: event_ID }}>
         {({
           data: {
             event: { registrations }
@@ -25,7 +25,7 @@ const EventRegistrationFeed = ({ eventId }) => {
                     <div className="row">
                       <div className="col-1">
                         <RespSmallAvatarLink
-                          id={registration.userId}
+                          id={registration.user_ID}
                           avatar={registration.creator.avatar}
                         />
                       </div>
@@ -33,7 +33,7 @@ const EventRegistrationFeed = ({ eventId }) => {
                         <div className="text-left mx-auto">
                           <div className="block">
                             <UserNameLink
-                              id={registration.userId}
+                              id={registration.user_ID}
                               name={registration.creator.profile.name}
                             />
                           </div>

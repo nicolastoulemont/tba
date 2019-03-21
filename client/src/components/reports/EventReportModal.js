@@ -36,7 +36,7 @@ class EventReportModal extends Component {
 
 	render() {
 		const { text, errors, newReport } = this.state;
-		const { eventId } = this.props;
+		const { event_ID } = this.props;
 		return (
 			<div
 				className="modal fade"
@@ -70,9 +70,9 @@ class EventReportModal extends Component {
 															e.preventDefault();
 															const response = await addReport({
 																variables: {
-																	userId: user.id,
+																	user_ID: user.id,
 																	text,
-																	eventId
+																	event_ID
 																}
 															});
 															const { success, errors } = response.data.addReport;

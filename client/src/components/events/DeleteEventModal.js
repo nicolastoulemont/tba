@@ -18,7 +18,7 @@ class DeleteEventModal extends Component {
     }
   }
   render() {
-    const { eventId, loggedUser } = this.props;
+    const { event_ID, loggedUser } = this.props;
     return (
       <div
         className="modal fade"
@@ -52,7 +52,7 @@ class DeleteEventModal extends Component {
                     onClick={async e => {
                       e.preventDefault();
                       const response = await deleteEvent({
-                        variables: { _id: eventId, userId: loggedUser }
+                        variables: { _id: event_ID, user_ID: loggedUser }
                       });
                       const { success, error } = response.data.deleteEvent;
                       if (success) {

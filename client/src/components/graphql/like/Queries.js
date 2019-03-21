@@ -6,7 +6,7 @@ export const GET_EVENT_LIKES = gql`
       id
       likes {
         id
-        userId
+        user_ID
       }
     }
   }
@@ -17,7 +17,7 @@ export const GET_COMMENT_LIKES = gql`
     comment(id: $id) {
       likes {
         id
-        userId
+        user_ID
       }
     }
   }

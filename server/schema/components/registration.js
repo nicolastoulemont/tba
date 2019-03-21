@@ -5,8 +5,8 @@ module.exports = {
 	RegistrationType: gql`
 		type Registration {
 			id: ID!
-			userId: ID!
-			eventId: String
+			user_ID: ID!
+			event_ID: String
 			createdAt: String
 			updatedAt: String
 			event: EventItem
@@ -25,7 +25,7 @@ module.exports = {
 		}
 
 		extend type Mutation {
-			addRegistration(userId: String!, eventId: String!): RegistrationResp!
+			addRegistration(user_ID: String!, event_ID: String!): RegistrationResp!
 			deleteRegistration(_id: ID!): Registration
 		}
 	`,
@@ -50,11 +50,11 @@ module.exports = {
 			}
 		},
 		Registration: {
-			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.eventId });
-			},
 			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return User.findOne({ _id: parent.user_ID });
+			},
+			event: (parent, args, { models: { EventItem } }) => {
+				return EventItem.findOne({ _id: parent.event_ID });
 			}
 		},
 		Mutation: {
@@ -64,8 +64,8 @@ module.exports = {
 				if (!isValid) return { success: false, errors };
 				try {
 					let newRegistration = await new Registration({
-						userId: args.userId,
-						eventId: args.eventId
+						user_ID: args.user_ID,
+						event_ID: args.event_ID
 					}).save();
 					return { success: true, newRegistration };
 				} catch (err) {

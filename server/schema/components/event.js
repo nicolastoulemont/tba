@@ -1,16 +1,16 @@
 const { gql } = require('apollo-server-express');
 const { validateEventInput, validateUpdEventIntput } = require('../../validation/event');
-const { buildEvent, updateEvent } = require('../../builders/event');
+const { buildEvent, updateEvent } = require('../../utils/event');
 
 module.exports = {
 	EventType: gql`
 		type EventItem {
 			id: ID!
-			userId: ID!
+			user_ID: ID!
 			name: String!
 			abstract: String!
 			description: String!
-			ispublic: Boolean!
+			isPublic: Boolean!
 			categoryOne: String!
 			categoryTwo: String
 			categoryThree: String
@@ -48,11 +48,11 @@ module.exports = {
 
 		extend type Mutation {
 			addEvent(
-				userId: String!
+				user_ID: String!
 				name: String!
 				abstract: String!
 				description: String!
-				ispublic: Boolean!
+				isPublic: Boolean!
 				categoryOne: String!
 				categoryTwo: String
 				categoryThree: String
@@ -65,7 +65,7 @@ module.exports = {
 				name: String!
 				abstract: String!
 				description: String!
-				ispublic: Boolean!
+				isPublic: Boolean!
 				categoryOne: String!
 				categoryTwo: String
 				categoryThree: String
@@ -73,7 +73,7 @@ module.exports = {
 				start: Date!
 				end: Date!
 			): EventResp!
-			deleteEvent(_id: ID!, userId: String!): EventResp!
+			deleteEvent(_id: ID!, user_ID: String!): EventResp!
 		}
 	`,
 	// Resolvers
@@ -89,7 +89,7 @@ module.exports = {
 			events: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
-					return await EventItem.find({ ispublic: true })
+					return await EventItem.find({ isPublic: true })
 						.sort({ _id: 'ascending' })
 						.limit(args.first);
 				} catch (err) {
@@ -132,7 +132,7 @@ module.exports = {
 				try {
 					return await EventItem.find({
 						start: { $gte: date, $lte: dayafter },
-						ispublic: true,
+						isPublic: true,
 						$or: [
 							{
 								$or: [
@@ -167,22 +167,22 @@ module.exports = {
 
 		EventItem: {
 			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return User.findOne({ _id: parent.user_ID });
 			},
 			comments: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.find({ eventId: parent.id });
+				return CommentItem.find({ event_ID: parent.id });
 			},
 			polls: (parent, args, { models: { Poll } }) => {
-				return Poll.find({ eventId: parent.id });
+				return Poll.find({ event_ID: parent.id });
 			},
 			likes: (parent, args, { models: { Like } }) => {
-				return Like.find({ eventId: parent.id });
+				return Like.find({ event_ID: parent.id });
 			},
 			reports: (parent, args, { models: { Report } }) => {
-				return Report.find({ eventId: parent.id });
+				return Report.find({ event_ID: parent.id });
 			},
 			registrations: (parent, args, { models: { Registration } }) => {
-				return Registration.find({ eventId: parent.id });
+				return Registration.find({ event_ID: parent.id });
 			}
 		},
 
@@ -191,7 +191,12 @@ module.exports = {
 				if (!user)
 					return {
 						success: false,
-						error: 'You are not logged in'
+						errors: [
+							{
+								path: 'auth',
+								message: 'You are not logged in'
+							}
+						]
 					};
 				// const { errors, isValid } = await validateEventInput(args);
 				// if (!isValid) return { success: false, errors };
@@ -216,7 +221,7 @@ module.exports = {
 					};
 				try {
 					const event = await EventItem.findById(args._id);
-					if (event.userId === args.userId) {
+					if (event.user_ID === args.user_ID) {
 						return {
 							success: true,
 							deleteEvent: await EventItem.findByIdAndDelete(args._id)

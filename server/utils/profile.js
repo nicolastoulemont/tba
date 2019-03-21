@@ -1,18 +1,23 @@
+const gravatar = require('gravatar');
 const { isAuthorized } = require('../validation/isAuthorized');
 
-const buildProfile = async (args, Profile) => {
+const buildProfile = async (args, User, Profile) => {
 	try {
-		let profile = new Profile({
-			userId: args.userId,
+		const user = User.findById(args.user_ID);
+		const picture_URL = gravatar.url(user.email, { s: '200', r: 'pg', d: 'mm' });
+
+		let profile = await new Profile({
+			user_ID: args.user_ID,
+			organisation_ID: args.organisation_ID,
 			name: args.name,
-			organisation: args.organisation,
 			position: args.position,
+			bio: args.bio,
+			twitter_URL: args.twitter_URL,
+			linkedin_URL: args.linkedin_URL,
+			picture_URL: picture_URL,
 			interestOne: args.interestOne,
 			interestTwo: args.interestTwo,
-			interestThree: args.interestThree,
-			bio: args.bio,
-			twitter: args.twitter,
-			linkedin: args.linkedin
+			interestThree: args.interestThree
 		}).save();
 		return { success: true, profile };
 	} catch (err) {
@@ -26,16 +31,16 @@ const updateProfile = async (args, user, User, Profile) => {
 		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
 
 		let updateProfile = {};
+		if (args.organisation_ID) updateProfile.organisation_ID = args.organisation_ID;
 		if (args.name) updateProfile.name = args.name;
-		if (args.organisation) updateProfile.organisation = args.organisation;
 		if (args.position) updateProfile.position = args.position;
+		if (args.bio) updateProfile.bio = args.bio;
+		if (args.twitter_URL) updateProfile.twitter_URL = args.twitter_URL;
+		if (args.linkedin_URL) updateProfile.linkedin_URL = args.linkedin_URL;
+		if (args.picture_URL) updateProfile.picture_URL = args.picture_URL;
 		if (args.interestOne) updateProfile.interestOne = args.interestOne;
 		if (args.interestTwo) updateProfile.interestTwo = args.interestTwo;
 		if (args.interestThree) updateProfile.interestThree = args.interestThree;
-		if (args.bio) updateProfile.bio = args.bio;
-		if (args.twitter) updateProfile.twitter = args.twitter;
-		if (args.linkedin) updateProfile.linkedin = args.linkedin;
-
 		return {
 			success: true,
 			profile: await Profile.findByIdAndUpdate(args._id, updateProfile, {

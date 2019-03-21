@@ -6,14 +6,14 @@ import { GET_EVENT_LIKES } from '../../graphql/like/Queries';
 
 class LikesFeed extends Component {
   getUserLikeId = (likes, user) => {
-    let userLikeObj = likes.find(like => like.userId === user);
+    let userLikeObj = likes.find(like => like.user_ID === user);
     return userLikeObj;
   };
   render() {
-    const { user, eventId } = this.props;
+    const { user, event_ID } = this.props;
     return (
       <Fragment>
-        <CQuery query={GET_EVENT_LIKES} variables={{ id: eventId }}>
+        <CQuery query={GET_EVENT_LIKES} variables={{ id: event_ID }}>
           {({
             data: {
               event: { likes }
@@ -27,7 +27,7 @@ class LikesFeed extends Component {
                   {typeof userLike === 'undefined' ? (
                     <LikeEvent
                       user={user}
-                      eventId={eventId}
+                      event_ID={event_ID}
                       refetch={refetch}
                     />
                   ) : (

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { ADD_LIKE, DELETE_LIKE } from '../../graphql/like/Mutations';
 
-export const LikeComment = ({ user, commentId, refetch }) => {
+export const LikeComment = ({ user, comment_ID, refetch }) => {
   return (
     <Fragment>
       <Mutation mutation={ADD_LIKE}>
@@ -15,8 +15,8 @@ export const LikeComment = ({ user, commentId, refetch }) => {
               e.preventDefault();
               addLike({
                 variables: {
-                  userId: user,
-                  commentId
+                  user_ID: user,
+                  comment_ID
                 }
               }).then(res => {
                 refetch();
@@ -44,7 +44,7 @@ export const UnLikeComment = ({ userLike, refetch, user }) => {
               deleteLike({
                 variables: {
                   _id: userLike.id,
-                  userId: user
+                  user_ID: user
                 }
               }).then(res => {
                 refetch();

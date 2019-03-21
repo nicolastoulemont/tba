@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EventFeedItem = ({ eventId, userId, name, creator, start, end, location, abstract }) => {
+const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location, abstract }) => {
 	return (
-		<div className="p-2 border-top border-bottom" key={eventId}>
+		<div className="p-2 border-top border-bottom" key={event_ID}>
 			<div className="row">
 				<div className="d-none d-md-block col-md-1">
-					<Link to={{ pathname: `/profile/${userId}` }}>
+					<Link to={{ pathname: `/profile/${user_ID}` }}>
 						{creator.avatar ? (
 							<img
 								className="rounded-circle small-avatar mt-2"
@@ -23,7 +23,7 @@ const EventFeedItem = ({ eventId, userId, name, creator, start, end, location, a
 						<h6 className="font-weight-bold mt-0">
 							<Link
 								to={{
-									pathname: `/event/${eventId}`
+									pathname: `/event/${event_ID}`
 								}}
 							>
 								{name}
@@ -50,7 +50,7 @@ const EventFeedItem = ({ eventId, userId, name, creator, start, end, location, a
 					<div className="d-flex w-100 justify-content-between">
 						<small>
 							by{' '}
-							<Link to={{ pathname: `/profile/${userId}` }} className="font-weight-bold">
+							<Link to={{ pathname: `/profile/${user_ID}` }} className="font-weight-bold">
 								{creator.profile.name}
 							</Link>
 							, {creator.profile.position} at {creator.profile.organisation}

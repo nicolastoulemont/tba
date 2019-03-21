@@ -9,7 +9,7 @@ class EditEventModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			_id: this.props.eventId,
+			_id: this.props.event_ID,
 			eventCreator: this.props.eventCreator,
 			loggedUser: this.props.loggedUser,
 			name: this.props.name,

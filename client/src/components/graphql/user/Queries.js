@@ -4,9 +4,9 @@ export const LOGGED_USER = gql`
 	{
 		currentUser {
 			id
-			avatar
 			profile {
 				name
+				picture_URL
 				interestOne
 				interestTwo
 				interestThree
@@ -68,7 +68,7 @@ export const GET_USER_COMMENTS = gql`
 					name
 				}
 				comment {
-					userId
+					user_ID
 					text
 					creator {
 						profile {
@@ -94,7 +94,7 @@ export const GET_USER_LIKES = gql`
 				}
 				comment {
 					id
-					userId
+					user_ID
 					creator {
 						profile {
 							name

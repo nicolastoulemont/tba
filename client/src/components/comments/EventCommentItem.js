@@ -13,7 +13,7 @@ const EventCommentItem = ({
 	creatorAvatar,
 	refetch,
 	user,
-	eventId,
+	event_ID,
 	eventCreator,
 	moderated,
 	moderationMsg
@@ -30,7 +30,7 @@ const EventCommentItem = ({
 				creatorAvatar={creatorAvatar}
 				refetch={refetch}
 				user={user}
-				eventId={eventId}
+				event_ID={event_ID}
 				eventCreator={eventCreator}
 				moderated={moderated}
 				moderationMsg={moderationMsg}
@@ -51,11 +51,11 @@ const EventCommentItem = ({
 											createdAt={comment.createdAt}
 											updatedAt={comment.updatedAt}
 											creatorName={comment.creator.profile.name}
-											creatorId={comment.userId}
+											creatorId={comment.user_ID}
 											creatorAvatar={comment.creator.avatar}
 											refetch={refetch}
 											user={user}
-											eventId={eventId}
+											event_ID={event_ID}
 											eventCreator={eventCreator}
 											moderated={comment.moderated}
 											moderationMsg={comment.moderationMsg}

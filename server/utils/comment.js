@@ -2,10 +2,10 @@ const { isCommentAuthorOrModerated } = require('../validation/isAuthorized');
 const buildComment = async (args, CommentItem) => {
 	try {
 		return await new CommentItem({
-			userId: args.userId,
-			eventId: args.eventId,
-			commentId: args.commentId,
-			pollId: args.pollId,
+			user_ID: args.user_ID,
+			event_ID: args.event_ID,
+			comment_ID: args.comment_ID,
+			poll_ID: args.poll_ID,
 			text: args.text
 		}).save();
 	} catch (err) {
@@ -41,12 +41,12 @@ const moderateComment = async (args, CommentItem, EventItem) => {
 	};
 	try {
 		const comment = await CommentItem.findById(args._id);
-		const event = await EventItem.findById(args.eventId);
-		if (comment.userId === args.userId)
+		const event = await EventItem.findById(args.event_ID);
+		if (comment.user_ID === args.user_ID)
 			return await CommentItem.findByIdAndUpdate(args._id, deletedComment, {
 				new: true
 			});
-		if (event.userId === args.userId && comment.userId !== args.userId)
+		if (event.user_ID === args.user_ID && comment.user_ID !== args.user_ID)
 			return await CommentItem.findByIdAndUpdate(args._id, moderatedComment, {
 				new: true
 			});

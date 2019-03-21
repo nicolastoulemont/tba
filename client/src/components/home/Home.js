@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
 import HomeFeed from './HomeFeed';
@@ -20,7 +21,11 @@ const Home = () => {
 							/>
 						</main>
 						<div className="d-none d-lg-block col-lg-4 text-center">
-							<SideBarUserProfile user={user.id} avatar={user.avatar} name={user.profile.name} />
+							<SideBarUserProfile
+								user={user.id}
+								avatar={user.profile.picture_URL}
+								name={user.profile.name}
+							/>
 							<div className="row">
 								<SideBarUserEvents user={user.id} />
 							</div>
@@ -36,7 +41,12 @@ const Home = () => {
 			<Fragment>
 				<div className="mt-2 text-center">
 					<div className="row">
-						<div className="col">You need a Profile to continue</div>
+						<div className="col">
+							<h6>You need a Profile to continue</h6>
+							<p>
+								<Link to={`/profile/create/${user.id}`}>Create your Profile</Link>
+							</p>
+						</div>
 					</div>
 				</div>
 			</Fragment>

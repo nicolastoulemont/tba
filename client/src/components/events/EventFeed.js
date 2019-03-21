@@ -23,8 +23,8 @@ export default function EventFeed(props) {
 											<EventFeedItem
 												key={event.id}
 												currentUser={user}
-												userId={event.userId}
-												eventId={event.id}
+												user_ID={event.user_ID}
+												event_ID={event.id}
 												name={event.name}
 												abstract={event.abstract}
 												creator={event.creator}

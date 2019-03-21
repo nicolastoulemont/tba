@@ -5,7 +5,7 @@ module.exports = {
 	OrganisationType: gql`
 		type Organisation {
 			id: ID!
-			userId: ID!
+			user_ID: ID!
 			name: String!
 			address: String!
 			description: String!
@@ -34,7 +34,7 @@ module.exports = {
 
 		extend type Mutation {
 			addOrganisation(
-				userId: String!
+				user_ID: String!
 				name: String!
 				address: String!
 				description: String!
@@ -86,7 +86,7 @@ module.exports = {
 		},
 		Organisation: {
 			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return User.findOne({ _id: parent.user_ID });
 			},
 			admins: (parent, args, { models: { Membership } }) => {
 				return Membership.find({
@@ -128,7 +128,7 @@ module.exports = {
 				if (!isValid) return { success: false, errors };
 				try {
 					let organisation = await new Organisation({
-						userId: args.userId,
+						user_ID: args.user_ID,
 						name: args.name,
 						address: args.address,
 						description: args.description,

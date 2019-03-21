@@ -5,10 +5,10 @@ module.exports = {
 	LikeType: gql`
 		type Like {
 			id: ID!
-			userId: ID!
-			eventId: String
-			pollId: String
-			commentId: String
+			user_ID: ID!
+			event_ID: String
+			poll_ID: String
+			comment_ID: String
 			createdAt: String
 			updatedAt: String
 			event: EventItem
@@ -29,8 +29,8 @@ module.exports = {
 		}
 
 		extend type Mutation {
-			addLike(userId: String!, eventId: String, pollId: String, commentId: String): LikeResp!
-			deleteLike(_id: ID!, userId: String!): Like
+			addLike(user_ID: String!, event_ID: String, poll_ID: String, comment_ID: String): LikeResp!
+			deleteLike(_id: ID!, user_ID: String!): Like
 		}
 	`,
 	// Resolvers
@@ -56,16 +56,16 @@ module.exports = {
 
 		Like: {
 			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.eventId });
+				return EventItem.findOne({ _id: parent.event_ID });
 			},
 			comment: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.findOne({ _id: parent.commentId });
+				return CommentItem.findOne({ _id: parent.comment_ID });
 			},
 			poll: (parent, args, { models: { Poll } }) => {
-				return Poll.find({ _id: parent.pollId });
+				return Poll.find({ _id: parent.poll_ID });
 			},
 			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return User.findOne({ _id: parent.user_ID });
 			}
 		},
 
@@ -76,21 +76,21 @@ module.exports = {
 				if (!isValid) return { success: false, errors };
 				try {
 					let like = await new Like({
-						userId: args.userId,
-						eventId: args.eventId,
-						commentId: args.commentId,
-						pollId: args.pollId
+						user_ID: args.user_ID,
+						event_ID: args.event_ID,
+						comment_ID: args.comment_ID,
+						poll_ID: args.poll_ID
 					}).save();
 					return { success: true, like };
 				} catch (err) {
 					console.log(err);
 				}
 			},
-			deleteLike: async (parent, { _id, userId }, { user, models: { Like } }) => {
+			deleteLike: async (parent, { _id, user_ID }, { user, models: { Like } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
 					const like = await Like.findById(_id);
-					if (like.userId === userId) return await Like.findByIdAndDelete(_id);
+					if (like.user_ID === user_ID) return await Like.findByIdAndDelete(_id);
 				} catch (err) {
 					console.log(err);
 				}

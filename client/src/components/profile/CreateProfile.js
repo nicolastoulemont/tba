@@ -9,7 +9,7 @@ class CreateProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: this.props.location.state.user,
+      user_ID: this.props.location.state.user,
       name: '',
       position: '',
       interests: '',
@@ -32,7 +32,7 @@ class CreateProfile extends Component {
 
   render() {
     const {
-      userId,
+      user_ID,
       name,
       position,
       interests,
@@ -43,7 +43,7 @@ class CreateProfile extends Component {
     return (
       <Fragment>
         <div className="row">
-          <SideBar user={userId} />
+          <SideBar user={user_ID} />
           <div className="col-md-9 ml-sm-auto col-lg-10 pt-3 px4">
             <div className="col-md-8 m-auto">
               <Mutation mutation={CREATE_PROFILE}>
@@ -61,7 +61,7 @@ class CreateProfile extends Component {
                             onSubmit={async e => {
                               e.preventDefault();
                               const response = await addProfile({
-                                variables: { userId, name, position, interests }
+                                variables: { user_ID, name, position, interests }
                               });
                               const {
                                 profile,

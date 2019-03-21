@@ -15,8 +15,8 @@ const NewsFeed = ({ user }) => {
 								<NewsFeedItem
 									key={event.id}
 									currentUser={user}
-									userId={event.userId}
-									eventId={event.id}
+									user_ID={event.user_ID}
+									event_ID={event.id}
 									name={event.name}
 									description={event.description}
 									category={event.category}

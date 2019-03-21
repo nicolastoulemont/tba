@@ -28,7 +28,7 @@ export default class EventSocialSelector extends Component {
   };
 
   render() {
-    const { user, eventId, eventCreator } = this.props;
+    const { user, event_ID, eventCreator } = this.props;
     const { commentsDisplay, registreeDisplay } = this.state;
 
     return (
@@ -36,7 +36,7 @@ export default class EventSocialSelector extends Component {
         <div className="py-2 border-top border-bottom">
           <div className="row">
             <div className="col px-0">
-              <LikesFeed user={user} eventId={eventId} />
+              <LikesFeed user={user} event_ID={event_ID} />
             </div>
             <div className="col px-0">
               <Link to="#" onClick={this.commentsDisplay}>
@@ -62,12 +62,12 @@ export default class EventSocialSelector extends Component {
               {commentsDisplay ? (
                 <EventCommentsFeed
                   user={user}
-                  eventId={eventId}
+                  event_ID={event_ID}
                   eventCreator={eventCreator}
                 />
               ) : null}
               {registreeDisplay ? (
-                <EventRegistrationsFeed eventId={eventId} />
+                <EventRegistrationsFeed event_ID={event_ID} />
               ) : null}
             </div>
           </div>

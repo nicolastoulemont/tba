@@ -6,17 +6,17 @@ export const GET_EVENT_COMMENTS = gql`
 			id
 			comments {
 				id
-				userId
+				user_ID
 				text
 				moderated
 				moderationMsg
 				createdAt
 				updatedAt
 				creator {
-					avatar
 					profile {
 						id
 						name
+						picture_URL
 					}
 				}
 			}
@@ -29,16 +29,16 @@ export const GET_COMMENT_COMMENTS = gql`
 		comment(id: $id) {
 			comments {
 				id
-				userId
+				user_ID
 				text
 				moderated
 				moderationMsg
 				createdAt
 				updatedAt
 				creator {
-					avatar
 					profile {
 						name
+						picture_URL
 					}
 				}
 			}

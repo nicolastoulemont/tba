@@ -14,6 +14,7 @@ import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import MobileNav from './components/layout/MobileNav';
 import CreateProfile from './components/profile/CreateProfile';
+import CreateUserProfile from './components/profile/profileactions/CreateUserProfile';
 import Profile from './components/profile/userprofile/Profile';
 import Config from './config/config';
 
@@ -40,6 +41,7 @@ class App extends Component {
 								<Route exact path="/login" component={Login} />
 								<PrivateRoute path="/home" component={Home} />
 								<PrivateRoute exact path="/create-profile" component={CreateProfile} />
+								<PrivateRoute exact path="/profile/create/:id" component={CreateUserProfile} />
 								<PrivateRoute exact path="/profile/:id" component={Profile} />
 								<PrivateRoute exact path="/event/:id" component={SingleEvent} />
 								<Route component={IncorrectRoute} />

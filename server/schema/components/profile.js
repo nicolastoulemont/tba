@@ -1,22 +1,23 @@
 const { gql } = require('apollo-server-express');
-const { buildProfile, updateProfile, deleteProfile } = require('../../builders/profile');
+const { buildProfile, updateProfile, deleteProfile } = require('../../utils/profile');
 
 module.exports = {
 	ProfileType: gql`
 		type Profile {
 			id: ID!
-			userId: ID!
+			user_ID: ID!
+			organisation_ID: String
 			name: String!
-			organisation: String
 			position: String!
-			interestOne: String!
+			bio: String
+			twitter_URL: String
+			linkedin_URL: String
+			picture_URL: String
+			interestOne: String
 			interestTwo: String
 			interestThree: String
-			bio: String
-			twitter: String
-			linkedin: String
-			createdAt: String
-			updatedAt: String
+			createdAt: Date
+			updatedAt: Date
 			creator: User
 		}
 
@@ -34,30 +35,32 @@ module.exports = {
 
 		extend type Mutation {
 			addProfile(
-				userId: String!
+				user_ID: String!
+				organisation_ID: String
 				name: String!
-				organisation: String
 				position: String!
-				interestOne: String!
+				bio: String
+				twitter_URL: String
+				linkedin_URL: String
+				picture_URL: String
+				interestOne: String
 				interestTwo: String
 				interestThree: String
-				bio: String
-				twitter: String
-				linkedin: String
 			): ProfileResp
 			updateProfile(
 				_id: ID!
+				organisation_ID: String
 				name: String
-				organisation: String
 				position: String
-				interestOne: String!
+				bio: String
+				twitter_URL: String
+				linkedin_URL: String
+				picture_URL: String
+				interestOne: String
 				interestTwo: String
 				interestThree: String
-				bio: String
-				twitter: String
-				linkedin: String
 			): ProfileResp
-			deleteProfile(_id: ID!, userId: String!): ProfileResp
+			deleteProfile(_id: ID!, user_ID: String!): ProfileResp
 		}
 	`,
 	// Resolvers
@@ -95,19 +98,19 @@ module.exports = {
 
 		Profile: {
 			creator: (parent, args, { models: { User } }) => {
-				return User.findById(parent.userId);
+				return User.findById(parent.user_ID);
 			}
 		},
 
 		Mutation: {
-			addProfile: async (parent, args, { user, models: { Profile } }) => {
+			addProfile: async (parent, args, { user, models: { User, Profile } }) => {
 				if (!user)
 					return {
 						success: false,
 						error: 'You are not logged in'
 					};
 				// TODO : Add input validation function
-				return buildProfile(args, Profile);
+				return buildProfile(args, User, Profile);
 			},
 			updateProfile: async (parent, args, { user, models: { User, Profile } }) => {
 				if (!user)

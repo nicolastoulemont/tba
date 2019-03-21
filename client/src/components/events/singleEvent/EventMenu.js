@@ -19,7 +19,7 @@ class EventMenu extends Component {
 	}
 	render() {
 		const {
-			eventId,
+			event_ID,
 			ispublic,
 			name,
 			categoryOne,
@@ -42,7 +42,7 @@ class EventMenu extends Component {
 					to="#"
 				/>
 				<EditEventModal
-					eventId={eventId}
+					event_ID={event_ID}
 					eventCreator={eventCreator}
 					loggedUser={loggedUser}
 					name={name}
@@ -62,7 +62,7 @@ class EventMenu extends Component {
 					data-target="#DeleteEventModal"
 					to="#"
 				/>
-				<DeleteEventModal eventId={eventId} loggedUser={loggedUser} history={this.props.history} />
+				<DeleteEventModal event_ID={event_ID} loggedUser={loggedUser} history={this.props.history} />
 			</div>
 		);
 	}

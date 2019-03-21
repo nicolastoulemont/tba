@@ -15,7 +15,7 @@ const EventCommentDisplay = ({
 	creatorAvatar,
 	refetch,
 	user,
-	eventId,
+	event_ID,
 	eventCreator,
 	moderated,
 	moderationMsg
@@ -47,7 +47,7 @@ const EventCommentDisplay = ({
 							<EventCommentActions
 								user={user}
 								creatorId={creatorId}
-								commentId={id}
+								comment_ID={id}
 								commentText={text}
 								createdAt={createdAt}
 								updatedAt={updatedAt}
@@ -69,8 +69,8 @@ const EventCommentDisplay = ({
 										moderateComment({
 											variables: {
 												_id: id,
-												userId: user,
-												eventId
+												user_ID: user,
+												event_ID
 											}
 										}).then(res => {
 											refetch();

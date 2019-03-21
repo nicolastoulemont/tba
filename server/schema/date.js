@@ -12,7 +12,7 @@ module.exports = {
 			name: 'Date',
 			description: 'Date scalar type',
 			parseValue(value) {
-				return dayjs(value).format('YYYY-MM-DD'); // value from the client
+				return dayjs(value); // value from the client
 			},
 			serialize(value) {
 				return dayjs(value).format('YYYY-MM-DDTHH:mm'); // value sent to the client

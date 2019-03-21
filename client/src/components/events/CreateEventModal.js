@@ -1,11 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import {
-  InputField,
-  TextAreaField,
-  InputCheck
-} from '../commons/InputComponents';
+import { InputField, TextAreaField, InputCheck } from '../commons/InputComponents';
 import { SuccessMsg, ErrorMsg } from '../commons/UserActionsComponents';
 import CQuery from '../commons/CustomQueryComponent';
 
@@ -13,92 +9,87 @@ import { CREATE_EVENT } from '../graphql/event/Mutations';
 import { LOGGED_USER_ID } from '../graphql/user/Queries';
 
 class CreateEventModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      description: '',
-      ispublic: true,
-      categoryOne: '',
-      categoryTwo: '',
-      categoryThree: '',
-      location: '',
-      start: '',
-      end: '',
-      newEvent: false,
-      errors: !{}
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			name: '',
+			description: '',
+			isPublic: true,
+			categoryOne: '',
+			categoryTwo: '',
+			categoryThree: '',
+			location: '',
+			start: '',
+			end: '',
+			newEvent: false,
+			errors: !{}
+		};
+	}
 
-  onChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-    if (this.state.errors) {
-      this.setState({ errors: !{} });
-    }
-  };
+	onChange = e => {
+		const { name, value } = e.target;
+		this.setState({ [name]: value });
+		if (this.state.errors) {
+			this.setState({ errors: !{} });
+		}
+	};
 
-  resetState = () => {
-    this.setState({
-      name: '',
-      description: '',
-      ispublic: true,
-      categoryOne: '',
-      categoryTwo: '',
-      categoryThree: '',
-      location: '',
-      start: '',
-      end: '',
-      newEvent: true,
-      errors: !{}
-    });
-  };
+	resetState = () => {
+		this.setState({
+			name: '',
+			description: '',
+			isPublic: true,
+			categoryOne: '',
+			categoryTwo: '',
+			categoryThree: '',
+			location: '',
+			start: '',
+			end: '',
+			newEvent: true,
+			errors: !{}
+		});
+	};
 
-  onCheck = e => {
-    this.setState({ ispublic: !this.state.ispublic });
-  };
+	onCheck = e => {
+		this.setState({ ispublic: !this.state.ispublic });
+	};
 
-  render() {
-    const {
-      name,
-      description,
-      ispublic,
-      categoryOne,
-      categoryTwo,
-      categoryThree,
-      location,
-     start,
-     end,
-      errors,
-      newEvent
-    } = this.state;
+	render() {
+		const {
+			name,
+			description,
+			isPublic,
+			categoryOne,
+			categoryTwo,
+			categoryThree,
+			location,
+			start,
+			end,
+			errors,
+			newEvent
+		} = this.state;
 
-    return (
-      <div
-        className="modal fade"
-        id="CreateEventModal"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="CreateEventModal"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog pt-2" role="document">
-          <div className="modal-content p-2">
-            <div className="modal-header p-2 m-0">
-              <h5 className="modal-title" id="CreateEventModal">
-                Create an Event
-              </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <CQuery query={LOGGED_USER_ID}>
+		return (
+			<div
+				className="modal fade"
+				id="CreateEventModal"
+				tabIndex="-1"
+				role="dialog"
+				aria-labelledby="CreateEventModal"
+				aria-hidden="true"
+			>
+				<div className="modal-dialog pt-2" role="document">
+					<div className="modal-content p-2">
+						<div className="modal-header p-2 m-0">
+							<h5 className="modal-title" id="CreateEventModal">
+								Create an Event
+							</h5>
+							<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div className="modal-body">
+							{/* <CQuery query={LOGGED_USER_ID}>
                 {({ data }) => {
                   const user = data.currentUser;
                   // Trigger the QUERY on every APP state changes...Maybe a passing the user as a prop would be a better idea
@@ -111,10 +102,10 @@ class CreateEventModal extends Component {
                               e.preventDefault();
                               const response = await addEvent({
                                 variables: {
-                                  userId: user.id,
+                                  user_ID: user.id,
                                   name,
                                   description,
-                                  ispublic,
+                                  isPublic,
                                   categoryOne,
                                   categoryTwo,
                                   categoryThree,
@@ -214,10 +205,10 @@ class CreateEventModal extends Component {
                             </div>
                             <InputCheck
                               type="checkbox"
-                              name="ispublic"
+                              name="isPublic"
                               id="iseventpublic"
-                              value={ispublic}
-                              checked={ispublic}
+                              value={isPublic}
+                              checked={isPublic}
                               onChange={this.onCheck}
                             />
                             <input
@@ -245,18 +236,18 @@ class CreateEventModal extends Component {
                     </Fragment>
                   );
                 }}
-              </CQuery>
-            </div>
-            <div className="modal-footer p-2 m-0">
-              <Link to="#" className="btn btn-secondary" data-dismiss="modal">
-                Close
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+              </CQuery> */}
+						</div>
+						<div className="modal-footer p-2 m-0">
+							<Link to="#" className="btn btn-secondary" data-dismiss="modal">
+								Close
+							</Link>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default CreateEventModal;

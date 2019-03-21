@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
-	userId: {
+	user_ID: {
 		type: String,
 		required: true
 	},
-	eventId: String,
-	commentId: String,
-	pollId: String,
+	event_ID: String,
+	comment_ID: String,
+	poll_ID: String,
 	text: {
 		type: String,
 		required: true

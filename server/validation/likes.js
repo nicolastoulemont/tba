@@ -4,10 +4,10 @@ const isEmpty = require('./is-empty');
 const ValidateAddLike = async data => {
   let errors = [];
 
-  if (data.eventId) {
+  if (data.event_ID) {
     const EventLiked = await Like.findOne({
-      eventId: data.eventId,
-      userId: data.userId
+      event_ID: data.event_ID,
+      user_ID: data.user_ID
     });
     if (EventLiked) {
       let EventLikedError = {
@@ -18,10 +18,10 @@ const ValidateAddLike = async data => {
     }
   }
 
-  if (data.commentId) {
+  if (data.comment_ID) {
     const CommentLike = await Like.findOne({
-      commentId: data.commentId,
-      userId: data.userId
+      comment_ID: data.comment_ID,
+      user_ID: data.user_ID
     });
     if (CommentLike) {
       let CommentLikedError = {

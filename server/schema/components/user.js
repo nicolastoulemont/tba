@@ -1,12 +1,9 @@
-// Password utils
 const bcrypt = require('bcrypt');
-// Utilitary
+const dayjs = require('dayjs');
 const { gql } = require('apollo-server-express');
-
+const { registerUser, loginUser, updateUserInfo } = require('../../utils/user');
 // Validation
 const { validateRegInput, validateUpdateInput } = require('../../validation/user');
-
-const { registerUser, loginUser, updateUserInfo } = require('../../builders/user');
 
 module.exports = {
 	UserType: gql`
@@ -14,12 +11,12 @@ module.exports = {
 			id: ID!
 			email: String!
 			isPro: Boolean
-			avatar: String
 			createdAt: String
 			updatedAt: String
+			profile: Profile
+			organisation: Organisation
 			events: [EventItem]
 			registrations: [Registration]
-			profile: Profile
 			memberships: [Membership]
 			comments: [CommentItem]
 			polls: [Poll]
@@ -83,29 +80,32 @@ module.exports = {
 		},
 
 		User: {
+			profile: (parent, args, { models: { Profile } }) => {
+				return Profile.findOne({ user_ID: parent.id });
+			},
+			organisation: (parent, args, { models: { Organisation } }) => {
+				return Organisation.findOne({ user_ID: parent.id });
+			},
 			events: (parent, args, { models: { EventItem } }) => {
-				return EventItem.find({ userId: parent.id });
+				return EventItem.find({ user_ID: parent.id });
 			},
 			registrations: (parent, args, { models: { Registration } }) => {
-				return Registration.find({ userId: parent.id });
+				return Registration.find({ user_ID: parent.id });
 			},
 			memberships: (parent, args, { models: { Membership } }) => {
-				return Membership.find({ userId: parent.id });
-			},
-			profile: (parent, args, { models: { Profile } }) => {
-				return Profile.findOne({ userId: parent.id });
+				return Membership.find({ user_ID: parent.id });
 			},
 			comments: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.find({ userId: parent.id });
+				return CommentItem.find({ user_ID: parent.id });
 			},
 			polls: (parent, args, { models: { Poll } }) => {
-				return Poll.find({ userId: parent.id });
+				return Poll.find({ user_ID: parent.id });
 			},
 			likes: (parent, args, { models: { Like } }) => {
-				return Like.find({ userId: parent.id });
+				return Like.find({ user_ID: parent.id });
 			},
 			reports: (parent, args, { models: { Report } }) => {
-				return Report.find({ userId: parent.id });
+				return Report.find({ user_ID: parent.id });
 			}
 		},
 

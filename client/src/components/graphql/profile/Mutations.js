@@ -1,86 +1,92 @@
 import gql from 'graphql-tag';
 
 export const CREATE_PROFILE = gql`
-  mutation AddProfile(
-    $userId: String!
-    $name: String!
-    $position: String!
-    $organisation: String
-    $interestOne: String!
-    $interestTwo: String
-    $interestThree: String
-    $bio: String
-    $twitter: String
-    $linkedin: String
-  ) {
-    addProfile(
-      userId: $userId
-      name: $name
-      position: $position
-      organisation: $organisation
-      interestOne: $interestOne
-      interestTwo: $interestTwo
-      interestThree: $interestThree
-      bio: $bio
-      twitter: $twitter
-      linkedin: $linkedin
-    ) {
-      profile {
-        id
-        userId
-        name
-        position
-        organisation
-        interestOne
-        interestTwo
-        interestThree
-        bio
-        twitter
-        linkedin
-      }
-    }
-  }
+	mutation AddProfile(
+		$user_ID: String!
+		$organisation_ID: String
+		$name: String!
+		$position: String!
+		$bio: String
+		$twitter_URL: String
+		$linkedin_URL: String
+		$picture_URL: String
+		$interestOne: String!
+		$interestTwo: String
+		$interestThree: String
+	) {
+		addProfile(
+			user_ID: $user_ID
+			organisation_ID: $organisation_ID
+			name: $name
+			position: $position
+			bio: $bio
+			twitter_URL: $twitter_URL
+			linkedin_URL: $linkedin_URL
+			picture_URL: $picture_URL
+			interestOne: $interestOne
+			interestTwo: $interestTwo
+			interestThree: $interestThree
+		) {
+			profile {
+				id
+				user_ID
+				organisation_ID
+				name
+				position
+				bio
+				twitter_URL
+				linkedin_URL
+				picture_URL
+				interestOne
+				interestTwo
+				interestThree
+			}
+		}
+	}
 `;
 
 export const UPDATE_PROFILE = gql`
-  mutation UpdateProfile(
-    $_id: ID!
-    $name: String
-    $organisation: String
-    $position: String
-    $interestOne: String!
-    $interestTwo: String
-    $interestThree: String
-    $bio: String
-    $twitter: String
-    $linkedin: String
-  ) {
-    updateProfile(
-      _id: $_id
-      name: $name
-      organisation: $organisation
-      position: $position
-      interestOne: $interestOne
-      interestTwo: $interestTwo
-      interestThree: $interestThree
-      bio: $bio
-      twitter: $twitter
-      linkedin: $linkedin
-    ) {
-      success
-      profile {
-        id
-        name
-        organisation
-        position
-        interestOne
-        interestTwo
-        interestThree
-        bio
-        twitter
-        linkedin
-      }
-      error
-    }
-  }
+	mutation UpdateProfile(
+		$_id: ID!
+		$organisation_ID: String
+		$name: String
+		$position: String
+		$bio: String
+		$twitter_URL: String
+		$linkedin_URL: String
+		$picture_URL: String
+		$interestOne: String!
+		$interestTwo: String
+		$interestThree: String
+	) {
+		updateProfile(
+			_id: $_id
+			organisation_ID: $organisation_ID
+			name: $name
+			position: $position
+			bio: $bio
+			twitter_URL: $twitter_URL
+			linkedin_URL: $linkedin_URL
+			picture_URL: $picture_URL
+			interestOne: $interestOne
+			interestTwo: $interestTwo
+			interestThree: $interestThree
+		) {
+			success
+			profile {
+				id
+				organisation_ID
+				name
+				position
+				bio
+				twitter_URL
+				linkedin_URL
+				picture_URL
+				interestOne
+				interestTwo
+				interestThree
+			}
+			error
+		}
+	}
 `;

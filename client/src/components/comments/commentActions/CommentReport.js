@@ -16,7 +16,7 @@ class CommentReport extends Component {
   };
 
   render() {
-    const { commentId, user } = this.props;
+    const { comment_ID, user } = this.props;
     const { text } = this.state;
     return (
       <Fragment>
@@ -38,7 +38,7 @@ class CommentReport extends Component {
                   onClick={e => {
                     e.preventDefault();
                     addReport({
-                      variables: { userId: user, text, commentId }
+                      variables: { user_ID: user, text, comment_ID }
                     }).then(res => {
                       this.setState({ text: 'Your report has been submitted' });
                     });

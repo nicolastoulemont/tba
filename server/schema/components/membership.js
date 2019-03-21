@@ -5,7 +5,7 @@ module.exports = {
 	MembershipType: gql`
 		type Membership {
 			id: ID!
-			userId: ID!
+			user_ID: ID!
 			organisationId: String!
 			admin: Boolean
 			accepted: Boolean
@@ -29,7 +29,7 @@ module.exports = {
 
 		extend type Mutation {
 			addMembership(
-				userId: String!
+				user_ID: String!
 				organisationId: String!
 				admin: Boolean
 				accepted: Boolean
@@ -71,7 +71,7 @@ module.exports = {
 				return Organisation.findOne({ _id: parent.organisationId });
 			},
 			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return User.findOne({ _id: parent.user_ID });
 			}
 		},
 		Mutation: {
@@ -81,7 +81,7 @@ module.exports = {
 				// if (!isValid) return { success: false, errors };
 				try {
 					let membership = await new Membership({
-						userId: args.userId,
+						user_ID: args.user_ID,
 						organisationId: args.organisationId,
 						admin: args.admin,
 						accepted: args.accepted,

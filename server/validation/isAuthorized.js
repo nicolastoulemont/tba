@@ -13,7 +13,7 @@ const isAuthorized = async (args, user, User) => {
 const isCommentAuthorOrModerated = async (args, user, CommentItem) => {
 	const comment = await CommentItem.findById(args._id);
 	if (comment.moderated) return false;
-	if (comment.userId === user.user.id) return true;
+	if (comment.user_ID === user.user.id) return true;
 	return false;
 };
 

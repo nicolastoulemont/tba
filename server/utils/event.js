@@ -1,17 +1,17 @@
 const buildEvent = async (args, EventItem) => {
 	try {
 		let event = await new EventItem({
-			userId: args.userId,
+			user_ID: args.user_ID,
 			name: args.name,
 			abstract: args.abstract,
 			description: args.description,
-			ispublic: args.ispublic,
+			isPublic: args.isPublic,
 			categoryOne: args.categoryOne,
 			categoryTwo: args.categoryTwo,
 			categoryThree: args.categoryThree,
 			location: args.location,
-			start: new Date(args.start),
-			end: new Date(args.end)
+			start: args.start,
+			end: args.end
 		}).save();
 		return {
 			success: true,
@@ -21,7 +21,7 @@ const buildEvent = async (args, EventItem) => {
 		console.log(err);
 		return {
 			success: false,
-			errors: err
+			errors: [err]
 		};
 	}
 };
@@ -32,7 +32,7 @@ const updateEvent = async (args, EventItem) => {
 		if (args.name) updateEvent.name = args.name;
 		if (args.abstract) updateEvent.abstract = args.abstract;
 		if (args.description) updateEvent.description = args.description;
-		if (args.ispublic) updateEvent.ispublic = args.ispublic;
+		if (args.isPublic) updateEvent.isPublic = args.isPublic;
 		if (args.categoryOne) updateEvent.categoryOne = args.categoryOne;
 		if (args.categoryTwo) updateEvent.categoryTwo = args.categoryTwo;
 		if (args.categoryThree) updateEvent.categoryThree = args.categoryThree;

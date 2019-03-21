@@ -6,7 +6,7 @@ import {
   DELETE_REGISTRATION
 } from '../graphql/registration/Mutations';
 
-export const RegisterEvent = ({ user, eventId, refetch, client }) => {
+export const RegisterEvent = ({ user, event_ID, refetch, client }) => {
   return (
     <Fragment>
       <Mutation mutation={ADD_REGISTRATION}>
@@ -17,8 +17,8 @@ export const RegisterEvent = ({ user, eventId, refetch, client }) => {
               e.preventDefault();
               addRegistration({
                 variables: {
-                  userId: user,
-                  eventId
+                  user_ID: user,
+                  event_ID
                 }
               }).then(res => {
                 client.resetStore();
@@ -39,7 +39,7 @@ export const UnRegisterEvent = ({
   userRegistration,
   client,
   refetch,
-  eventId
+  event_ID
 }) => {
   return (
     <Fragment>

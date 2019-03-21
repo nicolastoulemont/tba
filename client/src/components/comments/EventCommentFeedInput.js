@@ -18,14 +18,14 @@ class EventCommentFeedInput extends Component {
   };
 
   render() {
-    const { user, eventId, refetch } = this.props;
+    const { user, event_ID, refetch } = this.props;
     const { text } = this.state;
     return (
       <Fragment>
         <Mutation
           mutation={ADD_COMMENT}
           refetchQueries={() => {
-            return [{ query: GET_EVENT_COMMENTS, variables: { id: eventId } }];
+            return [{ query: GET_EVENT_COMMENTS, variables: { id: event_ID } }];
           }}
         >
           {(addComment, e) => (
@@ -45,7 +45,7 @@ class EventCommentFeedInput extends Component {
                   onClick={e => {
                     e.preventDefault();
                     addComment({
-                      variables: { userId: user, eventId, text }
+                      variables: { user_ID: user, event_ID, text }
                     }).then(res => {
                       refetch();
                       this.setState({ text: '' });

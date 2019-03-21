@@ -18,7 +18,7 @@ class CommentReply extends Component {
   };
 
   render() {
-    const { user, commentId } = this.props;
+    const { user, comment_ID } = this.props;
     const { text } = this.state;
     return (
       <Fragment>
@@ -26,7 +26,7 @@ class CommentReply extends Component {
           mutation={ADD_COMMENT}
           refetchQueries={() => {
             return [
-              { query: GET_COMMENT_COMMENTS, variables: { id: commentId } }
+              { query: GET_COMMENT_COMMENTS, variables: { id: comment_ID } }
             ];
           }}
         >
@@ -47,7 +47,7 @@ class CommentReply extends Component {
                   onClick={e => {
                     e.preventDefault();
                     addComment({
-                      variables: { userId: user, commentId, text }
+                      variables: { user_ID: user, comment_ID, text }
                     }).then(res => {
                       this.setState({ text: '' });
                     });

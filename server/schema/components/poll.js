@@ -4,8 +4,8 @@ module.exports = {
 	PollType: gql`
 		type Poll {
 			id: ID!
-			userId: ID!
-			eventId: String!
+			user_ID: ID!
+			event_ID: String!
 			text: String!
 			createdAt: String
 			updatedAt: String
@@ -22,7 +22,7 @@ module.exports = {
 		}
 
 		extend type Mutation {
-			addPoll(userId: String!, eventId: String!, text: String!): Poll
+			addPoll(user_ID: String!, event_ID: String!, text: String!): Poll
 			updatePoll(_id: ID!, text: String): Poll
 			deletePoll(_id: ID!): Poll
 		}
@@ -50,19 +50,19 @@ module.exports = {
 
 		Poll: {
 			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.userId });
+				return User.findOne({ _id: parent.user_ID });
 			},
 			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.eventId });
+				return EventItem.findOne({ _id: parent.event_ID });
 			},
 			comments: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.find({ pollId: parent.id });
+				return CommentItem.find({ poll_ID: parent.id });
 			},
 			likes: (parent, args, { models: Like }) => {
-				return Like.find({ pollId: parent.id });
+				return Like.find({ poll_ID: parent.id });
 			},
 			reports: (parent, args, { models: Report }) => {
-				return Report.find({ pollId: parent.id });
+				return Report.find({ poll_ID: parent.id });
 			}
 		},
 
@@ -71,8 +71,8 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
 					return await new Poll({
-						userId: args.userId,
-						eventId: args.eventId,
+						user_ID: args.user_ID,
+						event_ID: args.event_ID,
 						text: args.text
 					}).save();
 				} catch (err) {
