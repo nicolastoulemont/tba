@@ -11,14 +11,13 @@ const Event = ({ user, event_ID, history }) => {
 		<CQuery query={GET_EVENT} variables={{ id: event_ID }}>
 			{({ data: { event }, refetch }) => {
 				const {
-					creator,
 					creator: { profile }
 				} = event;
 				return (
 					<Fragment key={event.id}>
 						<EventHeader
 							user_ID={event.user_ID}
-							userAvatar={creator.avatar}
+							userAvatar={profile.picture_URL}
 							loggedUser={user}
 							history={history}
 							refetch={refetch}
@@ -26,10 +25,10 @@ const Event = ({ user, event_ID, history }) => {
 							name={event.name}
 							description={event.description}
 							location={event.location}
-							ispublic={event.ispublic}
+							ispublic={event.isPublic}
 							userName={profile.name}
 							userPosition={profile.position}
-							userOrganisation={profile.organisation}
+							userOrganisation={profile.organisation_ID}
 							categoryOne={event.categoryOne}
 							categoryTwo={event.categoryTwo}
 							categoryThree={event.categoryThree}
