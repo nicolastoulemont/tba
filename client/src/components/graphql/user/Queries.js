@@ -90,7 +90,7 @@ export const GET_USER_LIKES = gql`
 				event {
 					id
 					name
-					ispublic
+					isPublic
 				}
 				comment {
 					id
