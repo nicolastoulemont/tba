@@ -7,10 +7,10 @@ const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location,
 			<div className="row">
 				<div className="d-none d-md-block col-md-1">
 					<Link to={{ pathname: `/profile/${user_ID}` }}>
-						{creator.avatar ? (
+						{creator.profile.picture_URL ? (
 							<img
 								className="rounded-circle small-avatar mt-2"
-								src={creator.avatar}
+								src={creator.profile.picture_URL}
 								alt="User Avatar"
 							/>
 						) : (
@@ -30,7 +30,9 @@ const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location,
 							</Link>
 						</h6>
 					</div>
-					<div className="d-flex w-100 justify-content-between mb-2">{abstract}</div>
+					<div className="d-flex w-100 justify-content-between mb-2">
+						<p className="text-left">{abstract}</p>
+					</div>
 					<div className="d-flex w-100 justify-content-between">
 						<div>
 							{new Date(start).getDate() === new Date(end).getDate() ? (
@@ -53,7 +55,7 @@ const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location,
 							<Link to={{ pathname: `/profile/${user_ID}` }} className="font-weight-bold">
 								{creator.profile.name}
 							</Link>
-							, {creator.profile.position} at {creator.profile.organisation}
+							, {creator.profile.position} at {creator.profile.organisation_ID}
 						</small>
 					</div>
 				</div>
