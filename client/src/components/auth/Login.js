@@ -26,7 +26,7 @@ class Login extends Component {
     this.props.client.clearStore();
     await localStorage.setItem('jwtToken', token);
     const storedToken = await localStorage.getItem('jwtToken');
-    if (storedToken) this.props.history.push('/dashboard');
+    if (storedToken) this.props.history.push('/home/news');
   };
 
   render() {
