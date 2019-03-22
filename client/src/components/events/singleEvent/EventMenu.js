@@ -30,7 +30,7 @@ class EventMenu extends Component {
 			description,
 			location,
 			eventCreator,
-			loggedUser,
+			currentUser,
 			refetch
 		} = this.props;
 		return (
@@ -44,7 +44,7 @@ class EventMenu extends Component {
 				<EditEventModal
 					event_ID={event_ID}
 					eventCreator={eventCreator}
-					loggedUser={loggedUser}
+					currentUser={currentUser}
 					name={name}
 					ispublic={ispublic}
 					categoryOne={categoryOne}
@@ -62,7 +62,11 @@ class EventMenu extends Component {
 					data-target="#DeleteEventModal"
 					to="#"
 				/>
-				<DeleteEventModal event_ID={event_ID} loggedUser={loggedUser} history={this.props.history} />
+				<DeleteEventModal
+					event_ID={event_ID}
+					currentUser={currentUser}
+					history={this.props.history}
+				/>
 			</div>
 		);
 	}

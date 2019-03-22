@@ -6,8 +6,7 @@ import EventMenu from './EventMenu';
 
 const EventHeader = ({
 	user_ID,
-	loggedUser,
-	history,
+	currentUser,
 	refetch,
 	event_ID,
 	name,
@@ -66,7 +65,7 @@ const EventHeader = ({
 					</div>
 					<div className="d-none d-md-block col-md-4">
 						<div className="d-inline align-bottom">
-							{loggedUser === user_ID ? (
+							{currentUser === user_ID ? (
 								<EventMenu
 									ispublic={ispublic}
 									event_ID={event_ID}
@@ -79,8 +78,7 @@ const EventHeader = ({
 									description={description}
 									location={location}
 									eventCreator={user_ID}
-									loggedUser={loggedUser}
-									history={history}
+									currentUser={currentUser}
 									refetch={refetch}
 								/>
 							) : null}

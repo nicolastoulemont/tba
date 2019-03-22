@@ -12,7 +12,6 @@ import Home from './components/home/Home';
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import MobileNav from './components/layout/MobileNav';
-import CreateProfile from './components/profile/CreateProfile';
 import Config from './config/config';
 
 const { uri, token } = Config;
@@ -37,8 +36,6 @@ class App extends Component {
 								<Route exact path="/register" component={Register} />
 								<Route exact path="/login" component={Login} />
 								<PrivateRoute path="/home" component={Home} />
-								<PrivateRoute exact path="/create-profile" component={CreateProfile} />
-								{/* <PrivateRoute exact path="/event/create/:id" component={SingleEvent} /> */}
 								<Route component={IncorrectRoute} />
 							</Switch>
 						</div>

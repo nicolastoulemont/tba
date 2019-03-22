@@ -24,25 +24,9 @@ export default function EventFeed(props) {
 								} else {
 									return (
 										<Fragment>
-											<div>
-												{data.onedayevents.map(event => (
-													<EventFeedItem
-														key={event.id}
-														currentUser={user}
-														user_ID={event.user_ID}
-														event_ID={event.id}
-														name={event.name}
-														abstract={event.abstract}
-														creator={event.creator}
-														categoryOne={event.categoryOne}
-														categoryTwo={event.categoryTwo}
-														categoryThree={event.categoryThree}
-														location={event.location}
-														start={event.start}
-														end={event.end}
-													/>
-												))}
-											</div>
+											{data.onedayevents.map(event => (
+												<EventFeedItem key={event.id} currentUser={user} event={event} />
+											))}
 										</Fragment>
 									);
 								}

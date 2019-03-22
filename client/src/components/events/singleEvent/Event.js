@@ -14,6 +14,7 @@ const Event = ({ match, currentUser }) => {
 				const {
 					creator: { profile }
 				} = event;
+				console.log(currentUser);
 				return (
 					<Fragment key={event.id}>
 						<EventHeader

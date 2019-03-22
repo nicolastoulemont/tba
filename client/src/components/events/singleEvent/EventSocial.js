@@ -7,7 +7,7 @@ import EventSocialSelector from './EventSocialSelector';
 
 import EventReportModal from '../../reports/EventReportModal';
 
-const EventSocial = ({ user, event_ID, eventCreator }) => {
+const EventSocial = ({ currentUser, event_ID, eventCreator }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<Fragment>
@@ -23,10 +23,10 @@ const EventSocial = ({ user, event_ID, eventCreator }) => {
 					</div>
 
 					<div className="col-6">
-						<RegistrationFeed user={user} event_ID={event_ID} />
+						<RegistrationFeed user={currentUser} event_ID={event_ID} />
 					</div>
 				</div>
-				<EventSocialSelector user={user} event_ID={event_ID} eventCreator={eventCreator} />
+				<EventSocialSelector user={currentUser} event_ID={event_ID} eventCreator={eventCreator} />
 			</div>
 		</Fragment>
 	);

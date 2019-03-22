@@ -1,9 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location, abstract }) => {
+const EventFeedItem = ({
+	currentUser,
+	event: {
+		id,
+		user_ID,
+		name,
+		creator,
+		location,
+		start,
+		end,
+		categoryOne,
+		categoryTwo,
+		categoryThree,
+		abstract
+	}
+}) => {
 	return (
-		<div className="p-2 border-top border-bottom" key={event_ID}>
+		<div className="p-2 border-top border-bottom" key={id}>
 			<div className="row">
 				<div className="d-none d-md-block col-md-1">
 					<Link to={{ pathname: `/home/profile/${user_ID}` }}>
@@ -23,7 +38,7 @@ const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location,
 						<h6 className="font-weight-bold mt-0">
 							<Link
 								to={{
-									pathname: `/home/event/${event_ID}`
+									pathname: `/home/event/${id}`
 								}}
 							>
 								{name}
