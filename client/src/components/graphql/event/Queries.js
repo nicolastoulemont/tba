@@ -61,6 +61,7 @@ export const GET_EVENT = gql`
 			user_ID
 			isPublic
 			name
+			abstract
 			description
 			location
 			categoryOne

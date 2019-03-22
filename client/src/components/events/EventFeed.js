@@ -17,7 +17,6 @@ export default function EventFeed(props) {
 						variables={{ day, interestOne, interestTwo, interestThree }}
 					>
 						{({ data }) => {
-							console.log(data);
 							if (data) {
 								if (data.onedayevents.length === 0) {
 									return <div className="mt-4 pl-4 font-italic ">No events that day</div>;

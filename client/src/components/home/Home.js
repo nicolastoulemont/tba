@@ -9,6 +9,8 @@ import NewsFeed from '../news/NewsFeed';
 import CreateUserProfile from '../profile/profileactions/CreateUserProfile';
 import Profile from '../profile/userprofile/Profile';
 import Event from '../events/singleEvent/Event';
+import EditEvent from '../events/eventActions/EditEvent';
+import DeleteEvent from '../events/eventActions/DeleteEvent';
 
 const Home = () => {
 	const userHasProfile = user => {
@@ -46,8 +48,19 @@ const Home = () => {
 									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
 								/>
 								<Route
+									exact
 									path="/home/event/:id"
 									render={props => <Event {...props} currentUser={user.id} />}
+								/>
+								<Route
+									exact
+									path="/home/event/edit/:id"
+									render={props => <EditEvent {...props} currentUser={user.id} />}
+								/>
+								<Route
+									exact
+									path="/home/event/delete/:id"
+									render={props => <DeleteEvent {...props} currentUser={user.id} />}
 								/>
 							</Switch>
 						</main>

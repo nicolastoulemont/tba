@@ -14,29 +14,13 @@ const Event = ({ match, currentUser }) => {
 				const {
 					creator: { profile }
 				} = event;
-				console.log(currentUser);
 				return (
 					<Fragment key={event.id}>
 						<EventHeader
-							user_ID={event.user_ID}
-							userAvatar={profile.picture_URL}
 							currentUser={currentUser}
+							event={event}
+							profile={profile}
 							refetch={refetch}
-							event_ID={event.id}
-							name={event.name}
-							description={event.description}
-							location={event.location}
-							ispublic={event.isPublic}
-							userName={profile.name}
-							userPosition={profile.position}
-							userOrganisation={profile.organisation_ID}
-							categoryOne={event.categoryOne}
-							categoryTwo={event.categoryTwo}
-							categoryThree={event.categoryThree}
-							start={event.start}
-							end={event.end}
-							createdAt={event.createdAt}
-							updatedAt={event.updatedAt}
 						/>
 						<EventAbout description={event.description} />
 						<EventSocial

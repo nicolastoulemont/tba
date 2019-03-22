@@ -5,24 +5,26 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import EventMenu from './EventMenu';
 
 const EventHeader = ({
-	user_ID,
 	currentUser,
-	refetch,
-	event_ID,
-	name,
-	description,
-	location,
-	ispublic,
-	userAvatar,
-	userName,
-	userOrganisation,
-	categoryOne,
-	categoryTwo,
-	categoryThree,
-	start,
-	end,
-	createdAt,
-	updatedAt
+	event,
+	event: {
+		id,
+		user_ID,
+		name,
+		description,
+		location,
+		isPublic,
+		categoryOne,
+		categoryTwo,
+		categoryThree,
+		start,
+		end,
+		createdAt,
+		updatedAt
+	},
+	profile: { organisation_ID, picture_URL },
+	profile,
+	refetch
 }) => {
 	dayjs.extend(relativeTime);
 	return (
@@ -42,11 +44,11 @@ const EventHeader = ({
 										to={{ pathname: `/profile/${user_ID}` }}
 										className="text-white font-weight-bold"
 									>
-										{userName}
+										{profile.name}
 									</Link>
 								</div>
 								<div className="d-inline ml-2">
-									<small>{userOrganisation}</small>
+									<small>{organisation_ID}</small>
 								</div>
 							</div>
 							{new Date(start).getDate() === new Date(end).getDate() ? (
@@ -66,21 +68,7 @@ const EventHeader = ({
 					<div className="d-none d-md-block col-md-4">
 						<div className="d-inline align-bottom">
 							{currentUser === user_ID ? (
-								<EventMenu
-									ispublic={ispublic}
-									event_ID={event_ID}
-									name={name}
-									categoryOne={categoryOne}
-									categoryTwo={categoryTwo}
-									categoryThree={categoryThree}
-									start={start}
-									end={end}
-									description={description}
-									location={location}
-									eventCreator={user_ID}
-									currentUser={currentUser}
-									refetch={refetch}
-								/>
+								<EventMenu event={event} currentUser={currentUser} refetch={refetch} />
 							) : null}
 							<div className="d-none d-md-block my-1">
 								<div className="text-right mr-4">
@@ -93,10 +81,10 @@ const EventHeader = ({
 									</div>
 									<div className="d-block">
 										<Link to={{ pathname: `/profile/${user_ID}` }} className="mr-2">
-											{userAvatar ? (
+											{picture_URL ? (
 												<img
 													className="rounded-circle mini-avatar"
-													src={userAvatar}
+													src={picture_URL}
 													alt="User Avatar"
 												/>
 											) : (
@@ -107,7 +95,7 @@ const EventHeader = ({
 											to={{ pathname: `/profile/${user_ID}` }}
 											className="text-white font-weight-bold"
 										>
-											<small>{userName}</small>
+											<small>{profile.name}</small>
 										</Link>
 									</div>
 								</div>

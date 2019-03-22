@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Mutation } from 'react-apollo';
-import { InputField, TextAreaField, InputCheck } from '../commons/InputComponents';
-import { SuccessMsg, ErrorMsg } from '../commons/UserActionsComponents';
-import CQuery from '../commons/CustomQueryComponent';
+// import { Mutation } from 'react-apollo';
+// import { InputField, TextAreaField, InputCheck } from '../commons/InputComponents';
+// import { SuccessMsg, ErrorMsg } from '../commons/UserActionsComponents';
+// import CQuery from '../commons/CustomQueryComponent';
 
-import { CREATE_EVENT } from '../graphql/event/Mutations';
-import { LOGGED_USER_ID } from '../graphql/user/Queries';
+// import { CREATE_EVENT } from '../graphql/event/Mutations';
+// import { LOGGED_USER_ID } from '../graphql/user/Queries';
 
 class CreateEventModal extends Component {
 	constructor(props) {
@@ -55,19 +55,19 @@ class CreateEventModal extends Component {
 	};
 
 	render() {
-		const {
-			name,
-			description,
-			isPublic,
-			categoryOne,
-			categoryTwo,
-			categoryThree,
-			location,
-			start,
-			end,
-			errors,
-			newEvent
-		} = this.state;
+		// const {
+		// 	name,
+		// 	description,
+		// 	isPublic,
+		// 	categoryOne,
+		// 	categoryTwo,
+		// 	categoryThree,
+		// 	location,
+		// 	start,
+		// 	end,
+		// 	errors,
+		// 	newEvent
+		// } = this.state;
 
 		return (
 			<div
