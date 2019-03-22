@@ -6,7 +6,8 @@ import EventSocial from './EventSocial';
 
 import { GET_EVENT } from '../../graphql/event/Queries';
 
-const Event = ({ user, event_ID, history }) => {
+const Event = ({ match, currentUser }) => {
+	const event_ID = match.params.id;
 	return (
 		<CQuery query={GET_EVENT} variables={{ id: event_ID }}>
 			{({ data: { event }, refetch }) => {
@@ -18,8 +19,7 @@ const Event = ({ user, event_ID, history }) => {
 						<EventHeader
 							user_ID={event.user_ID}
 							userAvatar={profile.picture_URL}
-							loggedUser={user}
-							history={history}
+							currentUser={currentUser}
 							refetch={refetch}
 							event_ID={event.id}
 							name={event.name}
@@ -38,7 +38,11 @@ const Event = ({ user, event_ID, history }) => {
 							updatedAt={event.updatedAt}
 						/>
 						<EventAbout description={event.description} />
-						<EventSocial user={user} event_ID={event.id} eventCreator={event.user_ID} />
+						<EventSocial
+							currentUser={currentUser}
+							event_ID={event.id}
+							eventCreator={event.user_ID}
+						/>
 					</Fragment>
 				);
 			}}

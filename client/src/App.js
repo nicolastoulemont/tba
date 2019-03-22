@@ -9,13 +9,10 @@ import IncorrectRoute from './components/commons/IncorrectRoute';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Home from './components/home/Home';
-import SingleEvent from './components/events/singleEvent/SingleEvent';
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import MobileNav from './components/layout/MobileNav';
 import CreateProfile from './components/profile/CreateProfile';
-import CreateUserProfile from './components/profile/profileactions/CreateUserProfile';
-import Profile from './components/profile/userprofile/Profile';
 import Config from './config/config';
 
 const { uri, token } = Config;
@@ -41,10 +38,7 @@ class App extends Component {
 								<Route exact path="/login" component={Login} />
 								<PrivateRoute path="/home" component={Home} />
 								<PrivateRoute exact path="/create-profile" component={CreateProfile} />
-								<PrivateRoute exact path="/profile/create/:id" component={CreateUserProfile} />
-								<PrivateRoute exact path="/profile/:id" component={Profile} />
-								<PrivateRoute exact path="/event/:id" component={SingleEvent} />
-								<PrivateRoute exact path="/event/create/:id" component={SingleEvent} />
+								{/* <PrivateRoute exact path="/event/create/:id" component={SingleEvent} /> */}
 								<Route component={IncorrectRoute} />
 							</Switch>
 						</div>

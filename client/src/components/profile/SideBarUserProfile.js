@@ -9,7 +9,7 @@ const SideBarUserProfile = ({ user, avatar, name }) => {
 					<div className="py-4 border-0">
 						<div className="row">
 							<div className="col-md-4 px-0">
-								<Link to={{ pathname: `/profile/${user}` }}>
+								<Link to={{ pathname: `/home/profile/${user}` }}>
 									{avatar ? (
 										<img
 											className="rounded-circle border-avatar medium-avatar"

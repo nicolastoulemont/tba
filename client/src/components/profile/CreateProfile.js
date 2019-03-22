@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
-import SideBar from '../sidebar/SideBar';
+import SideBar from '../home/SideBar';
 import { InputField } from '../commons/InputComponents';
 import { CREATE_PROFILE } from '../graphql/profile/Mutations';
 import { SuccessMsg, ErrorMsg } from '../commons/UserActionsComponents';

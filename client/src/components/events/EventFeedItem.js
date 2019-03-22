@@ -6,7 +6,7 @@ const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location,
 		<div className="p-2 border-top border-bottom" key={event_ID}>
 			<div className="row">
 				<div className="d-none d-md-block col-md-1">
-					<Link to={{ pathname: `/profile/${user_ID}` }}>
+					<Link to={{ pathname: `/home/profile/${user_ID}` }}>
 						{creator.profile.picture_URL ? (
 							<img
 								className="rounded-circle small-avatar mt-2"
@@ -23,7 +23,7 @@ const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location,
 						<h6 className="font-weight-bold mt-0">
 							<Link
 								to={{
-									pathname: `/event/${event_ID}`
+									pathname: `/home/event/${event_ID}`
 								}}
 							>
 								{name}
@@ -52,7 +52,7 @@ const EventFeedItem = ({ event_ID, user_ID, name, creator, start, end, location,
 					<div className="d-flex w-100 justify-content-between">
 						<small>
 							by{' '}
-							<Link to={{ pathname: `/profile/${user_ID}` }} className="font-weight-bold">
+							<Link to={{ pathname: `/home/profile/${user_ID}` }} className="font-weight-bold">
 								{creator.profile.name}
 							</Link>
 							, {creator.profile.position} at {creator.profile.organisation_ID}

@@ -1,35 +1,57 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
-import HomeFeed from './HomeFeed';
-import SideBarUserProfile from '../profile/SideBarUserProfile';
-import SideBarUserEvents from '../events/sideBarUserEvents/SideBarUserEvents';
+import SideBar from './SideBar';
+import MainNav from './MainNav';
+import EventFeed from '../events/EventFeed';
+import NewsFeed from '../news/NewsFeed';
+import CreateUserProfile from '../profile/profileactions/CreateUserProfile';
+import Profile from '../profile/userprofile/Profile';
+import Event from '../events/singleEvent/Event';
 
 const Home = () => {
 	const userHasProfile = user => {
+		const redirect = () => {
+			if (window.location.pathname === '/home' || window.location.pathname === '/home/')
+				return <Redirect to="/home/news" />;
+		};
 		return (
 			<Fragment>
 				<div className="mt-2 text-center">
 					<div className="row">
-						<main className="col-sm-12 col-lg-8 bg-white">
-							<HomeFeed
-								user={user.id}
-								interestOne={user.profile.interestOne}
-								interestTwo={user.profile.interestTwo}
-								interestThree={user.profile.interestThree}
-							/>
+						<main className="col-sm-12 col-lg-8 bg-white px-0">
+							{redirect()}
+							<MainNav />
+							<Switch>
+								<Route path="/home/news" render={props => <NewsFeed {...props} user={user.id} />} />
+								<Route
+									path="/home/events/:day"
+									render={props => (
+										<EventFeed
+											{...props}
+											user={user.id}
+											interestOne={user.profile.interestOne}
+											interestTwo={user.profile.interestTwo}
+											interestThree={user.profile.interestThree}
+										/>
+									)}
+								/>
+								<Route
+									path="/home/profile/:id"
+									render={props => <Profile {...props} currentUser={user.id} />}
+								/>
+								<Route
+									path="/home/profile/create/:id"
+									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
+								/>
+								<Route
+									path="/home/event/:id"
+									render={props => <Event {...props} currentUser={user.id} />}
+								/>
+							</Switch>
 						</main>
-						<div className="d-none d-lg-block col-lg-4 text-center">
-							<SideBarUserProfile
-								user={user.id}
-								avatar={user.profile.picture_URL}
-								name={user.profile.name}
-							/>
-							<div className="row">
-								<SideBarUserEvents user={user.id} />
-							</div>
-						</div>
+						<SideBar user={user.id} avatar={user.profile.picture_URL} name={user.profile.name} />
 					</div>
 				</div>
 			</Fragment>
