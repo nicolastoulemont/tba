@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import logo from './logo.svg';
 import './App.css';
 import PrivateRoute from './components/auth/Auth';
-import IncorrectRoute from './components/commons/IncorrectRoute';
+import Error404 from './components/commons/IncorrectRoute';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Home from './components/home/Home';
@@ -36,7 +36,8 @@ class App extends Component {
 								<Route exact path="/register" component={Register} />
 								<Route exact path="/login" component={Login} />
 								<PrivateRoute path="/home" component={Home} />
-								<Route component={IncorrectRoute} />
+								<Route component={Error404} />
+								<Route path="/error" component={Error404} />
 							</Switch>
 						</div>
 						<PrivateRoute component={MobileNav} />

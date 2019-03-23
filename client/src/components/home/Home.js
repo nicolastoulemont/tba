@@ -40,10 +40,12 @@ const Home = () => {
 									)}
 								/>
 								<Route
+									exact
 									path="/home/profile/:id"
 									render={props => <Profile {...props} currentUser={user.id} />}
 								/>
 								<Route
+									exact
 									path="/home/profile/create/:id"
 									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
 								/>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CreateEventModal from '../events/CreateEventModal';
 import { ApolloClient } from 'apollo-boost';
 
 class Navbar extends Component {
@@ -41,8 +40,6 @@ class Navbar extends Component {
 									<Link
 										className="nav-link"
 										to="#"
-										data-toggle="modal"
-										data-target="#CreateEventModal"
 									>
 										<i className="fa fa-plus" />
 									</Link>
@@ -67,7 +64,6 @@ class Navbar extends Component {
 						</div>
 					</div>
 				</nav>
-				{/* <CreateEventModal /> */}
 			</div>
 		);
 	}

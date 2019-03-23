@@ -1,32 +1,32 @@
 {
-  "name": "graphtest",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix ../client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "apollo-server-express": "^2.4.8",
-    "bcrypt": "^3.0.5",
-    "body-parser": "^1.18.3",
-    "concurrently": "^4.1.0",
-    "dayjs": "^1.8.11",
-    "express": "^4.16.4",
-    "graphql": "^14.1.1",
-    "graphql-tools": "^4.0.4",
-    "gravatar": "^1.8.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.4.19",
-    "validator": "^10.11.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.10"
-  }
+	"name": "graphtest",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js",
+		"server": "nodemon server.js",
+		"client": "npm start --prefix ../client",
+		"dev": "concurrently \"npm run server\" \"npm run client\""
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"apollo-server-express": "^2.4.8",
+		"bcrypt": "^3.0.4",
+		"body-parser": "^1.18.3",
+		"concurrently": "^4.1.0",
+		"dayjs": "^1.8.11",
+		"express": "^4.16.4",
+		"graphql": "^14.1.1",
+		"graphql-tools": "^4.0.4",
+		"gravatar": "^1.8.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.4.19",
+		"validator": "^10.11.0"
+	},
+	"devDependencies": {
+		"nodemon": "^1.18.10"
+	}
 }

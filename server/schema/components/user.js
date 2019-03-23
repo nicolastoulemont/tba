@@ -63,8 +63,7 @@ module.exports = {
 			currentUser: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
-					const logUser = user.user;
-					return await User.findOne({ _id: logUser.id });
+					return await User.findOne({ _id: user.user.id });
 				} catch (err) {
 					throw new Error('Bad request');
 				}
