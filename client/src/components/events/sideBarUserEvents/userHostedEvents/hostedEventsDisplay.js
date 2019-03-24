@@ -8,9 +8,7 @@ const HostedEventsDisplay = ({ events }) => {
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
 				{props => (
 					<div style={props}>
-						<div className="text-left pl-4 ml-1">
-							<small>No events yet</small>
-						</div>
+						<small>No events yet</small>
 					</div>
 				)}
 			</Spring>
@@ -20,7 +18,7 @@ const HostedEventsDisplay = ({ events }) => {
 			<Fragment>
 				{events.map(event => {
 					return (
-						<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+						<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 							{props => (
 								<div style={props}>
 									<div className="text-left px-3 py-2 border-top" key={event.id}>

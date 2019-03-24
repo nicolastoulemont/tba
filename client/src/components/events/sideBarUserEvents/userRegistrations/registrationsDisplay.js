@@ -8,9 +8,7 @@ const RegistrationsDisplay = ({ registrations }) => {
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
 				{props => (
 					<div style={props}>
-						<div className="text-left pl-4 ml-1">
-							<small>No registrations yet</small>
-						</div>
+						<small>No registrations yet</small>
 					</div>
 				)}
 			</Spring>

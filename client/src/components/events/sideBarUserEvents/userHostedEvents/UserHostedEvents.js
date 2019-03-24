@@ -46,11 +46,25 @@ class UserHostedEvents extends Component {
 							<div className="row m-0 p-0">
 								<div className="col-6 p-0 py-0" />
 								<div className="col-6 p-0 py-0">
-									<Link to="#" onClick={this.futurEventsDisplay} className="link-menu mr-4">
-										<small className="d-inline text-uppercase font-weight-bold">Upcoming</small>
+									<Link
+										to="#"
+										onClick={this.futurEventsDisplay}
+										className="link-menu mx-4"
+										data-togggle="tooltip"
+										data-placement="bottom"
+										title="Upcoming hosted events"
+									>
+										<i className="d-inline far fa-calendar-plus" />
 									</Link>
-									<Link to="#" onClick={this.pastEventsDisplay} className="link-menu">
-										<small className="d-inline text-uppercase font-weight-bold">Past</small>
+									<Link
+										to="#"
+										onClick={this.pastEventsDisplay}
+										className="link-menu mx-4"
+										data-togggle="tooltip"
+										data-placement="bottom"
+										title="Past hosted events"
+									>
+										<i className="d-inline far fa-calendar-check" />
 									</Link>
 								</div>
 							</div>
