@@ -14,7 +14,15 @@ const EventSocial = ({ currentUser, event_ID, eventCreator }) => {
 			<div className="mb-3 pb-5">
 				<div className="row pl-2 pr-4 pb-2">
 					<div className="col-6">
-						<Link className="d-inline" to="#" data-toggle="modal" data-target="#EventReportModal">
+						<Link
+							className="d-inline"
+							to="#"
+							data-toggle="modal"
+							data-target="#EventReportModal"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Report this event"
+						>
 							<small>
 								<i className="fas fa-flag float-left ml-3" />
 							</small>
