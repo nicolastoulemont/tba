@@ -18,7 +18,7 @@ export default function EventFeed(props) {
 		return (
 			<Fragment>
 				<div className="row m-0 px-2">
-					<div className="mb-2 mt-2 w-100">
+					<div className="mb-4 mt-2 w-100">
 						<DateSelector {...props} />
 						<CQuery
 							query={GET_DAY_EVENTS}
@@ -32,14 +32,13 @@ export default function EventFeed(props) {
 										return (
 											<Fragment>
 												{data.onedayevents.map(event => (
-													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 														{props => (
 															<div style={props}>
 																<EventFeedItem key={event.id} currentUser={user} event={event} />
 															</div>
 														)}
 													</Spring>
-													// <EventFeedItem key={event.id} currentUser={user} event={event} />
 												))}
 											</Fragment>
 										);

@@ -9,8 +9,9 @@ class Navbar extends Component {
 		ApolloClient.resetStore();
 	};
 	render() {
+		const today = new Date().toISOString().slice(0, 10);
 		return (
-			<div className="top-menu">
+			<div className="d-none d-md-block">
 				<nav className="navbar sticky-top navbar-expand-sm bg-white border-bottom">
 					<div className="container px-0">
 						<Link className="navbar-brand text-black" to="/">
@@ -26,36 +27,31 @@ class Navbar extends Component {
 						</button>
 						<div className="collapse navbar-collapse" id="mobile-nav">
 							<ul className="navbar-nav ml-auto">
-								<li className="nav-item pr-2">
+								<li className="nav-item pr-4">
 									<Link className="nav-link" to="/home/news">
-										<i className="fa fa-home" />
-									</Link>
-								</li>
-								<li className="nav-item pr-2">
-									<Link className="nav-link" to="/create-post">
-										<i className="far fa-paper-plane" />
-									</Link>
-								</li>
-								<li className="nav-item border-right pr-4">
-									<Link
-										className="nav-link"
-										to="#"
-									>
-										<i className="fa fa-plus" />
-									</Link>
-								</li>
-
-								<li className="nav-item pl-4">
-									<Link className="nav-link" to="/about">
-										About
+										<i className="d-inline fa fa-home" />
+										<h6 className="d-inline ml-2">Home</h6>
 									</Link>
 								</li>
 								<li className="nav-item pr-4">
-									<Link className="nav-link" to="/docs">
-										Docs
+									<Link className="nav-link" to={`/home/events/${today}`}>
+										<i className="d-inline far fa-calendar" />
+										<h6 className="d-inline ml-2">Events</h6>
 									</Link>
 								</li>
-								<li className="nav-item">
+								<li className="nav-item pr-4">
+									<Link className="nav-link" to="/home/profiles">
+										<i className="d-inline fas fa-users" />
+										<h6 className="d-inline ml-2">Profiles</h6>
+									</Link>
+								</li>
+								<li className="nav-item pr-4">
+									<Link className="nav-link" to="/home/organisations">
+										<i className="d-inline fas fa-building" />
+										<h6 className="d-inline ml-2">Organisations</h6>
+									</Link>
+								</li>
+								<li className="nav-item pl-4">
 									<Link className="nav-link" to="/login" onClick={this.LogOut}>
 										<i className="fa fa-power-off" />
 									</Link>

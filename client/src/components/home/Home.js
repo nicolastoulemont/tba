@@ -3,7 +3,6 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
 import SideBar from './SideBar';
-import MainNav from './MainNav';
 import EventFeed from '../events/EventFeed';
 import NewsFeed from '../news/NewsFeed';
 import CreateUserProfile from '../profile/profileactions/CreateUserProfile';
@@ -24,7 +23,6 @@ const Home = () => {
 					<div className="row">
 						<main className="col-sm-12 col-lg-8 bg-white px-0">
 							{redirect()}
-							<MainNav />
 							<Switch>
 								<Route path="/home/news" render={props => <NewsFeed {...props} user={user.id} />} />
 								<Route
