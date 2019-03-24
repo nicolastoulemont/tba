@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const RespSmallAvatarLink = ({ id, avatar }) => {
 	return (
-		<Link to={{ pathname: `/profile/${id}` }}>
+		<Link to={{ pathname: `/home/profile/${id}` }}>
 			{avatar ? (
 				<Fragment>
 					<img

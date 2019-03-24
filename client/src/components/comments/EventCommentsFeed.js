@@ -24,7 +24,7 @@ class EventCommentsFeed extends Component {
 											updatedAt={comment.updatedAt}
 											creatorName={comment.creator.profile.name}
 											creatorId={comment.user_ID}
-											creatorAvatar={comment.creator.avatar}
+											creatorAvatar={comment.creator.profile.picture_URL}
 											refetch={refetch}
 											user={user}
 											event_ID={event_ID}
