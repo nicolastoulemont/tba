@@ -12,7 +12,7 @@ module.exports = {
 			name: 'Date',
 			description: 'Date scalar type',
 			parseValue(value) {
-				return value; // value from the client
+				return new Date(value); // value from the client
 			},
 			serialize(value) {
 				const date = new Date(value);

@@ -24,12 +24,12 @@ const EventCommentDisplay = ({
 		<div className="list-group-item border-0 py-1 px-2" key={id}>
 			<div className="row">
 				<div className="col-1">
-					<RespSmallAvatarLink id={creatorId} avatar={creatorAvatar} />
+					{moderated ? null : <RespSmallAvatarLink id={creatorId} avatar={creatorAvatar} />}
 				</div>
 				{moderated ? (
 					<div className="col-9 col-md-10 mx-0 pr-0 pl-1 py-0">
 						<div className="text-left mx-auto">
-							<UserNameLink id={creatorId} name={creatorName} />
+							<small className="font-italic">{'[ deleted ]'}</small>
 							<small className="d-none d-md-inline-block font-italic ml-2 py-0">
 								{moderationMsg}
 							</small>
