@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 
 export const RespSmallAvatarLink = ({ id, avatar }) => {
 	return (
-		<Link to={{ pathname: `/home/profile/${id}` }}>
+		<Link
+			to={{ pathname: `/home/profile/${id}` }}
+			data-togggle="tooltip"
+			data-placement="bottom"
+			title="See this person profile"
+		>
 			{avatar ? (
 				<Fragment>
 					<img
@@ -31,6 +36,9 @@ export const UserNameLink = ({ id, name }) => {
 				pathname: `/profile/${id}`
 			}}
 			className="d-none d-md-inline-block font-weight-bold text-darkblue"
+			data-togggle="tooltip"
+			data-placement="bottom"
+			title="See this person profile"
 		>
 			{name}
 		</Link>

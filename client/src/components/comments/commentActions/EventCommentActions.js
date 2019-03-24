@@ -49,13 +49,32 @@ class EventCommentActions extends Component {
 			<Fragment>
 				<small className="d-block mt-1">
 					<LikesFeed user={user} comment_ID={comment_ID} />
-					<Link to="#" onClick={this.showReply} className="ml-2">
+					<Link
+						to="#"
+						onClick={this.showReply}
+						className="ml-2"
+						data-togggle="tooltip"
+						data-placement="bottom"
+						title="Reply to this comment"
+					>
 						<i className="far fa-comment mx-1" />
 					</Link>
-					<Link to="#" onClick={this.showEdit}>
+					<Link
+						to="#"
+						onClick={this.showEdit}
+						data-togggle="tooltip"
+						data-placement="bottom"
+						title="Edit your comment"
+					>
 						<i className="far fa-edit mx-1" />
 					</Link>
-					<Link to="#" onClick={this.showReport}>
+					<Link
+						to="#"
+						onClick={this.showReport}
+						data-togggle="tooltip"
+						data-placement="bottom"
+						title="Report this comment"
+					>
 						<i className="fas fa-flag mx-1" />
 					</Link>
 
