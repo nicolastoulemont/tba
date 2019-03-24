@@ -64,10 +64,10 @@ export const DateLink = ({ string, number, path }) => {
 	);
 };
 
-export const WeekAction = ({ icon, path }) => {
+export const WeekAction = ({ icon, path, tooltip }) => {
 	return (
 		<div className="col p-0 m-0">
-			<Link to={path}>
+			<Link to={path} data-togggle="tooltip" data-placement="bottom" title={tooltip}>
 				<i className={icon} />
 			</Link>
 		</div>
@@ -79,7 +79,7 @@ export const MonthActions = ({ string, pathOne, pathTwo }) => {
 		<Fragment>
 			<div className="col-3 pr-0">
 				{' '}
-				<Link to={pathOne}>
+				<Link to={pathOne} data-togggle="tooltip" data-placement="bottom" title="Previous Month">
 					<i className="fas fa-chevron-left" />
 				</Link>
 			</div>
@@ -87,7 +87,7 @@ export const MonthActions = ({ string, pathOne, pathTwo }) => {
 				<h6 className="font-weight-bold text-uppercase mx-auto">{string}</h6>
 			</div>
 			<div className="col-3 pl-0">
-				<Link to={pathTwo}>
+				<Link to={pathTwo} data-togggle="tooltip" data-placement="bottom" title="Next Month">
 					<i className="fas fa-chevron-right" />
 				</Link>
 			</div>

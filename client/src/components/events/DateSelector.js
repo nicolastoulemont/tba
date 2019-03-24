@@ -28,6 +28,7 @@ export default function DateSelector({
 					path={`/home/events/${dayjs(day)
 						.subtract(7, 'day')
 						.format('YYYY-MM-DD')}`}
+					tooltip="Previous Week"
 				/>
 				<DateLink
 					string={dayjs(day)
@@ -104,6 +105,7 @@ export default function DateSelector({
 					path={`/home/events/${dayjs(day)
 						.add(7, 'day')
 						.format('YYYY-MM-DD')}`}
+					tooltip="Next Week"
 				/>
 			</div>
 		</div>
