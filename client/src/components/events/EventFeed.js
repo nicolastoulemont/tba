@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Spring } from 'react-spring/renderprops';
 import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
 import DateSelector from './DateSelector';
@@ -31,7 +32,14 @@ export default function EventFeed(props) {
 										return (
 											<Fragment>
 												{data.onedayevents.map(event => (
-													<EventFeedItem key={event.id} currentUser={user} event={event} />
+													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+														{props => (
+															<div style={props}>
+																<EventFeedItem key={event.id} currentUser={user} event={event} />
+															</div>
+														)}
+													</Spring>
+													// <EventFeedItem key={event.id} currentUser={user} event={event} />
 												))}
 											</Fragment>
 										);
