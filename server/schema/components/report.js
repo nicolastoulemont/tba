@@ -12,8 +12,8 @@ module.exports = {
 			organisation_ID: String
 			profile_ID: String
 			text: String!
-			createdAt: String
-			updatedAt: String
+			createdAt: Date
+			updatedAt: Date
 			event: EventItem
 			comment: CommentItem
 			poll: Poll

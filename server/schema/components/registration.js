@@ -7,8 +7,8 @@ module.exports = {
 			id: ID!
 			user_ID: ID!
 			event_ID: String
-			createdAt: String
-			updatedAt: String
+			createdAt: Date
+			updatedAt: Date
 			event: EventItem
 			creator: User
 		}

@@ -10,8 +10,8 @@ module.exports = {
 			admin: Boolean
 			accepted: Boolean
 			pending: Boolean
-			createdAt: String
-			updatedAt: String
+			createdAt: Date
+			updatedAt: Date
 			organisation: Organisation
 			creator: User
 		}

@@ -7,8 +7,8 @@ module.exports = {
 			user_ID: ID!
 			event_ID: String!
 			text: String!
-			createdAt: String
-			updatedAt: String
+			createdAt: Date
+			updatedAt: Date
 			event: EventItem
 			comments: [CommentItem]
 			likes: [Like]
