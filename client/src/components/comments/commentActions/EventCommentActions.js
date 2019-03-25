@@ -41,6 +41,14 @@ class EventCommentActions extends Component {
 		});
 	};
 
+	hideForms = e => {
+		this.setState({
+			showReportForm: false,
+			showReplyForm: false,
+			showEditForm: false
+		});
+	};
+
 	render() {
 		const { showReplyForm, showEditForm, showReportForm } = this.state;
 		const { user, comment_ID, commentText, refetch, createdAt, updatedAt } = this.props;
@@ -86,15 +94,22 @@ class EventCommentActions extends Component {
 				</small>
 				{showReplyForm ? (
 					<div>
-						<CommentReply user={user} comment_ID={comment_ID} />
+						<CommentReply user={user} comment_ID={comment_ID} hideForms={this.hideForms} />
 					</div>
 				) : null}
 				{showEditForm ? (
 					<div>
-						<CommentEdit comment_ID={comment_ID} text={commentText} refetch={refetch} />
+						<CommentEdit
+							comment_ID={comment_ID}
+							text={commentText}
+							refetch={refetch}
+							hideForms={this.hideForms}
+						/>
 					</div>
 				) : null}
-				{showReportForm ? <CommentReport comment_ID={comment_ID} user={user} /> : null}
+				{showReportForm ? (
+					<CommentReport comment_ID={comment_ID} user={user} hideForms={this.hideForms} />
+				) : null}
 			</Fragment>
 		);
 	}
