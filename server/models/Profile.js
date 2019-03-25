@@ -15,6 +15,10 @@ const profileSchema = new Schema({
 		type: String,
 		required: true
 	},
+	showSocial: {
+		type: Boolean,
+		default: true
+	},
 	bio: String,
 	twitter_URL: String,
 	linkedin_URL: String,

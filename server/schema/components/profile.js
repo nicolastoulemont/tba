@@ -9,6 +9,7 @@ module.exports = {
 			organisation_ID: String
 			name: String!
 			position: String!
+			showSocial: Boolean
 			bio: String
 			twitter_URL: String
 			linkedin_URL: String
@@ -39,6 +40,7 @@ module.exports = {
 				organisation_ID: String
 				name: String!
 				position: String!
+				showSocial: Boolean
 				bio: String
 				twitter_URL: String
 				linkedin_URL: String
@@ -52,6 +54,7 @@ module.exports = {
 				organisation_ID: String
 				name: String
 				position: String
+				showSocial: Boolean
 				bio: String
 				twitter_URL: String
 				linkedin_URL: String
