@@ -68,23 +68,23 @@ module.exports = {
 		},
 
 		Report: {
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.user_ID });
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findOne({ _id: parent.user_ID });
 			},
-			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.event_ID });
+			event: async (parent, args, { models: { EventItem } }) => {
+				return await EventItem.findOne({ _id: parent.event_ID });
 			},
-			poll: (parent, args, { models: { Poll } }) => {
-				return Poll.findOne({ _id: parent.poll_ID });
+			poll: async (parent, args, { models: { Poll } }) => {
+				return await Poll.findOne({ _id: parent.poll_ID });
 			},
-			comment: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.findOne({ _id: parent.comment_ID });
+			comment: async (parent, args, { models: { CommentItem } }) => {
+				return await CommentItem.findOne({ _id: parent.comment_ID });
 			},
-			organisation: (parent, args, { models: { Organisation } }) => {
-				return Organisation.findOne({ _id: parent.organisation_ID });
+			organisation: async (parent, args, { models: { Organisation } }) => {
+				return await Organisation.findOne({ _id: parent.organisation_ID });
 			},
-			profile: (parent, args, { models: { Profile } }) => {
-				return Profile.findOne({ _id: parent.profile_ID });
+			profile: async (parent, args, { models: { Profile } }) => {
+				return await Profile.findOne({ _id: parent.profile_ID });
 			}
 		},
 

@@ -103,8 +103,8 @@ module.exports = {
 		},
 
 		Profile: {
-			creator: (parent, args, { models: { User } }) => {
-				return User.findById(parent.user_ID);
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findById(parent.user_ID);
 			}
 		},
 

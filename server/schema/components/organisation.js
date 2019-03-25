@@ -85,35 +85,35 @@ module.exports = {
 			}
 		},
 		Organisation: {
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.user_ID });
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findOne({ _id: parent.user_ID });
 			},
-			admins: (parent, args, { models: { Membership } }) => {
-				return Membership.find({
+			admins: async (parent, args, { models: { Membership } }) => {
+				return await Membership.find({
 					organisationId: parent.id,
 					admin: true,
 					accepted: true,
 					pending: false
 				});
 			},
-			members: (parent, args, { models: { Membership } }) => {
-				return Membership.find({
+			members: async (parent, args, { models: { Membership } }) => {
+				return await Membership.find({
 					organisationId: parent.id,
 					admin: false,
 					accepted: true,
 					pending: false
 				});
 			},
-			applicants: (parent, args, { models: { Membership } }) => {
-				return Membership.find({
+			applicants: async (parent, args, { models: { Membership } }) => {
+				return await Membership.find({
 					organisationId: parent.id,
 					admin: false,
 					accepted: false,
 					pending: true
 				});
 			},
-			reports: (parent, args, { models: { Report } }) => {
-				return Report.find({ orgId: parent.id });
+			reports: async (parent, args, { models: { Report } }) => {
+				return await Report.find({ orgId: parent.id });
 			}
 		},
 
@@ -157,9 +157,13 @@ module.exports = {
 				if (args.registryId) updateEvent.registryId = args.registryId;
 
 				try {
-					const updOrganisation = await Organisation.findByIdAndUpdate(args._id, updateOrganisation, {
-						new: true
-					});
+					const updOrganisation = await Organisation.findByIdAndUpdate(
+						args._id,
+						updateOrganisation,
+						{
+							new: true
+						}
+					);
 					return { success: true, updOrganisation };
 				} catch (err) {
 					console.log(err);

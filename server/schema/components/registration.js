@@ -50,11 +50,11 @@ module.exports = {
 			}
 		},
 		Registration: {
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.user_ID });
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findOne({ _id: parent.user_ID });
 			},
-			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.event_ID });
+			event: async (parent, args, { models: { EventItem } }) => {
+				return await EventItem.findOne({ _id: parent.event_ID });
 			}
 		},
 		Mutation: {

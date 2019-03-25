@@ -78,8 +78,8 @@ module.exports = {
 			}
 		},
 		UserLog: {
-			user: (parent, args, { models: { User } }) => {
-				return User.findById(parent.user_ID);
+			user: async (parent, args, { models: { User } }) => {
+				return await User.findById(parent.user_ID);
 			}
 		},
 

@@ -166,23 +166,23 @@ module.exports = {
 		},
 
 		EventItem: {
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.user_ID });
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findOne({ _id: parent.user_ID });
 			},
-			comments: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.find({ event_ID: parent.id });
+			comments: async (parent, args, { models: { CommentItem } }) => {
+				return await CommentItem.find({ event_ID: parent.id });
 			},
-			polls: (parent, args, { models: { Poll } }) => {
-				return Poll.find({ event_ID: parent.id });
+			polls: async (parent, args, { models: { Poll } }) => {
+				return await Poll.find({ event_ID: parent.id });
 			},
-			likes: (parent, args, { models: { Like } }) => {
-				return Like.find({ event_ID: parent.id });
+			likes: async (parent, args, { models: { Like } }) => {
+				return await Like.find({ event_ID: parent.id });
 			},
-			reports: (parent, args, { models: { Report } }) => {
-				return Report.find({ event_ID: parent.id });
+			reports: async (parent, args, { models: { Report } }) => {
+				return await Report.find({ event_ID: parent.id });
 			},
-			registrations: (parent, args, { models: { Registration } }) => {
-				return Registration.find({ event_ID: parent.id });
+			registrations: async (parent, args, { models: { Registration } }) => {
+				return await Registration.find({ event_ID: parent.id });
 			}
 		},
 

@@ -62,26 +62,26 @@ module.exports = {
 			}
 		},
 		CommentItem: {
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.user_ID });
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findOne({ _id: parent.user_ID });
 			},
-			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.event_ID });
+			event: async (parent, args, { models: { EventItem } }) => {
+				return await EventItem.findOne({ _id: parent.event_ID });
 			},
-			comment: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.findOne({ _id: parent.comment_ID });
+			comment: async (parent, args, { models: { CommentItem } }) => {
+				return await CommentItem.findOne({ _id: parent.comment_ID });
 			},
-			comments: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.find({ comment_ID: parent.id });
+			comments: async (parent, args, { models: { CommentItem } }) => {
+				return await CommentItem.find({ comment_ID: parent.id });
 			},
-			poll: (parent, args, { models: { Poll } }) => {
-				return Poll.findOne({ _id: parent.poll_ID });
+			poll: async (parent, args, { models: { Poll } }) => {
+				return await Poll.findOne({ _id: parent.poll_ID });
 			},
-			likes: (parent, args, { models: { Like } }) => {
-				return Like.find({ comment_ID: parent.id });
+			likes: async (parent, args, { models: { Like } }) => {
+				return await Like.find({ comment_ID: parent.id });
 			},
-			reports: (parent, args, { models: { Report } }) => {
-				return Report.find({ comment_ID: parent.id });
+			reports: async (parent, args, { models: { Report } }) => {
+				return await Report.find({ comment_ID: parent.id });
 			}
 		},
 

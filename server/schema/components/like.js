@@ -55,17 +55,17 @@ module.exports = {
 		},
 
 		Like: {
-			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.event_ID });
+			event: async (parent, args, { models: { EventItem } }) => {
+				return await EventItem.findOne({ _id: parent.event_ID });
 			},
-			comment: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.findOne({ _id: parent.comment_ID });
+			comment: async (parent, args, { models: { CommentItem } }) => {
+				return await CommentItem.findOne({ _id: parent.comment_ID });
 			},
-			poll: (parent, args, { models: { Poll } }) => {
-				return Poll.find({ _id: parent.poll_ID });
+			poll: async (parent, args, { models: { Poll } }) => {
+				return await Poll.find({ _id: parent.poll_ID });
 			},
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.user_ID });
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findOne({ _id: parent.user_ID });
 			}
 		},
 

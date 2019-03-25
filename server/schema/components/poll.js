@@ -49,20 +49,20 @@ module.exports = {
 		},
 
 		Poll: {
-			creator: (parent, args, { models: { User } }) => {
-				return User.findOne({ _id: parent.user_ID });
+			creator: async (parent, args, { models: { User } }) => {
+				return await User.findOne({ _id: parent.user_ID });
 			},
-			event: (parent, args, { models: { EventItem } }) => {
-				return EventItem.findOne({ _id: parent.event_ID });
+			event: async (parent, args, { models: { EventItem } }) => {
+				return await EventItem.findOne({ _id: parent.event_ID });
 			},
-			comments: (parent, args, { models: { CommentItem } }) => {
-				return CommentItem.find({ poll_ID: parent.id });
+			comments: async (parent, args, { models: { CommentItem } }) => {
+				return await CommentItem.find({ poll_ID: parent.id });
 			},
-			likes: (parent, args, { models: Like }) => {
-				return Like.find({ poll_ID: parent.id });
+			likes: async (parent, args, { models: Like }) => {
+				return await Like.find({ poll_ID: parent.id });
 			},
-			reports: (parent, args, { models: Report }) => {
-				return Report.find({ poll_ID: parent.id });
+			reports: async (parent, args, { models: Report }) => {
+				return await Report.find({ poll_ID: parent.id });
 			}
 		},
 
