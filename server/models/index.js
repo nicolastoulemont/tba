@@ -8,5 +8,18 @@ const Registration = require('./Registration');
 const Membership = require('./Membership');
 const Organisation = require('./Organisation');
 const Poll = require('./Poll');
+const UserLog = require('./UserLog');
 
-module.exports = { User, Profile, CommentItem, EventItem, Like, Report, Registration, Membership, Organisation, Poll };
+module.exports = {
+	User,
+	Profile,
+	CommentItem,
+	EventItem,
+	Like,
+	Report,
+	Registration,
+	Membership,
+	Organisation,
+	Poll,
+	UserLog
+};
