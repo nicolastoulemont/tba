@@ -4,6 +4,18 @@ import { Mutation } from 'react-apollo';
 import { ADD_REGISTRATION, DELETE_REGISTRATION } from '../graphql/registration/Mutations';
 
 export const RegisterEvent = ({ user, event_ID, refetch, client }) => {
+	const createRegistration = (e, user, event_ID, addRegistration, client) => {
+		e.preventDefault();
+		addRegistration({
+			variables: {
+				user_ID: user,
+				event_ID
+			}
+		}).then(res => {
+			client.resetStore();
+		});
+	};
+
 	return (
 		<Fragment>
 			<Mutation mutation={ADD_REGISTRATION}>
@@ -13,17 +25,7 @@ export const RegisterEvent = ({ user, event_ID, refetch, client }) => {
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Register to this event"
-						onClick={e => {
-							e.preventDefault();
-							addRegistration({
-								variables: {
-									user_ID: user,
-									event_ID
-								}
-							}).then(res => {
-								client.resetStore();
-							});
-						}}
+						onClick={e => createRegistration(e, user, event_ID, addRegistration, client)}
 					>
 						<h6 className="d-none d-md-inline font-weight-bold text-uppercase">Register</h6>
 					</Link>
