@@ -11,7 +11,7 @@ const buildProfile = async (args, User, Profile) => {
 			organisation_ID: args.organisation_ID,
 			name: args.name,
 			position: args.position,
-			showSocial: args.showSocial,
+			hideSocial: args.hideSocial,
 			privateProfile: args.privateProfile,
 			bio: args.bio,
 			twitter_URL: args.twitter_URL,
@@ -38,7 +38,7 @@ const updateProfile = async (args, user, User, Profile) => {
 		if (args.organisation_ID) updateProfile.organisation_ID = args.organisation_ID;
 		if (args.name) updateProfile.name = args.name;
 		if (args.position) updateProfile.position = args.position;
-		if (args.showSocial) updateProfile.showSocial = args.showSocial;
+		if (args.hideSocial) updateProfile.hideSocial = args.hideSocial;
 		if (args.privateProfile) updateProfile.privateProfile = args.privateProfile;
 		if (args.bio) updateProfile.bio = args.bio;
 		if (args.twitter_URL) updateProfile.twitter_URL = args.twitter_URL;

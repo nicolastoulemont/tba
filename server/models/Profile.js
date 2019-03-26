@@ -15,7 +15,7 @@ const profileSchema = new Schema({
 		type: String,
 		required: true
 	},
-	showSocial: {
+	hideSocial: {
 		type: Boolean,
 		default: true
 	},

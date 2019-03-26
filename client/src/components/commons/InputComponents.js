@@ -29,6 +29,32 @@ export const InputField = ({ type, name, placeholder, value, onChange, labelText
 	);
 };
 
+export const FileInput = ({ type, name, placeholder, value, onChange, labelText }) => {
+	return (
+		<div className="form-group">
+			{labelText ? (
+				<div className="d-block">
+					{' '}
+					<p className="text-left m-0 p-0">{labelText}</p>{' '}
+				</div>
+			) : null}
+			<div className="custom-file my-2">
+				<input
+					type={type}
+					className="custom-file-input"
+					name={name}
+					value={value}
+					onChange={onChange}
+					id="profilePictureFile"
+				/>
+				<label className="custom-file-label text-left" htmlFor="profilePictureFile">
+					<small>{placeholder}</small>
+				</label>
+			</div>
+		</div>
+	);
+};
+
 export const InputCheck = ({ type, name, id, value, checked, onChange }) => {
 	return (
 		<div className="form-group">
@@ -50,7 +76,7 @@ export const InputCheck = ({ type, name, id, value, checked, onChange }) => {
 	);
 };
 
-export const TextAreaField = ({ type, name, placeholder, value, onChange, labelText }) => {
+export const TextAreaField = ({ type, name, placeholder, value, onChange, labelText, rows }) => {
 	return (
 		<div className="form-group">
 			{labelText ? (
@@ -67,6 +93,7 @@ export const TextAreaField = ({ type, name, placeholder, value, onChange, labelT
 					value={value}
 					placeholder={placeholder}
 					onChange={onChange}
+					rows={rows}
 				/>
 			</div>
 		</div>

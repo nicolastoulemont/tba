@@ -9,7 +9,7 @@ module.exports = {
 			organisation_ID: String
 			name: String!
 			position: String!
-			showSocial: Boolean
+			hideSocial: Boolean
 			privateProfile: Boolean
 			bio: String
 			twitter_URL: String
@@ -41,7 +41,7 @@ module.exports = {
 				organisation_ID: String
 				name: String!
 				position: String!
-				showSocial: Boolean
+				hideSocial: Boolean
 				privateProfile: Boolean
 				bio: String
 				twitter_URL: String
@@ -56,7 +56,7 @@ module.exports = {
 				organisation_ID: String
 				name: String
 				position: String
-				showSocial: Boolean
+				hideSocial: Boolean
 				privateProfile: Boolean
 				bio: String
 				twitter_URL: String
