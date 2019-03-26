@@ -19,7 +19,9 @@ const buildProfile = async (args, User, Profile) => {
 			picture_URL: picture_URL,
 			interestOne: args.interestOne,
 			interestTwo: args.interestTwo,
-			interestThree: args.interestThree
+			interestThree: args.interestThree,
+			createdAt: new Date(),
+			updatedAt: new Date()
 		}).save();
 		return { success: true, profile };
 	} catch (err) {
@@ -45,6 +47,7 @@ const updateProfile = async (args, user, User, Profile) => {
 		if (args.interestOne) updateProfile.interestOne = args.interestOne;
 		if (args.interestTwo) updateProfile.interestTwo = args.interestTwo;
 		if (args.interestThree) updateProfile.interestThree = args.interestThree;
+		updateProfile.updatedAt = new Date();
 		return {
 			success: true,
 			profile: await Profile.findByIdAndUpdate(args._id, updateProfile, {

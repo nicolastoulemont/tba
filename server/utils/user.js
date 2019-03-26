@@ -8,7 +8,9 @@ const registerUser = async (args, User) => {
 		const hashedPwd = await bcrypt.hash(args.password, 12);
 		let user = new User({
 			email: args.email,
-			password: hashedPwd
+			password: hashedPwd,
+			createdAt: new Date(),
+			updatedAt: new Date()
 		}).save();
 		return { success: true, user };
 	} catch (err) {
@@ -40,6 +42,7 @@ const updateUserInfo = async (args, user, User) => {
 		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
 		let updateUser = {};
 		if (args.email) updateUser.email = args.email;
+		updateUser.updatedAt = new Date();
 		return await User.findByIdAndUpdate(args._id, updateUser, {
 			new: true
 		});

@@ -11,7 +11,9 @@ const buildEvent = async (args, EventItem) => {
 			categoryThree: args.categoryThree,
 			location: args.location,
 			start: args.start,
-			end: args.end
+			end: args.end,
+			createdAt: new Date(),
+			updatedAt: new Date()
 		}).save();
 		return {
 			success: true,
@@ -39,6 +41,7 @@ const updateEvent = async (args, EventItem) => {
 		if (args.location) updateEvent.location = args.location;
 		if (args.start) updateEvent.start = new Date(args.start);
 		if (args.end) updateEvent.end = new Date(args.end);
+		updateEvent.updatedAt = new Date();
 
 		const updEvent = await EventItem.findByIdAndUpdate(args._id, updateEvent, {
 			new: true
