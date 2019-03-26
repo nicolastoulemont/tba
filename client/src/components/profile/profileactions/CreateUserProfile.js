@@ -36,24 +36,35 @@ export default class CreateUserProfile extends Component {
 					<h6 className="text-left">Create your profile</h6>
 					<form action="">
 						<div className="form-row">
-							<div className="col">
+							<div className="col-8">
 								<InputField
 									type="text"
-									placeholder="Name"
+									placeholder="e.g. Frederic Von Brexit"
 									name="name"
+									labelText="Name"
+									input_ID="inputUserName"
 									value={name}
 									onChange={this.onChange}
 								/>
 								<InputField
 									type="text"
-									placeholder="Position"
+									placeholder="e.g. Policy Officer / Citizen"
 									name="position"
+									labelText="Position"
+									input_ID="inputUserPosition"
 									value={position}
 									onChange={this.onChange}
 								/>
 							</div>
-							<div className="col">
-								<h6>Picture DROP AREA</h6>
+							<div className="col-4">
+								<div className="row">
+									<div className="col mt-2 pt-2">
+										<button type="button" className="btn btn-outline-dark p-4">
+											<i className="far fa-image mr-2" />
+											<small>Add a profil picture</small>
+										</button>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="form-row">
