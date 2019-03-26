@@ -15,6 +15,20 @@ class CommentReport extends Component {
 		this.setState({ [name]: value });
 	};
 
+	reportComment = (e, user, comment_ID, text, addReport) => {
+		if (
+			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
+			(e.type === 'keydown' && e.keyCode === 13)
+		) {
+			e.preventDefault();
+			addReport({
+				variables: { user_ID: user, text, comment_ID }
+			}).then(res => {
+				this.props.hideForms();
+			});
+		}
+	};
+
 	render() {
 		const { comment_ID, user } = this.props;
 		const { text } = this.state;
@@ -30,19 +44,13 @@ class CommentReport extends Component {
 								onChange={this.onChange}
 								name="text"
 								value={text}
+								onKeyDown={e => this.reportComment(e, user, comment_ID, text, addReport)}
 							/>
 							<div className="input-group-append">
 								<Link
 									to="#"
 									className="btn bg-darkblue"
-									onClick={e => {
-										e.preventDefault();
-										addReport({
-											variables: { user_ID: user, text, comment_ID }
-										}).then(res => {
-											this.props.hideForms();
-										});
-									}}
+									onClick={e => this.reportComment(e, user, comment_ID, text, addReport)}
 								>
 									<i className="fa fa-paper-plane text-white" aria-hidden="true" />
 								</Link>

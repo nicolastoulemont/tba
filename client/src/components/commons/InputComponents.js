@@ -1,24 +1,30 @@
 import React from 'react';
 
-export const InputField = ({ type, name, placeholder, value, onChange, input_ID, labelText }) => {
+export const InputField = ({ type, name, placeholder, value, onChange, labelText, usageExpl }) => {
 	return (
-		<div className="form-group row">
+		<div className="form-group">
 			{labelText ? (
-				<label htmlFor={input_ID} className="col-sm-2 col-form-label">
-					{labelText}
-				</label>
+				<div className="d-block">
+					{' '}
+					<p className="text-left m-0 p-0">{labelText}</p>{' '}
+				</div>
 			) : null}
-			<div className="col-sm-10">
+			<div className="d-block">
 				<input
-					className="text-secondary form-control form-control-sm my-2"
+					className="text-secondary form-control form-control-sm my-1"
 					type={type}
 					name={name}
 					value={value}
-					id={input_ID}
 					placeholder={placeholder}
 					onChange={onChange}
 				/>
 			</div>
+			{usageExpl ? (
+				<div className="d-block text-left p-0 m-0">
+					{' '}
+					<small className="text-secondary m-0 p-0 font-italic">{usageExpl}</small>{' '}
+				</div>
+			) : null}
 		</div>
 	);
 };
@@ -44,17 +50,25 @@ export const InputCheck = ({ type, name, id, value, checked, onChange }) => {
 	);
 };
 
-export const TextAreaField = ({ type, name, placeholder, value, onChange }) => {
+export const TextAreaField = ({ type, name, placeholder, value, onChange, labelText }) => {
 	return (
 		<div className="form-group">
-			<textarea
-				className="text-secondary form-control form-control-sm"
-				type={type}
-				name={name}
-				value={value}
-				placeholder={placeholder}
-				onChange={onChange}
-			/>
+			{labelText ? (
+				<div className="d-block">
+					{' '}
+					<p className="text-left m-0 p-0">{labelText}</p>{' '}
+				</div>
+			) : null}
+			<div className="d-block">
+				<textarea
+					className="text-secondary form-control form-control-sm"
+					type={type}
+					name={name}
+					value={value}
+					placeholder={placeholder}
+					onChange={onChange}
+				/>
+			</div>
 		</div>
 	);
 };

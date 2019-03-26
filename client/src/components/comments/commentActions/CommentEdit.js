@@ -15,6 +15,21 @@ class CommentEdit extends Component {
 		this.setState({ [name]: value });
 	};
 
+	editComment = (e, comment_ID, text, editComment, refetch) => {
+		if (
+			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
+			(e.type === 'keydown' && e.keyCode === 13)
+		) {
+			e.preventDefault();
+			editComment({
+				variables: { _id: comment_ID, text }
+			}).then(res => {
+				this.props.hideForms();
+				refetch();
+			});
+		}
+	};
+
 	render() {
 		const { comment_ID, refetch } = this.props;
 		const { text } = this.state;
@@ -30,20 +45,13 @@ class CommentEdit extends Component {
 								onChange={this.onChange}
 								name="text"
 								value={text}
+								onKeyDown={e => this.editComment(e, comment_ID, text, editComment, refetch)}
 							/>
 							<div className="input-group-append">
 								<Link
 									to="#"
 									className="btn bg-darkblue"
-									onClick={e => {
-										e.preventDefault();
-										editComment({
-											variables: { _id: comment_ID, text }
-										}).then(res => {
-											this.props.hideForms();
-											refetch();
-										});
-									}}
+									onClick={e => this.editComment(e, comment_ID, text, editComment, refetch)}
 								>
 									<i className="fa fa-paper-plane text-white" aria-hidden="true" />
 								</Link>

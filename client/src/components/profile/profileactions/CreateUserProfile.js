@@ -34,63 +34,51 @@ export default class CreateUserProfile extends Component {
 			<Fragment key={currentUser}>
 				<div className="mx-auto p-4">
 					<h6 className="text-left">Create your profile</h6>
-					<form action="">
-						<div className="form-row">
-							<div className="col-8">
-								<InputField
-									type="text"
-									placeholder="e.g. Frederic Von Brexit"
-									name="name"
-									labelText="Name"
-									input_ID="inputUserName"
-									value={name}
-									onChange={this.onChange}
-								/>
-								<InputField
-									type="text"
-									placeholder="e.g. Policy Officer / Citizen"
-									name="position"
-									labelText="Position"
-									input_ID="inputUserPosition"
-									value={position}
-									onChange={this.onChange}
-								/>
-							</div>
-							<div className="col-4">
-								<div className="row">
-									<div className="col mt-2 pt-2">
-										<button type="button" className="btn btn-outline-dark p-4">
-											<i className="far fa-image mr-2" />
-											<small>Add a profil picture</small>
-										</button>
-									</div>
-								</div>
-							</div>
+					<form action="" className="p-4">
+						<InputField
+							type="text"
+							placeholder="e.g. Frederic Von Brexit"
+							name="name"
+							labelText="Name"
+							value={name}
+							onChange={this.onChange}
+						/>
+						<InputField
+							type="text"
+							placeholder="e.g. Policy Officer / Citizen"
+							name="position"
+							labelText="Position"
+							value={position}
+							onChange={this.onChange}
+						/>
+						<p className="text-left m-0 p-0">Profile picture</p>
+						<div className="custom-file my-2">
+							<input type="file" className="custom-file-input" id="profilePictureFile" />
+							<label className="custom-file-label text-left" htmlFor="profilePictureFile">
+								<small>Add a picture</small>
+							</label>
 						</div>
-						<div className="form-row">
-							<div className="col">
-								<InputField
-									type="text"
-									placeholder="Twitter account url"
-									name="twitter_URL"
-									value={twitter_URL}
-									onChange={this.onChange}
-								/>
-								<InputField
-									type="text"
-									placeholder="LinkedIn account url"
-									name="linkedin_URL"
-									value={linkedin_URL}
-									onChange={this.onChange}
-								/>
-							</div>
-							<div className="col">Organisation selection AREA</div>
-						</div>
+						<div>Organisation selection AREA</div>
 						<TextAreaField
 							type="text"
-							placeholder="Bio"
+							placeholder="e.g. I'm an EU affairs professional in EU digital policies"
 							name="bio"
+							labelText="Bio"
 							value={bio}
+							onChange={this.onChange}
+						/>
+						<InputField
+							type="text"
+							placeholder="Twitter account url"
+							name="twitter_URL"
+							value={twitter_URL}
+							onChange={this.onChange}
+						/>
+						<InputField
+							type="text"
+							placeholder="LinkedIn account url"
+							name="linkedin_URL"
+							value={linkedin_URL}
 							onChange={this.onChange}
 						/>
 					</form>

@@ -17,6 +17,20 @@ class CommentReply extends Component {
 		this.setState({ [name]: value });
 	};
 
+	commentReply = (e, user, comment_ID, text, addComment) => {
+		if (
+			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
+			(e.type === 'keydown' && e.keyCode === 13)
+		) {
+			e.preventDefault();
+			addComment({
+				variables: { user_ID: user, comment_ID, text }
+			}).then(res => {
+				this.props.hideForms();
+			});
+		}
+	};
+
 	render() {
 		const { user, comment_ID } = this.props;
 		const { text } = this.state;
@@ -37,19 +51,13 @@ class CommentReply extends Component {
 								onChange={this.onChange}
 								name="text"
 								value={text}
+								onKeyDown={e => this.commentReply(e, user, comment_ID, text, addComment)}
 							/>
 							<div className="input-group-append">
 								<Link
 									to="#"
 									className="btn bg-darkblue"
-									onClick={e => {
-										e.preventDefault();
-										addComment({
-											variables: { user_ID: user, comment_ID, text }
-										}).then(res => {
-											this.props.hideForms();
-										});
-									}}
+									onClick={e => this.commentReply(e, user, comment_ID, text, addComment)}
 								>
 									<i className="fa fa-paper-plane text-white" aria-hidden="true" />
 								</Link>
