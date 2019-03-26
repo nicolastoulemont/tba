@@ -36,7 +36,7 @@ class EventCommentsFeed extends Component {
 
 									<div className="input-group input-group-sm mt-2 mx-0">
 										<br />
-										<EventCommentFeedInput user={user} event_ID={event_ID} refetch={refetch} />
+										<EventCommentFeedInput user={user} event_ID={event_ID} />
 									</div>
 								</Fragment>
 							);

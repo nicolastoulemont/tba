@@ -8,6 +8,7 @@ import NewsFeed from '../news/NewsFeed';
 import CreateUserProfile from '../profile/profileactions/CreateUserProfile';
 import Profile from '../profile/userprofile/Profile';
 import Event from '../events/singleEvent/Event';
+import CreateEvent from '../events/eventActions/CreateEvent';
 import EditEvent from '../events/eventActions/EditEvent';
 import DeleteEvent from '../events/eventActions/DeleteEvent';
 
@@ -49,8 +50,19 @@ const Home = () => {
 								/>
 								<Route
 									exact
+									path="/home/profile/edit/:id"
+									// ADD the edit profile component
+									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
+								/>
+								<Route
+									exact
 									path="/home/event/:id"
 									render={props => <Event {...props} currentUser={user.id} />}
+								/>
+								<Route
+									exact
+									path="/home/event/create/:id"
+									render={props => <CreateEvent {...props} currentUser={user.id} />}
 								/>
 								<Route
 									exact
