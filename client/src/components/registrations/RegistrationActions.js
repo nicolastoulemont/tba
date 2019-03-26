@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { ADD_REGISTRATION, DELETE_REGISTRATION } from '../graphql/registration/Mutations';
 
-export const RegisterEvent = ({ user, event_ID, refetch, client }) => {
+export const RegisterEvent = ({ user, event_ID, client }) => {
 	const createRegistration = (e, user, event_ID, addRegistration, client) => {
 		e.preventDefault();
 		addRegistration({
@@ -35,7 +35,17 @@ export const RegisterEvent = ({ user, event_ID, refetch, client }) => {
 	);
 };
 
-export const UnRegisterEvent = ({ userRegistration, client, refetch, event_ID }) => {
+export const UnRegisterEvent = ({ userRegistration, client }) => {
+	const unRegister = (e, userRegistration, deleteRegistration, client) => {
+		e.preventDefault();
+		deleteRegistration({
+			variables: {
+				_id: userRegistration.id
+			}
+		}).then(res => {
+			client.resetStore();
+		});
+	};
 	return (
 		<Fragment>
 			<Mutation mutation={DELETE_REGISTRATION}>
@@ -45,16 +55,7 @@ export const UnRegisterEvent = ({ userRegistration, client, refetch, event_ID })
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Cancel your registration to this event"
-						onClick={e => {
-							e.preventDefault();
-							deleteRegistration({
-								variables: {
-									_id: userRegistration.id
-								}
-							}).then(res => {
-								client.resetStore();
-							});
-						}}
+						onClick={e => unRegister(e, userRegistration, deleteRegistration, client)}
 					>
 						<h6 className="d-none d-md-inline font-weight-bold text-uppercase">Unregister</h6>
 					</Link>
