@@ -22,7 +22,13 @@ export default class CreateUserProfile extends Component {
 	};
 
 	onCheck = e => {
-		console.log('checked');
+		const { name } = e.target;
+		if (name === 'privateProfile') {
+			this.setState({ privateProfile: !this.state.privateProfile });
+		}
+		if (name === 'hideSocial') {
+			this.setState({ hideSocial: !this.state.hideSocial });
+		}
 	};
 
 	userCheck = props => {
@@ -45,6 +51,7 @@ export default class CreateUserProfile extends Component {
 			hideSocial,
 			privateProfile
 		} = this.state;
+
 		if (!correctUser) return <Redirect to="/error" />;
 		return (
 			<Fragment key={currentUser}>
@@ -141,7 +148,7 @@ export default class CreateUserProfile extends Component {
 								</small>
 							</label>
 						</div>
-						<input type="submit" className="btn btn-info btn-block mt-4" />
+						<input type="submit" className="btn btn-darkblue btn-block mt-4" />
 					</form>
 				</div>
 			</Fragment>
