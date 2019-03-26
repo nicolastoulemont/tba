@@ -18,7 +18,7 @@ const RegistrationsDisplay = ({ registrations }) => {
 			<Fragment>
 				{registrations.map(registration => {
 					return (
-						<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+						<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={registration.id}>
 							{props => (
 								<div style={props}>
 									<div className="text-left px-3 py-2 border-top" key={registration.id}>
