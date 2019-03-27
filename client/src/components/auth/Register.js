@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
-import { REGISTER_USER } from '../graphql/user/Mutations';
+import { REGISTER_AND_LOGIN_USER } from '../graphql/user/Mutations';
 
 class Register extends Component {
 	constructor() {
@@ -21,33 +21,40 @@ class Register extends Component {
 		}
 	};
 
-	registerUser = async (e, email, password, register) => {
+	registerAndLoginUser = async (e, email, password, registerAndLogin) => {
 		e.preventDefault();
-		const response = await register({
+		const response = await registerAndLogin({
 			variables: { email, password }
 		});
-		const { success, errors } = response.data.register;
+		console.log(response);
+		const { success, token, errors } = response.data.registerAndLogin;
 		if (!success) {
 			this.setState({
 				errors: errors
 			});
-		} else this.props.history.push('/login');
+		}
+		this.props.client.resetStore();
+		await localStorage.setItem('token', token);
+		this.props.history.push('/home/news');
 	};
 
 	render() {
 		const { email, errors, password } = this.state;
-
 		return (
 			<Fragment>
-				<Mutation mutation={REGISTER_USER}>
-					{(register, e) => (
+				<Mutation mutation={REGISTER_AND_LOGIN_USER}>
+					{(registerAndLogin, e) => (
 						<Fragment>
 							<div className="container">
 								<div className="row">
 									<div className="col-md-6 mt-4 mx-auto">
 										<h1 className="display-4 text-center">Register</h1>
 										<p className="lead text-center">Create your eu-watcher account</p>
-										<form onSubmit={async e => this.registerUser(e, email, password, register)}>
+										<form
+											onSubmit={async e =>
+												this.registerAndLoginUser(e, email, password, registerAndLogin)
+											}
+										>
 											<InputField
 												type="text"
 												placeholder="Please enter your email adress"
@@ -85,4 +92,4 @@ class Register extends Component {
 	}
 }
 
-export default Register;
+export default withApollo(Register);

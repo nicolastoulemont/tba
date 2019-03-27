@@ -48,12 +48,12 @@ const Home = () => {
 									path="/home/profile/create/:id"
 									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
 								/>
-								<Route
+								{/* <Route
 									exact
 									path="/home/profile/edit/:id"
 									// ADD the edit profile component
 									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
-								/>
+								/> */}
 								<Route
 									exact
 									path="/home/event/:id"
@@ -90,7 +90,7 @@ const Home = () => {
 					<div className="col">
 						<h6>You need a Profile to continue</h6>
 						<p>
-							<Link to={`/profile/create/${user.id}`}>Create your Profile</Link>
+							<Link to={`/home/profile/create/${user.id}`}>Create your Profile</Link>
 						</p>
 					</div>
 				</div>
