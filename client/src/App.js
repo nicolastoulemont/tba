@@ -40,7 +40,7 @@ class App extends Component {
 								<Route path="/error" component={Error404} />
 							</Switch>
 						</div>
-						<PrivateRoute component={MobileNav} />
+						<Route component={MobileNav} />
 					</div>
 				</Router>
 			</ApolloProvider>

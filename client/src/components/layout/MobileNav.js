@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CreateEventModal from '../events/CreateEventModal';
 
-const MobileNav = () => {
+export default function MobileNav() {
 	const today = new Date().toISOString().slice(0, 10);
 	return (
 		<div className="justify-text-center">
@@ -35,9 +34,6 @@ const MobileNav = () => {
 					</div>
 				</div>
 			</div>
-			<CreateEventModal />
 		</div>
 	);
-};
-
-export default MobileNav;
+}

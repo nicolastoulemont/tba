@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-boost';
 
 class Navbar extends Component {
 	LogOut = e => {
-		localStorage.removeItem('jwtToken');
+		localStorage.removeItem('token');
 		localStorage.removeItem('uuid');
 		ApolloClient.resetStore();
 	};
