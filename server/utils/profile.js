@@ -4,7 +4,12 @@ const { isAuthorized } = require('../validation/isAuthorized');
 const buildProfile = async (args, User, Profile) => {
 	try {
 		const user = User.findById(args.user_ID);
-		const picture_URL = gravatar.url(user.email, { s: '200', r: 'pg', d: 'mm' });
+		const picture_URL = gravatar.url(user.email, {
+			protocol: 'https',
+			s: '200',
+			r: 'pg',
+			d: 'mp'
+		});
 
 		let profile = await new Profile({
 			user_ID: args.user_ID,

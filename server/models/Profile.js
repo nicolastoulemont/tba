@@ -17,7 +17,7 @@ const profileSchema = new Schema({
 	},
 	hideSocial: {
 		type: Boolean,
-		default: true
+		default: false
 	},
 	privateProfile: {
 		type: Boolean,

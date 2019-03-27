@@ -15,10 +15,10 @@ const userLogSchema = new Schema({
 	isActive: {
 		type: Boolean
 	},
-	upgradedToPro: {
+	upgradedAccess: {
 		type: Date
 	},
-	downgradedToStandard: {
+	downgradedAccess: {
 		type: Date
 	},
 	lastComment: {

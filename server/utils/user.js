@@ -9,6 +9,7 @@ const registerUser = async (args, User) => {
 		let user = new User({
 			email: args.email,
 			password: hashedPwd,
+			access: 'citizen',
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();
@@ -25,6 +26,7 @@ const registerAndLogin = async (args, User) => {
 		const user = await new User({
 			email: args.email,
 			password: hashedPwd,
+			access: 'citizen',
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();
@@ -71,6 +73,7 @@ const updateUserInfo = async (args, user, User) => {
 		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
 		let updateUser = {};
 		if (args.email) updateUser.email = args.email;
+		if (args.access) updateUser.access = args.access;
 		updateUser.updatedAt = new Date();
 		return await User.findByIdAndUpdate(args._id, updateUser, {
 			new: true

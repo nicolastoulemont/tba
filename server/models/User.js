@@ -13,9 +13,10 @@ const userSchema = new Schema({
 		type: String,
 		required: true
 	},
-	isPro: {
-		type: Boolean,
-		default: false
+	access: {
+		type: String,
+		default: 'citizen',
+		required: true
 	},
 	createdAt: {
 		type: Date,

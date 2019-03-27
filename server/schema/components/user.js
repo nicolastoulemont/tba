@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const dayjs = require('dayjs');
 const { gql } = require('apollo-server-express');
 const { registerUser, registerAndLogin, loginUser, updateUserInfo } = require('../../utils/user');
 // Validation
@@ -10,7 +9,7 @@ module.exports = {
 		type User {
 			id: ID!
 			email: String!
-			isPro: Boolean
+			access: String!
 			createdAt: Date
 			updatedAt: Date
 			profile: Profile
