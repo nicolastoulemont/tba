@@ -5,21 +5,15 @@ import { MODERATE_COMMENT } from '../graphql/comment/Mutations';
 import { RespSmallAvatarLink, UserNameLink } from '../commons/CustomLinks';
 import EventCommentActions from './commentActions/EventCommentActions';
 
-const EventCommentDisplay = ({
+export default function EventCommentDisplay({
 	id,
-	text,
-	createdAt,
-	updatedAt,
-	creatorName,
-	creatorId,
-	creatorAvatar,
-	refetch,
+	comment: { text, createdAt, updatedAt, user_ID, moderated, moderationMsg },
+	comment,
 	user,
 	event_ID,
-	eventCreator,
-	moderated,
-	moderationMsg
-}) => {
+	refetch,
+	eventCreator
+}) {
 	return (
 		<Fragment>
 			{moderated ? (
@@ -40,16 +34,16 @@ const EventCommentDisplay = ({
 				<div className="list-group-item border-0 py-1 px-2" key={id}>
 					<div className="row">
 						<div className="col-1">
-							<RespSmallAvatarLink id={creatorId} avatar={creatorAvatar} />
+							<RespSmallAvatarLink id={user_ID} avatar={comment.creator.profile.picture_URL} />
 						</div>
 						<div className="col-9 col-md-10 mx-0 pr-0 pl-1">
 							<div className="text-left mx-auto">
-								<UserNameLink id={creatorId} name={creatorName} />
+								<UserNameLink id={user_ID} name={comment.creator.profile.name} />
 								<span className="d-none d-md-inline-block ml-2">{text}</span>
 								<span className="d-inline-block d-md-none ml-4">{text}</span>
 								<EventCommentActions
 									user={user}
-									creatorId={creatorId}
+									creatorId={user_ID}
 									comment_ID={id}
 									commentText={text}
 									createdAt={createdAt}
@@ -59,7 +53,7 @@ const EventCommentDisplay = ({
 							</div>
 						</div>
 						<div className="col-1 mx-0">
-							{user === creatorId || user === eventCreator ? (
+							{user === user_ID || user === eventCreator ? (
 								<Mutation mutation={MODERATE_COMMENT}>
 									{(moderateComment, e) => (
 										<Link
@@ -78,7 +72,7 @@ const EventCommentDisplay = ({
 												});
 											}}
 										>
-											{user === creatorId ? (
+											{user === user_ID ? (
 												<i className="fa fa-times mx-0" aria-hidden="true" />
 											) : user === eventCreator ? (
 												<i className="fas fa-ban mx-0" aria-hidden="true" />
@@ -93,6 +87,4 @@ const EventCommentDisplay = ({
 			)}
 		</Fragment>
 	);
-};
-
-export default EventCommentDisplay;
+}

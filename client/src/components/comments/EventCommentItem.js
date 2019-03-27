@@ -3,37 +3,23 @@ import EventCommentDisplay from './EventCommentDisplay';
 import CQuery from '../commons/CustomQueryComponent';
 import { GET_COMMENT_COMMENTS } from '../graphql/comment/Queries';
 
-const EventCommentItem = ({
-	id,
-	text,
-	createdAt,
-	updatedAt,
-	creatorName,
-	creatorId,
-	creatorAvatar,
-	refetch,
+export default function EventCommentItem({
+	comment: { id },
+	comment,
 	user,
 	event_ID,
-	eventCreator,
-	moderated,
-	moderationMsg
-}) => {
+	refetch,
+	eventCreator
+}) {
 	return (
 		<Fragment>
 			<EventCommentDisplay
 				id={id}
-				text={text}
-				createdAt={createdAt}
-				updatedAt={updatedAt}
-				creatorName={creatorName}
-				creatorId={creatorId}
-				creatorAvatar={creatorAvatar}
+				comment={comment}
 				refetch={refetch}
 				user={user}
 				event_ID={event_ID}
 				eventCreator={eventCreator}
-				moderated={moderated}
-				moderationMsg={moderationMsg}
 			/>
 			<CQuery query={GET_COMMENT_COMMENTS} variables={{ id }}>
 				{({ data: { comment }, refetch }) => {
@@ -46,19 +32,11 @@ const EventCommentItem = ({
 									{comments.map(comment => (
 										<EventCommentItem
 											key={comment.id}
-											id={comment.id}
-											text={comment.text}
-											createdAt={comment.createdAt}
-											updatedAt={comment.updatedAt}
-											creatorName={comment.creator.profile.name}
-											creatorId={comment.user_ID}
-											creatorAvatar={comment.creator.profile.picture_URL}
-											refetch={refetch}
+											comment={comment}
 											user={user}
 											event_ID={event_ID}
+											refetch={refetch}
 											eventCreator={eventCreator}
-											moderated={comment.moderated}
-											moderationMsg={comment.moderationMsg}
 										/>
 									))}
 								</div>
@@ -69,6 +47,4 @@ const EventCommentItem = ({
 			</CQuery>
 		</Fragment>
 	);
-};
-
-export default EventCommentItem;
+}
