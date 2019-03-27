@@ -83,22 +83,20 @@ const Home = () => {
 		);
 	};
 
-	const userHasNoProfile = user => {
-		return (
-			<Fragment>
-				<div className="mt-2 text-center">
-					<div className="row">
-						<div className="col">
-							<h6>You need a Profile to continue</h6>
-							<p>
-								<Link to={`/profile/create/${user.id}`}>Create your Profile</Link>
-							</p>
-						</div>
+	const userHasNoProfile = user => (
+		<Fragment>
+			<div className="mt-2 text-center">
+				<div className="row">
+					<div className="col">
+						<h6>You need a Profile to continue</h6>
+						<p>
+							<Link to={`/profile/create/${user.id}`}>Create your Profile</Link>
+						</p>
 					</div>
 				</div>
-			</Fragment>
-		);
-	};
+			</div>
+		</Fragment>
+	);
 
 	return (
 		<Fragment>

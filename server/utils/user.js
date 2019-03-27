@@ -19,6 +19,35 @@ const registerUser = async (args, User) => {
 	}
 };
 
+const registerAndLogin = async (args, User) => {
+	try {
+		const hashedPwd = await bcrypt.hash(args.password, 12);
+		const user = await new User({
+			email: args.email,
+			password: hashedPwd,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		}).save();
+		const token = await jwt.sign(
+			{
+				user: {
+					id: user._id
+				}
+			},
+			SECRET,
+			{ expiresIn: '1y' }
+		);
+		return {
+			success: true,
+			user,
+			token
+		};
+	} catch (err) {
+		console.log(err);
+		return { success: false, errors: [err] };
+	}
+};
+
 const loginUser = async user => {
 	try {
 		const token = await jwt.sign(
@@ -52,4 +81,4 @@ const updateUserInfo = async (args, user, User) => {
 	}
 };
 
-module.exports = { registerUser, loginUser, updateUserInfo };
+module.exports = { registerUser, registerAndLogin, loginUser, updateUserInfo };

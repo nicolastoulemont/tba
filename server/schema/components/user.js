@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const dayjs = require('dayjs');
 const { gql } = require('apollo-server-express');
-const { registerUser, loginUser, updateUserInfo } = require('../../utils/user');
+const { registerUser, registerAndLogin, loginUser, updateUserInfo } = require('../../utils/user');
 // Validation
 const { validateRegInput, validateUpdateInput } = require('../../validation/user');
 
@@ -37,6 +37,13 @@ module.exports = {
 			error: String
 		}
 
+		type RegisterAndLoginResponse {
+			success: Boolean!
+			user: User
+			token: String
+			errors: [Error]
+		}
+
 		extend type Query {
 			user(id: ID!): User
 			currentUser: User
@@ -45,6 +52,7 @@ module.exports = {
 
 		extend type Mutation {
 			register(email: String!, password: String!): RegisterResp!
+			registerAndLogin(email: String!, password: String!): RegisterAndLoginResponse!
 			login(email: String!, password: String!): LoginResp!
 			updateUser(_id: ID!, email: String): User
 			deleteUser(_id: ID!): User
@@ -117,6 +125,11 @@ module.exports = {
 				const { errors, isValid } = await validateRegInput(args);
 				if (!isValid) return { success: false, errors };
 				return await registerUser(args, User);
+			},
+			registerAndLogin: async (parent, args, { models: { User } }) => {
+				const { errors, isValid } = await validateRegInput(args);
+				if (!isValid) return { success: false, errors };
+				return await registerAndLogin(args, User);
 			},
 			login: async (parent, args, { models: { User } }) => {
 				const user = await User.findOne({ email: args.email });
