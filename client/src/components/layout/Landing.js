@@ -1,8 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import decode from 'jwt-decode';
 
 export default function Landing() {
-	return (
+	const hasToken = () => {
+		const token = localStorage.getItem('token');
+		try {
+			decode(token);
+		} catch (err) {
+			return false;
+		}
+		return true;
+	};
+
+	const hasNoToken = () => (
 		<div className="landing">
 			<div className="dark-overlay landing-inner text-light">
 				<div className="container">
@@ -26,4 +37,6 @@ export default function Landing() {
 			</div>
 		</div>
 	);
+
+	return <Fragment>{hasToken() ? <Redirect to="/home/news" /> : hasNoToken()}</Fragment>;
 }
