@@ -61,7 +61,7 @@ const loginUser = async user => {
 			SECRET,
 			{ expiresIn: '1y' }
 		);
-		return { success: true, token };
+		return { success: true, token, user };
 	} catch (err) {
 		console.log(err);
 		return { success: false, error: err };

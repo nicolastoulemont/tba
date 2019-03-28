@@ -102,6 +102,7 @@ const Home = () => {
 		<Fragment>
 			<CQuery query={LOGGED_USER}>
 				{({ data }) => {
+					console.log(data);
 					const user = data.currentUser;
 					if (user.profile) return userHasProfile(user);
 					if (!user.profile) return userHasNoProfile(user);

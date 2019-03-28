@@ -14,12 +14,19 @@ import Navbar from './components/layout/Navbar';
 import MobileNav from './components/layout/MobileNav';
 import Config from './config/config';
 
-const { uri, token } = Config;
+const { uri } = Config;
 
 const client = new ApolloClient({
 	uri,
-	headers: {
-		authorization: token ? token : ''
+	request: operation => {
+		const token = localStorage.getItem('token');
+		if (token) {
+			operation.setContext({
+				headers: {
+					authorization: token
+				}
+			});
+		}
 	}
 });
 

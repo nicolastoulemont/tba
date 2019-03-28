@@ -19,8 +19,8 @@ mongoose.set('useCreateIndex', true);
 const server = new ApolloServer({
 	schema,
 	context: ({ req }) => {
-		const token = req.headers.authorization;
 		try {
+			const token = req.headers.authorization || '';
 			const user = jwt.verify(token, SECRET);
 			return { user, SECRET, models };
 		} catch (err) {

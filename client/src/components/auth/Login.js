@@ -21,12 +21,9 @@ class Login extends Component {
 		}
 	};
 
-	setToken = async token => {
+	setToken = token => {
 		this.props.client.resetStore();
-		this.props.client.clearStore();
-		await localStorage.setItem('token', token);
-		const storedToken = await localStorage.getItem('token');
-		if (storedToken) this.props.history.push('/home/news');
+		localStorage.setItem('token', token);
 	};
 
 	logIn = async (e, email, password, login) => {
@@ -35,54 +32,51 @@ class Login extends Component {
 			variables: { email, password }
 		});
 		const { success, token, error } = response.data.login;
+		console.log(response);
 		if (!success) {
 			this.setState({ errors: error });
 		} else {
 			this.setToken(token);
+			setTimeout(() => this.props.history.push('/home/news'), 50);
 		}
 	};
 
 	render() {
 		const { email, errors, password } = this.state;
-
 		return (
 			<Fragment>
 				<Mutation mutation={LOGIN_USER}>
 					{(login, e) => (
-						<Fragment>
-							<div className="container">
-								<div className="row">
-									<div className="col-md-6 mt-4 mx-auto">
-										<h1 className="display-4 text-center">Login</h1>
-										<p className="lead text-center">Login to your user account</p>
-										<form onSubmit={async e => this.logIn(e, email, password, login)}>
-											<InputField
-												type="text"
-												placeholder="Please enter your email adress"
-												name="email"
-												value={email}
-												onChange={this.onChange}
-											/>
-											<InputField
-												type="password"
-												placeholder="Please enter your password"
-												name="password"
-												value={password}
-												onChange={this.onChange}
-											/>
-											{errors ? (
-												<div className="form-group">
-													<div className="alert alert-danger" role="alert">
-														{errors}
-													</div>
-												</div>
-											) : null}
-											<input type="submit" className="btn btn-info btn-block mt-4" />
-										</form>
-									</div>
-								</div>
+						<div className="row">
+							<div className="col-md-6 mt-4 mx-auto">
+								<h1 className="display-4 text-center">Login</h1>
+								<p className="lead text-center">Login to your user account</p>
+								<form onSubmit={async e => this.logIn(e, email, password, login)}>
+									<InputField
+										type="text"
+										placeholder="Please enter your email adress"
+										name="email"
+										value={email}
+										onChange={this.onChange}
+									/>
+									<InputField
+										type="password"
+										placeholder="Please enter your password"
+										name="password"
+										value={password}
+										onChange={this.onChange}
+									/>
+									{errors ? (
+										<div className="form-group">
+											<div className="alert alert-danger" role="alert">
+												{errors}
+											</div>
+										</div>
+									) : null}
+									<input type="submit" className="btn btn-info btn-block mt-4" />
+								</form>
 							</div>
-						</Fragment>
+						</div>
 					)}
 				</Mutation>
 			</Fragment>

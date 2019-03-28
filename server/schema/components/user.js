@@ -33,6 +33,7 @@ module.exports = {
 		type LoginResp {
 			success: Boolean!
 			token: String
+			user: User
 			error: String
 		}
 

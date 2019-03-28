@@ -21,6 +21,9 @@ export const LOGIN_USER = gql`
 		login(email: $email, password: $password) {
 			success
 			token
+			user {
+				id
+			}
 			error
 		}
 	}
