@@ -1,23 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-const NewsFeedItem = ({ event_ID, user_ID, currentUser, name, category, location }) => {
+const NewsFeedItem = ({ currentUser, event }) => {
+	dayjs.extend(relativeTime);
 	return (
-		<div className="flex-column align-items-start p-2 border-top" key={event_ID}>
-			<div className="d-flex w-100 justify-content-between my-2">
-				<h6 className="font-weight-bold mb-2">{name}</h6>
-				<small>{location}</small>
-			</div>
-			<div className="d-flex w-100 justify-content-between">
-				<small className="mb-2 font-weight-light">{category}</small>
-				<Link
-					to={{
-						pathname: `/home/event/${event_ID}`,
-						state: { currentUser, user_ID }
-					}}
-				>
-					<small className="text-darkblue font-italic">See more</small>
+		<div className="media my-2 border-bottom">
+			<Link to={`/home/profile/${event.user_ID}`}>
+				<img
+					src={event.creator.profile.picture_URL}
+					className="small-avatar rounded-circle mr-3"
+					alt="Avatar"
+				/>
+			</Link>
+			<div className="media-body">
+				<Link to={`/home/event/${event.id}`}>
+					{' '}
+					<h6 className="text-left mb-0">
+						{event.name} -{' '}
+						{event.createdAt !== event.updatedAt ? (
+							<small className="font-italic">
+								{dayjs(event.updatedAt).fromNow()} <small>edited</small>{' '}
+							</small>
+						) : (
+							<small className="font-italic">{dayjs(event.createdAt).fromNow()}</small>
+						)}
+					</h6>
 				</Link>
+				<p className="text-left p-0 mt-0">
+					<small>
+						{event.categoryOne} {event.categoryTwo === 'Default' ? null : ` | ${event.categoryTwo}`}
+						{event.categoryThree === 'Default' ? null : ` | ${event.categoryThree}`}
+						{event.isPublic ? <span className="ml-2 font-italic">- Public event</span> : null}
+					</small>
+				</p>
+				<p className="text-left">{event.abstract}</p>
 			</div>
 		</div>
 	);

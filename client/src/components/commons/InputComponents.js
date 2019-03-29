@@ -114,19 +114,21 @@ export const SelectListGroup = ({ name, options, value, onChange }) => {
 };
 
 export const InputGroup = ({ type, name, placeholder, value, icon, onChange }) => (
-	<div className="input-group mb-3">
-		<div className="input-group-prepend">
-			<span className="input-group-text">
-				<i className={icon} />
-			</span>
+	<div className="mx-auto py-2 px-4">
+		<div className="input-group input-group-sm mb-3">
+			<input
+				className="form-control form-control-lg"
+				type={type}
+				name={name}
+				value={value}
+				placeholder={placeholder}
+				onChange={onChange}
+			/>
+			<div className="input-group-append">
+				<span className="input-group-text">
+					<i className={icon} />
+				</span>
+			</div>
 		</div>
-		<input
-			className="form-control form-control-lg"
-			type={type}
-			name={name}
-			value={value}
-			placeholder={placeholder}
-			onChange={onChange}
-		/>
 	</div>
 );

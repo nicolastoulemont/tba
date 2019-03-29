@@ -32,7 +32,6 @@ class Login extends Component {
 			variables: { email, password }
 		});
 		const { success, token, error } = response.data.login;
-		console.log(response);
 		if (!success) {
 			this.setState({ errors: error });
 		} else {

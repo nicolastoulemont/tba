@@ -44,12 +44,22 @@ export const GET_EVENTS = gql`
 			name
 			abstract
 			isPublic
-			location
-			start
-			end
 			categoryOne
 			categoryTwo
 			categoryThree
+			location
+			createdAt
+			updatedAt
+			start
+			end
+			creator {
+				profile {
+					name
+					position
+					organisation_ID
+					picture_URL
+				}
+			}
 		}
 	}
 `;
