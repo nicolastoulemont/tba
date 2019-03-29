@@ -90,7 +90,7 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
 					return await EventItem.find({ isPublic: true })
-						.sort({ _id: 'ascending' })
+						.sort({ _id: 'descending' })
 						.limit(args.first);
 				} catch (err) {
 					throw new Error('Bad request');
