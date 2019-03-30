@@ -48,12 +48,12 @@ const Home = () => {
 									path="/home/profile/create/:id"
 									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
 								/>
-								{/* <Route
+								<Route
 									exact
 									path="/home/profile/edit/:id"
 									// ADD the edit profile component
 									render={props => <CreateUserProfile {...props} currentUser={user.id} />}
-								/> */}
+								/>
 								<Route
 									exact
 									path="/home/event/:id"
@@ -76,7 +76,7 @@ const Home = () => {
 								/>
 							</Switch>
 						</main>
-						<SideBar user={user.id} avatar={user.profile.picture_URL} name={user.profile.name} />
+						<SideBar user={user} />
 					</div>
 				</div>
 			</Fragment>

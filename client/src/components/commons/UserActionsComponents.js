@@ -64,33 +64,19 @@ export const WeekAction = ({ icon, path, tooltip }) => (
 
 export const MonthActions = ({ string, pathOne, pathTwo }) => (
 	<Fragment>
-		<div className="d-none d-md-block col-md-6">
-			<div className="input-group input-group-sm mb-3">
-				<div className="input-group-prepend">
-					<span className="input-group-text">
-						<i className="fas fa-search" />
-					</span>
-				</div>
-				<input className="form-control form-control-lg" type="text" placeholder="Search..." />
-			</div>
+		<div className="col mt-1">
+			{' '}
+			<Link to={pathOne} data-togggle="tooltip" data-placement="bottom" title="Previous Month">
+				<i className="fas fa-chevron-left" />
+			</Link>
 		</div>
-		<div className="col-12 col-md-6">
-			<div className="row">
-				<div className="col mt-1">
-					{' '}
-					<Link to={pathOne} data-togggle="tooltip" data-placement="bottom" title="Previous Month">
-						<i className="fas fa-chevron-left" />
-					</Link>
-				</div>
-				<div className="col mt-1">
-					<h6 className="font-weight-bold text-uppercase mx-auto">{string}</h6>
-				</div>
-				<div className="col mt-1">
-					<Link to={pathTwo} data-togggle="tooltip" data-placement="bottom" title="Next Month">
-						<i className="fas fa-chevron-right" />
-					</Link>
-				</div>
-			</div>
+		<div className="col mt-1">
+			<h6 className="font-weight-bold text-uppercase mx-auto">{string}</h6>
+		</div>
+		<div className="col mt-1">
+			<Link to={pathTwo} data-togggle="tooltip" data-placement="bottom" title="Next Month">
+				<i className="fas fa-chevron-right" />
+			</Link>
 		</div>
 	</Fragment>
 );
