@@ -83,7 +83,7 @@ class EventCommentActions extends Component {
 						data-placement="bottom"
 						title="Report this comment"
 					>
-						<i className="fas fa-flag mx-1" />
+						<i className="far fa-flag mx-1" />
 					</Link>
 
 					{createdAt !== updatedAt ? (

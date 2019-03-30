@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import CQuery from '../commons/CustomQueryComponent';
 import NewsFeedItem from './NewsFeedItem';
+import { Spring } from 'react-spring/renderprops';
 import { InputGroup } from '../commons/InputComponents';
 import { GET_EVENTS } from '../graphql/event/Queries';
 
@@ -12,11 +13,16 @@ const NewsFeed = ({ user }) => {
 					<InputGroup icon="fas fa-search" type="text" placeholder="Search..." />
 					<CQuery query={GET_EVENTS}>
 						{({ data }) => {
-							console.log(data);
 							return (
 								<div className="border-top">
 									{data.events.map(event => (
-										<NewsFeedItem key={event.id} currentUser={user} event={event} />
+										<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
+											{props => (
+												<div style={props}>
+													<NewsFeedItem key={event.id} currentUser={user} event={event} />
+												</div>
+											)}
+										</Spring>
 									))}
 								</div>
 							);

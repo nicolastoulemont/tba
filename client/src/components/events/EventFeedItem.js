@@ -1,78 +1,81 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-const EventFeedItem = ({
-	currentUser,
-	event: {
-		id,
-		user_ID,
-		name,
-		creator,
-		location,
-		start,
-		end,
-		categoryOne,
-		categoryTwo,
-		categoryThree,
-		abstract
-	}
-}) => {
+const EventFeedItem = ({ currentUser, event }) => {
+	dayjs.extend(relativeTime);
 	return (
-		<div className="p-2 border-top border-bottom" key={id}>
-			<div className="row">
-				<div className="d-none d-md-block col-md-1">
-					<Link to={{ pathname: `/home/profile/${user_ID}` }}>
-						{creator.profile.picture_URL ? (
-							<img
-								className="rounded-circle small-avatar mt-2"
-								src={creator.profile.picture_URL}
-								alt="User Avatar"
-							/>
-						) : (
-							<i className="fas fa-user-astronaut fa-3x" />
-						)}
-					</Link>
-				</div>
-				<div className="col-md-11">
-					<div className="d-flex w-100 justify-content-between mt-2">
-						<h6 className="font-weight-bold mt-0">
-							<Link
-								to={{
-									pathname: `/home/event/${id}`
-								}}
-							>
-								{name}
-							</Link>
-						</h6>
-					</div>
-					<div className="d-flex w-100 justify-content-between mb-2">
-						<p className="text-left">{abstract}</p>
-					</div>
-					<div className="d-flex w-100 justify-content-between">
-						<div>
-							{new Date(start).getDate() === new Date(end).getDate() ? (
-								<small>
-									From {new Date(start).toTimeString().slice(0, 5)} to{' '}
-									{new Date(end).toTimeString().slice(0, 5)}
-								</small>
-							) : (
-								<small>
-									On {new Date(start).toUTCString().slice(0, 22)} to{' '}
-									{new Date(end).toUTCString().slice(0, 22)}
-								</small>
-							)}
-							<small> at {location}</small>
-						</div>
-					</div>
-					<div className="d-flex w-100 justify-content-between">
-						<small>
-							by{' '}
-							<Link to={{ pathname: `/home/profile/${user_ID}` }} className="font-weight-bold">
-								{creator.profile.name}
-							</Link>
+		<div className="media my-2 px-2 border-bottom">
+			<Link to={`/home/profile/${event.user_ID}`}>
+				<img
+					src={event.creator.profile.picture_URL}
+					className="small-avatar rounded-circle mr-3"
+					alt="User Avatar"
+				/>
+			</Link>
+			<div className="media-body">
+				<h6 className="text-left mb-0">
+					<Link to={`/home/event/${event.id}`}> {event.name} </Link> -{' '}
+					{event.createdAt !== event.updatedAt ? (
+						<small className="font-italic">
+							{dayjs(event.updatedAt).fromNow()} <small>edited</small>{' '}
 						</small>
-					</div>
-				</div>
+					) : (
+						<small className="font-italic">{dayjs(event.createdAt).fromNow()}</small>
+					)}
+				</h6>
+
+				<p className="text-left p-0 mt-0 mb-1">
+					<small>
+						{event.categoryOne} {event.categoryTwo === 'Default' ? null : ` | ${event.categoryTwo}`}
+						{event.categoryThree === 'Default' ? null : ` | ${event.categoryThree}`}
+						{event.isPublic ? <span className="ml-2 mb-0 font-italic">- Public event</span> : null}
+					</small>
+				</p>
+				<p className="text-left">{event.abstract}</p>
+				<p className="text-left mb-0">
+					{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
+						<small>
+							From {new Date(event.start).toTimeString().slice(0, 5)} to{' '}
+							{new Date(event.end).toTimeString().slice(0, 5)}
+						</small>
+					) : (
+						<small>
+							On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
+							{new Date(event.end).toUTCString().slice(0, 22)}
+						</small>
+					)}
+					<small> at {event.location}</small>
+				</p>
+				<p className="float-left">
+					<small>
+						by{' '}
+						<Link to={{ pathname: `/home/profile/${event.user_ID}` }} className="font-weight-bold">
+							{event.creator.profile.name}
+						</Link>
+					</small>
+				</p>
+				<p className="float-right ">
+					<small className="d-block">
+						<Link
+							to="#"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Read the full article"
+						>
+							<i className="fas fa-external-link-alt mx-2" />
+						</Link>
+						<Link
+							to="#"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Report this news piece"
+						>
+							<i className="far fa-flag mx-2" />
+						</Link>
+					</small>
+				</p>
 			</div>
 		</div>
 	);

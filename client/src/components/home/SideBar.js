@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import dayjs from 'dayjs';
+import { Spring } from 'react-spring/renderprops';
 import SideBarUserProfile from '../profile/SideBarUserProfile';
 import SideBarUserEvents from '../events/sideBarUserEvents/SideBarUserEvents';
 
@@ -28,44 +29,42 @@ export default class SideBar extends Component {
 			// this.props.history.push(`/home/events/${dayjs(day).format('YYYY-MM-DD')}`);
 			return null;
 		}
+		return null;
 	}
 
 	render() {
 		const { user } = this.props;
-		if (!user.profile) {
-			return (
-				<div className="d-none d-lg-block col-lg-4 text-center">
-					<div className="row">
-						<Link to={`/home/profile/create/${user.id}`}>
-							<p>Create your profile to register and likes events and post comments</p>
-						</Link>
-					</div>
-					<div className="row bg-white pr-0 ml-2 mb-4">
-						<div className="col">
-							<DayPicker />
-						</div>
-					</div>
-				</div>
-			);
-		}
+		const path = window.location.pathname;
 		return (
 			<div className="d-none d-lg-block col-lg-4 text-center">
 				<div className="row">
-					<SideBarUserProfile
-						avatar={user.profile.picture_URL}
-						name={user.profile.name}
-						user={user.id}
-					/>
-				</div>
-				<div className="row bg-white pr-0 ml-2 mb-4">
-					<div className="col">
-						<DayPicker
-							selectedDays={this.state.selectedDay}
-							onDayClick={this.handleDayClick}
-							// disabledDays={{ daysOfWeek: [0, 6] }}
+					{user.profile ? (
+						<SideBarUserProfile
+							avatar={user.profile.picture_URL}
+							name={user.profile.name}
+							user={user.id}
 						/>
-					</div>
+					) : (
+						<Link to={`/home/profile/create/${user.id}`}>
+							<p>Create your profile to register and likes events and post comments</p>
+						</Link>
+					)}
 				</div>
+				{path.includes('events') || path.includes('news') ? (
+					<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+						{props => (
+							<div className="row bg-white pr-0 ml-2 mb-4" style={props}>
+								<div className="col">
+									<DayPicker
+										selectedDays={this.state.selectedDay}
+										onDayClick={this.handleDayClick}
+										// disabledDays={{ daysOfWeek: [0, 6] }}
+									/>
+								</div>
+							</div>
+						)}
+					</Spring>
+				) : null}
 				<div className="row">
 					<SideBarUserEvents user={user.id} />
 				</div>

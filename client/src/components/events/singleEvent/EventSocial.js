@@ -24,7 +24,7 @@ const EventSocial = ({ currentUser, event_ID, eventCreator }) => {
 							title="Report this event"
 						>
 							<small>
-								<i className="fas fa-flag float-left ml-3" />
+								<i className="far fa-flag float-left ml-3" />
 							</small>
 						</Link>
 						<EventReportModal event_ID={event_ID} />

@@ -30,7 +30,7 @@ export default function EventFeed(props) {
 										return <div className="mt-4 pl-4 font-italic ">No events that day</div>;
 									} else {
 										return (
-											<Fragment>
+											<div className="border-top">
 												{data.onedayevents.map(event => (
 													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 														{props => (
@@ -40,7 +40,7 @@ export default function EventFeed(props) {
 														)}
 													</Spring>
 												))}
-											</Fragment>
+											</div>
 										);
 									}
 								}
