@@ -12,8 +12,8 @@ import CreateEvent from '../events/eventActions/CreateEvent';
 import EditEvent from '../events/eventActions/EditEvent';
 import DeleteEvent from '../events/eventActions/DeleteEvent';
 
-const Home = () => {
-	const userHasProfile = user => {
+const Home = props => {
+	const userHasProfile = (user, props) => {
 		const redirect = () => {
 			if (window.location.pathname === '/home' || window.location.pathname === '/home/')
 				return <Redirect to="/home/news" />;
@@ -76,7 +76,7 @@ const Home = () => {
 								/>
 							</Switch>
 						</main>
-						<SideBar user={user} />
+						<SideBar user={user} history={props.history} />
 					</div>
 				</div>
 			</Fragment>
@@ -103,7 +103,7 @@ const Home = () => {
 			<CQuery query={LOGGED_USER}>
 				{({ data }) => {
 					const user = data.currentUser;
-					if (user.profile) return userHasProfile(user);
+					if (user.profile) return userHasProfile(user, props);
 					if (!user.profile) return userHasNoProfile(user);
 				}}
 			</CQuery>

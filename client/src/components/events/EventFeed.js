@@ -19,7 +19,7 @@ export default function EventFeed(props) {
 			<Fragment>
 				<div className="row m-0 px-2">
 					<div className="w-100 mt-2 mb-4 pb-4">
-						<DateSelector {...props} />
+						{/* <DateSelector {...props} /> */}
 						<CQuery
 							query={GET_DAY_EVENTS}
 							variables={{ day, interestOne, interestTwo, interestThree }}
