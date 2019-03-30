@@ -8,7 +8,7 @@ const NewsFeed = ({ user }) => {
 	return (
 		<Fragment>
 			<div className="m-0 px-2">
-				<div className="mb-2 mt-2">
+				<div className="mt-2 mb-4 pb-4">
 					<InputGroup icon="fas fa-search" type="text" placeholder="Search..." />
 					<CQuery query={GET_EVENTS}>
 						{({ data }) => {

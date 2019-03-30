@@ -11,7 +11,7 @@ const EventSocial = ({ currentUser, event_ID, eventCreator }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<Fragment>
-			<div className="mb-3 pb-5">
+			<div className="mb-4 pb-4">
 				<div className="row pl-2 pr-4 pb-2">
 					<div className="col-6">
 						<Link
