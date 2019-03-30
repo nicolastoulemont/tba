@@ -24,7 +24,7 @@ const RegistrationsDisplay = ({ registrations }) => {
 									<div className="text-left px-3 py-2 border-top" key={registration.id}>
 										<Link
 											to={{
-												pathname: `/event/${registration.event.id}`
+												pathname: `/home/event/${registration.event.id}`
 											}}
 											className="link-menu"
 										>

@@ -24,7 +24,7 @@ const HostedEventsDisplay = ({ events }) => {
 									<div className="text-left px-3 py-2 border-top" key={event.id}>
 										<Link
 											to={{
-												pathname: `/event/${event.id}`
+												pathname: `/home/event/${event.id}`
 											}}
 											className="link-menu"
 										>
