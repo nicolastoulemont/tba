@@ -97,7 +97,6 @@ const Home = props => {
 			</div>
 		</Fragment>
 	);
-
 	return (
 		<Fragment>
 			<CQuery query={LOGGED_USER}>

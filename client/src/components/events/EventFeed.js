@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
 import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
-import DateSelector from './DateSelector';
+import { InputGroup } from '../commons/InputComponents';
 import { GET_DAY_EVENTS } from '../graphql/event/Queries';
 import dayjs from 'dayjs';
 
@@ -19,7 +19,7 @@ export default function EventFeed(props) {
 			<Fragment>
 				<div className="row m-0 px-2">
 					<div className="w-100 mt-2 mb-4 pb-4">
-						{/* <DateSelector {...props} /> */}
+						<InputGroup icon="fas fa-search" type="text" placeholder="Search..." />
 						<CQuery
 							query={GET_DAY_EVENTS}
 							variables={{ day, interestOne, interestTwo, interestThree }}
