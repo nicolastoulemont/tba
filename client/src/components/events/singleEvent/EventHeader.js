@@ -41,7 +41,7 @@ const EventHeader = ({
 							<div className="d-block d-md-none">
 								<div className="d-inline">
 									<Link
-										to={{ pathname: `/profile/${user_ID}` }}
+										to={{ pathname: `/home/profile/${user_ID}` }}
 										className="text-white font-weight-bold"
 									>
 										{profile.name}
@@ -80,7 +80,7 @@ const EventHeader = ({
 										)}
 									</div>
 									<div className="d-block">
-										<Link to={{ pathname: `/profile/${user_ID}` }} className="mr-2">
+										<Link to={{ pathname: `/home/profile/${user_ID}` }} className="mr-2">
 											{picture_URL ? (
 												<img
 													className="rounded-circle mini-avatar"
@@ -92,7 +92,7 @@ const EventHeader = ({
 											)}
 										</Link>
 										<Link
-											to={{ pathname: `/profile/${user_ID}` }}
+											to={{ pathname: `/home/profile/${user_ID}` }}
 											className="text-white font-weight-bold"
 										>
 											<small>{profile.name}</small>

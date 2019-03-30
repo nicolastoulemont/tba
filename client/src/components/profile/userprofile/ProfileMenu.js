@@ -30,6 +30,7 @@ class ProfileMenu extends Component {
 					data-toggle="modal"
 					data-target="#EditProfileModal"
 					to="#"
+					aria-label="edit profile"
 				/>
 				<EditProfileModal
 					profile_ID={profile_ID}

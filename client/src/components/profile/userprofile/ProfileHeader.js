@@ -48,16 +48,27 @@ export default class ProfileHeader extends Component {
 									</p>
 									<small className="my-1">{bio}</small>
 									<p className="my-1">
-										<a className="text-white pr-2" href={twitter_URL} target="#">
+										<a
+											className="text-white pr-2"
+											href={twitter_URL}
+											target="#"
+											aria-label="twitter"
+										>
 											<i className="fab fa-twitter" />
 										</a>
-										<a className="text-white px-2" href={linkedin_URL} target="#">
+										<a
+											className="text-white px-2"
+											href={linkedin_URL}
+											target="#"
+											aria-label="linkedin"
+										>
 											<i className="fab fa-linkedin" />
 										</a>
 										<a
 											className="text-white pl-2"
 											href="user-organisationwebsite-url"
 											target="_blank"
+											aria-label="user organisation website"
 										>
 											<i className="fas fa-globe" />
 										</a>

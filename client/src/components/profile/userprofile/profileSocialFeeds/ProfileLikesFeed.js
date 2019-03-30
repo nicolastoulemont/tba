@@ -27,7 +27,7 @@ const ProfileLikesFeed = ({ user, name }) => {
 												{name} liked the event{' '}
 												<Link
 													to={{
-														pathname: `/event/${like.event.id}`
+														pathname: `/home/event/${like.event.id}`
 													}}
 													className="font-weight-bold"
 												>
@@ -44,7 +44,7 @@ const ProfileLikesFeed = ({ user, name }) => {
 											{name} liked a comment by
 											<Link
 												to={{
-													pathname: `/profile/${like.comment.user_ID}`
+													pathname: `/home/profile/${like.comment.user_ID}`
 												}}
 												className="font-weight-bold"
 											>

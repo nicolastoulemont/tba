@@ -116,6 +116,11 @@ export const SelectListGroup = ({ name, options, value, onChange }) => {
 export const InputGroup = ({ type, name, placeholder, value, icon, onChange }) => (
 	<div className="mx-auto py-2 px-4">
 		<div className="input-group input-group-sm mb-3">
+			<div className="input-group-prepend">
+				<span className="input-group-text">
+					<i className={icon} />
+				</span>
+			</div>
 			<input
 				className="form-control form-control-lg"
 				type={type}
@@ -124,11 +129,6 @@ export const InputGroup = ({ type, name, placeholder, value, icon, onChange }) =
 				placeholder={placeholder}
 				onChange={onChange}
 			/>
-			<div className="input-group-append">
-				<span className="input-group-text">
-					<i className={icon} />
-				</span>
-			</div>
 		</div>
 	</div>
 );

@@ -10,7 +10,7 @@ export default function DateSelector({
 	return (
 		<div className="m-0">
 			<div className="d-block mb-2">
-				<div className="row">
+				<div className="row mt-2 px-4">
 					<MonthActions
 						string={dayjs(day).format('MMMM')}
 						pathOne={`/home/events/${dayjs(day)

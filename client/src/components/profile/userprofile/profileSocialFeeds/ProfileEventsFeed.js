@@ -27,14 +27,15 @@ const ProfileEventsFeed = ({ user }) => {
 									>
 										<small className="font-weight-bold mr-2">{event.name}</small>
 									</Link>
-									{event.startDate === event.endDate ? (
-										<small className="my-1">
-											{event.startDate} : {event.startTime} to {event.endTime}
+									{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
+										<small>
+											{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
+											{new Date(event.end).toTimeString().slice(0, 5)}
 										</small>
 									) : (
-										<small className="my-1">
-											On {event.startDate} from {event.startTime} to {event.endTime} on{' '}
-											{event.endDate}
+										<small>
+											On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
+											{new Date(event.end).toUTCString().slice(0, 22)}
 										</small>
 									)}
 									<small className="d-block">{event.location}</small>

@@ -69,8 +69,7 @@ const EventFeedItem = ({
 							by{' '}
 							<Link to={{ pathname: `/home/profile/${user_ID}` }} className="font-weight-bold">
 								{creator.profile.name}
-							</Link>{' '}
-							- {creator.profile.organisation_ID}
+							</Link>
 						</small>
 					</div>
 				</div>

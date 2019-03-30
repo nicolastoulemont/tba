@@ -9,7 +9,7 @@ const NewsFeed = ({ user }) => {
 		<Fragment>
 			<div className="m-0 px-2">
 				<div className="mb-2 mt-2">
-					<InputGroup icon="fas fa-search" type="text" placeholder="Search" />
+					<InputGroup icon="fas fa-search" type="text" placeholder="Search..." />
 					<CQuery query={GET_EVENTS}>
 						{({ data }) => {
 							console.log(data);
