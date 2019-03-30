@@ -22,6 +22,8 @@ export const GET_DAY_EVENTS = gql`
 			categoryTwo
 			categoryThree
 			location
+			createdAt
+			updatedAt
 			start
 			end
 			creator {
