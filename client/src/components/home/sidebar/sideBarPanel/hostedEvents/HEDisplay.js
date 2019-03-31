@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
 
-const HostedEventsDisplay = ({ events }) => {
+const HEDisplay = ({ events }) => {
 	if (events.length === 0) {
 		return (
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
@@ -53,4 +53,4 @@ const HostedEventsDisplay = ({ events }) => {
 	}
 };
 
-export default HostedEventsDisplay;
+export default HEDisplay;

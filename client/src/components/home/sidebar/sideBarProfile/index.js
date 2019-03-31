@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const SideBarUserProfile = ({ user, avatar, name }) => {
+const SBProfile = ({ user, avatar, name }) => {
 	return (
 		<div className="col pr-0 mx-auto">
 			<div className="mb-4 ml-2 border-0 bg-darkblue">
@@ -30,4 +30,4 @@ const SideBarUserProfile = ({ user, avatar, name }) => {
 	);
 };
 
-export default SideBarUserProfile;
+export default SBProfile;

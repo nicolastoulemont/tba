@@ -2,10 +2,10 @@ import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import RegistrationsDisplay from './registrationsDisplay';
 
-import CQuery from '../../../commons/CustomQueryComponent';
-import { GET_USER_REGISTRATIONS } from '../../../graphql/user/Queries';
+import CQuery from '../../../../commons/CustomQueryComponent';
+import { GET_USER_REGISTRATIONS } from '../../../../graphql/user/Queries';
 
-class UserRegistrations extends Component {
+class RegistrationPanel extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -87,4 +87,4 @@ class UserRegistrations extends Component {
 	}
 }
 
-export default UserRegistrations;
+export default RegistrationPanel;

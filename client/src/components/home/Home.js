@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
-import SideBar from './SideBar';
+import SideBar from './sidebar/';
 import EventFeed from '../events/EventFeed';
 import NewsFeed from '../news/NewsFeed';
 import CreateUserProfile from '../profile/profileactions/CreateUserProfile';

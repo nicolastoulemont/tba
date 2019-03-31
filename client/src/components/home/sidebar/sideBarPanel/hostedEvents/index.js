@@ -1,12 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import HostedEventsDisplay from './hostedEventsDisplay';
+import HEDisplay from './HEDisplay';
 
-import CQuery from '../../../commons/CustomQueryComponent';
-import { GET_USER_EVENTS } from '../../../graphql/user/Queries';
+import CQuery from '../../../../commons/CustomQueryComponent';
+import { GET_USER_EVENTS } from '../../../../graphql/user/Queries';
 
-class UserHostedEvents extends Component {
+class HEventsPanel extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -71,9 +71,9 @@ class UserHostedEvents extends Component {
 							<div className="row m-0 p-0" />
 							<div className="my-2 w-100">
 								{futEventsDisplay ? (
-									<HostedEventsDisplay events={futureEvents} />
+									<HEDisplay events={futureEvents} />
 								) : (
-									<HostedEventsDisplay events={pastEvents} />
+									<HEDisplay events={pastEvents} />
 								)}
 							</div>
 						</Fragment>
@@ -84,4 +84,4 @@ class UserHostedEvents extends Component {
 	}
 }
 
-export default UserHostedEvents;
+export default HEventsPanel;

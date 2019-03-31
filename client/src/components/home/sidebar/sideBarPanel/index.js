@@ -1,10 +1,10 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import UserHostedEvents from './userHostedEvents/UserHostedEvents';
-import UserRegistrations from './userRegistrations/UserRegistrations';
+import HEventsPanel from './hostedEvents/';
+import RegistrationPanel from './registrations';
 
-class SideBarUserEvents extends Component {
+class SBPanel extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -55,9 +55,9 @@ class SideBarUserEvents extends Component {
 						<div className="row  m-0 p-0">
 							<div className="mt-1 w-100">
 								{registrationsDisplay ? (
-									<UserRegistrations user={user} />
+									<RegistrationPanel user={user} />
 								) : (
-									<UserHostedEvents user={user} />
+									<HEventsPanel user={user} />
 								)}
 							</div>
 						</div>
@@ -68,4 +68,4 @@ class SideBarUserEvents extends Component {
 	}
 }
 
-export default SideBarUserEvents;
+export default SBPanel;
