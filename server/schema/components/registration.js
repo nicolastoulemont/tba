@@ -7,6 +7,10 @@ module.exports = {
 			id: ID!
 			user_ID: ID!
 			event_ID: String
+			eventName: String
+			eventLocation: String
+			eventStart: Date
+			eventEnd: Date
 			createdAt: Date
 			updatedAt: Date
 			event: EventItem
@@ -22,10 +26,19 @@ module.exports = {
 		extend type Query {
 			registration(id: ID!): Registration
 			registrations: [Registration!]!
+			userFutureRegistrations(user_ID: ID!, date: String): [Registration!]!
+			userPastRegistrations(user_ID: ID!, date: String): [Registration!]!
 		}
 
 		extend type Mutation {
-			addRegistration(user_ID: String!, event_ID: String!): RegistrationResp!
+			addRegistration(
+				user_ID: String!
+				event_ID: String!
+				eventName: String!
+				eventLocation: String!
+				eventStart: String!
+				eventEnd: String!
+			): RegistrationResp!
 			deleteRegistration(_id: ID!): Registration
 		}
 	`,
@@ -47,6 +60,24 @@ module.exports = {
 				} catch (err) {
 					throw new Error('Bad request');
 				}
+			},
+			userFutureRegistrations: async (parent, args, { user, models: { Registration } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				const date = new Date(args.date);
+				try {
+					return await Registration.find({ user_ID: args.user_ID, eventStart: { $gte: date } });
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			userPastRegistrations: async (parent, args, { user, models: { Registration } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				const date = new Date(args.date);
+				try {
+					return await Registration.find({ user_ID: args.user_ID, eventStart: { $lte: date } });
+				} catch (err) {
+					throw new Error('Bad request');
+				}
 			}
 		},
 		Registration: {
@@ -65,7 +96,13 @@ module.exports = {
 				try {
 					let newRegistration = await new Registration({
 						user_ID: args.user_ID,
-						event_ID: args.event_ID
+						event_ID: args.event_ID,
+						eventName: args.eventName,
+						eventLocation: args.eventLocation,
+						eventStart: new Date(args.eventStart),
+						eventEnd: new Date(args.eventEnd),
+						createdAt: new Date(),
+						updatedAt: new Date()
 					}).save();
 					return { success: true, newRegistration };
 				} catch (err) {

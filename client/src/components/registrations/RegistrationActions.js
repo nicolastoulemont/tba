@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { ADD_REGISTRATION, DELETE_REGISTRATION } from '../graphql/registration/Mutations';
 
-export const RegisterEvent = ({ user, event_ID, client }) => {
-	const createRegistration = (e, user, event_ID, addRegistration, client) => {
+export const RegisterEvent = ({ user, event, client }) => {
+	const createRegistration = (e, user, event, addRegistration, client) => {
 		e.preventDefault();
 		addRegistration({
 			variables: {
 				user_ID: user,
-				event_ID
+				event_ID: event.id,
+				eventName: event.name,
+				eventLocation: event.location,
+				eventStart: event.start,
+				eventEnd: event.end
 			}
 		}).then(res => {
 			client.resetStore();
@@ -25,7 +29,7 @@ export const RegisterEvent = ({ user, event_ID, client }) => {
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Register to this event"
-						onClick={e => createRegistration(e, user, event_ID, addRegistration, client)}
+						onClick={e => createRegistration(e, user, event, addRegistration, client)}
 					>
 						<h6 className="d-none d-md-inline font-weight-bold text-uppercase">Register</h6>
 					</Link>

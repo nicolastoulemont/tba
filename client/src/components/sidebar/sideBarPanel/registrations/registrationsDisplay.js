@@ -1,59 +1,53 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
+import CQuery from '../../../commons/CustomQueryComponent';
+import {
+	GET_USER_FUTURE_REGISTRATIONS,
+	GET_USER_PAST_REGISTRATIONS
+} from '../../../graphql/registration/Queries';
+import RegistrationItem from './registrationItem';
 
-const RegistrationsDisplay = ({ registrations }) => {
-	if (registrations.length === 0) {
-		return (
-			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-				{props => (
-					<div style={props}>
-						<small>No registrations yet</small>
-					</div>
-				)}
-			</Spring>
-		);
-	} else {
-		return (
-			<Fragment>
-				{registrations.map(registration => {
+export default function registrationsDisplay({ user, target }) {
+	const chooseQuery = target => {
+		if (target === 'future') {
+			return GET_USER_FUTURE_REGISTRATIONS;
+		}
+		if (target === 'past') {
+			return GET_USER_PAST_REGISTRATIONS;
+		}
+	};
+	const today = new Date().toISOString().slice(0, 10);
+	return (
+		<CQuery query={chooseQuery(target)} variables={{ user_ID: user, date: today }}>
+			{({ data }) => {
+				if (data.userFutureRegistrations && data.userFutureRegistrations.length !== 0) {
 					return (
-						<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={registration.id}>
-							{props => (
-								<div style={props}>
-									<div className="text-left px-3 py-2 border-top" key={registration.id}>
-										<Link
-											to={{
-												pathname: `/home/event/${registration.event.id}`
-											}}
-											className="link-menu"
-										>
-											<small className="font-weight-bold mr-2 link-menu">
-												{registration.event.name}
-											</small>
-										</Link>
-										<small className="d-block">{registration.event.location}</small>
-										{new Date(registration.event.start).getDate() ===
-										new Date(registration.event.end).getDate() ? (
-											<small>
-												{new Date(registration.event.start).toUTCString().slice(0, 22)} -{' '}
-												{new Date(registration.event.end).toTimeString().slice(0, 5)}
-											</small>
-										) : (
-											<small>
-												On {new Date(registration.event.start).toUTCString().slice(0, 22)} to{' '}
-												{new Date(registration.event.end).toUTCString().slice(0, 22)}
-											</small>
-										)}
-									</div>
-								</div>
-							)}
-						</Spring>
+						<Fragment>
+							{data.userFutureRegistrations.map(registration => (
+								<RegistrationItem registration={registration} key={registration.id} />
+							))}
+						</Fragment>
 					);
-				})}
-			</Fragment>
-		);
-	}
-};
-
-export default RegistrationsDisplay;
+				}
+				if (data.userPastRegistrations && data.userPastRegistrations.length !== 0) {
+					return (
+						<Fragment>
+							{data.userPastRegistrations.map(registration => (
+								<RegistrationItem registration={registration} key={registration.id} />
+							))}
+						</Fragment>
+					);
+				}
+				return (
+					<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+						{props => (
+							<div style={props}>
+								<small>No registrations yet</small>
+							</div>
+						)}
+					</Spring>
+				);
+			}}
+		</CQuery>
+	);
+}

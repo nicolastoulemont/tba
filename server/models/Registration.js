@@ -10,6 +10,22 @@ const registrationSchema = new Schema({
 		type: String,
 		required: true
 	},
+	eventName: {
+		type: String,
+		required: true
+	},
+	eventLocation: {
+		type: String,
+		required: true
+	},
+	eventStart: {
+		type: Date,
+		required: true
+	},
+	eventEnd: {
+		type: Date,
+		required: true
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now()

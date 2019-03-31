@@ -27,11 +27,7 @@ const Event = ({ match, currentUser }) => {
 										refetch={refetch}
 									/>
 									<EventAbout description={event.description} />
-									<EventSocial
-										currentUser={currentUser}
-										event_ID={event.id}
-										eventCreator={event.user_ID}
-									/>
+									<EventSocial currentUser={currentUser} event={event} />
 								</div>
 							)}
 						</Spring>
