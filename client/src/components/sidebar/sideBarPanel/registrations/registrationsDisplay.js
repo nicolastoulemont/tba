@@ -28,8 +28,7 @@ export default function registrationsDisplay({ user, target }) {
 							))}
 						</Fragment>
 					);
-				}
-				if (data.userPastRegistrations && data.userPastRegistrations.length !== 0) {
+				} else if (data.userPastRegistrations && data.userPastRegistrations.length !== 0) {
 					return (
 						<Fragment>
 							{data.userPastRegistrations.map(registration => (
@@ -37,16 +36,18 @@ export default function registrationsDisplay({ user, target }) {
 							))}
 						</Fragment>
 					);
+				} else {
+					return (
+						<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+							{props => (
+								<div style={props}>
+									<small>No registrations yet</small>
+								</div>
+							)}
+						</Spring>
+					);
 				}
-				return (
-					<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-						{props => (
-							<div style={props}>
-								<small>No registrations yet</small>
-							</div>
-						)}
-					</Spring>
-				);
+			
 			}}
 		</CQuery>
 	);
