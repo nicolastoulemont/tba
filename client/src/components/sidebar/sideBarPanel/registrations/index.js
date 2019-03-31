@@ -2,8 +2,8 @@ import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import RegistrationsDisplay from './registrationsDisplay';
 
-import CQuery from '../../../../commons/CustomQueryComponent';
-import { GET_USER_REGISTRATIONS } from '../../../../graphql/user/Queries';
+import CQuery from '../../../commons/CustomQueryComponent';
+import { GET_USER_REGISTRATIONS } from '../../../graphql/user/Queries';
 
 class RegistrationPanel extends Component {
 	constructor(props) {

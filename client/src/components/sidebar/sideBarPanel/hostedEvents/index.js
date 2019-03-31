@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import HEDisplay from './HEDisplay';
 
-import CQuery from '../../../../commons/CustomQueryComponent';
-import { GET_USER_EVENTS } from '../../../../graphql/user/Queries';
+import CQuery from '../../../commons/CustomQueryComponent';
+import { GET_USER_EVENTS } from '../../../graphql/user/Queries';
 
 class HEventsPanel extends Component {
 	constructor(props) {
