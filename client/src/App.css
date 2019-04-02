@@ -25,8 +25,16 @@ body {
 	width: 100%;
 }
 
+.bg-blue {
+	background-color: #4f96d5;
+}
+
 .bg-darkblue {
 	background-color: #29456e;
+}
+
+.text-blue {
+	color: #4f96d5;
 }
 
 .text-darkblue {

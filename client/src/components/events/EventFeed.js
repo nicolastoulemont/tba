@@ -1,15 +1,21 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
 import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
-import { InputGroup } from '../commons/InputComponents';
+import FeedSearch from '../commons/FeedSearch';
 import { GET_DAY_EVENTS } from '../graphql/event/Queries';
 import dayjs from 'dayjs';
 
 export default function EventFeed(props) {
+	const [search, setSearch] = useState('');
+	const [sort, setSort] = useState('ascending');
+	const [institutional, setInstitutional] = useState(false);
+	const [onlyFree, setOnlyFree] = useState(false);
+
 	const { user, interestOne, interestTwo, interestThree } = props;
 	const day = props.match.params.day;
+	const displayDay = dayjs(day).format('dddd');
 
 	const validateDate = day => {
 		const today = new Date();
@@ -19,7 +25,17 @@ export default function EventFeed(props) {
 			<Fragment>
 				<div className="row m-0 px-2">
 					<div className="w-100 mt-2 mb-4 pb-4">
-						<InputGroup icon="fas fa-search" type="text" placeholder="Search..." />
+						<FeedSearch
+							date={displayDay}
+							page="events"
+							setSearch={setSearch}
+							sort={sort}
+							setSort={setSort}
+							institutional={institutional}
+							setInstitutional={setInstitutional}
+							onlyFree={onlyFree}
+							setOnlyFree={setOnlyFree}
+						/>
 						<CQuery
 							query={GET_DAY_EVENTS}
 							variables={{ day, interestOne, interestTwo, interestThree }}
@@ -27,7 +43,9 @@ export default function EventFeed(props) {
 							{({ data }) => {
 								if (data) {
 									if (data.onedayevents.length === 0) {
-										return <div className="mt-4 pl-4 font-italic ">No events that day</div>;
+										return (
+											<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
+										);
 									} else {
 										return (
 											<div className="border-top">
