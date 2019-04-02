@@ -188,24 +188,16 @@ module.exports = {
 		},
 
 		EventItem: {
-			creator: async (parent, args, { models: { User } }) => {
-				return await User.findOne({ _id: parent.user_ID });
-			},
-			comments: async (parent, args, { models: { CommentItem } }) => {
-				return await CommentItem.find({ event_ID: parent.id });
-			},
-			polls: async (parent, args, { models: { Poll } }) => {
-				return await Poll.find({ event_ID: parent.id });
-			},
-			likes: async (parent, args, { models: { Like } }) => {
-				return await Like.find({ event_ID: parent.id });
-			},
-			reports: async (parent, args, { models: { Report } }) => {
-				return await Report.find({ event_ID: parent.id });
-			},
-			registrations: async (parent, args, { models: { Registration } }) => {
-				return await Registration.find({ event_ID: parent.id });
-			}
+			creator: async (parent, args, { models: { User } }) =>
+				await User.findOne({ _id: parent.user_ID }),
+			comments: async (parent, args, { models: { CommentItem } }) =>
+				await CommentItem.find({ event_ID: parent.id }),
+			polls: async (parent, args, { models: { Poll } }) => await Poll.find({ event_ID: parent.id }),
+			likes: async (parent, args, { models: { Like } }) => await Like.find({ event_ID: parent.id }),
+			reports: async (parent, args, { models: { Report } }) =>
+				await Report.find({ event_ID: parent.id }),
+			registrations: async (parent, args, { models: { Registration } }) =>
+				await Registration.find({ event_ID: parent.id })
 		},
 
 		Mutation: {

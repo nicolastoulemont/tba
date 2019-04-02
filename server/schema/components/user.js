@@ -88,36 +88,24 @@ module.exports = {
 		},
 
 		User: {
-			profile: async (parent, args, { models: { Profile } }) => {
-				return await Profile.findOne({ user_ID: parent.id });
-			},
-			organisation: async (parent, args, { models: { Organisation } }) => {
-				return await Organisation.findOne({ user_ID: parent.id });
-			},
-			events: async (parent, args, { models: { EventItem } }) => {
-				return await EventItem.find({ user_ID: parent.id });
-			},
-			registrations: async (parent, args, { models: { Registration } }) => {
-				return await Registration.find({ user_ID: parent.id });
-			},
-			memberships: async (parent, args, { models: { Membership } }) => {
-				return await Membership.find({ user_ID: parent.id });
-			},
-			comments: async (parent, args, { models: { CommentItem } }) => {
-				return await CommentItem.find({ user_ID: parent.id });
-			},
-			polls: async (parent, args, { models: { Poll } }) => {
-				return await Poll.find({ user_ID: parent.id });
-			},
-			likes: async (parent, args, { models: { Like } }) => {
-				return await Like.find({ user_ID: parent.id });
-			},
-			reports: async (parent, args, { models: { Report } }) => {
-				return await Report.find({ user_ID: parent.id });
-			},
-			userLog: async (parent, args, { models: { UserLog } }) => {
-				return await UserLog.findOne({ user_ID: parent.id });
-			}
+			profile: async (parent, args, { models: { Profile } }) =>
+				await Profile.findOne({ user_ID: parent.id }),
+			organisation: async (parent, args, { models: { Organisation } }) =>
+				await Organisation.findOne({ user_ID: parent.id }),
+			events: async (parent, args, { models: { EventItem } }) =>
+				await EventItem.find({ user_ID: parent.id }),
+			registrations: async (parent, args, { models: { Registration } }) =>
+				await Registration.find({ user_ID: parent.id }),
+			memberships: async (parent, args, { models: { Membership } }) =>
+				await Membership.find({ user_ID: parent.id }),
+			comments: async (parent, args, { models: { CommentItem } }) =>
+				await CommentItem.find({ user_ID: parent.id }),
+			polls: async (parent, args, { models: { Poll } }) => await Poll.find({ user_ID: parent.id }),
+			likes: async (parent, args, { models: { Like } }) => await Like.find({ user_ID: parent.id }),
+			reports: async (parent, args, { models: { Report } }) =>
+				await Report.find({ user_ID: parent.id }),
+			userLog: async (parent, args, { models: { UserLog } }) =>
+				await UserLog.findOne({ user_ID: parent.id })
 		},
 
 		Mutation: {

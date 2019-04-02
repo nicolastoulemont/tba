@@ -67,12 +67,10 @@ module.exports = {
 		},
 
 		Membership: {
-			organisation: async (parent, args, { models: { Organisation } }) => {
-				return await Organisation.findOne({ _id: parent.organisationId });
-			},
-			creator: async (parent, args, { models: { User } }) => {
-				return await User.findOne({ _id: parent.user_ID });
-			}
+			organisation: async (parent, args, { models: { Organisation } }) =>
+				await Organisation.findOne({ _id: parent.organisationId }),
+			creator: async (parent, args, { models: { User } }) =>
+				await User.findOne({ _id: parent.user_ID })
 		},
 		Mutation: {
 			addMembership: async (parent, args, { user, models: { Membership } }) => {

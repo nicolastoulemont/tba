@@ -103,9 +103,7 @@ module.exports = {
 		},
 
 		Profile: {
-			creator: async (parent, args, { models: { User } }) => {
-				return await User.findById(parent.user_ID);
-			}
+			creator: async (parent, args, { models: { User } }) => await User.findById(parent.user_ID)
 		},
 
 		Mutation: {

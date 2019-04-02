@@ -84,12 +84,10 @@ module.exports = {
 			}
 		},
 		Registration: {
-			creator: async (parent, args, { models: { User } }) => {
-				return await User.findOne({ _id: parent.user_ID });
-			},
-			event: async (parent, args, { models: { EventItem } }) => {
-				return await EventItem.findOne({ _id: parent.event_ID });
-			}
+			creator: async (parent, args, { models: { User } }) =>
+				await User.findOne({ _id: parent.user_ID }),
+			event: async (parent, args, { models: { EventItem } }) =>
+				await EventItem.findOne({ _id: parent.event_ID })
 		},
 		Mutation: {
 			addRegistration: async (parent, args, { user, models: { Registration } }) => {

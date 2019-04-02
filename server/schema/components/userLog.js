@@ -78,9 +78,7 @@ module.exports = {
 			}
 		},
 		UserLog: {
-			user: async (parent, args, { models: { User } }) => {
-				return await User.findById(parent.user_ID);
-			}
+			user: async (parent, args, { models: { User } }) => await User.findById(parent.user_ID)
 		},
 
 		Mutation: {

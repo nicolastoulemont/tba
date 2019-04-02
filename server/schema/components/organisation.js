@@ -85,36 +85,32 @@ module.exports = {
 			}
 		},
 		Organisation: {
-			creator: async (parent, args, { models: { User } }) => {
-				return await User.findOne({ _id: parent.user_ID });
-			},
-			admins: async (parent, args, { models: { Membership } }) => {
-				return await Membership.find({
+			creator: async (parent, args, { models: { User } }) =>
+				await User.findOne({ _id: parent.user_ID }),
+
+			admins: async (parent, args, { models: { Membership } }) =>
+				await Membership.find({
 					organisationId: parent.id,
 					admin: true,
 					accepted: true,
 					pending: false
-				});
-			},
-			members: async (parent, args, { models: { Membership } }) => {
-				return await Membership.find({
+				}),
+			members: async (parent, args, { models: { Membership } }) =>
+				await Membership.find({
 					organisationId: parent.id,
 					admin: false,
 					accepted: true,
 					pending: false
-				});
-			},
-			applicants: async (parent, args, { models: { Membership } }) => {
-				return await Membership.find({
+				}),
+			applicants: async (parent, args, { models: { Membership } }) =>
+				await Membership.find({
 					organisationId: parent.id,
 					admin: false,
 					accepted: false,
 					pending: true
-				});
-			},
-			reports: async (parent, args, { models: { Report } }) => {
-				return await Report.find({ orgId: parent.id });
-			}
+				}),
+			reports: async (parent, args, { models: { Report } }) =>
+				await Report.find({ orgId: parent.id })
 		},
 
 		Mutation: {
