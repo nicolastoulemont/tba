@@ -10,8 +10,8 @@ const buildEvent = async (args, EventItem) => {
 			categoryTwo: args.categoryTwo,
 			categoryThree: args.categoryThree,
 			location: args.location,
-			start: args.start,
-			end: args.end,
+			start: new Date(args.start),
+			end: new Date(args.end),
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();

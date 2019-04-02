@@ -74,7 +74,10 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				const date = new Date(args.date);
 				try {
-					return await Registration.find({ user_ID: args.user_ID, eventStart: { $lte: date } });
+					return await Registration.find({
+						user_ID: args.user_ID,
+						eventStart: { $lte: date }
+					}).sort({ eventStart: 'descending' });
 				} catch (err) {
 					throw new Error('Bad request');
 				}

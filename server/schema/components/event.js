@@ -44,6 +44,8 @@ module.exports = {
 				interestTwo: String
 				interestThree: String
 			): [EventItem!]!
+			userFutureHostedEvents(user_ID: ID!, date: String): [EventItem!]!
+			userPastHostedEvents(user_ID: ID!, date: String): [EventItem!]!
 		}
 
 		extend type Mutation {
@@ -158,6 +160,26 @@ module.exports = {
 						]
 					}).sort({
 						start: 'ascending'
+					});
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			userFutureHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				const date = new Date(args.date);
+				try {
+					return await EventItem.find({ user_ID: args.user_ID, start: { $gte: date } });
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			userPastHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				const date = new Date(args.date);
+				try {
+					return await EventItem.find({ user_ID: args.user_ID, start: { $lte: date } }).sort({
+						start: 'descending'
 					});
 				} catch (err) {
 					throw new Error('Bad request');
