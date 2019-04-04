@@ -74,7 +74,9 @@ export default function ProfileHeader({
 							</div>
 						</div>
 						<div className="col-md-2">
-							{loggedInUser === user_ID ? <ProfileMenu profile={profile} /> : null}
+							{loggedInUser === user_ID ? (
+								<ProfileMenu profile={profile} user_ID={user_ID} />
+							) : null}
 						</div>
 					</div>
 				</div>
