@@ -28,7 +28,8 @@ export const GET_USER_EVENTS = gql`
 			events {
 				id
 				name
-				location
+				city
+				address
 				start
 				end
 			}
@@ -45,7 +46,8 @@ export const GET_USER_REGISTRATIONS = gql`
 				event {
 					id
 					name
-					location
+					city
+					address
 					start
 					end
 				}

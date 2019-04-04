@@ -13,21 +13,7 @@ const Profile = ({ match, currentUser }) => {
 					const profile = user.profile;
 					return (
 						<Fragment key={profile.id}>
-							<ProfileHeader
-								user_ID={user.id}
-								loggedInUser={currentUser}
-								profile_ID={profile.id}
-								picture_URL={profile.picture_URL}
-								name={profile.name}
-								position={profile.position}
-								organisation={profile.organisation}
-								interestOne={profile.interestOne}
-								interestTwo={profile.interestTwo}
-								interestThree={profile.interestThree}
-								bio={profile.bio}
-								twitter_URL={profile.twitter_URL}
-								linkedin_URL={profile.linkedin_URL}
-							/>
+							<ProfileHeader user_ID={user.id} loggedInUser={currentUser} profile={profile} />
 							<ProfileSocial user={user.id} name={profile.name} />
 						</Fragment>
 					);

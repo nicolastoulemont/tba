@@ -38,7 +38,9 @@ const ProfileEventsFeed = ({ user }) => {
 											{new Date(event.end).toUTCString().slice(0, 22)}
 										</small>
 									)}
-									<small className="d-block">{event.location}</small>
+									<small className="d-block">
+										{event.address}, {event.city}
+									</small>
 								</div>
 							</div>
 						))}
