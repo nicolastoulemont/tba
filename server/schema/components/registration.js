@@ -8,7 +8,8 @@ module.exports = {
 			user_ID: ID!
 			event_ID: String
 			eventName: String
-			eventLocation: String
+			eventCity: String
+			eventAddress: String
 			eventStart: Date
 			eventEnd: Date
 			createdAt: Date
@@ -35,7 +36,8 @@ module.exports = {
 				user_ID: String!
 				event_ID: String!
 				eventName: String!
-				eventLocation: String!
+				eventCity: String
+				eventAddress: String
 				eventStart: String!
 				eventEnd: String!
 			): RegistrationResp!
@@ -99,7 +101,8 @@ module.exports = {
 						user_ID: args.user_ID,
 						event_ID: args.event_ID,
 						eventName: args.eventName,
-						eventLocation: args.eventLocation,
+						eventCity: args.eventCity,
+						eventAddress: args.eventAddress,
 						eventStart: new Date(args.eventStart),
 						eventEnd: new Date(args.eventEnd),
 						createdAt: new Date(),

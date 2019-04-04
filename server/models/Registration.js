@@ -14,7 +14,11 @@ const registrationSchema = new Schema({
 		type: String,
 		required: true
 	},
-	eventLocation: {
+	eventCity: {
+		type: String,
+		required: true
+	},
+	eventAddress: {
 		type: String,
 		required: true
 	},
