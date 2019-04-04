@@ -23,19 +23,11 @@ const eventSchema = new Schema({
 		default: true,
 		required: true
 	},
-	categoryOne: {
+	city: {
 		type: String,
-		require: true
+		required: true
 	},
-	categoryTwo: {
-		type: String,
-		default: 'Default'
-	},
-	categoryThree: {
-		type: String,
-		default: 'Default'
-	},
-	location: {
+	address: {
 		type: String,
 		required: true
 	},
@@ -54,6 +46,9 @@ const eventSchema = new Schema({
 	end: {
 		type: Date,
 		required: true
+	},
+	tags: {
+		type: [String]
 	}
 });
 

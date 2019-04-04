@@ -11,14 +11,13 @@ module.exports = {
 			abstract: String!
 			description: String!
 			isPublic: Boolean!
-			categoryOne: String!
-			categoryTwo: String
-			categoryThree: String
-			location: String!
+			city: String!
+			address: String!
 			start: Date!
 			end: Date!
 			createdAt: Date
 			updatedAt: Date
+			tags: [String]
 			creator: User
 			comments: [CommentItem]
 			polls: [Poll]
@@ -48,12 +47,11 @@ module.exports = {
 				abstract: String!
 				description: String!
 				isPublic: Boolean!
-				categoryOne: String!
-				categoryTwo: String
-				categoryThree: String
-				location: String!
+				city: String!
+				address: String!
 				start: Date!
 				end: Date!
+				tags: [String]
 			): EventResp!
 			updateEvent(
 				_id: ID!
@@ -61,12 +59,11 @@ module.exports = {
 				abstract: String!
 				description: String!
 				isPublic: Boolean!
-				categoryOne: String!
-				categoryTwo: String
-				categoryThree: String
-				location: String!
+				city: String!
+				address: String!
 				start: Date!
 				end: Date!
+				tags: [String]
 			): EventResp!
 			deleteEvent(_id: ID!, user_ID: String!): EventResp!
 		}
@@ -90,6 +87,14 @@ module.exports = {
 				} catch (err) {
 					throw new Error('Bad request');
 				}
+				// const searchedTags = ['orange', 'green'];
+				// try {
+				// 	return await EventItem.find({ isPublic: true, tags: { $in: searchedTags } })
+				// 		.sort({ _id: 'descending' })
+				// 		.limit(args.limit);
+				// } catch (err) {
+				// 	throw new Error('Bad request');
+				// }
 			},
 			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');

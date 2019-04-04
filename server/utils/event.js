@@ -6,14 +6,13 @@ const buildEvent = async (args, EventItem) => {
 			abstract: args.abstract,
 			description: args.description,
 			isPublic: args.isPublic,
-			categoryOne: args.categoryOne,
-			categoryTwo: args.categoryTwo,
-			categoryThree: args.categoryThree,
-			location: args.location,
+			city: args.city,
+			address: args.address,
 			start: new Date(args.start),
 			end: new Date(args.end),
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			tags: args.tags
 		}).save();
 		return {
 			success: true,
@@ -35,12 +34,11 @@ const updateEvent = async (args, EventItem) => {
 		if (args.abstract) updateEvent.abstract = args.abstract;
 		if (args.description) updateEvent.description = args.description;
 		if (args.isPublic) updateEvent.isPublic = args.isPublic;
-		if (args.categoryOne) updateEvent.categoryOne = args.categoryOne;
-		if (args.categoryTwo) updateEvent.categoryTwo = args.categoryTwo;
-		if (args.categoryThree) updateEvent.categoryThree = args.categoryThree;
-		if (args.location) updateEvent.location = args.location;
+		if (args.city) updateEvent.city = args.city;
+		if (args.address) updateEvent.address = args.address;
 		if (args.start) updateEvent.start = new Date(args.start);
 		if (args.end) updateEvent.end = new Date(args.end);
+		if (args.tags) updateEvent.tags = args.tags;
 		updateEvent.updatedAt = new Date();
 
 		const updEvent = await EventItem.findByIdAndUpdate(args._id, updateEvent, {
