@@ -20,7 +20,6 @@ export default function registrationsDisplay({ user, target }) {
 	return (
 		<CQuery query={chooseQuery(target)} variables={{ user_ID: user, date: today }}>
 			{({ data }) => {
-				console.log(data);
 				if (data.userFutureHostedEvents && data.userFutureHostedEvents.length !== 0) {
 					return (
 						<Fragment>

@@ -23,44 +23,6 @@ export const SEARCH_DAILY_EVENTS = gql`
 	}
 `;
 
-export const GET_DAY_EVENTS = gql`
-	query Onedayevents(
-		$day: String!
-		$interestOne: String!
-		$interestTwo: String
-		$interestThree: String
-	) {
-		onedayevents(
-			day: $day
-			interestOne: $interestOne
-			interestTwo: $interestTwo
-			interestThree: $interestThree
-		) {
-			id
-			user_ID
-			name
-			abstract
-			isPublic
-			categoryOne
-			categoryTwo
-			categoryThree
-			location
-			createdAt
-			updatedAt
-			start
-			end
-			creator {
-				profile {
-					name
-					position
-					organisation_ID
-					picture_URL
-				}
-			}
-		}
-	}
-`;
-
 export const GET_EVENTS = gql`
 	{
 		events(limit: 10) {
