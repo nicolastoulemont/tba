@@ -10,9 +10,7 @@ export const CREATE_PROFILE = gql`
 		$twitter_URL: String
 		$linkedin_URL: String
 		$picture_URL: String
-		$interestOne: String!
-		$interestTwo: String
-		$interestThree: String
+		$tags: [String]
 	) {
 		addProfile(
 			user_ID: $user_ID
@@ -26,6 +24,7 @@ export const CREATE_PROFILE = gql`
 			interestOne: $interestOne
 			interestTwo: $interestTwo
 			interestThree: $interestThree
+			tags: $tags
 		) {
 			profile {
 				id
@@ -37,9 +36,7 @@ export const CREATE_PROFILE = gql`
 				twitter_URL
 				linkedin_URL
 				picture_URL
-				interestOne
-				interestTwo
-				interestThree
+				tags
 			}
 		}
 	}
@@ -55,9 +52,7 @@ export const UPDATE_PROFILE = gql`
 		$twitter_URL: String
 		$linkedin_URL: String
 		$picture_URL: String
-		$interestOne: String!
-		$interestTwo: String
-		$interestThree: String
+		$tags: [String]
 	) {
 		updateProfile(
 			_id: $_id
@@ -68,9 +63,7 @@ export const UPDATE_PROFILE = gql`
 			twitter_URL: $twitter_URL
 			linkedin_URL: $linkedin_URL
 			picture_URL: $picture_URL
-			interestOne: $interestOne
-			interestTwo: $interestTwo
-			interestThree: $interestThree
+			tags: $tags
 		) {
 			success
 			profile {
@@ -82,9 +75,7 @@ export const UPDATE_PROFILE = gql`
 				twitter_URL
 				linkedin_URL
 				picture_URL
-				interestOne
-				interestTwo
-				interestThree
+				tags
 			}
 			error
 		}

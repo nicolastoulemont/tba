@@ -102,6 +102,7 @@ const Home = props => {
 			<CQuery query={LOGGED_USER}>
 				{({ data }) => {
 					const user = data.currentUser;
+					console.log(user);
 					if (user.profile) return userHasProfile(user, props);
 					if (!user.profile) return userHasNoProfile(user);
 				}}

@@ -13,9 +13,7 @@ export const GET_USER_FULL_PROFILE = gql`
 				twitter_URL
 				linkedin_URL
 				picture_URL
-				interestOne
-				interestTwo
-				interestThree
+				tags
 			}
 		}
 	}

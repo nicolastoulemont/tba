@@ -7,9 +7,7 @@ export const LOGGED_USER = gql`
 			profile {
 				name
 				picture_URL
-				interestOne
-				interestTwo
-				interestThree
+				tags
 			}
 		}
 	}

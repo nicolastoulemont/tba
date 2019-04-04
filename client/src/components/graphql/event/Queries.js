@@ -10,7 +10,8 @@ export const SEARCH_DAILY_EVENTS = gql`
 			isPublic
 			start
 			end
-			location
+			city
+			address
 			createdAt
 			updatedAt
 			creator {
@@ -31,10 +32,9 @@ export const GET_EVENTS = gql`
 			name
 			abstract
 			isPublic
-			categoryOne
-			categoryTwo
-			categoryThree
-			location
+			tags
+			city
+			address
 			createdAt
 			updatedAt
 			start
@@ -60,10 +60,9 @@ export const GET_EVENT = gql`
 			name
 			abstract
 			description
-			location
-			categoryOne
-			categoryTwo
-			categoryThree
+			city
+			address
+			tags
 			start
 			end
 			createdAt
@@ -86,7 +85,8 @@ export const GET_USER_FUTURE_HOSTED_EVENTS = gql`
 			id
 			user_ID
 			name
-			location
+			city
+			address
 			start
 			end
 		}
@@ -99,7 +99,8 @@ export const GET_USER_PAST_HOSTED_EVENTS = gql`
 			id
 			user_ID
 			name
-			location
+			city
+			address
 			start
 			end
 		}
