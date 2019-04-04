@@ -5,7 +5,7 @@ import {
 	GET_USER_FUTURE_REGISTRATIONS,
 	GET_USER_PAST_REGISTRATIONS
 } from '../../../graphql/registration/Queries';
-import RegistrationItem from './registrationItem';
+import PanelItem from '../panelItem';
 
 export default function registrationsDisplay({ user, target }) {
 	const chooseQuery = target => {
@@ -24,7 +24,7 @@ export default function registrationsDisplay({ user, target }) {
 					return (
 						<Fragment>
 							{data.userFutureRegistrations.map(registration => (
-								<RegistrationItem registration={registration} key={registration.id} />
+								<PanelItem registration={registration} key={registration.id} />
 							))}
 						</Fragment>
 					);
@@ -32,7 +32,7 @@ export default function registrationsDisplay({ user, target }) {
 					return (
 						<Fragment>
 							{data.userPastRegistrations.map(registration => (
-								<RegistrationItem registration={registration} key={registration.id} />
+								<PanelItem registration={registration} key={registration.id} />
 							))}
 						</Fragment>
 					);
@@ -47,7 +47,6 @@ export default function registrationsDisplay({ user, target }) {
 						</Spring>
 					);
 				}
-			
 			}}
 		</CQuery>
 	);

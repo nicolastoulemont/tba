@@ -94,3 +94,29 @@ export const GET_EVENT = gql`
 		}
 	}
 `;
+
+export const GET_USER_FUTURE_HOSTED_EVENTS = gql`
+	query UserFutureHostedEvents($user_ID: ID!, $date: String!) {
+		userFutureHostedEvents(user_ID: $user_ID, date: $date) {
+			id
+			user_ID
+			name
+			location
+			start
+			end
+		}
+	}
+`;
+
+export const GET_USER_PAST_HOSTED_EVENTS = gql`
+	query UserPastHostedEvents($user_ID: ID!, $date: String!) {
+		userPastHostedEvents(user_ID: $user_ID, date: $date) {
+			id
+			user_ID
+			name
+			location
+			start
+			end
+		}
+	}
+`;
