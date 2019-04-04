@@ -27,18 +27,6 @@ const profileSchema = new Schema({
 	twitter_URL: String,
 	linkedin_URL: String,
 	picture_URL: String,
-	interestOne: {
-		type: String,
-		default: 'none'
-	},
-	interestTwo: {
-		type: String,
-		default: 'none'
-	},
-	interestThree: {
-		type: String,
-		default: 'none'
-	},
 	createdAt: {
 		type: Date,
 		default: Date.now()
@@ -46,6 +34,9 @@ const profileSchema = new Schema({
 	updatedAt: {
 		type: Date,
 		default: Date.now()
+	},
+	tags: {
+		type: [String]
 	}
 });
 

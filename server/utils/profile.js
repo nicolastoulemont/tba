@@ -22,11 +22,9 @@ const buildProfile = async (args, User, Profile) => {
 			twitter_URL: args.twitter_URL,
 			linkedin_URL: args.linkedin_URL,
 			picture_URL: picture_URL,
-			interestOne: args.interestOne,
-			interestTwo: args.interestTwo,
-			interestThree: args.interestThree,
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			tags: args.tags
 		}).save();
 		return { success: true, profile };
 	} catch (err) {
@@ -49,9 +47,7 @@ const updateProfile = async (args, user, User, Profile) => {
 		if (args.twitter_URL) updateProfile.twitter_URL = args.twitter_URL;
 		if (args.linkedin_URL) updateProfile.linkedin_URL = args.linkedin_URL;
 		if (args.picture_URL) updateProfile.picture_URL = args.picture_URL;
-		if (args.interestOne) updateProfile.interestOne = args.interestOne;
-		if (args.interestTwo) updateProfile.interestTwo = args.interestTwo;
-		if (args.interestThree) updateProfile.interestThree = args.interestThree;
+		if (args.tags) updateProfile.tags = args.tags;
 		updateProfile.updatedAt = new Date();
 		return {
 			success: true,

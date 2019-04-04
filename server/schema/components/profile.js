@@ -15,11 +15,9 @@ module.exports = {
 			twitter_URL: String
 			linkedin_URL: String
 			picture_URL: String
-			interestOne: String
-			interestTwo: String
-			interestThree: String
 			createdAt: Date
 			updatedAt: Date
+			tags: [String]
 			creator: User
 		}
 
@@ -47,9 +45,7 @@ module.exports = {
 				twitter_URL: String
 				linkedin_URL: String
 				picture_URL: String
-				interestOne: String
-				interestTwo: String
-				interestThree: String
+				tags: [String]
 			): ProfileResp
 			updateProfile(
 				_id: ID!
@@ -62,9 +58,7 @@ module.exports = {
 				twitter_URL: String
 				linkedin_URL: String
 				picture_URL: String
-				interestOne: String
-				interestTwo: String
-				interestThree: String
+				tags: [String]
 			): ProfileResp
 			deleteProfile(_id: ID!, user_ID: String!): ProfileResp
 		}
