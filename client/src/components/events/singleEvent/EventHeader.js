@@ -12,11 +12,10 @@ const EventHeader = ({
 		user_ID,
 		name,
 		description,
-		location,
+		city,
+		address,
 		isPublic,
-		categoryOne,
-		categoryTwo,
-		categoryThree,
+		tags,
 		start,
 		end,
 		createdAt,
@@ -34,10 +33,10 @@ const EventHeader = ({
 					<div className="col-md-8">
 						<div className="text-center text-md-left my-2 mx-4">
 							<p className="font-weight-bold text-uppercase">{name}</p>
-							<p className="my-1">
+							{/* <p className="my-1">
 								{categoryOne} {categoryTwo === 'Default' ? null : `| ${categoryTwo}`}
 								{categoryThree === 'Default' ? null : `| ${categoryThree}`}
-							</p>
+							</p> */}
 							<div className="d-block d-md-none">
 								<div className="d-inline">
 									<Link
@@ -62,7 +61,9 @@ const EventHeader = ({
 									{new Date(end).toUTCString().slice(0, 22)}
 								</small>
 							)}
-							<p className="my-1">{location}</p>
+							<p className="my-1">
+								{address}, {city}
+							</p>
 						</div>
 					</div>
 					<div className="d-none d-md-block col-md-4">
