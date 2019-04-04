@@ -14,6 +14,7 @@ export const SEARCH_DAILY_EVENTS = gql`
 			address
 			createdAt
 			updatedAt
+			tags
 			creator {
 				profile {
 					name

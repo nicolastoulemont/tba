@@ -16,7 +16,9 @@ export default function PanelItem({ registration, event }) {
 							>
 								<small className="font-weight-bold mr-2 link-menu">{registration.eventName}</small>
 							</Link>
-							<small className="d-block">{registration.eventLocation}</small>
+							<small className="d-block">
+								{registration.eventAddress},{registration.eventCity}
+							</small>
 							{new Date(registration.eventStart).getDate() ===
 							new Date(registration.eventEnd).getDate() ? (
 								<small>
@@ -48,7 +50,9 @@ export default function PanelItem({ registration, event }) {
 							>
 								<small className="font-weight-bold mr-2 link-menu">{event.name}</small>
 							</Link>
-							<small className="d-block">{event.location}</small>
+							<small className="d-block">
+								{event.address}, {event.city}
+							</small>
 							{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
 								<small>
 									{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
