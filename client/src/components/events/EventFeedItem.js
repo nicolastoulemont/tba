@@ -28,9 +28,9 @@ const EventFeedItem = ({ currentUser, event }) => {
 
 				<p className="text-left p-0 mt-0 mb-1">
 					<small>
-						{event.categoryOne} {event.categoryTwo === 'Default' ? null : ` | ${event.categoryTwo}`}
-						{event.categoryThree === 'Default' ? null : ` | ${event.categoryThree}`}
-						{event.isPublic ? <span className="ml-2 mb-0 font-italic">- Public event</span> : null}
+						{/* {event.categoryOne} {event.categoryTwo === 'Default' ? null : ` | ${event.categoryTwo}`}
+						{event.categoryThree === 'Default' ? null : ` | ${event.categoryThree}`} */}
+						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}
 					</small>
 				</p>
 				<p className="text-left">{event.abstract}</p>

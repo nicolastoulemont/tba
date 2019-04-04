@@ -4,17 +4,16 @@ import { Spring } from 'react-spring/renderprops';
 import CQuery from '../commons/CustomQueryComponent';
 import EventFeedItem from './EventFeedItem';
 import FeedSearch from '../commons/FeedSearch';
-import { GET_DAY_EVENTS } from '../graphql/event/Queries';
+import { SEARCH_DAILY_EVENTS } from '../graphql/event/Queries';
 import dayjs from 'dayjs';
 
-export default function EventFeed(props) {
+export default function EventFeed({ user, match }) {
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState('ascending');
 	const [institutional, setInstitutional] = useState(false);
 	const [onlyFree, setOnlyFree] = useState(false);
 
-	const { user, interestOne, interestTwo, interestThree } = props;
-	const day = props.match.params.day;
+	const day = match.params.day;
 	const displayDay = dayjs(day).format('dddd');
 
 	const validateDate = day => {
@@ -36,31 +35,24 @@ export default function EventFeed(props) {
 							onlyFree={onlyFree}
 							setOnlyFree={setOnlyFree}
 						/>
-						<CQuery
-							query={GET_DAY_EVENTS}
-							variables={{ day, interestOne, interestTwo, interestThree }}
-						>
+						<CQuery query={SEARCH_DAILY_EVENTS} variables={{ date: day, search, limit: 10, sort }}>
 							{({ data }) => {
-								if (data) {
-									if (data.onedayevents.length === 0) {
-										return (
-											<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
-										);
-									} else {
-										return (
-											<div className="border-top">
-												{data.onedayevents.map(event => (
-													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
-														{props => (
-															<div style={props}>
-																<EventFeedItem key={event.id} currentUser={user} event={event} />
-															</div>
-														)}
-													</Spring>
-												))}
-											</div>
-										);
-									}
+								if (data.searchDailyEvents.length === 0) {
+									return <div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>;
+								} else {
+									return (
+										<div className="border-top">
+											{data.searchDailyEvents.map(event => (
+												<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
+													{props => (
+														<div style={props}>
+															<EventFeedItem key={event.id} currentUser={user} event={event} />
+														</div>
+													)}
+												</Spring>
+											))}
+										</div>
+									);
 								}
 							}}
 						</CQuery>

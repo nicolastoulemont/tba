@@ -35,7 +35,8 @@ module.exports = {
 
 		extend type Query {
 			event(id: ID!): EventItem
-			events(first: Int): [EventItem!]!
+			events(limit: Int): [EventItem!]!
+			searchDailyEvents(date: String!, search: String, limit: Int!, sort: String!): [EventItem!]!
 			searchEventsByDate(date: String): [EventItem!]!
 			searchEventsByNameOrDescription(search: String, limit: Int): [EventItem!]!
 			onedayevents(
@@ -93,7 +94,26 @@ module.exports = {
 				try {
 					return await EventItem.find({ isPublic: true })
 						.sort({ _id: 'descending' })
-						.limit(args.first);
+						.limit(args.limit);
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				const date = new Date(args.date);
+				const dayafter = new Date(new Date(args.date).setDate(new Date(args.date).getDate() + 1));
+				try {
+					return await EventItem.find({
+						start: { $gte: date, $lte: dayafter },
+						isPublic: true,
+						$or: [
+							{ name: { $regex: new RegExp(args.search) } },
+							{ description: { $regex: new RegExp(args.search) } }
+						]
+					})
+						.sort({ start: args.sort })
+						.limit(args.limit);
 				} catch (err) {
 					throw new Error('Bad request');
 				}

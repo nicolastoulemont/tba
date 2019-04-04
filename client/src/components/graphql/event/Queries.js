@@ -1,5 +1,28 @@
 import gql from 'graphql-tag';
 
+export const SEARCH_DAILY_EVENTS = gql`
+	query SearchDailyEvents($date: String!, $search: String, $limit: Int!, $sort: String!) {
+		searchDailyEvents(date: $date, search: $search, limit: $limit, sort: $sort) {
+			id
+			user_ID
+			name
+			abstract
+			isPublic
+			start
+			end
+			location
+			createdAt
+			updatedAt
+			creator {
+				profile {
+					name
+					picture_URL
+				}
+			}
+		}
+	}
+`;
+
 export const GET_DAY_EVENTS = gql`
 	query Onedayevents(
 		$day: String!
@@ -40,7 +63,7 @@ export const GET_DAY_EVENTS = gql`
 
 export const GET_EVENTS = gql`
 	{
-		events(first: 10) {
+		events(limit: 10) {
 			id
 			user_ID
 			name
