@@ -1,6 +1,12 @@
 import React, { Fragment, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { InputField, TextAreaField, FileInput } from '../../commons/InputComponents';
+import { Redirect, Link } from 'react-router-dom';
+import {
+	InputField,
+	TextAreaField,
+	FileInput,
+	TagsInput,
+	UserTags
+} from '../../commons/InputComponents';
 
 export default function CreateUserProfile(props) {
 	const [name, setName] = useState('');
@@ -11,6 +17,53 @@ export default function CreateUserProfile(props) {
 	const [linkedin_URL, setLinkedin_URL] = useState('');
 	const [hideSocial, setHideSocial] = useState(false);
 	const [privateProfile, setprivateProfile] = useState(false);
+	const [userTopics, setUserTopics] = useState([]);
+	const [topicsPool, setTopicsPool] = useState([
+		'Brexit',
+		'Environment',
+		'Climate Change',
+		'Energy',
+		'Public Health',
+		'Food Safety',
+		'Agriculture',
+		'Rural Development',
+		'Fisheries',
+		'Maritime Affairs',
+		'Research Innovation',
+		'Education',
+		'Culture',
+		'Employment and Social Affairs',
+		'Legal Affairs',
+		'Civil Liberties',
+		'Constitutional Affairs',
+		'Justice and Home Affairs',
+		'Budgets',
+		'Budgetary Control',
+		'Financial Crimes, tax evasion and tax avoidance',
+		'Migration',
+		'Human Rights',
+		'Development',
+		'Security and Defense',
+		'Foreign Affairs',
+		'International Trade',
+		'Internal Market and Consumer Protection',
+		'Industry',
+		'Competition',
+		'Regional Development',
+		'Transport',
+		'Tourisme',
+		'Urban Development'
+	]);
+
+	const addTopic = topic => {
+		setUserTopics([...userTopics, topic]);
+		setTopicsPool(topicsPool.filter(item => item !== topic));
+	};
+
+	const deleteTopic = topic => {
+		setTopicsPool([...topicsPool, topic]);
+		setUserTopics(userTopics.filter(item => item !== topic));
+	};
 
 	const currentUser = props.currentUser;
 	const targetUser = props.match.params.id;
@@ -77,6 +130,58 @@ export default function CreateUserProfile(props) {
 							/>
 						</div>
 					</div>
+					<div>
+						<p className="text-left">
+							Choose the topics your are interested in{' '}
+							<small className="font-italic">
+								&#40;Optional but advised given the large quantity of news and events myEU
+								aggregate&#41;
+							</small>
+						</p>
+						<div className="form-row">
+							<div className="col">
+								<div className="border rounded text-left">
+									{topicsPool.map(topic => {
+										return (
+											<TagsInput
+												topic={topic}
+												func={e => addTopic(topic)}
+												key={
+													Math.random()
+														.toString(36)
+														.substring(2, 15) +
+													Math.random()
+														.toString(36)
+														.substring(2, 15)
+												}
+											/>
+										);
+									})}
+								</div>
+							</div>
+							<div className="col">
+								<div className="border rounded text-left">
+									{userTopics.map(topic => {
+										return (
+											<UserTags
+												topic={topic}
+												func={e => deleteTopic(topic)}
+												key={
+													Math.random()
+														.toString(36)
+														.substring(2, 15) +
+													Math.random()
+														.toString(36)
+														.substring(2, 15)
+												}
+											/>
+										);
+									})}
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div className="form-check float-left">
 						<input
 							className="form-check-input"

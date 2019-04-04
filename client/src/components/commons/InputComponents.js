@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const InputField = ({ type, name, placeholder, value, onChange, labelText, usageExpl }) => (
 	<div className="form-group">
@@ -131,4 +132,20 @@ export const InputGroup = ({ type, name, placeholder, value, icon, onChange }) =
 			/>
 		</div>
 	</div>
+);
+
+export const TagsInput = ({ topic, func }) => (
+	<Link to="#" onClick={func}>
+		<span className="badge badge-pill badge-light my-2 mx-1">
+			{topic} <i className="fas fa-plus ml-1" />
+		</span>
+	</Link>
+);
+
+export const UserTags = ({ topic, func }) => (
+	<Link to="#" onClick={func}>
+		<span className="badge badge-pill badge-light my-2 mx-1">
+			{topic} <i class="fas fa-times ml-1" />
+		</span>
+	</Link>
 );
