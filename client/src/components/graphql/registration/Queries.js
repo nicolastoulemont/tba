@@ -39,7 +39,8 @@ export const GET_USER_FUTURE_REGISTRATIONS = gql`
 			user_ID
 			event_ID
 			eventName
-			eventLocation
+			eventCity
+			eventAddress
 			eventStart
 			eventEnd
 		}
@@ -53,7 +54,8 @@ export const GET_USER_PAST_REGISTRATIONS = gql`
 			user_ID
 			event_ID
 			eventName
-			eventLocation
+			eventCity
+			eventAddress
 			eventStart
 			eventEnd
 		}

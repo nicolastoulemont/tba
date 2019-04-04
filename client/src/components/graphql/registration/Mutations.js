@@ -5,7 +5,8 @@ export const ADD_REGISTRATION = gql`
 		$user_ID: String!
 		$event_ID: String!
 		$eventName: String!
-		$eventLocation: String!
+		$eventCity: String
+		$eventAddress: String
 		$eventStart: String!
 		$eventEnd: String!
 	) {
@@ -13,7 +14,8 @@ export const ADD_REGISTRATION = gql`
 			user_ID: $user_ID
 			event_ID: $event_ID
 			eventName: $eventName
-			eventLocation: $eventLocation
+			eventCity: $eventCity
+			eventAddress: $eventAddress
 			eventStart: $eventStart
 			eventEnd: $eventEnd
 		) {
