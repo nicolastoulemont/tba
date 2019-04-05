@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {
 	InputField,
 	TextAreaField,
@@ -12,7 +12,7 @@ export default function CreateUserProfile(props) {
 	const [name, setName] = useState('');
 	const [position, setPosition] = useState('');
 	const [bio, setBio] = useState('');
-	const [picture, setPicture] = useState('');
+	const [picture, setPicture] = useState([]);
 	const [twitter_URL, setTwitter_URL] = useState('');
 	const [linkedin_URL, setLinkedin_URL] = useState('');
 	const [hideSocial, setHideSocial] = useState(false);
@@ -29,6 +29,10 @@ export default function CreateUserProfile(props) {
 		'Rural Development',
 		'Fisheries',
 		'Maritime Affairs',
+		'Digital',
+		'Data Protection',
+		'Technology',
+		'Cybersecurity',
 		'Research Innovation',
 		'Education',
 		'Culture',
@@ -39,7 +43,7 @@ export default function CreateUserProfile(props) {
 		'Justice and Home Affairs',
 		'Budgets',
 		'Budgetary Control',
-		'Financial Crimes, tax evasion and tax avoidance',
+		'Financial Crimes, Tax Evasion and Tax Avoidance',
 		'Migration',
 		'Human Rights',
 		'Development',
@@ -51,7 +55,7 @@ export default function CreateUserProfile(props) {
 		'Competition',
 		'Regional Development',
 		'Transport',
-		'Tourisme',
+		'Tourism',
 		'Urban Development'
 	]);
 
@@ -67,6 +71,7 @@ export default function CreateUserProfile(props) {
 
 	const currentUser = props.currentUser;
 	const targetUser = props.match.params.id;
+	console.log(picture);
 	if (currentUser !== targetUser) return <Redirect to="/error" />;
 	return (
 		<Fragment key={props.currentUser}>
@@ -94,9 +99,9 @@ export default function CreateUserProfile(props) {
 						placeholder="Add a picture"
 						name="picture"
 						labelText="Profile picture"
-						value={picture}
-						onChange={e => setPicture(e.target.value)}
+						onChange={e => setPicture(e.target.files[0])}
 					/>
+					<img src={picture} className="rounded-circle border-avatar medium-avatar" alt="avatar" />
 					<div>Organisation selection AREA</div>
 					<div className="form-row mt-2">
 						<div className="col">
@@ -131,21 +136,23 @@ export default function CreateUserProfile(props) {
 						</div>
 					</div>
 					<div>
-						<p className="text-left">
-							Choose the topics your are interested in{' '}
-							<small className="font-italic">
-								&#40;Optional but advised given the large quantity of news and events myEU
-								aggregate&#41;
-							</small>
-						</p>
-						<div className="form-row">
+						<div>
+							<p className="text-left m-0 p-0">Choose the topics your are interested in </p>
+							<p className="text-left">
+								<small className="font-italic">
+									Optional but advised given the large quantity of news and events myEU aggregate
+								</small>
+							</p>
+						</div>
+
+						<div className="form-row my-2">
 							<div className="col">
-								<div className="border rounded text-left">
+								<div className="border rounded text-left p-2">
 									{topicsPool.map(topic => {
 										return (
 											<TagsInput
 												topic={topic}
-												func={e => addTopic(topic)}
+												addTopic={e => addTopic(topic)}
 												key={
 													Math.random()
 														.toString(36)
@@ -160,12 +167,12 @@ export default function CreateUserProfile(props) {
 								</div>
 							</div>
 							<div className="col">
-								<div className="border rounded text-left">
+								<div className="border rounded text-left h-100 p-2">
 									{userTopics.map(topic => {
 										return (
 											<UserTags
 												topic={topic}
-												func={e => deleteTopic(topic)}
+												deleteTopic={e => deleteTopic(topic)}
 												key={
 													Math.random()
 														.toString(36)
@@ -182,7 +189,7 @@ export default function CreateUserProfile(props) {
 						</div>
 					</div>
 
-					<div className="form-check float-left">
+					<div className="form-check float-left my-2">
 						<input
 							className="form-check-input"
 							type="checkbox"
@@ -215,7 +222,7 @@ export default function CreateUserProfile(props) {
 							</small>
 						</label>
 					</div>
-					<input type="submit" className="btn btn-darkblue btn-block mt-4" />
+					<input type="submit" className="btn btn-blue btn-block mt-4" />
 				</form>
 			</div>
 		</Fragment>

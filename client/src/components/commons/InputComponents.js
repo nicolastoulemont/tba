@@ -134,17 +134,17 @@ export const InputGroup = ({ type, name, placeholder, value, icon, onChange }) =
 	</div>
 );
 
-export const TagsInput = ({ topic, func }) => (
-	<Link to="#" onClick={func}>
-		<span className="badge badge-pill badge-light my-2 mx-1">
+export const TagsInput = ({ topic, addTopic }) => (
+	<Link to="#" onClick={addTopic}>
+		<span className="badge badge-pill bg-blue text-white m-1">
 			{topic} <i className="fas fa-plus ml-1" />
 		</span>
 	</Link>
 );
 
-export const UserTags = ({ topic, func }) => (
-	<Link to="#" onClick={func}>
-		<span className="badge badge-pill badge-light my-2 mx-1">
+export const UserTags = ({ topic, deleteTopic }) => (
+	<Link to="#" onClick={deleteTopic}>
+		<span className="badge badge-pill bg-blue text-white m-1">
 			{topic} <i class="fas fa-times ml-1" />
 		</span>
 	</Link>
