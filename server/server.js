@@ -1,12 +1,9 @@
 require('dotenv').config();
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server');
 const schema = require('./schema/schema');
 const models = require('./models');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-
-const app = express();
 
 const SECRET = process.env.SECRET;
 const DB_URI = `${process.env.DB_NAME}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${
@@ -35,9 +32,7 @@ const server = new ApolloServer({
 	playground: true
 });
 
-server.applyMiddleware({ app });
-
-app.listen(process.env.PORT, () =>
+server.listen(process.env.PORT, () =>
 	console.log(
 		`Server running on http://localhost:${
 			process.env.PORT

@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server');
 const { validateOrgInput, validateUpdOrgIntput } = require('../../validation/organisation');
 
 module.exports = {

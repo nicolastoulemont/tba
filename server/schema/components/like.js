@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server');
 const { ValidateAddLike } = require('../../validation/likes');
 
 module.exports = {

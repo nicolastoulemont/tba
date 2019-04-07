@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server');
 const { buildProfile, updateProfile, deleteProfile } = require('../../utils/profile');
 
 module.exports = {

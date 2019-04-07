@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server');
 const { registerUser, registerAndLogin, loginUser, updateUserInfo } = require('../../utils/user');
 // Validation
 const { validateRegInput, validateUpdateInput } = require('../../validation/user');

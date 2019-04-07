@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server');
 const { validateCommentInput } = require('../../validation/comment');
 const { buildComment, updateComment, moderateComment } = require('../../utils/comment');
 

@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server');
 const { validateEventInput, validateUpdEventIntput } = require('../../validation/event');
 const { buildEvent, updateEvent } = require('../../utils/event');
 
