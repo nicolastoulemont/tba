@@ -12,6 +12,7 @@
     "react-apollo": "^2.5.2",
     "react-day-picker": "^7.3.0",
     "react-dom": "^16.8.4",
+    "react-dropzone": "^10.1.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-spring": "^8.0.18"

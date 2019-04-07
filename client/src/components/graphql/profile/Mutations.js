@@ -6,6 +6,8 @@ export const CREATE_PROFILE = gql`
 		$organisation_ID: String
 		$name: String!
 		$position: String!
+		$hideSocial: Boolean
+		$privateProfile: Boolean
 		$bio: String
 		$twitter_URL: String
 		$linkedin_URL: String
@@ -17,13 +19,12 @@ export const CREATE_PROFILE = gql`
 			organisation_ID: $organisation_ID
 			name: $name
 			position: $position
+			hideSocial: $hideSocial
+			privateProfile: $privateProfile
 			bio: $bio
 			twitter_URL: $twitter_URL
 			linkedin_URL: $linkedin_URL
 			picture_URL: $picture_URL
-			interestOne: $interestOne
-			interestTwo: $interestTwo
-			interestThree: $interestThree
 			tags: $tags
 		) {
 			profile {
@@ -32,6 +33,8 @@ export const CREATE_PROFILE = gql`
 				organisation_ID
 				name
 				position
+				hideSocial
+				privateProfile
 				bio
 				twitter_URL
 				linkedin_URL

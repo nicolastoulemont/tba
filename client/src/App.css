@@ -54,6 +54,9 @@ body {
 .border-avatar {
 	border: 3px solid white;
 }
+.border-avatar-black {
+	border: 3px solid black;
+}
 
 .mini-avatar {
 	height: 16px;

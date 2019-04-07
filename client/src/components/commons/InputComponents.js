@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Dropzone from 'react-dropzone';
 
 export const InputField = ({ type, name, placeholder, value, onChange, labelText, usageExpl }) => (
 	<div className="form-group">
@@ -145,7 +146,99 @@ export const TagsInput = ({ topic, addTopic }) => (
 export const UserTags = ({ topic, deleteTopic }) => (
 	<Link to="#" onClick={deleteTopic}>
 		<span className="badge badge-pill bg-blue text-white m-1">
-			{topic} <i class="fas fa-times ml-1" />
+			{topic} <i className="fas fa-times ml-1" />
 		</span>
 	</Link>
+);
+
+export const DropProfileImage = ({ picture, addPicture }) => (
+	<Dropzone
+		accept={'image/*'}
+		multiple={false}
+		maxSize={2097152}
+		onDrop={acceptedFiles => addPicture(acceptedFiles[0])}
+	>
+		{({ getRootProps, getInputProps }) => (
+			<section className="h-100 ml-4">
+				<div {...getRootProps()} className="h-100">
+					{!picture ? (
+						<div className="h-100 border rounded align-items-center">
+							<p className="mx-auto pt-4 mt-4 mb-0">Add a Profile Picture</p>
+							<p className="mx-auto my-0 p-0 ">
+								{' '}
+								<small className="font-italic ">Max image size : 2MB</small>
+							</p>
+
+							<input {...getInputProps()} />
+						</div>
+					) : (
+						<div className="h-100 align-items-center">
+							<img
+								src={URL.createObjectURL(picture)}
+								className="large-avatar rounded-circle mt-2"
+								alt="avatar"
+							/>
+							<input {...getInputProps()} />
+						</div>
+					)}
+				</div>
+			</section>
+		)}
+	</Dropzone>
+);
+
+export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) => (
+	<div>
+		<div>
+			<p className="m-0 p-0">Choose the topics your are interested in </p>
+			<p>
+				<small className="font-italic">
+					Optional but advised given the large quantity of news and events myEU aggregate
+				</small>
+			</p>
+		</div>
+
+		<div className="form-row my-2">
+			<div className="col-6">
+				<div className="border rounded text-left p-2">
+					{topicsPool.map(topic => {
+						return (
+							<TagsInput
+								topic={topic}
+								addTopic={e => addTopic(topic)}
+								key={
+									Math.random()
+										.toString(36)
+										.substring(2, 15) +
+									Math.random()
+										.toString(36)
+										.substring(2, 15)
+								}
+							/>
+						);
+					})}
+				</div>
+			</div>
+			<div className="col-6">
+				<div className="border rounded text-left h-100 p-2">
+					{userTopics.map(topic => {
+						return (
+							<UserTags
+								topic={topic}
+								deleteTopic={e => deleteTopic(topic)}
+								key={
+									Math.random()
+										.toString(36)
+										.substring(2, 15) +
+									Math.random()
+										.toString(36)
+										.substring(2, 15)
+								}
+							/>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+	</div>
 );
