@@ -1,16 +1,21 @@
+require('dotenv').config();
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema/schema');
 const models = require('./models');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { mongoURI, SECRET, port } = require('./config/keys');
 
 const app = express();
 
+const SECRET = process.env.SECRET;
+const DB_URI = `${process.env.DB_NAME}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${
+	process.env.DB_HOST
+}:${process.env.DB_DEPLOYMENT}`;
+
 // DB CONNECTION
 mongoose
-	.connect(mongoURI, { useNewUrlParser: true })
+	.connect(DB_URI, { useNewUrlParser: true })
 	.then(() => console.log('DB connected'))
 	.catch(err => console.log(err));
 mongoose.set('useCreateIndex', true);
@@ -32,8 +37,10 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-app.listen(port, () =>
+app.listen(process.env.PORT, () =>
 	console.log(
-		`Server running on http://localhost:${port} - Playground available on http://localhost:${port}/graphql?`
+		`Server running on http://localhost:${
+			process.env.PORT
+		} - Playground available on http://localhost:${process.env.PORT}/graphql?`
 	)
 );

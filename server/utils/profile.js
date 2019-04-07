@@ -25,7 +25,10 @@ const buildProfile = async (args, User, Profile) => {
 			createdAt: new Date(),
 			updatedAt: new Date(),
 			tags: args.tags
-		}).save();
+		});
+
+		console.log(profile);
+
 		return { success: true, profile };
 	} catch (err) {
 		console.log(err);

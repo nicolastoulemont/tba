@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SECRET } = require('../config/keys');
 const { isAuthorized } = require('../validation/isAuthorized');
+
+const SECRET = process.env.SECRET;
 
 const registerUser = async (args, User) => {
 	try {
