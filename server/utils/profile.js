@@ -19,8 +19,6 @@ const buildProfile = async (args, Profile) => {
 			tags: args.tags
 		}).save();
 
-		console.log(profile);
-
 		return { success: true, profile };
 	} catch (err) {
 		console.log(err);

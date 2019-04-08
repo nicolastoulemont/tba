@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import dayjs from 'dayjs';
 import { Spring } from 'react-spring/renderprops';
 import SBProfile from './sideBarProfile';
 import SBPanel from './sideBarPanel';
-
+import SBNoProfile from './sideBarNoProfile';
 export default class SideBar extends Component {
 	constructor(props) {
 		super(props);
@@ -41,9 +40,7 @@ export default class SideBar extends Component {
 					{user.profile ? (
 						<SBProfile avatar={user.profile.picture_URL} name={user.profile.name} user={user.id} />
 					) : (
-						<Link to={`/home/profile/create/${user.id}`}>
-							<p>Create your profile to register and likes events and post comments</p>
-						</Link>
+						<SBNoProfile user={user} />
 					)}
 				</div>
 				{path.includes('events') || path.includes('news') ? (

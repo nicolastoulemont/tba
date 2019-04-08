@@ -12,6 +12,7 @@ import { tagsList } from '../../commons/tagsList';
 import { Mutation } from 'react-apollo';
 import { CREATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
+import { LOGGED_USER } from '../../graphql/user/Queries';
 
 export default function CreateUserProfile(props) {
 	const [name, setName] = useState('');
@@ -90,6 +91,8 @@ export default function CreateUserProfile(props) {
 					tags: userTopics
 				}
 			});
+
+			props.history.push('/home/news');
 		} else if (!picture) {
 			await addProfile({
 				variables: {
@@ -105,6 +108,7 @@ export default function CreateUserProfile(props) {
 					tags: userTopics
 				}
 			});
+			props.history.push('/home/news');
 		}
 	};
 
@@ -117,7 +121,12 @@ export default function CreateUserProfile(props) {
 				<h6 className="text-left">Create your profile</h6>
 				<Mutation mutation={SIGN_S3}>
 					{(signS3, e) => (
-						<Mutation mutation={CREATE_PROFILE}>
+						<Mutation
+							mutation={CREATE_PROFILE}
+							refetchQueries={() => {
+								return [{ query: LOGGED_USER }];
+							}}
+						>
 							{(addProfile, e) => (
 								<form
 									onSubmit={async e =>
