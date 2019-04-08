@@ -26,7 +26,11 @@ const profileSchema = new Schema({
 	bio: String,
 	twitter_URL: String,
 	linkedin_URL: String,
-	picture_URL: String,
+	picture_URL: {
+		type: String,
+		default:
+			'https://s3.eu-west-3.amazonaws.com/my-eu-development/images/20190408T1704-z6sdtva1fp-default-user-avatar-png'
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now()
