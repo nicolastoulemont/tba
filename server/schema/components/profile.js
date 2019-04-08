@@ -101,14 +101,14 @@ module.exports = {
 		},
 
 		Mutation: {
-			addProfile: async (parent, args, { user, models: { User, Profile } }) => {
+			addProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user)
 					return {
 						success: false,
 						error: 'You are not logged in'
 					};
 				// TODO : Add input validation function
-				return buildProfile(args, User, Profile);
+				return buildProfile(args, Profile);
 			},
 			updateProfile: async (parent, args, { user, models: { User, Profile } }) => {
 				if (!user)
