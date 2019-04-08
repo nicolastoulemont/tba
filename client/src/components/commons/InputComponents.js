@@ -151,12 +151,12 @@ export const UserTags = ({ topic, deleteTopic }) => (
 	</Link>
 );
 
-export const DropProfileImage = ({ picture, addPicture }) => (
+export const DropProfileImage = ({ picture, addImage }) => (
 	<Dropzone
 		accept={'image/*'}
 		multiple={false}
 		maxSize={2097152}
-		onDrop={acceptedFiles => addPicture(acceptedFiles[0])}
+		onDrop={acceptedFiles => addImage(acceptedFiles[0])}
 	>
 		{({ getRootProps, getInputProps }) => (
 			<section className="h-100 ml-4">
@@ -206,14 +206,9 @@ export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) =
 							<TagsInput
 								topic={topic}
 								addTopic={e => addTopic(topic)}
-								key={
-									Math.random()
-										.toString(36)
-										.substring(2, 15) +
-									Math.random()
-										.toString(36)
-										.substring(2, 15)
-								}
+								key={Math.random()
+									.toString(36)
+									.substring(2, 7)}
 							/>
 						);
 					})}
@@ -226,14 +221,9 @@ export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) =
 							<UserTags
 								topic={topic}
 								deleteTopic={e => deleteTopic(topic)}
-								key={
-									Math.random()
-										.toString(36)
-										.substring(2, 15) +
-									Math.random()
-										.toString(36)
-										.substring(2, 15)
-								}
+								key={Math.random()
+									.toString(36)
+									.substring(2, 7)}
 							/>
 						);
 					})}
