@@ -1,118 +1,103 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import LikesFeed from '../../likes/commentLikes/LikesFeed';
+import LikesFeed from '../../likes/commentLikes/likesFeed/index';
 import CommentReply from './CommentReply';
 import CommentEdit from './CommentEdit';
 import CommentReport from './CommentReport';
 
-class EventCommentActions extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			showReplyForm: false,
-			showEditForm: false,
-			showReportForm: false
-		};
-	}
+export default function EventCommentActions({
+	user,
+	comment_ID,
+	commentText,
+	refetch,
+	createdAt,
+	updatedAt
+}) {
+	const [replyForm, setReplyForm] = useState(false);
+	const [editForm, setEditForm] = useState(false);
+	const [reportForm, setReportForm] = useState(false);
 
-	showReply = e => {
-		this.setState({
-			showReplyForm: !this.state.showReplyForm,
-			showEditForm: false,
-			showReportForm: false
-		});
+	const showReply = e => {
+		setReplyForm(true);
+		setEditForm(false);
+		setReportForm(false);
+	};
+	const showEdit = e => {
+		setReplyForm(false);
+		setEditForm(true);
+		setReportForm(false);
+	};
+	const showReport = e => {
+		setReplyForm(false);
+		setEditForm(false);
+		setReportForm(true);
 	};
 
-	showEdit = e => {
-		this.setState({
-			showEditForm: !this.state.showEditForm,
-			showReplyForm: false,
-			showReportForm: false
-		});
+	const hideForms = e => {
+		setReplyForm(false);
+		setEditForm(false);
+		setReportForm(false);
 	};
+	dayjs.extend(relativeTime);
+	return (
+		<Fragment>
+			<small className="d-block mt-1">
+				<LikesFeed user={user} comment_ID={comment_ID} />
+				<Link
+					to="#"
+					onClick={e => showReply(e)}
+					className="ml-2"
+					data-togggle="tooltip"
+					data-placement="bottom"
+					title="Reply to this comment"
+				>
+					<i className="far fa-comment mx-1" />
+				</Link>
+				<Link
+					to="#"
+					onClick={e => showEdit(e)}
+					data-togggle="tooltip"
+					data-placement="bottom"
+					title="Edit your comment"
+				>
+					<i className="far fa-edit mx-1" />
+				</Link>
+				<Link
+					to="#"
+					onClick={e => showReport(e)}
+					data-togggle="tooltip"
+					data-placement="bottom"
+					title="Report this comment"
+				>
+					<i className="far fa-flag mx-1" />
+				</Link>
 
-	showReport = e => {
-		this.setState({
-			showReportForm: !this.state.showReportForm,
-			showReplyForm: false,
-			showEditForm: false
-		});
-	};
-
-	hideForms = e => {
-		this.setState({
-			showReportForm: false,
-			showReplyForm: false,
-			showEditForm: false
-		});
-	};
-
-	render() {
-		const { showReplyForm, showEditForm, showReportForm } = this.state;
-		const { user, comment_ID, commentText, refetch, createdAt, updatedAt } = this.props;
-		dayjs.extend(relativeTime);
-		return (
-			<Fragment>
-				<small className="d-block mt-1">
-					<LikesFeed user={user} comment_ID={comment_ID} />
-					<Link
-						to="#"
-						onClick={this.showReply}
-						className="ml-2"
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Reply to this comment"
-					>
-						<i className="far fa-comment mx-1" />
-					</Link>
-					<Link
-						to="#"
-						onClick={this.showEdit}
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Edit your comment"
-					>
-						<i className="far fa-edit mx-1" />
-					</Link>
-					<Link
-						to="#"
-						onClick={this.showReport}
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Report this comment"
-					>
-						<i className="far fa-flag mx-1" />
-					</Link>
-
-					{createdAt !== updatedAt ? (
-						<small className="font-italic"> edited {dayjs(updatedAt).fromNow()}</small>
-					) : (
-						<small className="font-italic"> posted {dayjs(createdAt).fromNow()}</small>
-					)}
-				</small>
-				{showReplyForm ? (
-					<div>
-						<CommentReply user={user} comment_ID={comment_ID} hideForms={this.hideForms} />
-					</div>
-				) : null}
-				{showEditForm ? (
-					<div>
-						<CommentEdit
-							comment_ID={comment_ID}
-							text={commentText}
-							refetch={refetch}
-							hideForms={this.hideForms}
-						/>
-					</div>
-				) : null}
-				{showReportForm ? (
-					<CommentReport comment_ID={comment_ID} user={user} hideForms={this.hideForms} />
-				) : null}
-			</Fragment>
-		);
-	}
+				{createdAt !== updatedAt ? (
+					<small className="font-italic"> edited {dayjs(updatedAt).fromNow()}</small>
+				) : (
+					<small className="font-italic"> posted {dayjs(createdAt).fromNow()}</small>
+				)}
+			</small>
+			{replyForm ? (
+				<div>
+					<CommentReply user={user} comment_ID={comment_ID} hideForms={hideForms} />
+				</div>
+			) : null}
+			{editForm ? (
+				<div>
+					<CommentEdit
+						comment_ID={comment_ID}
+						text={commentText}
+						refetch={refetch}
+						hideForms={this.hideForms}
+					/>
+				</div>
+			) : null}
+			{reportForm ? (
+				<CommentReport comment_ID={comment_ID} user={user} hideForms={hideForms} />
+			) : null}
+		</Fragment>
+	);
 }
-
-export default EventCommentActions;

@@ -8,7 +8,7 @@ import PrivateRoute from './components/auth/Auth';
 import Error404 from './components/commons/IncorrectRoute';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Home from './components/home/Home';
+import Home from './components/home';
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import MobileNav from './components/layout/MobileNav';

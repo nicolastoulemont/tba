@@ -1,23 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { ADD_COMMENT } from '../../graphql/comment/Mutations';
 import { GET_COMMENT_COMMENTS } from '../../graphql/comment/Queries';
 
-class CommentReply extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			text: ''
-		};
-	}
+export default function CommentReply({ user, comment_ID }) {
+	const [text, setText] = useState('');
 
-	onChange = e => {
-		const { name, value } = e.target;
-		this.setState({ [name]: value });
-	};
-
-	commentReply = (e, user, comment_ID, text, addComment) => {
+	const commentReply = (e, user, comment_ID, text, addComment) => {
 		if (
 			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
 			(e.type === 'keydown' && e.keyCode === 13)
@@ -31,43 +21,37 @@ class CommentReply extends Component {
 		}
 	};
 
-	render() {
-		const { user, comment_ID } = this.props;
-		const { text } = this.state;
-		return (
-			<Fragment>
-				<Mutation
-					mutation={ADD_COMMENT}
-					refetchQueries={() => {
-						return [{ query: GET_COMMENT_COMMENTS, variables: { id: comment_ID } }];
-					}}
-				>
-					{(addComment, e) => (
-						<div className="input-group input-group-sm py-2">
-							<input
-								type="text"
-								className="form-control"
-								placeholder="Comment..."
-								onChange={this.onChange}
-								name="text"
-								value={text}
-								onKeyDown={e => this.commentReply(e, user, comment_ID, text, addComment)}
-							/>
-							<div className="input-group-append">
-								<Link
-									to="#"
-									className="btn bg-darkblue"
-									onClick={e => this.commentReply(e, user, comment_ID, text, addComment)}
-								>
-									<i className="fa fa-paper-plane text-white" aria-hidden="true" />
-								</Link>
-							</div>
+	return (
+		<Fragment>
+			<Mutation
+				mutation={ADD_COMMENT}
+				refetchQueries={() => {
+					return [{ query: GET_COMMENT_COMMENTS, variables: { id: comment_ID } }];
+				}}
+			>
+				{(addComment, e) => (
+					<div className="input-group input-group-sm py-2">
+						<input
+							type="text"
+							className="form-control"
+							placeholder="Comment..."
+							onChange={e => setText(e.target.value)}
+							name="text"
+							value={text}
+							onKeyDown={e => commentReply(e, user, comment_ID, text, addComment)}
+						/>
+						<div className="input-group-append">
+							<Link
+								to="#"
+								className="btn bg-darkblue"
+								onClick={e => commentReply(e, user, comment_ID, text, addComment)}
+							>
+								<i className="fa fa-paper-plane text-white" aria-hidden="true" />
+							</Link>
 						</div>
-					)}
-				</Mutation>
-			</Fragment>
-		);
-	}
+					</div>
+				)}
+			</Mutation>
+		</Fragment>
+	);
 }
-
-export default CommentReply;
