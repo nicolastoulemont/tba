@@ -1,13 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
+import DefaultAvatar from '../../img/default_user_avatar.png';
 
-export const InputField = ({ type, name, placeholder, value, onChange, labelText, usageExpl }) => (
+export const InputField = ({
+	type,
+	name,
+	placeholder,
+	value,
+	onChange,
+	labelText,
+	usageExpl,
+	optional
+}) => (
 	<div className="form-group">
 		{labelText ? (
 			<div className="d-block">
 				{' '}
-				<p className="text-left m-0 p-0">{labelText}</p>{' '}
+				<p className="float-left m-0 p-0">{labelText}</p>{' '}
+				{optional ? (
+					<p className="float-right m-0 p-0">
+						<small>Optional</small>
+					</p>
+				) : null}
 			</div>
 		) : null}
 		<div className="d-block">
@@ -72,12 +87,26 @@ export const InputCheck = ({ type, name, id, value, checked, onChange }) => (
 	</div>
 );
 
-export const TextAreaField = ({ type, name, placeholder, value, onChange, labelText, rows }) => (
+export const TextAreaField = ({
+	type,
+	name,
+	placeholder,
+	value,
+	onChange,
+	labelText,
+	rows,
+	optional
+}) => (
 	<div className="form-group">
 		{labelText ? (
 			<div className="d-block">
 				{' '}
-				<p className="text-left m-0 p-0">{labelText}</p>{' '}
+				<p className="float-left m-0 p-0">{labelText}</p>{' '}
+				{optional ? (
+					<p className="float-right m-0 p-0">
+						<small>Optional</small>
+					</p>
+				) : null}
 			</div>
 		) : null}
 		<div className="d-block">
@@ -159,28 +188,24 @@ export const DropProfileImage = ({ picture, addImage }) => (
 		onDrop={acceptedFiles => addImage(acceptedFiles[0])}
 	>
 		{({ getRootProps, getInputProps }) => (
-			<section className="h-100 ml-4">
+			<section className="mt-2">
 				<div {...getRootProps()} className="h-100">
-					{!picture ? (
-						<div className="h-100 border rounded align-items-center">
-							<p className="mx-auto pt-4 mt-4 mb-0">Add a Profile Picture</p>
-							<p className="mx-auto my-0 p-0 ">
-								{' '}
-								<small className="font-italic ">Max image size : 2MB</small>
-							</p>
-
-							<input {...getInputProps()} />
-						</div>
-					) : (
-						<div className="h-100 align-items-center">
+					<div>
+						{!picture ? (
+							<img
+								src={DefaultAvatar}
+								className="large-avatar rounded-circle"
+								alt="Default avatar"
+							/>
+						) : (
 							<img
 								src={URL.createObjectURL(picture)}
-								className="large-avatar rounded-circle mt-2"
+								className="large-avatar rounded-circle"
 								alt="avatar"
 							/>
-							<input {...getInputProps()} />
-						</div>
-					)}
+						)}
+						<input {...getInputProps()} />
+					</div>
 				</div>
 			</section>
 		)}
@@ -189,7 +214,7 @@ export const DropProfileImage = ({ picture, addImage }) => (
 
 export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) => (
 	<div>
-		<div>
+		<div className="text-left">
 			<p className="m-0 p-0">Choose the topics your are interested in </p>
 			<p>
 				<small className="font-italic">
