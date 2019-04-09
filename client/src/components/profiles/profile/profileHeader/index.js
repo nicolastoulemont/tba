@@ -18,13 +18,13 @@ export default function ProfileHeader({
 	profile
 }) {
 	return (
-		<div className="py-4 px-4 bg-darkblue text-white mb-2">
+		<div className="py-4 px-4 mb-2 bg-darkblue text-white">
 			<div className="row">
 				<div className="col-md-4">
 					<div className="mx-auto">
 						{picture_URL ? (
 							<img
-								className="rounded-circle border-avatar large-avatar mt-2 ml-2"
+								className="rounded-circle large-avatar mt-2 ml-2"
 								src={picture_URL}
 								alt="User Avatar"
 							/>
@@ -44,7 +44,11 @@ export default function ProfileHeader({
 								</p>
 								<p className="my-1">
 									{tags.map(tag => (
-										<small>
+										<small
+											key={Math.random()
+												.toString(36)
+												.substring(2, 7)}
+										>
 											{tag}
 											{` | `}
 										</small>

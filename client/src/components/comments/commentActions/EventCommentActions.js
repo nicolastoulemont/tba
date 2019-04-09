@@ -91,7 +91,7 @@ export default function EventCommentActions({
 						comment_ID={comment_ID}
 						text={commentText}
 						refetch={refetch}
-						hideForms={this.hideForms}
+						hideForms={hideForms}
 					/>
 				</div>
 			) : null}

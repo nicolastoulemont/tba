@@ -3,6 +3,15 @@
 	padding: 0;
 }
 
+/*
+POTENTIAL COLORS 
+#424B54 OUTER SPACE
+#919EAA MANATEE
+#B5CCE2 LIGHT STEEL BLUE
+#69829B SLATE GRAY
+
+*/
+
 body {
 	background-color: #e6ecf0;
 }
@@ -30,7 +39,7 @@ body {
 }
 
 .bg-darkblue {
-	background-color: #29456e;
+	background-color: #005178;
 }
 
 .text-blue {
@@ -47,15 +56,8 @@ body {
 }
 
 .btn-darkblue {
-	background-color: #29456e;
+	background-color: #005178;
 	color: white;
-}
-
-.border-avatar {
-	border: 3px solid white;
-}
-.border-avatar-black {
-	border: 3px solid black;
 }
 
 .mini-avatar {
@@ -66,21 +68,31 @@ body {
 .ultra-small-avatar {
 	height: 32px;
 	width: 32px;
+	border: 2px solid #ffffff;
 }
 
 .small-avatar {
 	height: 48px;
 	width: 48px;
+	border: 2px solid #ffffff;
 }
 
 .medium-avatar {
 	height: 64px;
 	width: 64px;
+	border: 2px solid #ffffff;
+}
+
+.medium-large-avatar {
+	height: 92px;
+	width: 92px;
+	border: 2px solid #ffffff;
 }
 
 .large-avatar {
 	height: 128px;
 	width: 128px;
+	border: 3px solid #ffffff;
 }
 
 img {
