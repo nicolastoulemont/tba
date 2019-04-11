@@ -1,13 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { formatFileName, resizeImage } from '../../commons/fileManagers';
-import { DropProfileImage, TagsChooser } from '../../commons/InputComponents';
-
+import { formatFileName } from '../../commons/fileManagers';
+import { TagsChooser } from '../../commons/InputComponents';
+import ImgHandler from '../../commons/ImgHandler';
 import CRProfileHeader from './header';
 import CRProfileSocial from './socialLinks';
 
-import { tagsList } from '../../commons/tagsList';
+import { tagsList } from '../../commons/TagsList';
 import { Mutation } from 'react-apollo';
 import { CREATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
@@ -33,10 +33,6 @@ export default function CreateProfile(props) {
 	const deleteTopic = topic => {
 		setTopicsPool([...topicsPool, topic]);
 		setUserTopics(userTopics.filter(item => item !== topic));
-	};
-
-	const addImage = file => {
-		resizeImage(file, 200, 200, setPicture);
 	};
 
 	const uploadToS3 = async (picture, signedRequest) => {
@@ -145,7 +141,7 @@ export default function CreateProfile(props) {
 									<h6 className="pt-2">Create your profile</h6>
 									<div className="form-row pt-2 px-4">
 										<div className="col-md-4">
-											<DropProfileImage picture={picture} addImage={addImage} />
+											<ImgHandler func={setPicture} picture={picture} x={150} y={150} />
 										</div>
 										<div className="col-md-8">
 											<CRProfileHeader
@@ -173,7 +169,7 @@ export default function CreateProfile(props) {
 										deleteTopic={deleteTopic}
 									/>
 
-									<div className="form-check float-left my-2">
+									<div className="form-check float-left mt-2">
 										<input
 											className="form-check-input"
 											type="checkbox"
@@ -190,7 +186,7 @@ export default function CreateProfile(props) {
 											</small>
 										</label>
 									</div>
-									<div className="form-check float-left mt-2 mb-4">
+									<div className="form-check float-left mb-4">
 										<input
 											className="form-check-input"
 											type="checkbox"
@@ -206,7 +202,7 @@ export default function CreateProfile(props) {
 											</small>
 										</label>
 									</div>
-									<input type="submit" className="btn btn-darkblue btn-block mt-4" />
+									<input type="submit" className="btn btn-darkblue btn-block mt-4 mb-2" />
 								</div>
 							</form>
 						)}
