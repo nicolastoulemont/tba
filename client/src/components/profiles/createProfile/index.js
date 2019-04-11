@@ -1,13 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
+import { Spring } from 'react-spring/renderprops';
 import { formatFileName, resizeImage } from '../../commons/fileManagers';
-import {
-	InputField,
-	TextAreaField,
-	DropProfileImage,
-	TagsChooser
-} from '../../commons/InputComponents';
+import { DropProfileImage, TagsChooser } from '../../commons/InputComponents';
 
 import CRProfileHeader from './header';
 import CRProfileSocial from './socialLinks';
@@ -147,7 +143,7 @@ export default function CreateProfile(props) {
 									)
 								}
 							>
-								<div className="bg-darkblue text-white p-0 m-0">
+								<div className="p-0 m-0">
 									<h6 className="pt-2">Create your profile</h6>
 									<div className="form-row pt-2 px-4">
 										<div className="col-md-4">
@@ -164,24 +160,29 @@ export default function CreateProfile(props) {
 											/>
 											<Link
 												to="#"
-												className="float-left font-italic text-white mb-2"
+												className="float-left font-italic mb-2"
 												onClick={e => setShowSocial(!showSocial)}
 											>
 												<small>Add twitter and linkedin profiles - Optional</small>
 											</Link>
-
 											{showSocial ? (
-												<CRProfileSocial
-													twitter_URL={twitter_URL}
-													setTwitter_URL={setTwitter_URL}
-													linkedin_URL={linkedin_URL}
-													setTwitter_URL={setLinkedin_URL}
-												/>
+												<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+													{props => (
+														<div style={props}>
+															<CRProfileSocial
+																twitter_URL={twitter_URL}
+																setTwitter_URL={setTwitter_URL}
+																linkedin_URL={linkedin_URL}
+																setLinkedin_URL={setLinkedin_URL}
+															/>
+														</div>
+													)}
+												</Spring>
 											) : null}
 										</div>
 									</div>
 								</div>
-								<div className="p-4">
+								<div className="px-4 py-2">
 									<TagsChooser
 										topicsPool={topicsPool}
 										addTopic={addTopic}
