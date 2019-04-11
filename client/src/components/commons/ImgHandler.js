@@ -1,8 +1,9 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import DefaultAvatar from '../../img/default_user_avatar.png';
+import DefaultAvatar from '../../img/default_avatar.svg';
+import DefaultEvent from '../../img/default_event.svg';
 
-const ImgHandler = ({ func, picture, x, y }) => {
+const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 	const resizeImage = (file, x, y, func) => {
 		const width = x;
 		const height = y;
@@ -34,6 +35,12 @@ const ImgHandler = ({ func, picture, x, y }) => {
 		};
 	};
 
+	const placeholderAlternator = placeholder => {
+		if (placeholder === 'avatar') return DefaultAvatar;
+		if (placeholder === 'event') return DefaultEvent;
+		return null;
+	};
+
 	return (
 		<Dropzone
 			accept={'image/*'}
@@ -47,7 +54,7 @@ const ImgHandler = ({ func, picture, x, y }) => {
 						<div>
 							{!picture ? (
 								<img
-									src={DefaultAvatar}
+									src={placeholderAlternator(placeholder)}
 									className="extra-large-avatar rounded-circle"
 									alt="Default avatar"
 								/>

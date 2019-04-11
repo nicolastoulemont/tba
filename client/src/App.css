@@ -87,16 +87,15 @@ body {
 	border: 2px solid #ffffff;
 }
 
-.extra-large-avatar {
-	height: 156px;
-	width: 156px;
-	border: 3px solid #ffffff;
-}
-
 .large-avatar {
 	height: 128px;
 	width: 128px;
 	border: 3px solid #ffffff;
+}
+
+.extra-large-avatar {
+	height: 156px;
+	width: 156px;
 }
 
 img {

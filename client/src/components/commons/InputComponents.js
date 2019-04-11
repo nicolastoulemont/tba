@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Dropzone from 'react-dropzone';
-import DefaultAvatar from '../../img/default_user_avatar.png';
 
 export const InputField = ({
 	type,
@@ -178,38 +176,6 @@ export const UserTags = ({ topic, deleteTopic }) => (
 			{topic} <i className="fas fa-times ml-1" />
 		</span>
 	</Link>
-);
-
-export const DropProfileImage = ({ picture, addImage }) => (
-	<Dropzone
-		accept={'image/*'}
-		multiple={false}
-		maxSize={2097152}
-		onDrop={acceptedFiles => addImage(acceptedFiles[0])}
-	>
-		{({ getRootProps, getInputProps }) => (
-			<section className="mt-2">
-				<div {...getRootProps()} className="h-100">
-					<div>
-						{!picture ? (
-							<img
-								src={DefaultAvatar}
-								className="extra-large-avatar rounded-circle"
-								alt="Default avatar"
-							/>
-						) : (
-							<img
-								src={URL.createObjectURL(picture)}
-								className="extra-large-avatar rounded-circle"
-								alt="avatar"
-							/>
-						)}
-						<input {...getInputProps()} />
-					</div>
-				</div>
-			</section>
-		)}
-	</Dropzone>
 );
 
 export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) => (

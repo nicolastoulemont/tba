@@ -6,7 +6,6 @@ import { TagsChooser } from '../../commons/InputComponents';
 import ImgHandler from '../../commons/ImgHandler';
 import CRProfileHeader from './header';
 import CRProfileSocial from './socialLinks';
-
 import { tagsList } from '../../commons/TagsList';
 import { Mutation } from 'react-apollo';
 import { CREATE_PROFILE } from '../../graphql/profile/Mutations';
@@ -138,11 +137,8 @@ export default function CreateProfile(props) {
 								}
 							>
 								<div className="p-0 m-0">
-									<h6 className="pt-2">Create your profile</h6>
+									<h6 className="text-left pt-4 px-4">Create your profile</h6>
 									<div className="form-row pt-2 px-4">
-										<div className="col-md-4">
-											<ImgHandler func={setPicture} picture={picture} x={150} y={150} />
-										</div>
 										<div className="col-md-8">
 											<CRProfileHeader
 												name={name}
@@ -157,6 +153,15 @@ export default function CreateProfile(props) {
 												setTwitter_URL={setTwitter_URL}
 												linkedin_URL={linkedin_URL}
 												setLinkedin_URL={setLinkedin_URL}
+											/>
+										</div>
+										<div className="col-md-4">
+											<ImgHandler
+												func={setPicture}
+												picture={picture}
+												x={150}
+												y={150}
+												placeholder="avatar"
 											/>
 										</div>
 									</div>
