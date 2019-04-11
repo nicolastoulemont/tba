@@ -194,13 +194,13 @@ export const DropProfileImage = ({ picture, addImage }) => (
 						{!picture ? (
 							<img
 								src={DefaultAvatar}
-								className="large-avatar rounded-circle"
+								className="extra-large-avatar rounded-circle"
 								alt="Default avatar"
 							/>
 						) : (
 							<img
 								src={URL.createObjectURL(picture)}
-								className="large-avatar rounded-circle"
+								className="extra-large-avatar rounded-circle"
 								alt="avatar"
 							/>
 						)}
@@ -224,7 +224,7 @@ export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) =
 		</div>
 
 		<div className="form-row my-2">
-			<div className="col-6">
+			<div className="col-md-6">
 				<div className="border rounded text-left p-2">
 					{topicsPool.map(topic => {
 						return (
@@ -239,7 +239,7 @@ export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) =
 					})}
 				</div>
 			</div>
-			<div className="col-6">
+			<div className="col-md-6">
 				<div className="border rounded text-left h-100 p-2">
 					{userTopics.map(topic => {
 						return (

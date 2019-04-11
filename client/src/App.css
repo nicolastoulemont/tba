@@ -83,10 +83,10 @@ body {
 	border: 2px solid #ffffff;
 }
 
-.medium-large-avatar {
-	height: 92px;
-	width: 92px;
-	border: 2px solid #ffffff;
+.extra-large-avatar {
+	height: 156px;
+	width: 156px;
+	border: 3px solid #ffffff;
 }
 
 .large-avatar {

@@ -1,5 +1,5 @@
 import ApolloClient from 'apollo-boost';
-import React, { Component } from 'react';
+import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import logo from './logo.svg';
@@ -30,29 +30,25 @@ const client = new ApolloClient({
 	}
 });
 
-class App extends Component {
-	render() {
-		return (
-			<ApolloProvider client={client}>
-				<Router>
-					<div className="App">
-						<Route component={Navbar} />
-						<div className="container">
-							<Switch>
-								<Route exact path="/" component={Landing} />
-								<Route exact path="/register" component={Register} />
-								<Route exact path="/login" component={Login} />
-								<PrivateRoute path="/home" component={Home} />
-								<Route component={Error404} />
-								<Route path="/error" component={Error404} />
-							</Switch>
-						</div>
-						<Route component={MobileNav} />
-					</div>
-				</Router>
-			</ApolloProvider>
-		);
-	}
-}
+const App = () => (
+	<ApolloProvider client={client}>
+		<Router>
+			<div className="App">
+				<Route component={Navbar} />
+				<div className="container">
+					<Switch>
+						<Route exact path="/" component={Landing} />
+						<Route exact path="/register" component={Register} />
+						<Route exact path="/login" component={Login} />
+						<PrivateRoute path="/home" component={Home} />
+						<Route component={Error404} />
+						<Route path="/error" component={Error404} />
+					</Switch>
+				</div>
+				<Route component={MobileNav} />
+			</div>
+		</Router>
+	</ApolloProvider>
+);
 
 export default App;
