@@ -58,12 +58,14 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 									className="extra-large-avatar rounded-circle"
 									alt="Default avatar"
 								/>
-							) : (
+							) : typeof picture !== 'string' ? (
 								<img
 									src={URL.createObjectURL(picture)}
 									className="extra-large-avatar rounded-circle"
 									alt="avatar"
 								/>
+							) : (
+								<img src={picture} className="extra-large-avatar rounded-circle" alt="avatar" />
 							)}
 							<input {...getInputProps()} />
 						</div>

@@ -9,7 +9,7 @@ export default function ProfileMenu({ profile, user_ID }) {
 				data-togggle="tooltip"
 				data-placement="bottom"
 				title="Edit your profile"
-				to={{ pathname: `/home/profile/edit/${user_ID}`, state: { profile: profile } }}
+				to={`/home/profile/edit/${user_ID}`}
 			/>
 		</div>
 	);

@@ -5,7 +5,15 @@ export const LOGGED_USER = gql`
 		currentUser {
 			id
 			profile {
+				id
+				organisation_ID
 				name
+				position
+				hideSocial
+				privateProfile
+				bio
+				twitter_URL
+				linkedin_URL
 				picture_URL
 				tags
 			}

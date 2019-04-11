@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import EventFeed from '../../events/eventsFeed';
 import NewsFeed from '../../news/newsFeed/index';
 import CreateProfile from '../../profiles/createProfile';
+import EditProfile from '../../profiles/editProfile';
 import Profile from '../../profiles/profile';
 import Event from '../../events/event';
 import CreateEvent from '../../events/createEvent';
@@ -29,7 +30,7 @@ export default function HomeRouter({ user }) {
 					exact
 					path="/home/profile/edit/:id"
 					// ADD the edit profile component
-					render={props => <CreateProfile {...props} currentUser={user.id} />}
+					render={props => <EditProfile {...props} user={user} />}
 				/>
 				<Route
 					exact
