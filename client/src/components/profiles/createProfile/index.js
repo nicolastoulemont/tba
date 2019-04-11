@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Spring } from 'react-spring/renderprops';
 import { formatFileName, resizeImage } from '../../commons/fileManagers';
 import { DropProfileImage, TagsChooser } from '../../commons/InputComponents';
 
@@ -25,7 +24,6 @@ export default function CreateProfile(props) {
 	const [privateProfile, setprivateProfile] = useState(false);
 	const [userTopics, setUserTopics] = useState([]);
 	const [topicsPool, setTopicsPool] = useState(tagsList);
-	const [showSocial, setShowSocial] = useState(false);
 
 	const addTopic = topic => {
 		setUserTopics([...userTopics, topic]);
@@ -158,27 +156,12 @@ export default function CreateProfile(props) {
 												bio={bio}
 												setBio={setBio}
 											/>
-											<Link
-												to="#"
-												className="float-left font-italic mb-2"
-												onClick={e => setShowSocial(!showSocial)}
-											>
-												<small>Add twitter and linkedin profiles - Optional</small>
-											</Link>
-											{showSocial ? (
-												<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-													{props => (
-														<div style={props}>
-															<CRProfileSocial
-																twitter_URL={twitter_URL}
-																setTwitter_URL={setTwitter_URL}
-																linkedin_URL={linkedin_URL}
-																setLinkedin_URL={setLinkedin_URL}
-															/>
-														</div>
-													)}
-												</Spring>
-											) : null}
+											<CRProfileSocial
+												twitter_URL={twitter_URL}
+												setTwitter_URL={setTwitter_URL}
+												linkedin_URL={linkedin_URL}
+												setLinkedin_URL={setLinkedin_URL}
+											/>
 										</div>
 									</div>
 								</div>

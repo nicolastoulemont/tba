@@ -166,7 +166,7 @@ export const InputGroup = ({ type, name, placeholder, value, icon, onChange }) =
 
 export const TagsInput = ({ topic, addTopic }) => (
 	<Link to="#" onClick={addTopic}>
-		<span className="badge badge-pill bg-blue text-white m-1">
+		<span className="badge badge-pill border-grey m-1">
 			{topic} <i className="fas fa-plus ml-1" />
 		</span>
 	</Link>
@@ -174,7 +174,7 @@ export const TagsInput = ({ topic, addTopic }) => (
 
 export const UserTags = ({ topic, deleteTopic }) => (
 	<Link to="#" onClick={deleteTopic}>
-		<span className="badge badge-pill bg-blue text-white m-1">
+		<span className="badge badge-pill border-grey  m-1">
 			{topic} <i className="fas fa-times ml-1" />
 		</span>
 	</Link>
