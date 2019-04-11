@@ -137,7 +137,7 @@ export default function CreateProfile(props) {
 								}
 							>
 								<div className="p-0 m-0">
-									<h6 className="text-left pt-4 px-4">Create your profile</h6>
+									<h4 className="text-left pt-4 px-4">Create your profile</h4>
 									<div className="form-row pt-2 px-4">
 										<div className="col-md-8">
 											<CRProfileHeader
