@@ -1,32 +1,18 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
 import { LOGIN_USER } from '../graphql/user/Mutations';
 
-class Login extends Component {
-	constructor() {
-		super();
-		this.state = {
-			email: '',
-			errors: !!'',
-			password: ''
-		};
-	}
+const Login = props => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [errors, setErrors] = useState(!!'');
 
-	onChange = e => {
-		const { name, value } = e.target;
-		this.setState({ [name]: value });
-		if (this.state.errors) {
-			this.setState({ errors: !{} });
-		}
+	const onChange = e => {
+		if (this.state.errors) setErrors(!{});
 	};
 
-	setToken = token => {
-		this.props.client.resetStore();
-		localStorage.setItem('token', token);
-	};
-
-	logIn = async (e, email, password, login) => {
+	const logIn = async (e, email, password, login) => {
 		e.preventDefault();
 		const response = await login({
 			variables: { email, password }
@@ -35,52 +21,52 @@ class Login extends Component {
 		if (!success) {
 			this.setState({ errors: error });
 		} else {
-			this.setToken(token);
-			setTimeout(() => this.props.history.push('/home/news'), 50);
+			props.client.resetStore();
+			localStorage.setItem('token', token);
+			setTimeout(() => props.history.push('/home/news'), 50);
 		}
 	};
 
-	render() {
-		const { email, errors, password } = this.state;
-		return (
-			<Fragment>
-				<Mutation mutation={LOGIN_USER}>
-					{(login, e) => (
-						<div className="row">
-							<div className="col-md-6 mt-4 mx-auto">
-								<h1 className="display-4 text-center">Login</h1>
-								<p className="lead text-center">Login to your user account</p>
-								<form onSubmit={async e => this.logIn(e, email, password, login)}>
-									<InputField
-										type="text"
-										placeholder="Please enter your email adress"
-										name="email"
-										value={email}
-										onChange={this.onChange}
-									/>
-									<InputField
-										type="password"
-										placeholder="Please enter your password"
-										name="password"
-										value={password}
-										onChange={this.onChange}
-									/>
-									{errors ? (
-										<div className="form-group">
-											<div className="alert alert-danger" role="alert">
-												{errors}
-											</div>
+	return (
+		<Fragment>
+			<Mutation mutation={LOGIN_USER}>
+				{(login, e) => (
+					<div className="row">
+						<div className="col-md-6 mt-4 mx-auto">
+							<h1 className="display-4 text-center">Login</h1>
+							<p className="lead text-center">Login to your user account</p>
+							<form onSubmit={e => logIn(e, email, password, login)}>
+								<InputField
+									type="text"
+									placeholder="Please enter your email adress"
+									name="email"
+									value={email}
+									onChange={onChange}
+									onChange={e => setEmail(e.target.value)}
+								/>
+								<InputField
+									type="password"
+									placeholder="Please enter your password"
+									name="password"
+									value={password}
+									onChange={onChange}
+									onChange={e => setPassword(e.target.value)}
+								/>
+								{errors ? (
+									<div className="form-group">
+										<div className="alert alert-danger" role="alert">
+											{errors}
 										</div>
-									) : null}
-									<input type="submit" className="btn btn-info btn-block mt-4" />
-								</form>
-							</div>
+									</div>
+								) : null}
+								<input type="submit" className="btn btn-info btn-block mt-4" />
+							</form>
 						</div>
-					)}
-				</Mutation>
-			</Fragment>
-		);
-	}
-}
+					</div>
+				)}
+			</Mutation>
+		</Fragment>
+	);
+};
 
 export default withApollo(Login);
