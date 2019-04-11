@@ -10,6 +10,8 @@ const Login = props => {
 
 	const onChange = e => {
 		if (errors) setErrors(!{});
+		if (e.target.name === 'password') setPassword(e.target.value);
+		if (e.target.name === 'email') setEmail(e.target.value);
 	};
 
 	const logIn = async (e, email, password, login) => {
@@ -42,7 +44,6 @@ const Login = props => {
 									name="email"
 									value={email}
 									onChange={onChange}
-									onChange={e => setEmail(e.target.value)}
 								/>
 								<InputField
 									type="password"
@@ -50,7 +51,6 @@ const Login = props => {
 									name="password"
 									value={password}
 									onChange={onChange}
-									onChange={e => setPassword(e.target.value)}
 								/>
 								{errors ? (
 									<div className="form-group">

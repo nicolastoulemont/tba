@@ -10,6 +10,8 @@ const Register = props => {
 
 	const onChange = e => {
 		if (errors) setErrors(!{});
+		if (e.target.name === 'password') setPassword(e.target.value);
+		if (e.target.name === 'email') setEmail(e.target.value);
 	};
 
 	const registerAndLoginUser = async (e, email, password, registerAndLogin) => {
@@ -41,7 +43,6 @@ const Register = props => {
 									name="email"
 									value={email}
 									onChange={onChange}
-									onChange={e => setEmail(e.target.value)}
 								/>
 								<InputField
 									type="password"
@@ -49,7 +50,6 @@ const Register = props => {
 									name="password"
 									value={password}
 									onChange={onChange}
-									onChange={e => setPassword(e.target.value)}
 								/>
 								<input type="submit" className="btn btn-info btn-block mt-4" />
 								{errors ? (
