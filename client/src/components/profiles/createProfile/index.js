@@ -206,7 +206,7 @@ export default function CreateProfile(props) {
 											</small>
 										</label>
 									</div>
-									<input type="submit" className="btn btn-blue btn-block mt-4" />
+									<input type="submit" className="btn btn-darkblue btn-block mt-4" />
 								</div>
 							</form>
 						)}

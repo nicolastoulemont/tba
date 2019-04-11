@@ -214,7 +214,7 @@ export const DropProfileImage = ({ picture, addImage }) => (
 
 export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) => (
 	<div>
-		<div>
+		<div className="text-left">
 			<p className="m-0 p-0">Choose the topics your are interested in </p>
 			<p>
 				<small className="font-italic">
