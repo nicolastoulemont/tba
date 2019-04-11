@@ -30,7 +30,7 @@ export const RespSmallAvatarLink = ({ id, avatar }) => (
 export const UserNameLink = ({ id, name }) => (
 	<Link
 		to={{
-			pathname: `/profile/${id}`
+			pathname: `/home/profile/${id}`
 		}}
 		className="d-none d-md-inline-block font-weight-bold text-darkblue"
 		data-togggle="tooltip"
