@@ -83,7 +83,6 @@ export default function EditProfile(props) {
 					tags: userTopics
 				}
 			});
-
 			props.history.push('/home/news');
 		} else if (!picture) {
 			await updateProfile({

@@ -19,7 +19,7 @@ export default function NewsFeed({ user }) {
 										<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 											{props => (
 												<div style={props}>
-													<NewsFeedItem key={event.id} currentUser={user} event={event} />
+													<NewsFeedItem key={event.id} event={event} />
 												</div>
 											)}
 										</Spring>

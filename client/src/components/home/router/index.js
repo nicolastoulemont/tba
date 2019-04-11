@@ -14,43 +14,38 @@ export default function HomeRouter({ user }) {
 	return (
 		<Fragment>
 			<Switch>
-				<Route path="/home/news" render={props => <NewsFeed {...props} user={user.id} />} />
-				<Route path="/home/events/:day" render={props => <EventFeed {...props} user={user.id} />} />
+				<Route path="/home/news" render={props => <NewsFeed {...props} user={user} />} />
+				<Route path="/home/events/:day" render={props => <EventFeed {...props} user={user} />} />
 				<Route
 					exact
 					path="/home/profile/:id"
-					render={props => <Profile {...props} currentUser={user.id} />}
+					render={props => <Profile {...props} currentUser={user} />}
 				/>
 				<Route
 					exact
 					path="/home/profile/create/:id"
-					render={props => <CreateProfile {...props} currentUser={user.id} />}
+					render={props => <CreateProfile {...props} user={user} />}
 				/>
 				<Route
 					exact
 					path="/home/profile/edit/:id"
-					// ADD the edit profile component
 					render={props => <EditProfile {...props} user={user} />}
 				/>
-				<Route
-					exact
-					path="/home/event/:id"
-					render={props => <Event {...props} currentUser={user.id} />}
-				/>
+				<Route exact path="/home/event/:id" render={props => <Event {...props} user={user} />} />
 				<Route
 					exact
 					path="/home/event/create/:id"
-					render={props => <CreateEvent {...props} currentUser={user.id} />}
+					render={props => <CreateEvent {...props} user={user} />}
 				/>
 				<Route
 					exact
 					path="/home/event/edit/:id"
-					render={props => <EditEvent {...props} currentUser={user.id} />}
+					render={props => <EditEvent {...props} user={user} />}
 				/>
 				<Route
 					exact
 					path="/home/event/delete/:id"
-					render={props => <DeleteEvent {...props} currentUser={user.id} />}
+					render={props => <DeleteEvent {...props} user={user} />}
 				/>
 			</Switch>
 		</Fragment>

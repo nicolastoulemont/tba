@@ -7,13 +7,13 @@ import { GET_USER_FULL_PROFILE } from '../../graphql/profile/Queries';
 const Profile = ({ match, currentUser }) => {
 	const targetUser = match.params.id;
 	return (
-		<Fragment key={currentUser}>
+		<Fragment key={currentUser.id}>
 			<CQuery query={GET_USER_FULL_PROFILE} variables={{ id: targetUser }}>
 				{({ data: { user } }) => {
 					const profile = user.profile;
 					return (
 						<Fragment key={profile.id}>
-							<ProfileHeader user_ID={user.id} loggedInUser={currentUser} profile={profile} />
+							<ProfileHeader user_ID={user.id} loggedInUser={currentUser.id} profile={profile} />
 							<ProfileSocial user={user.id} name={profile.name} />
 						</Fragment>
 					);

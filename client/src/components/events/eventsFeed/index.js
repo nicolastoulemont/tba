@@ -44,7 +44,7 @@ export default function EventFeed({ user, match }) {
 											<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 												{props => (
 													<div style={props}>
-														<EventFeedItem key={event.id} currentUser={user} event={event} />
+														<EventFeedItem key={event.id} event={event} />
 													</div>
 												)}
 											</Spring>

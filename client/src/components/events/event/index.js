@@ -7,7 +7,7 @@ import { Spring } from 'react-spring/renderprops';
 
 import { GET_EVENT } from '../../graphql/event/Queries';
 
-const Event = ({ match, currentUser }) => {
+const Event = ({ match, user }) => {
 	const event_ID = match.params.id;
 	return (
 		<CQuery query={GET_EVENT} variables={{ id: event_ID }}>
@@ -21,13 +21,13 @@ const Event = ({ match, currentUser }) => {
 							{props => (
 								<div style={props}>
 									<EventHeader
-										currentUser={currentUser}
+										currentUser={user.id}
 										event={event}
 										profile={profile}
 										refetch={refetch}
 									/>
 									<EventAbout description={event.description} />
-									<EventSocial currentUser={currentUser} event={event} />
+									<EventSocial currentUser={user.id} event={event} />
 								</div>
 							)}
 						</Spring>

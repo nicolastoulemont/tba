@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-export default function EventFeedIitem({ currentUser, event }) {
+export default function EventFeedIitem({ event }) {
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2 px-2 border-bottom">

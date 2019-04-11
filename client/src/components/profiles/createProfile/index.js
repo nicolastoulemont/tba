@@ -103,7 +103,7 @@ export default function CreateProfile(props) {
 		}
 	};
 
-	const currentUser = props.currentUser;
+	const currentUser = props.user.id;
 	const targetUser = props.match.params.id;
 	if (currentUser !== targetUser) return <Redirect to="/error" />;
 	return (
