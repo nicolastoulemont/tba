@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
 import { LOGIN_USER } from '../graphql/user/Mutations';
@@ -9,7 +9,7 @@ const Login = props => {
 	const [errors, setErrors] = useState(!!'');
 
 	const onChange = e => {
-		if (this.state.errors) setErrors(!{});
+		if (errors) setErrors(!{});
 	};
 
 	const logIn = async (e, email, password, login) => {
@@ -19,7 +19,7 @@ const Login = props => {
 		});
 		const { success, token, error } = response.data.login;
 		if (!success) {
-			this.setState({ errors: error });
+			setErrors(error);
 		} else {
 			props.client.resetStore();
 			localStorage.setItem('token', token);
