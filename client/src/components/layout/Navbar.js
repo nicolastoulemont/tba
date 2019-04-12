@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { ApolloClient } from 'apollo-boost';
 import { AuthContext } from '../contexts';
 
 export default function Navbar() {
@@ -9,7 +8,6 @@ export default function Navbar() {
 	const logOut = e => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('uuid');
-		ApolloClient.resetStore();
 	};
 	const today = new Date().toISOString().slice(0, 10);
 

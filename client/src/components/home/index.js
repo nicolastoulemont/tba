@@ -5,9 +5,11 @@ import { LOGGED_USER } from '../graphql/user/Queries';
 import SideBar from '../sidebar/';
 import HomeRouter from './router';
 import { UserContext } from '../contexts';
+
 const Home = props => {
 	if (window.location.pathname === '/home' || window.location.pathname === '/home/')
 		return <Redirect to="/home/news" />;
+
 	return (
 		<Fragment>
 			<CQuery query={LOGGED_USER}>
