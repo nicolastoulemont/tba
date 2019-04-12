@@ -13,6 +13,7 @@ import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import MobileNav from './components/layout/MobileNav';
 import Config from './config/config';
+import { AuthContext, AuthContextValue } from './components/contexts';
 
 const { uri } = Config;
 
@@ -34,18 +35,20 @@ const App = () => (
 	<ApolloProvider client={client}>
 		<Router>
 			<div className="App">
-				<Route component={Navbar} />
-				<div className="container">
-					<Switch>
-						<Route exact path="/" component={Landing} />
-						<Route exact path="/register" component={Register} />
-						<Route exact path="/login" component={Login} />
-						<PrivateRoute path="/home" component={Home} />
-						<Route component={Error404} />
-						<Route path="/error" component={Error404} />
-					</Switch>
-				</div>
-				<Route component={MobileNav} />
+				<AuthContext.Provider value={AuthContextValue}>
+					<Route component={Navbar} />
+					<div className="container">
+						<Switch>
+							<Route exact path="/" component={Landing} />
+							<Route exact path="/register" component={Register} />
+							<Route exact path="/login" component={Login} />
+							<PrivateRoute path="/home" component={Home} />
+							<Route component={Error404} />
+							<Route path="/error" component={Error404} />
+						</Switch>
+					</div>
+					<Route component={MobileNav} />
+				</AuthContext.Provider>
 			</div>
 		</Router>
 	</ApolloProvider>
