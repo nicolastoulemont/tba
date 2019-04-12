@@ -32,7 +32,7 @@ export default function RegistrationPanel({ user }) {
 				<div className="col-6 p-0 py-0" />
 			</div>
 			<div className="my-2 w-100">
-				<RegistrationsDisplay user={user} target={target} />
+				<RegistrationsDisplay target={target} />
 			</div>
 		</Fragment>
 	);

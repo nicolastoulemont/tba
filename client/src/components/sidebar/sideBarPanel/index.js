@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import HEventsPanel from './hostedEvents/';
 import RegistrationPanel from './registrations';
 
-export default function SBPanel({ user }) {
+export default function SBPanel() {
 	const [display, setDisplay] = useState('registrations');
 	return (
 		<Fragment>
@@ -37,11 +37,7 @@ export default function SBPanel({ user }) {
 					</div>
 					<div className="row  m-0 p-0">
 						<div className="mt-1 w-100">
-							{display === 'registrations' ? (
-								<RegistrationPanel user={user} />
-							) : (
-								<HEventsPanel user={user} />
-							)}
+							{display === 'registrations' ? <RegistrationPanel /> : <HEventsPanel />}
 						</div>
 					</div>
 				</div>

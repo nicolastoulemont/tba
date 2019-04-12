@@ -32,7 +32,7 @@ export default function HEEventsPanel({ user }) {
 				</div>
 			</div>
 			<div className="my-2 w-100">
-				<HEDisplay user={user} target={target} />
+				<HEDisplay target={target} />
 			</div>
 		</Fragment>
 	);

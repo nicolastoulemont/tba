@@ -4,7 +4,7 @@ import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
 import SideBar from '../sidebar/';
 import HomeRouter from './router';
-
+import { UserContext } from '../contexts';
 const Home = props => {
 	if (window.location.pathname === '/home' || window.location.pathname === '/home/')
 		return <Redirect to="/home/news" />;
@@ -15,14 +15,16 @@ const Home = props => {
 					const user = data.currentUser;
 					return (
 						<Fragment>
-							<div className="mt-2 text-center">
-								<div className="row">
-									<main className="col-sm-12 col-lg-8 bg-white px-0">
-										<HomeRouter user={user} />
-									</main>
-									<SideBar user={user} history={props.history} />
+							<UserContext.Provider value={user}>
+								<div className="mt-2 text-center">
+									<div className="row">
+										<main className="col-sm-12 col-lg-8 bg-white px-0">
+											<HomeRouter user={user} />
+										</main>
+										<SideBar history={props.history} />
+									</div>
 								</div>
-							</div>
+							</UserContext.Provider>
 						</Fragment>
 					);
 				}}

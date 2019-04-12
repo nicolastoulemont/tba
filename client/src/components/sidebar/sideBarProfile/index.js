@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../contexts';
 
-const SBProfile = ({ user, avatar, name }) => {
+const SBProfile = () => {
+	const {
+		id,
+		profile: { picture_URL, name }
+	} = useContext(UserContext);
 	return (
 		<div className="col pr-0 mx-auto">
 			<div className="mb-4 ml-2 bg-darkblue">
 				<div className="py-4">
-					<Link to={{ pathname: `/home/profile/${user}` }} className="d-inline mr-2">
-						{avatar ? (
-							<img className="rounded-circle medium-avatar" src={avatar} alt="User Avatar" />
+					<Link to={{ pathname: `/home/profile/${id}` }} className="d-inline mr-2">
+						{picture_URL ? (
+							<img className="rounded-circle medium-avatar" src={picture_URL} alt="User Avatar" />
 						) : (
 							<i className="fas fa-user-astronaut fa-3x" />
 						)}

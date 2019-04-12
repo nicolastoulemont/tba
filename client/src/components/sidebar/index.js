@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import dayjs from 'dayjs';
@@ -6,8 +6,10 @@ import { Spring } from 'react-spring/renderprops';
 import SBProfile from './sideBarProfile';
 import SBPanel from './sideBarPanel';
 import SBNoProfile from './sideBarNoProfile';
+import { UserContext } from '../contexts';
 
-const SideBar = ({ user, history }) => {
+const SideBar = ({ history }) => {
+	const { profile } = useContext(UserContext);
 	const [selectedDay, setSelectedDay] = useState(null);
 	const path = window.location.pathname;
 
@@ -25,16 +27,9 @@ const SideBar = ({ user, history }) => {
 		}
 		return null;
 	};
-
 	return (
 		<div className="d-none d-lg-block col-lg-4 text-center">
-			<div className="row">
-				{user.profile ? (
-					<SBProfile avatar={user.profile.picture_URL} name={user.profile.name} user={user.id} />
-				) : (
-					<SBNoProfile user={user} />
-				)}
-			</div>
+			<div className="row">{profile ? <SBProfile /> : <SBNoProfile />}</div>
 			{path.includes('events') || path.includes('news') ? (
 				<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
 					{props => (
@@ -51,7 +46,7 @@ const SideBar = ({ user, history }) => {
 				</Spring>
 			) : null}
 			<div className="row">
-				<SBPanel user={user.id} />
+				<SBPanel />
 			</div>
 		</div>
 	);
