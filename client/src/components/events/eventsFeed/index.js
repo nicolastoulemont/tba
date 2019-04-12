@@ -7,7 +7,7 @@ import FeedSearch from '../../commons/FeedSearch';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
 import dayjs from 'dayjs';
 
-export default function EventFeed({ user, match }) {
+export default function EventFeed({ match }) {
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState('ascending');
 	const [institutional, setInstitutional] = useState(false);

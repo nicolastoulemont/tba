@@ -1,9 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { ADD_LIKE, DELETE_LIKE } from '../../graphql/like/Mutations';
+import { UserContext, EventContext } from '../../contexts';
 
-export const LikeEvent = ({ user, event_ID, refetch }) => {
+export const LikeEvent = ({ refetch }) => {
+	const { id } = useContext(UserContext);
+	const value = useContext(EventContext);
 	return (
 		<Fragment>
 			<Mutation mutation={ADD_LIKE}>
@@ -18,8 +21,8 @@ export const LikeEvent = ({ user, event_ID, refetch }) => {
 							e.preventDefault();
 							addLike({
 								variables: {
-									user_ID: user,
-									event_ID
+									user_ID: id,
+									event_ID: value.id
 								}
 							}).then(res => {
 								refetch();
@@ -34,7 +37,8 @@ export const LikeEvent = ({ user, event_ID, refetch }) => {
 	);
 };
 
-export const UnLikeEvent = ({ userLike, refetch, user }) => {
+export const UnLikeEvent = ({ userLike, refetch }) => {
+	const { id } = useContext(UserContext);
 	return (
 		<Fragment>
 			<Mutation mutation={DELETE_LIKE}>
@@ -50,7 +54,7 @@ export const UnLikeEvent = ({ userLike, refetch, user }) => {
 							deleteLike({
 								variables: {
 									_id: userLike.id,
-									user_ID: user
+									user_ID: id
 								}
 							}).then(res => {
 								refetch();

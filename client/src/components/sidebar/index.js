@@ -27,6 +27,7 @@ const SideBar = ({ history }) => {
 		}
 		return null;
 	};
+
 	return (
 		<div className="d-none d-lg-block col-lg-4 text-center">
 			<div className="row">{profile ? <SBProfile /> : <SBNoProfile />}</div>

@@ -1,22 +1,24 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { EDIT_COMMENT } from '../../graphql/comment/Mutations';
+import { CommentContext } from '../../contexts';
 
-export default function CommentEdit({ comment_ID, refetch }) {
+const CommentEdit = () => {
+	const comment = useContext(CommentContext);
 	const [text, setText] = useState('');
 
-	const commentEdit = (e, comment_ID, text, editComment, refetch) => {
+	const commentEdit = (e, text, editComment) => {
 		if (
 			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
 			(e.type === 'keydown' && e.keyCode === 13)
 		) {
 			e.preventDefault();
 			editComment({
-				variables: { _id: comment_ID, text }
+				variables: { _id: comment.id, text }
 			}).then(res => {
 				this.props.hideForms();
-				refetch();
+				// refetch(); // ADD REFECTH QUERY
 			});
 		}
 	};
@@ -33,13 +35,13 @@ export default function CommentEdit({ comment_ID, refetch }) {
 							onChange={e => setText(e.target.value)}
 							name="text"
 							value={text}
-							onKeyDown={e => commentEdit(e, comment_ID, text, editComment, refetch)}
+							onKeyDown={e => commentEdit(e, text, editComment)}
 						/>
 						<div className="input-group-append">
 							<Link
 								to="#"
 								className="btn bg-darkblue"
-								onClick={e => commentEdit(e, comment_ID, text, editComment, refetch)}
+								onClick={e => commentEdit(e, text, editComment)}
 							>
 								<i className="fa fa-paper-plane text-white" aria-hidden="true" />
 							</Link>
@@ -49,4 +51,6 @@ export default function CommentEdit({ comment_ID, refetch }) {
 			</Mutation>
 		</Fragment>
 	);
-}
+};
+
+export default CommentEdit;

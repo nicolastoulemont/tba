@@ -1,19 +1,23 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { ADD_COMMENT } from '../graphql/comment/Mutations';
 import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
+import { UserContext, EventContext } from '../contexts';
 
-const EventCommentFeedInput = ({ user, event_ID }) => {
+const EventCommentFeedInput = () => {
+	const { id } = useContext(UserContext);
+	const value = useContext(EventContext);
 	const [text, setText] = useState('');
-	const createComment = (e, user, event_ID, text, addComment) => {
+
+	const createComment = (e, id, value, text, addComment) => {
 		if (
 			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
 			(e.type === 'keydown' && e.keyCode === 13)
 		) {
 			e.preventDefault();
 			addComment({
-				variables: { user_ID: user, event_ID, text }
+				variables: { user_ID: id, event_ID: value.id, text }
 			}).then(res => {
 				setText('');
 			});
@@ -25,7 +29,7 @@ const EventCommentFeedInput = ({ user, event_ID }) => {
 			<Mutation
 				mutation={ADD_COMMENT}
 				refetchQueries={() => {
-					return [{ query: GET_EVENT_COMMENTS, variables: { id: event_ID } }];
+					return [{ query: GET_EVENT_COMMENTS, variables: { id: value.id } }];
 				}}
 			>
 				{(addComment, e) => (
@@ -37,13 +41,13 @@ const EventCommentFeedInput = ({ user, event_ID }) => {
 							onChange={e => setText(e.target.value)}
 							name="text"
 							value={text}
-							onKeyDown={e => createComment(e, user, event_ID, text, addComment)}
+							onKeyDown={e => createComment(e, id, value, text, addComment)}
 						/>
 						<div className="input-group-append">
 							<Link
 								to="#"
 								className="btn bg-darkblue"
-								onClick={e => createComment(e, user, event_ID, text, addComment)}
+								onClick={e => createComment(e, id, value, text, addComment)}
 							>
 								<i className="fa fa-paper-plane text-white" aria-hidden="true" />
 							</Link>

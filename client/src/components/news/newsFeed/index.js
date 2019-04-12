@@ -5,7 +5,7 @@ import { Spring } from 'react-spring/renderprops';
 import { InputGroup } from '../../commons/InputComponents';
 import { GET_EVENTS } from '../../graphql/event/Queries';
 
-export default function NewsFeed({ user }) {
+export default function NewsFeed() {
 	return (
 		<Fragment>
 			<div className="m-0 px-2">

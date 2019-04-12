@@ -1,19 +1,22 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { ADD_REPORT } from '../../graphql/report/Mutations';
+import { CommentContext, UserContext } from '../../contexts';
 
-export default function CommentReport({ comment_ID, user }) {
+const CommentReport = () => {
+	const user = useContext(UserContext);
+	const comment = useContext(CommentContext);
 	const [text, setText] = useState('');
 
-	const reportComment = (e, user, comment_ID, text, addReport) => {
+	const reportComment = (e, text, addReport) => {
 		if (
 			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
 			(e.type === 'keydown' && e.keyCode === 13)
 		) {
 			e.preventDefault();
 			addReport({
-				variables: { user_ID: user, text, comment_ID }
+				variables: { user_ID: user.id, text, comment_ID: comment.id }
 			}).then(res => {
 				this.props.hideForms();
 			});
@@ -32,13 +35,13 @@ export default function CommentReport({ comment_ID, user }) {
 							onChange={e => setText(e.target.value)}
 							name="text"
 							value={text}
-							onKeyDown={e => reportComment(e, user, comment_ID, text, addReport)}
+							onKeyDown={e => reportComment(e, text, addReport)}
 						/>
 						<div className="input-group-append">
 							<Link
 								to="#"
 								className="btn bg-darkblue"
-								onClick={e => reportComment(e, user, comment_ID, text, addReport)}
+								onClick={e => reportComment(e, text, addReport)}
 							>
 								<i className="fa fa-paper-plane text-white" aria-hidden="true" />
 							</Link>
@@ -48,4 +51,6 @@ export default function CommentReport({ comment_ID, user }) {
 			</Mutation>
 		</Fragment>
 	);
-}
+};
+
+export default CommentReport;

@@ -1,13 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import RegistrationFeed from '../../registrations/RegistrationFeed';
 import EventSocialSelector from './EventSocialSelector';
-
 import EventReportModal from '../../reports/EventReportModal';
+import { EventContext } from '../../contexts';
 
-const EventSocial = ({ currentUser, event }) => {
+const EventSocial = () => {
+	const { id } = useContext(EventContext);
 	dayjs.extend(relativeTime);
 	return (
 		<Fragment>
@@ -27,14 +28,14 @@ const EventSocial = ({ currentUser, event }) => {
 								<i className="far fa-flag float-left ml-3" />
 							</small>
 						</Link>
-						<EventReportModal event_ID={event.id} />
+						<EventReportModal event_ID={id} />
 					</div>
 
 					<div className="col-6">
-						<RegistrationFeed user={currentUser} event={event} />
+						<RegistrationFeed />
 					</div>
 				</div>
-				<EventSocialSelector user={currentUser} event_ID={event.id} eventCreator={event.user_ID} />
+				<EventSocialSelector />
 			</div>
 		</Fragment>
 	);

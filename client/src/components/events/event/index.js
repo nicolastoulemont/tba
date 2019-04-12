@@ -4,30 +4,24 @@ import EventAbout from './EventAbout';
 import EventHeader from './EventHeader';
 import EventSocial from './EventSocial';
 import { Spring } from 'react-spring/renderprops';
-
 import { GET_EVENT } from '../../graphql/event/Queries';
+import { EventContext } from '../../contexts';
 
-const Event = ({ match, user }) => {
+const Event = ({ match }) => {
 	const event_ID = match.params.id;
 	return (
 		<CQuery query={GET_EVENT} variables={{ id: event_ID }}>
-			{({ data: { event }, refetch }) => {
-				const {
-					creator: { profile }
-				} = event;
+			{({ data: { event } }) => {
 				return (
 					<Fragment key={event.id}>
 						<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} config={{ delay: 300 }}>
 							{props => (
 								<div style={props}>
-									<EventHeader
-										currentUser={user.id}
-										event={event}
-										profile={profile}
-										refetch={refetch}
-									/>
-									<EventAbout description={event.description} />
-									<EventSocial currentUser={user.id} event={event} />
+									<EventContext.Provider value={event}>
+										<EventHeader />
+										<EventAbout />
+										<EventSocial />
+									</EventContext.Provider>
 								</div>
 							)}
 						</Spring>

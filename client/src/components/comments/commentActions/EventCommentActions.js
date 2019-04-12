@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -6,15 +6,10 @@ import LikesFeed from '../../likes/commentLikes/likesFeed/index';
 import CommentReply from './CommentReply';
 import CommentEdit from './CommentEdit';
 import CommentReport from './CommentReport';
+import { CommentContext } from '../../contexts';
 
-export default function EventCommentActions({
-	user,
-	comment_ID,
-	commentText,
-	refetch,
-	createdAt,
-	updatedAt
-}) {
+const EventCommentActions = () => {
+	const { createdAt, updatedAt } = useContext(CommentContext);
 	const [replyForm, setReplyForm] = useState(false);
 	const [editForm, setEditForm] = useState(false);
 	const [reportForm, setReportForm] = useState(false);
@@ -44,7 +39,7 @@ export default function EventCommentActions({
 	return (
 		<Fragment>
 			<small className="d-block mt-1">
-				<LikesFeed user={user} comment_ID={comment_ID} />
+				<LikesFeed />
 				<Link
 					to="#"
 					onClick={e => showReply(e)}
@@ -82,22 +77,17 @@ export default function EventCommentActions({
 			</small>
 			{replyForm ? (
 				<div>
-					<CommentReply user={user} comment_ID={comment_ID} hideForms={hideForms} />
+					<CommentReply hideForms={hideForms} />
 				</div>
 			) : null}
 			{editForm ? (
 				<div>
-					<CommentEdit
-						comment_ID={comment_ID}
-						text={commentText}
-						refetch={refetch}
-						hideForms={hideForms}
-					/>
+					<CommentEdit hideForms={hideForms} />
 				</div>
 			) : null}
-			{reportForm ? (
-				<CommentReport comment_ID={comment_ID} user={user} hideForms={hideForms} />
-			) : null}
+			{reportForm ? <CommentReport hideForms={hideForms} /> : null}
 		</Fragment>
 	);
-}
+};
+
+export default EventCommentActions;

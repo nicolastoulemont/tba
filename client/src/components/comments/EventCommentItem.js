@@ -1,28 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import EventCommentDisplay from './EventCommentDisplay';
 import CQuery from '../commons/CustomQueryComponent';
 import { GET_COMMENT_COMMENTS } from '../graphql/comment/Queries';
+import { CommentContext } from '../contexts';
 
-export default function EventCommentItem({
-	comment: { id },
-	comment,
-	user,
-	event_ID,
-	refetch,
-	eventCreator
-}) {
+const EventCommentItem = () => {
+	const { id } = useContext(CommentContext);
 	return (
 		<Fragment>
-			<EventCommentDisplay
-				id={id}
-				comment={comment}
-				refetch={refetch}
-				user={user}
-				event_ID={event_ID}
-				eventCreator={eventCreator}
-			/>
+			<EventCommentDisplay />
 			<CQuery query={GET_COMMENT_COMMENTS} variables={{ id }}>
-				{({ data: { comment }, refetch }) => {
+				{({ data: { comment } }) => {
 					const comments = comment.comments;
 					if (comments.length === 0) return null;
 					return (
@@ -30,14 +18,9 @@ export default function EventCommentItem({
 							<div className="row">
 								<div className="col-12 child-comment">
 									{comments.map(comment => (
-										<EventCommentItem
-											key={comment.id}
-											comment={comment}
-											user={user}
-											event_ID={event_ID}
-											refetch={refetch}
-											eventCreator={eventCreator}
-										/>
+										<CommentContext.Provider value={comment}>
+											<EventCommentItem key={comment.id} />
+										</CommentContext.Provider>
 									))}
 								</div>
 							</div>
@@ -47,4 +30,6 @@ export default function EventCommentItem({
 			</CQuery>
 		</Fragment>
 	);
-}
+};
+
+export default EventCommentItem;

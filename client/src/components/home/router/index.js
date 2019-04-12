@@ -14,8 +14,8 @@ export default function HomeRouter({ user }) {
 	return (
 		<Fragment>
 			<Switch>
-				<Route path="/home/news" render={props => <NewsFeed {...props} user={user} />} />
-				<Route path="/home/events/:day" render={props => <EventFeed {...props} user={user} />} />
+				<Route path="/home/news" render={props => <NewsFeed {...props} />} />
+				<Route path="/home/events/:day" render={props => <EventFeed {...props} />} />
 				<Route
 					exact
 					path="/home/profile/:id"

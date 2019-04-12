@@ -1,31 +1,28 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import EventCommentFeedInput from './EventCommentFeedInput';
 import EventCommentItem from './EventCommentItem';
 import CQuery from '../commons/CustomQueryComponent';
 import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
+import { EventContext, CommentContext } from '../contexts';
 
-export default function EventCommentsFeed({ event_ID, user, eventCreator }) {
+const EventCommentsFeed = () => {
+	const { id } = useContext(EventContext);
 	return (
 		<Fragment>
-			<CQuery query={GET_EVENT_COMMENTS} variables={{ id: event_ID }}>
-				{({ data: { event }, refetch }) => {
+			<CQuery query={GET_EVENT_COMMENTS} variables={{ id }}>
+				{({ data: { event } }) => {
 					const comments = event.comments;
 					return (
 						<Fragment>
 							{comments.map(comment => (
-								<EventCommentItem
-									key={comment.id}
-									comment={comment}
-									user={user}
-									event_ID={event_ID}
-									refetch={refetch}
-									eventCreator={eventCreator}
-								/>
+								<CommentContext.Provider value={comment}>
+									<EventCommentItem key={comment.id} />
+								</CommentContext.Provider>
 							))}
 
 							<div className="input-group input-group-sm mt-2 mx-0">
 								<br />
-								<EventCommentFeedInput user={user} event_ID={event_ID} />
+								<EventCommentFeedInput />
 							</div>
 						</Fragment>
 					);
@@ -33,4 +30,6 @@ export default function EventCommentsFeed({ event_ID, user, eventCreator }) {
 			</CQuery>
 		</Fragment>
 	);
-}
+};
+
+export default EventCommentsFeed;

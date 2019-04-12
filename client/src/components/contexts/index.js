@@ -1,4 +1,6 @@
 import React from 'react';
-const UserContext = React.createContext({});
+const UserContext = React.createContext();
+const EventContext = React.createContext();
+const CommentContext = React.createContext();
 
-export { UserContext };
+export { UserContext, EventContext, CommentContext };
