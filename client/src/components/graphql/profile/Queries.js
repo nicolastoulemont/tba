@@ -6,6 +6,7 @@ export const GET_USER_FULL_PROFILE = gql`
 			id
 			profile {
 				id
+				user_ID
 				organisation_ID
 				name
 				position

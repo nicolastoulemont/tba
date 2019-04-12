@@ -1,17 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CQuery from '../../../../commons/CustomQueryComponent';
 import { GET_USER_COMMENTS } from '../../../../graphql/user/Queries';
+import { ProfileContext } from '../../../../contexts';
 
-const ProfileCommentsFeed = ({ user, name }) => {
+const ProfileCommentsFeed = () => {
+	const profile = useContext(ProfileContext);
 	return (
-		<CQuery query={GET_USER_COMMENTS} variables={{ id: user }}>
+		<CQuery query={GET_USER_COMMENTS} variables={{ id: profile.user_ID }}>
 			{({ data: { user } }) => {
 				const comments = user.comments;
 				if (comments.length === 0)
 					return (
 						<div className="text-left px-3 py-2 border-top">
-							<small>{name} did not write a comment yet</small>
+							<small>{profile.name} did not write a comment yet</small>
 						</div>
 					);
 				return (
@@ -22,7 +24,7 @@ const ProfileCommentsFeed = ({ user, name }) => {
 									<div className="text-left px-3 py-1 border-top" key={comment.id}>
 										<blockquote className="blockquote mb-1">
 											<footer className="blockquote-footer">
-												<small>{name} commented on </small>
+												<small>{profile.name} commented on </small>
 
 												<cite title={comment.event.name}>
 													{' '}
@@ -47,7 +49,7 @@ const ProfileCommentsFeed = ({ user, name }) => {
 									<div className="text-left px-3 py-1 border-top" key={comment.id}>
 										<blockquote className="blockquote mb-1">
 											<footer className="blockquote-footer">
-												<small>{name} replied to a comment of </small>
+												<small>{profile.name} replied to a comment of </small>
 
 												<cite title={comment.comment.creator.profile.name}>
 													{' '}

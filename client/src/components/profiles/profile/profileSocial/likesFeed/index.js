@@ -1,17 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CQuery from '../../../../commons/CustomQueryComponent';
 import { GET_USER_LIKES } from '../../../../graphql/user/Queries';
+import { ProfileContext } from '../../../../contexts';
 
-const ProfileLikesFeed = ({ user, name }) => {
+const ProfileLikesFeed = () => {
+	const profile = useContext(ProfileContext);
 	return (
-		<CQuery query={GET_USER_LIKES} variables={{ id: user }}>
+		<CQuery query={GET_USER_LIKES} variables={{ id: profile.user_ID }}>
 			{({ data: { user } }) => {
 				const likes = user.likes;
 				if (likes.length === 0)
 					return (
 						<div className="text-left px-3 py-2 border-top">
-							<small>{name} did not like anything yet</small>
+							<small>{profile.name} did not like anything yet</small>
 						</div>
 					);
 				return (
@@ -24,7 +26,7 @@ const ProfileLikesFeed = ({ user, name }) => {
 									return (
 										<div className="text-left px-3 py-2 border-top" key={like.id}>
 											<small>
-												{name} liked the event{' '}
+												{profile.name} liked the event{' '}
 												<Link
 													to={{
 														pathname: `/home/event/${like.event.id}`
@@ -41,7 +43,7 @@ const ProfileLikesFeed = ({ user, name }) => {
 								return (
 									<div className="text-left px-3 py-2 border-top" key={like.id}>
 										<small>
-											{name} liked a comment by
+											{profile.name} liked a comment by
 											<Link
 												to={{
 													pathname: `/home/profile/${like.comment.user_ID}`

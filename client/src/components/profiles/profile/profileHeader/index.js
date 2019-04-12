@@ -1,31 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ProfileMenu from '../profileMenu/index';
+import { UserContext, ProfileContext } from '../../../contexts';
 
-export default function ProfileHeader({
-	user_ID,
-	loggedInUser,
-	profile: {
-		id,
-		picture_URL,
-		name,
-		position,
-		organisation_ID,
-		tags,
-		bio,
-		twitter_URL,
-		linkedin_URL
-	},
-	profile
-}) {
+const ProfileHeader = () => {
+	const user = useContext(UserContext);
+	const profile = useContext(ProfileContext);
 	return (
 		<div className="py-4 px-4 mb-2 bg-darkblue text-white">
 			<div className="row">
 				<div className="col-md-4">
 					<div className="mx-auto">
-						{picture_URL ? (
+						{profile.picture_URL ? (
 							<img
 								className="rounded-circle large-avatar mt-2 ml-2"
-								src={picture_URL}
+								src={profile.picture_URL}
 								alt="User Avatar"
 							/>
 						) : (
@@ -37,13 +25,13 @@ export default function ProfileHeader({
 					<div className="row">
 						<div className="col-md-10 pl-0">
 							<div className="text-center text-md-left mt-2">
-								<p className="d-inline font-weight-bold text-uppercase">{name}</p>
+								<p className="d-inline font-weight-bold text-uppercase">{profile.name}</p>
 								<p className="my-1">
-									{position}
-									<span> at {organisation_ID}</span>
+									{profile.position}
+									<span> at {profile.organisation_ID}</span>
 								</p>
 								<p className="my-1">
-									{tags.map(tag => (
+									{profile.tags.map(tag => (
 										<small
 											key={Math.random()
 												.toString(36)
@@ -54,14 +42,19 @@ export default function ProfileHeader({
 										</small>
 									))}
 								</p>
-								<small className="my-1">{bio}</small>
+								<small className="my-1">{profile.bio}</small>
 								<p className="my-1">
-									<a className="text-white pr-2" href={twitter_URL} target="#" aria-label="twitter">
+									<a
+										className="text-white pr-2"
+										href={profile.twitter_URL}
+										target="#"
+										aria-label="twitter"
+									>
 										<i className="fab fa-twitter" />
 									</a>
 									<a
 										className="text-white px-2"
-										href={linkedin_URL}
+										href={profile.linkedin_URL}
 										target="#"
 										aria-label="linkedin"
 									>
@@ -78,14 +71,12 @@ export default function ProfileHeader({
 								</p>
 							</div>
 						</div>
-						<div className="col-md-2">
-							{loggedInUser === user_ID ? (
-								<ProfileMenu profile={profile} user_ID={user_ID} />
-							) : null}
-						</div>
+						<div className="col-md-2">{user.id === profile.user_ID ? <ProfileMenu /> : null}</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
+
+export default ProfileHeader;

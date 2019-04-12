@@ -1,17 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CQuery from '../../../../commons/CustomQueryComponent';
 import { GET_USER_EVENTS } from '../../../../graphql/user/Queries';
+import { ProfileContext } from '../../../../contexts';
 
-const ProfileEventsFeed = ({ user }) => {
+const ProfileEventsFeed = () => {
+	const profile = useContext(ProfileContext);
 	return (
-		<CQuery query={GET_USER_EVENTS} variables={{ id: user }}>
+		<CQuery query={GET_USER_EVENTS} variables={{ id: profile.user_ID }}>
 			{({ data: { user } }) => {
 				const events = user.events;
 				if (events.length === 0)
 					return (
 						<div className="text-left px-3 py-2 border-top">
-							<small>Did not attend an event yet</small>
+							<small>{profile.name} did not attend an event yet</small>
 						</div>
 					);
 				return (

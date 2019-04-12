@@ -3,18 +3,24 @@ import CQuery from '../../commons/CustomQueryComponent';
 import ProfileHeader from './profileHeader/index';
 import ProfileSocial from './profileSocial/index';
 import { GET_USER_FULL_PROFILE } from '../../graphql/profile/Queries';
+import { ProfileContext } from '../../contexts';
 
-const Profile = ({ match, currentUser }) => {
-	const targetUser = match.params.id;
+const Profile = ({
+	match: {
+		params: { id }
+	}
+}) => {
 	return (
-		<Fragment key={currentUser.id}>
-			<CQuery query={GET_USER_FULL_PROFILE} variables={{ id: targetUser }}>
+		<Fragment>
+			<CQuery query={GET_USER_FULL_PROFILE} variables={{ id }}>
 				{({ data: { user } }) => {
 					const profile = user.profile;
 					return (
 						<Fragment key={profile.id}>
-							<ProfileHeader user_ID={user.id} loggedInUser={currentUser.id} profile={profile} />
-							<ProfileSocial user={user.id} name={profile.name} />
+							<ProfileContext.Provider value={profile}>
+								<ProfileHeader />
+								<ProfileSocial />
+							</ProfileContext.Provider>
 						</Fragment>
 					);
 				}}

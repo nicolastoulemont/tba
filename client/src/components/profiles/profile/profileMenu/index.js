@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { ProfileContext } from '../../../contexts';
 
-export default function ProfileMenu({ profile, user_ID }) {
+const ProfileMenu = () => {
+	const profile = useContext(ProfileContext);
 	return (
 		<div className="text-right mt-0 mr-2">
 			<Link
@@ -9,8 +11,10 @@ export default function ProfileMenu({ profile, user_ID }) {
 				data-togggle="tooltip"
 				data-placement="bottom"
 				title="Edit your profile"
-				to={`/home/profile/edit/${user_ID}`}
+				to={`/home/profile/edit/${profile.user_ID}`}
 			/>
 		</div>
 	);
-}
+};
+
+export default ProfileMenu;
