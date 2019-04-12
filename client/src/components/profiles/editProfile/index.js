@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { formatFileName } from '../../commons/fileManagers';
@@ -11,19 +11,26 @@ import { Mutation } from 'react-apollo';
 import { UPDATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
+import { UserContext } from '../../contexts';
 
-export default function EditProfile(props) {
-	const [name, setName] = useState(props.user.profile.name);
-	const [position, setPosition] = useState(props.user.profile.position);
-	const [bio, setBio] = useState(props.user.profile.bio);
-	const [picture, setPicture] = useState(props.user.profile.picture_URL);
-	const [twitter_URL, setTwitter_URL] = useState(props.user.profile.twitter_URL);
-	const [linkedin_URL, setLinkedin_URL] = useState(props.user.profile.linkedin_URL);
-	const [hideSocial, setHideSocial] = useState(props.user.profile.hideSocial);
-	const [privateProfile, setprivateProfile] = useState(props.user.profile.privateProfile);
-	const [userTopics, setUserTopics] = useState(props.user.profile.tags);
+export default function EditProfile({
+	match: {
+		params: { id }
+	},
+	history
+}) {
+	const user = useContext(UserContext);
+	const [name, setName] = useState(user.profile.name);
+	const [position, setPosition] = useState(user.profile.position);
+	const [bio, setBio] = useState(user.profile.bio);
+	const [picture, setPicture] = useState(user.profile.picture_URL);
+	const [twitter_URL, setTwitter_URL] = useState(user.profile.twitter_URL);
+	const [linkedin_URL, setLinkedin_URL] = useState(user.profile.linkedin_URL);
+	const [hideSocial, setHideSocial] = useState(user.profile.hideSocial);
+	const [privateProfile, setprivateProfile] = useState(user.profile.privateProfile);
+	const [userTopics, setUserTopics] = useState(user.profile.tags);
 	const [topicsPool, setTopicsPool] = useState(
-		tagsList.filter(tag => !props.user.profile.tags.includes(tag))
+		tagsList.filter(tag => !user.profile.tags.includes(tag))
 	);
 
 	const addTopic = topic => {
@@ -70,7 +77,7 @@ export default function EditProfile(props) {
 			await uploadToS3(picture, signedRequest);
 			await updateProfile({
 				variables: {
-					_id: props.user.profile.id, // TODO
+					_id: user.profile.id, // TODO
 					organisation_ID: 'aazeazea',
 					name,
 					position,
@@ -83,11 +90,11 @@ export default function EditProfile(props) {
 					tags: userTopics
 				}
 			});
-			props.history.push('/home/news');
+			history.push('/home/news');
 		} else if (!picture) {
 			await updateProfile({
 				variables: {
-					_id: props.user.profile.id,
+					_id: user.profile.id,
 					organisation_ID: 'aazeazea',
 					name,
 					position,
@@ -99,15 +106,13 @@ export default function EditProfile(props) {
 					tags: userTopics
 				}
 			});
-			props.history.push('/home/news');
+			history.push('/home/news');
 		}
 	};
 
-	const currentUser = props.user.id;
-	const targetUser = props.match.params.id;
-	if (currentUser !== targetUser) return <Redirect to="/error" />; // TO CHECK
+	if (user.id !== id) return <Redirect to="/error" />;
 	return (
-		<Fragment key={props.currentUser}>
+		<Fragment>
 			<Mutation mutation={SIGN_S3}>
 				{(signS3, e) => (
 					<Mutation

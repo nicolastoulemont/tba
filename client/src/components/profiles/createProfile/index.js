@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { formatFileName } from '../../commons/fileManagers';
@@ -11,8 +11,15 @@ import { Mutation } from 'react-apollo';
 import { CREATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
+import { UserContext } from '../../contexts';
 
-export default function CreateProfile(props) {
+export default function CreateProfile({
+	match: {
+		params: { id }
+	},
+	history
+}) {
+	const user = useContext(UserContext);
 	const [name, setName] = useState('');
 	const [position, setPosition] = useState('');
 	const [bio, setBio] = useState('');
@@ -45,7 +52,6 @@ export default function CreateProfile(props) {
 
 	const createProfile = async (
 		e,
-		targetUser,
 		addProfile,
 		signS3,
 		name,
@@ -69,7 +75,7 @@ export default function CreateProfile(props) {
 			await uploadToS3(picture, signedRequest);
 			await addProfile({
 				variables: {
-					user_ID: targetUser,
+					user_ID: id,
 					organisation_ID: 'aazeazea',
 					name,
 					position,
@@ -83,11 +89,11 @@ export default function CreateProfile(props) {
 				}
 			});
 
-			props.history.push('/home/news');
+			history.push('/home/news');
 		} else if (!picture) {
 			await addProfile({
 				variables: {
-					user_ID: targetUser,
+					user_ID: id,
 					organisation_ID: 'aazeazea',
 					name,
 					position,
@@ -99,15 +105,13 @@ export default function CreateProfile(props) {
 					tags: userTopics
 				}
 			});
-			props.history.push('/home/news');
+			history.push('/home/news');
 		}
 	};
 
-	const currentUser = props.user.id;
-	const targetUser = props.match.params.id;
-	if (currentUser !== targetUser) return <Redirect to="/error" />;
+	if (user.id !== id) return <Redirect to="/error" />;
 	return (
-		<Fragment key={props.currentUser}>
+		<Fragment>
 			<Mutation mutation={SIGN_S3}>
 				{(signS3, e) => (
 					<Mutation
@@ -121,7 +125,6 @@ export default function CreateProfile(props) {
 								onSubmit={async e =>
 									createProfile(
 										e,
-										targetUser,
 										addProfile,
 										signS3,
 										name,
