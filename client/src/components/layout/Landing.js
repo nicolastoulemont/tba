@@ -1,19 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import decode from 'jwt-decode';
+import { AuthContext } from '../contexts';
 
 export default function Landing() {
-	const hasToken = () => {
-		const token = localStorage.getItem('token');
-		try {
-			decode(token);
-		} catch (err) {
-			return false;
-		}
-		return true;
-	};
+	const Auth = useContext(AuthContext);
 
-	const hasNoToken = () => (
+	const notAuth = () => (
 		<div className="landing">
 			<div className="dark-overlay landing-inner text-light">
 				<div className="container">
@@ -38,5 +30,5 @@ export default function Landing() {
 		</div>
 	);
 
-	return <Fragment>{hasToken() ? <Redirect to="/home/news" /> : hasNoToken()}</Fragment>;
+	return <Fragment>{Auth() ? <Redirect to="/home/news" /> : notAuth()}</Fragment>;
 }
