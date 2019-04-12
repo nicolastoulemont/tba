@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { MODERATE_COMMENT } from '../graphql/comment/Mutations';
+import { GET_COMMENT_COMMENTS } from '../graphql/comment/Queries';
 import { RespSmallAvatarLink, UserNameLink } from '../commons/CustomLinks';
 import EventCommentActions from './commentActions/EventCommentActions';
 import { UserContext, EventContext, CommentContext } from '../contexts';
@@ -49,7 +50,12 @@ const EventCommentDisplay = () => {
 					</div>
 					<div className="col-1 mx-0">
 						{user.id === comment.user_ID || user.id === event.user_ID ? (
-							<Mutation mutation={MODERATE_COMMENT}>
+							<Mutation
+								mutation={MODERATE_COMMENT}
+								refetchQueries={() => {
+									return [{ query: GET_COMMENT_COMMENTS, variables: { id: comment.id } }];
+								}}
+							>
 								{(moderateComment, e) => (
 									<Link
 										to="#"
@@ -62,8 +68,6 @@ const EventCommentDisplay = () => {
 													user_ID: user.id,
 													event_ID: event.id
 												}
-											}).then(res => {
-												// refetch(); // ADD REFETCH QUEERY
 											});
 										}}
 									>

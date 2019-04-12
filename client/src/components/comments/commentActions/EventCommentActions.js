@@ -75,16 +75,8 @@ const EventCommentActions = () => {
 					<small className="font-italic"> posted {dayjs(createdAt).fromNow()}</small>
 				)}
 			</small>
-			{replyForm ? (
-				<div>
-					<CommentReply hideForms={hideForms} />
-				</div>
-			) : null}
-			{editForm ? (
-				<div>
-					<CommentEdit hideForms={hideForms} />
-				</div>
-			) : null}
+			{replyForm ? <CommentReply hideForms={hideForms} /> : null}
+			{editForm ? <CommentEdit hideForms={hideForms} /> : null}
 			{reportForm ? <CommentReport hideForms={hideForms} /> : null}
 		</Fragment>
 	);

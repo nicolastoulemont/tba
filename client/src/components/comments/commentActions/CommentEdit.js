@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { EDIT_COMMENT } from '../../graphql/comment/Mutations';
+import { GET_COMMENT_COMMENTS } from '../../graphql/comment/Queries';
 import { CommentContext } from '../../contexts';
 
 const CommentEdit = () => {
@@ -18,14 +19,18 @@ const CommentEdit = () => {
 				variables: { _id: comment.id, text }
 			}).then(res => {
 				this.props.hideForms();
-				// refetch(); // ADD REFECTH QUERY
 			});
 		}
 	};
 
 	return (
 		<Fragment>
-			<Mutation mutation={EDIT_COMMENT}>
+			<Mutation
+				mutation={EDIT_COMMENT}
+				refetchQueries={() => {
+					return [{ query: GET_COMMENT_COMMENTS, variables: { id: comment.id } }];
+				}}
+			>
 				{(editComment, e) => (
 					<div className="input-group input-group-sm py-2">
 						<input
