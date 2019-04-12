@@ -1,18 +1,22 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LikeComment, UnLikeComment } from '../likesActions';
 import CQuery from '../../../commons/CustomQueryComponent';
 import { GET_COMMENT_LIKES } from '../../../graphql/like/Queries';
+import { UserContext, CommentContext } from '../../../contexts';
 
-export default function LikesFeed({ user, comment_ID }) {
+const LikesFeed = () => {
+	const user = useContext(UserContext);
+	const comment = useContext(CommentContext);
+
 	const getUserLikeId = (likes, user) => {
-		let userLikeObj = likes.find(like => like.user_ID === user);
+		let userLikeObj = likes.find(like => like.user_ID === user.id);
 		return userLikeObj;
 	};
 
 	return (
 		<Fragment>
-			<CQuery query={GET_COMMENT_LIKES} variables={{ id: comment_ID }}>
+			<CQuery query={GET_COMMENT_LIKES} variables={{ id: comment.id }}>
 				{({
 					data: {
 						comment: { likes }
@@ -23,7 +27,7 @@ export default function LikesFeed({ user, comment_ID }) {
 					return (
 						<Fragment>
 							{typeof userLike === 'undefined' ? (
-								<LikeComment user={user} comment_ID={comment_ID} refetch={refetch} />
+								<LikeComment user={user} comment_ID={comment.id} refetch={refetch} />
 							) : (
 								<Link
 									to="#"
@@ -49,4 +53,6 @@ export default function LikesFeed({ user, comment_ID }) {
 			</CQuery>
 		</Fragment>
 	);
-}
+};
+
+export default LikesFeed;

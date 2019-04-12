@@ -18,7 +18,7 @@ export const LikeComment = ({ user, comment_ID, refetch }) => {
 							e.preventDefault();
 							addLike({
 								variables: {
-									user_ID: user,
+									user_ID: user.id,
 									comment_ID
 								}
 							}).then(res => {
@@ -50,7 +50,7 @@ export const UnLikeComment = ({ userLike, refetch, user }) => {
 							deleteLike({
 								variables: {
 									_id: userLike.id,
-									user_ID: user
+									user_ID: user.id
 								}
 							}).then(res => {
 								refetch();
