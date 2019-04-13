@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Dropzone from 'react-dropzone';
 import DefaultAvatar from '../../img/default_avatar.svg';
 import DefaultEvent from '../../img/default_event.svg';
@@ -36,8 +36,40 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 	};
 
 	const placeholderAlternator = placeholder => {
-		if (placeholder === 'avatar') return DefaultAvatar;
-		if (placeholder === 'event') return DefaultEvent;
+		if (placeholder === 'avatar') {
+			return (
+				<Fragment>
+					{!picture ? (
+						<img
+							src={DefaultAvatar}
+							className="extra-large-avatar rounded-circle"
+							alt="Default avatar"
+						/>
+					) : typeof picture !== 'string' ? (
+						<img
+							src={URL.createObjectURL(picture)}
+							className="extra-large-avatar rounded-circle"
+							alt="avatar"
+						/>
+					) : (
+						<img src={picture} className="extra-large-avatar rounded-circle" alt="avatar" />
+					)}
+				</Fragment>
+			);
+		}
+		if (placeholder === 'event') {
+			return (
+				<Fragment>
+					{!picture ? (
+						<img src={DefaultEvent} className="event-banner" alt="Default Event banner" />
+					) : typeof picture !== 'string' ? (
+						<img src={URL.createObjectURL(picture)} className="event-banner" alt="avatar" />
+					) : (
+						<img src={picture} className="event-banner" alt="Event banner" />
+					)}
+				</Fragment>
+			);
+		}
 		return null;
 	};
 
@@ -52,21 +84,7 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 				<section className="mt-2">
 					<div {...getRootProps()} className="h-100">
 						<div>
-							{!picture ? (
-								<img
-									src={placeholderAlternator(placeholder)}
-									className="extra-large-avatar rounded-circle"
-									alt="Default avatar"
-								/>
-							) : typeof picture !== 'string' ? (
-								<img
-									src={URL.createObjectURL(picture)}
-									className="extra-large-avatar rounded-circle"
-									alt="avatar"
-								/>
-							) : (
-								<img src={picture} className="extra-large-avatar rounded-circle" alt="avatar" />
-							)}
+							{placeholderAlternator(placeholder)}
 							<input {...getInputProps()} />
 						</div>
 					</div>
