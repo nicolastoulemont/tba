@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
 import { LOGGED_USER } from '../graphql/user/Queries';
 import SideBar from '../sidebar/';
-import HomeRouter from './router';
+import HomeRouter from './router.js';
 import { UserContext } from '../contexts';
 
 const Home = props => {

@@ -13,12 +13,7 @@ import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
 import { UserContext } from '../../contexts';
 
-export default function EditProfile({
-	match: {
-		params: { id }
-	},
-	history
-}) {
+const EditProfile = ({ match, history }) => {
 	const user = useContext(UserContext);
 	const [name, setName] = useState(user.profile.name);
 	const [position, setPosition] = useState(user.profile.position);
@@ -32,6 +27,8 @@ export default function EditProfile({
 	const [topicsPool, setTopicsPool] = useState(
 		tagsList.filter(tag => !user.profile.tags.includes(tag))
 	);
+
+	if (user.id !== match.params.id) return <Redirect to="/error" />;
 
 	const addTopic = topic => {
 		setUserTopics([...userTopics, topic]);
@@ -66,7 +63,7 @@ export default function EditProfile({
 		privateProfile
 	) => {
 		e.preventDefault();
-		if (picture) {
+		if (picture !== user.profile.picture_URL) {
 			const response = await signS3({
 				variables: {
 					filename: formatFileName(picture.name),
@@ -77,7 +74,7 @@ export default function EditProfile({
 			await uploadToS3(picture, signedRequest);
 			await updateProfile({
 				variables: {
-					_id: user.profile.id, // TODO
+					_id: user.profile.id,
 					organisation_ID: 'aazeazea',
 					name,
 					position,
@@ -91,7 +88,7 @@ export default function EditProfile({
 				}
 			});
 			history.push('/home/news');
-		} else if (!picture) {
+		} else if (picture === user.profile.picture_URL) {
 			await updateProfile({
 				variables: {
 					_id: user.profile.id,
@@ -101,6 +98,7 @@ export default function EditProfile({
 					bio,
 					twitter_URL,
 					linkedin_URL,
+					picture_URL: user.profile.picture_URL,
 					hideSocial,
 					privateProfile,
 					tags: userTopics
@@ -110,7 +108,6 @@ export default function EditProfile({
 		}
 	};
 
-	if (user.id !== id) return <Redirect to="/error" />;
 	return (
 		<Fragment>
 			<Mutation mutation={SIGN_S3}>
@@ -220,4 +217,6 @@ export default function EditProfile({
 			</Mutation>
 		</Fragment>
 	);
-}
+};
+
+export default EditProfile;

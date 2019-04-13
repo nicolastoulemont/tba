@@ -1,4 +1,3 @@
-const gravatar = require('gravatar');
 const { isAuthorized } = require('../validation/isAuthorized');
 
 const buildProfile = async (args, Profile) => {
@@ -28,7 +27,7 @@ const buildProfile = async (args, Profile) => {
 
 const updateProfile = async (args, user, User, Profile) => {
 	try {
-		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
+		// if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action'); // Need some rework
 
 		let updateProfile = {};
 		if (args.organisation_ID) updateProfile.organisation_ID = args.organisation_ID;
