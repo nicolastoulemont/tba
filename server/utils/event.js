@@ -4,6 +4,7 @@ const buildEvent = async (args, EventItem) => {
 			user_ID: args.user_ID,
 			name: args.name,
 			abstract: args.abstract,
+			banner_URL: args.banner_URL,
 			description: args.description,
 			isPublic: args.isPublic,
 			city: args.city,
@@ -32,6 +33,7 @@ const updateEvent = async (args, EventItem) => {
 		let updateEvent = {};
 		if (args.name) updateEvent.name = args.name;
 		if (args.abstract) updateEvent.abstract = args.abstract;
+		if (args.banner_URL) updateEvent.banner_URL = args.banner_URL;
 		if (args.description) updateEvent.description = args.description;
 		if (args.isPublic) updateEvent.isPublic = args.isPublic;
 		if (args.city) updateEvent.city = args.city;
