@@ -15,14 +15,8 @@ const profileSchema = new Schema({
 		type: String,
 		required: true
 	},
-	hideSocial: {
-		type: Boolean,
-		default: false
-	},
-	privateProfile: {
-		type: Boolean,
-		default: false
-	},
+	hideSocial: Boolean,
+	privateProfile: Boolean,
 	bio: String,
 	twitter_URL: String,
 	linkedin_URL: String,

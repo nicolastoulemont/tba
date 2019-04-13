@@ -11,6 +11,8 @@ export const GET_USER_FULL_PROFILE = gql`
 				name
 				position
 				bio
+				hideSocial
+				privateProfile
 				twitter_URL
 				linkedin_URL
 				picture_URL

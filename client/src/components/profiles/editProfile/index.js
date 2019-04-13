@@ -49,19 +49,7 @@ const EditProfile = ({ match, history }) => {
 		await axios.put(signedRequest, picture, options).catch(err => console.log(err));
 	};
 
-	const editProfile = async (
-		e,
-		updateProfile,
-		signS3,
-		name,
-		position,
-		bio,
-		picture,
-		twitter_URL,
-		linkedin_URL,
-		hideSocial,
-		privateProfile
-	) => {
+	const editProfile = async (e, updateProfile, signS3) => {
 		e.preventDefault();
 		if (picture !== user.profile.picture_URL) {
 			const response = await signS3({
@@ -119,24 +107,7 @@ const EditProfile = ({ match, history }) => {
 						}}
 					>
 						{(updateProfile, e) => (
-							<form
-								onSubmit={e =>
-									editProfile(
-										e,
-										updateProfile,
-										signS3,
-										name,
-										position,
-										bio,
-										picture,
-										twitter_URL,
-										linkedin_URL,
-										hideSocial,
-										privateProfile,
-										userTopics
-									)
-								}
-							>
+							<form onSubmit={e => editProfile(e, updateProfile, signS3)}>
 								<div className="p-0 m-0">
 									<h4 className="text-left pt-4 px-4">Edit your profile</h4>
 									<div className="form-row pt-2 px-4">

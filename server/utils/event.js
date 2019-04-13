@@ -35,7 +35,7 @@ const updateEvent = async (args, EventItem) => {
 		if (args.abstract) updateEvent.abstract = args.abstract;
 		if (args.banner_URL) updateEvent.banner_URL = args.banner_URL;
 		if (args.description) updateEvent.description = args.description;
-		if (args.isPublic) updateEvent.isPublic = args.isPublic;
+		if (typeof args.isPublic !== null) updateEvent.isPublic = args.isPublic;
 		if (args.city) updateEvent.city = args.city;
 		if (args.address) updateEvent.address = args.address;
 		if (args.start) updateEvent.start = new Date(args.start);
@@ -43,7 +43,7 @@ const updateEvent = async (args, EventItem) => {
 		if (args.tags) updateEvent.tags = args.tags;
 		updateEvent.updatedAt = new Date();
 
-		const updEvent = await EventItem.findByIdAndUpdate(args._id, updateEvent, {
+		const updEvent = await EventItem.findOneAndUpdate({ _id: args._id }, updateEvent, {
 			new: true
 		});
 		return { success: true, updEvent };

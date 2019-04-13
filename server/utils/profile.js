@@ -28,13 +28,12 @@ const buildProfile = async (args, Profile) => {
 const updateProfile = async (args, user, User, Profile) => {
 	try {
 		// if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action'); // Need some rework
-
 		let updateProfile = {};
 		if (args.organisation_ID) updateProfile.organisation_ID = args.organisation_ID;
 		if (args.name) updateProfile.name = args.name;
 		if (args.position) updateProfile.position = args.position;
-		if (args.hideSocial) updateProfile.hideSocial = args.hideSocial;
-		if (args.privateProfile) updateProfile.privateProfile = args.privateProfile;
+		if (typeof args.hideSocial !== null) updateProfile.hideSocial = args.hideSocial;
+		if (typeof args.privateProfile !== null) updateProfile.privateProfile = args.privateProfile;
 		if (args.bio) updateProfile.bio = args.bio;
 		if (args.twitter_URL) updateProfile.twitter_URL = args.twitter_URL;
 		if (args.linkedin_URL) updateProfile.linkedin_URL = args.linkedin_URL;
@@ -43,7 +42,7 @@ const updateProfile = async (args, user, User, Profile) => {
 		updateProfile.updatedAt = new Date();
 		return {
 			success: true,
-			profile: await Profile.findByIdAndUpdate(args._id, updateProfile, {
+			profile: await Profile.findOneAndUpdate({ _id: args._id }, updateProfile, {
 				new: true
 			})
 		};
