@@ -10,7 +10,7 @@ const EventCommentsFeed = () => {
 	return (
 		<Fragment>
 			<CQuery query={GET_EVENT_COMMENTS} variables={{ id: event.id }}>
-				{({ data: { event } }) => {
+				{({ data: { event }, refetch }) => {
 					const comments = event.comments;
 					if (comments.lenght === 0) return <p>No comment yet...</p>;
 					return (
@@ -18,7 +18,7 @@ const EventCommentsFeed = () => {
 							{comments.map(comment => (
 								<Fragment key={comment.id}>
 									<CommentContext.Provider value={comment}>
-										<EventCommentItem key={comment.id} />
+										<EventCommentItem key={comment.id} refetch={refetch} />
 									</CommentContext.Provider>
 								</Fragment>
 							))}

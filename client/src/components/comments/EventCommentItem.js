@@ -4,13 +4,13 @@ import { CommentContext } from '../contexts';
 import { GET_COMMENT_COMMENTS } from '../graphql/comment/Queries';
 import EventCommentDisplay from './EventCommentDisplay';
 
-const EventCommentItem = () => {
+const EventCommentItem = ({ refetch }) => {
 	const comment = useContext(CommentContext);
 	return (
 		<Fragment>
-			<EventCommentDisplay />
+			<EventCommentDisplay parentCommentId={comment.id} refetch={refetch} />
 			<CQuery query={GET_COMMENT_COMMENTS} variables={{ id: comment.id }}>
-				{({ data: { comment } }) => {
+				{({ data: { comment }, refetch }) => {
 					const comments = comment.comments;
 					if (comments.length === 0) return null;
 					return (
@@ -20,7 +20,7 @@ const EventCommentItem = () => {
 									{comments.map(comment => (
 										<Fragment key={comment.id}>
 											<CommentContext.Provider value={comment}>
-												<EventCommentItem key={comment.id} />
+												<EventCommentItem key={comment.id} refetch={refetch} />
 											</CommentContext.Provider>
 										</Fragment>
 									))}
