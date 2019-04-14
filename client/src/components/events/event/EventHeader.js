@@ -1,16 +1,13 @@
-import React, { Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import React, { Fragment, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { EventContext, UserContext } from '../../contexts';
 import EventMenu from './EventMenu';
-import { UserContext, EventContext } from '../../contexts';
 
 const EventHeader = () => {
 	const { id } = useContext(UserContext);
-	const { user_ID, name, city, address, start, end, createdAt, updatedAt, profile } = useContext(
-		EventContext
-	);
-
+	const event = useContext(EventContext);
 	dayjs.extend(relativeTime);
 	return (
 		<Fragment>
@@ -18,54 +15,60 @@ const EventHeader = () => {
 				<div className="row">
 					<div className="col-md-8">
 						<div className="text-center text-md-left my-2 mx-4">
-							<p className="font-weight-bold text-uppercase">{name}</p>
+							<p className="font-weight-bold text-uppercase">{event.name}</p>
 							<div className="d-block d-md-none">
 								<div className="d-inline">
 									<Link
-										to={{ pathname: `/home/profile/${user_ID}` }}
+										to={{ pathname: `/home/profile/${event.user_ID}` }}
 										className="text-white font-weight-bold"
 									>
-										{profile.name}
+										{event.creator.profile.name}
 									</Link>
 								</div>
 								<div className="d-inline ml-2">
-									<small>{profile.organisation_ID}</small>
+									<small>{event.creator.profile.organisation_ID}</small>
 								</div>
 							</div>
-							{new Date(start).getDate() === new Date(end).getDate() ? (
+							{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
 								<small>
-									{new Date(start).toUTCString().slice(0, 22)} -{' '}
-									{new Date(end).toTimeString().slice(0, 5)}
+									{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
+									{new Date(event.end).toTimeString().slice(0, 5)}
 								</small>
 							) : (
 								<small>
-									On {new Date(start).toUTCString().slice(0, 22)} to{' '}
-									{new Date(end).toUTCString().slice(0, 22)}
+									On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
+									{new Date(event.end).toUTCString().slice(0, 22)}
 								</small>
 							)}
 							<p className="my-1">
-								{address}, {city}
+								{event.address}, {event.city}
 							</p>
 						</div>
 					</div>
 					<div className="d-none d-md-block col-md-4">
 						<div className="d-inline align-bottom">
-							{id === user_ID ? <EventMenu /> : null}
+							{id === event.user_ID ? <EventMenu /> : null}
 							<div className="d-none d-md-block my-1">
 								<div className="text-right mr-4">
 									<div className="d-block">
-										{createdAt !== updatedAt ? (
-											<small className="font-italic"> edited {dayjs(updatedAt).fromNow()} by</small>
+										{event.createdAt !== event.updatedAt ? (
+											<small className="font-italic">
+												{' '}
+												edited {dayjs(event.updatedAt).fromNow()} by
+											</small>
 										) : (
-											<small className="font-italic"> posted {dayjs(createdAt).fromNow()} by</small>
+											<small className="font-italic">
+												{' '}
+												posted {dayjs(event.createdAt).fromNow()} by
+											</small>
 										)}
 									</div>
 									<div className="d-block">
-										<Link to={{ pathname: `/home/profile/${user_ID}` }} className="mr-2">
-											{profile.picture_URL ? (
+										<Link to={{ pathname: `/home/profile/${event.user_ID}` }} className="mr-2">
+											{event.creator.profile.picture_URL ? (
 												<img
 													className="rounded-circle mini-avatar"
-													src={profile.picture_URL}
+													src={event.creator.profile.picture_URL}
 													alt="User Avatar"
 												/>
 											) : (
@@ -73,10 +76,10 @@ const EventHeader = () => {
 											)}
 										</Link>
 										<Link
-											to={{ pathname: `/home/profile/${user_ID}` }}
+											to={{ pathname: `/home/profile/${event.user_ID}` }}
 											className="text-white font-weight-bold"
 										>
-											<small>{profile.name}</small>
+											<small>{event.creator.profile.name}</small>
 										</Link>
 									</div>
 								</div>

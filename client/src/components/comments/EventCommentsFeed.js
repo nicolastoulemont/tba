@@ -1,17 +1,18 @@
 import React, { Fragment, useContext } from 'react';
+import CQuery from '../commons/CustomQueryComponent';
+import { CommentContext, EventContext } from '../contexts';
+import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
 import EventCommentFeedInput from './EventCommentFeedInput';
 import EventCommentItem from './EventCommentItem';
-import CQuery from '../commons/CustomQueryComponent';
-import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
-import { EventContext, CommentContext } from '../contexts';
 
 const EventCommentsFeed = () => {
-	const { id } = useContext(EventContext);
+	const event = useContext(EventContext);
 	return (
 		<Fragment>
-			<CQuery query={GET_EVENT_COMMENTS} variables={{ id }}>
+			<CQuery query={GET_EVENT_COMMENTS} variables={{ id: event.id }}>
 				{({ data: { event } }) => {
 					const comments = event.comments;
+					if (comments.lenght === 0) return <p>No comment yet...</p>;
 					return (
 						<Fragment>
 							{comments.map(comment => (

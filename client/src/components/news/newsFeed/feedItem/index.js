@@ -1,9 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NewsFeedItem = ({ event }) => {
+	const eventTags = () => {
+		if (event.tags.length === 0) return null;
+		if (event.tags.length < 2) {
+			return event.tags.map(tag => (
+				<small
+					key={Math.random()
+						.toString(36)
+						.substring(2, 7)}
+				>
+					{tag}
+				</small>
+			));
+		}
+		return event.tags.map(tag => (
+			<small
+				key={Math.random()
+					.toString(36)
+					.substring(2, 7)}
+			>
+				{' '}
+				{tag}
+				{` | `}
+			</small>
+		));
+	};
+
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2 px-2 border-bottom">
@@ -26,13 +52,7 @@ const NewsFeedItem = ({ event }) => {
 					)}
 				</h6>
 
-				<p className="text-left p-0 mt-0 mb-1">
-					<small>
-						{event.categoryOne} {event.categoryTwo === 'Default' ? null : ` | ${event.categoryTwo}`}
-						{event.categoryThree === 'Default' ? null : ` | ${event.categoryThree}`}
-						{event.isPublic ? <span className="ml-2 mb-0 font-italic">- Public event</span> : null}
-					</small>
-				</p>
+				<p className="text-left p-0 mt-0 mb-1">{eventTags()}</p>
 				<p className="text-left">{event.abstract}</p>
 				<p className="text-left mb-0">
 					{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
@@ -46,7 +66,7 @@ const NewsFeedItem = ({ event }) => {
 							{new Date(event.end).toUTCString().slice(0, 22)}
 						</small>
 					)}
-					<small> at {event.location}</small>
+					<small> at {event.city}</small>
 				</p>
 				<p className="float-left">
 					<small>

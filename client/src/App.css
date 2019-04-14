@@ -118,6 +118,10 @@ a:hover {
 	border-bottom: 3px solid #29456e;
 }
 
+.child-comment {
+	padding-left: 2em;
+}
+
 .fa:hover,
 .far:hover {
 	color: #29456e;

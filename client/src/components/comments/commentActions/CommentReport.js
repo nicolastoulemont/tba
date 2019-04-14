@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
-import { ADD_REPORT } from '../../graphql/report/Mutations';
+import { Link } from 'react-router-dom';
 import { CommentContext, UserContext } from '../../contexts';
+import { ADD_REPORT } from '../../graphql/report/Mutations';
 
-const CommentReport = () => {
+const CommentReport = ({ hideForms }) => {
 	const user = useContext(UserContext);
 	const comment = useContext(CommentContext);
 	const [text, setText] = useState('');
@@ -18,7 +18,7 @@ const CommentReport = () => {
 			addReport({
 				variables: { user_ID: user.id, text, comment_ID: comment.id }
 			}).then(res => {
-				this.props.hideForms();
+				hideForms();
 			});
 		}
 	};

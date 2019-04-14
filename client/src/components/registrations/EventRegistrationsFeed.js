@@ -1,12 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import { RespSmallAvatarLink, UserNameLink } from '../commons/CustomLinks';
 import { FetchError } from '../commons/UserActionsComponents';
+import { EventContext } from '../contexts';
 import { GET_EVENT_REGISTRATIONS } from '../graphql/registration/Queries';
 
-const EventRegistrationFeed = ({ event_ID }) => {
+const EventRegistrationFeed = () => {
+	const event = useContext(EventContext);
+
 	const { data, error } = useQuery(GET_EVENT_REGISTRATIONS, {
-		variables: { id: event_ID },
+		variables: { id: event.id },
 		suspend: true
 	});
 	if (error) return <FetchError />;

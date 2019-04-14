@@ -1,15 +1,15 @@
 import React, { Fragment, useContext } from 'react';
 import { Spring } from 'react-spring/renderprops';
 import CQuery from '../../../commons/CustomQueryComponent';
+import { UserContext } from '../../../contexts';
 import {
 	GET_USER_FUTURE_REGISTRATIONS,
 	GET_USER_PAST_REGISTRATIONS
 } from '../../../graphql/registration/Queries';
 import PanelItem from '../panelItem';
-import { UserContext } from '../../../contexts';
 
 export default function registrationsDisplay({ target }) {
-	const { id } = useContext(UserContext);
+	const user = useContext(UserContext);
 	const chooseQuery = target => {
 		if (target === 'future') {
 			return GET_USER_FUTURE_REGISTRATIONS;
@@ -20,7 +20,7 @@ export default function registrationsDisplay({ target }) {
 	};
 	const today = new Date().toISOString().slice(0, 10);
 	return (
-		<CQuery query={chooseQuery(target)} variables={{ user_ID: id, date: today }}>
+		<CQuery query={chooseQuery(target)} variables={{ user_ID: user.id, date: today }}>
 			{({ data }) => {
 				if (data.userFutureRegistrations && data.userFutureRegistrations.length !== 0) {
 					return (

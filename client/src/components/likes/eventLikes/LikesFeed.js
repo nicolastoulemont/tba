@@ -15,7 +15,10 @@ const LikesFeed = () => {
 		return userLikeObj;
 	};
 
-	const { data, error } = useQuery(GET_EVENT_LIKES, { variables: { _id: event.id } });
+	const { data, error } = useQuery(GET_EVENT_LIKES, {
+		variables: { id: event.id },
+		suspend: true
+	});
 	if (error) return <FetchError />;
 	const likes = data.event.likes;
 	const userLike = getUserLikeId(likes, id);

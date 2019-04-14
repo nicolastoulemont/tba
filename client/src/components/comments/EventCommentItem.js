@@ -1,15 +1,16 @@
 import React, { Fragment, useContext } from 'react';
-import EventCommentDisplay from './EventCommentDisplay';
 import CQuery from '../commons/CustomQueryComponent';
-import { GET_COMMENT_COMMENTS } from '../graphql/comment/Queries';
 import { CommentContext } from '../contexts';
+import { GET_COMMENT_COMMENTS } from '../graphql/comment/Queries';
+import EventCommentDisplay from './EventCommentDisplay';
 
 const EventCommentItem = () => {
-	const { id } = useContext(CommentContext);
+	const comment = useContext(CommentContext);
+	console.log(comment);
 	return (
 		<Fragment>
 			<EventCommentDisplay />
-			<CQuery query={GET_COMMENT_COMMENTS} variables={{ id }}>
+			<CQuery query={GET_COMMENT_COMMENTS} variables={{ id: comment.id }}>
 				{({ data: { comment } }) => {
 					const comments = comment.comments;
 					if (comments.length === 0) return null;

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function EventFeedIitem({ event }) {
 	dayjs.extend(relativeTime);
@@ -28,8 +28,15 @@ export default function EventFeedIitem({ event }) {
 
 				<p className="text-left p-0 mt-0 mb-1">
 					<small>
-						{/* {event.categoryOne} {event.categoryTwo === 'Default' ? null : ` | ${event.categoryTwo}`}
-          {event.categoryThree === 'Default' ? null : ` | ${event.categoryThree}`} */}
+						{event.tags.map(tag => (
+							<span
+								key={Math.random()
+									.toString(36)
+									.substring(0, 7)}
+							>
+								{tag} {` `}
+							</span>
+						))}
 						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}
 					</small>
 				</p>
@@ -46,7 +53,7 @@ export default function EventFeedIitem({ event }) {
 							{new Date(event.end).toUTCString().slice(0, 22)}
 						</small>
 					)}
-					<small> at {event.location}</small>
+					<small> at {event.city}</small>
 				</p>
 				<p className="float-left">
 					<small>

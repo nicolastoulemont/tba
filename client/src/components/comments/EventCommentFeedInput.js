@@ -1,23 +1,23 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
+import { Link } from 'react-router-dom';
+import { EventContext, UserContext } from '../contexts';
 import { ADD_COMMENT } from '../graphql/comment/Mutations';
 import { GET_EVENT_COMMENTS } from '../graphql/comment/Queries';
-import { UserContext, EventContext } from '../contexts';
 
 const EventCommentFeedInput = () => {
-	const { id } = useContext(UserContext);
-	const value = useContext(EventContext);
+	const user = useContext(UserContext);
+	const event = useContext(EventContext);
 	const [text, setText] = useState('');
 
-	const createComment = (e, id, value, text, addComment) => {
+	const createComment = (e, text, addComment) => {
 		if (
 			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
 			(e.type === 'keydown' && e.keyCode === 13)
 		) {
 			e.preventDefault();
 			addComment({
-				variables: { user_ID: id, event_ID: value.id, text }
+				variables: { user_ID: user.id, event_ID: event.id, text }
 			}).then(res => {
 				setText('');
 			});
@@ -29,7 +29,7 @@ const EventCommentFeedInput = () => {
 			<Mutation
 				mutation={ADD_COMMENT}
 				refetchQueries={() => {
-					return [{ query: GET_EVENT_COMMENTS, variables: { id: value.id } }];
+					return [{ query: GET_EVENT_COMMENTS, variables: { id: event.id } }];
 				}}
 			>
 				{(addComment, e) => (
@@ -41,13 +41,13 @@ const EventCommentFeedInput = () => {
 							onChange={e => setText(e.target.value)}
 							name="text"
 							value={text}
-							onKeyDown={e => createComment(e, id, value, text, addComment)}
+							onKeyDown={e => createComment(e, text, addComment)}
 						/>
 						<div className="input-group-append">
 							<Link
 								to="#"
 								className="btn bg-darkblue"
-								onClick={e => createComment(e, id, value, text, addComment)}
+								onClick={e => createComment(e, text, addComment)}
 							>
 								<i className="fa fa-paper-plane text-white" aria-hidden="true" />
 							</Link>

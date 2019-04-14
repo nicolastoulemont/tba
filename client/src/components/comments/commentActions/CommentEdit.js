@@ -1,11 +1,11 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
+import { Link } from 'react-router-dom';
+import { CommentContext } from '../../contexts';
 import { EDIT_COMMENT } from '../../graphql/comment/Mutations';
 import { GET_COMMENT_COMMENTS } from '../../graphql/comment/Queries';
-import { CommentContext } from '../../contexts';
 
-const CommentEdit = () => {
+const CommentEdit = ({ hideForms }) => {
 	const comment = useContext(CommentContext);
 	const [text, setText] = useState('');
 
@@ -18,7 +18,7 @@ const CommentEdit = () => {
 			editComment({
 				variables: { _id: comment.id, text }
 			}).then(res => {
-				this.props.hideForms();
+				hideForms();
 			});
 		}
 	};

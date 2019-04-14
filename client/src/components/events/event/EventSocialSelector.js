@@ -6,7 +6,7 @@ import EventRegistrationsFeed from '../../registrations/EventRegistrationsFeed';
 
 const EventSocialSelector = () => {
 	const [commentDisplay, setCommentDisplay] = useState(true);
-	const [registreeDisplay, setRegistreeDisplay] = useState(true);
+	const [registreeDisplay, setRegistreeDisplay] = useState(false);
 
 	const displayComments = e => {
 		setCommentDisplay(true);

@@ -6,15 +6,16 @@ import { ADD_LIKE, DELETE_LIKE } from '../../graphql/like/Mutations';
 import { GET_EVENT_LIKES } from '../../graphql/like/Queries';
 
 export const LikeEvent = () => {
-	const { id } = useContext(UserContext);
+	const user = useContext(UserContext);
 	const event = useContext(EventContext);
+
 	const addLike = useMutation(ADD_LIKE, {
 		variables: {
-			user_ID: id,
+			user_ID: user.id,
 			event_ID: event.id
 		},
 		refetchQueries: () => {
-			return [{ query: GET_EVENT_LIKES, variables: { _id: event.id } }];
+			return [{ query: GET_EVENT_LIKES, variables: { id: event.id } }];
 		}
 	});
 	return (
@@ -37,15 +38,15 @@ export const LikeEvent = () => {
 };
 
 export const UnLikeEvent = ({ userLike }) => {
-	const { id } = useContext(UserContext);
+	const user = useContext(UserContext);
 	const event = useContext(EventContext);
 	const deleteLike = useMutation(DELETE_LIKE, {
 		variables: {
 			_id: userLike.id,
-			user_ID: id
+			user_ID: user.id
 		},
 		refetchQueries: () => {
-			return [{ query: GET_EVENT_LIKES, variables: { _id: event.id } }];
+			return [{ query: GET_EVENT_LIKES, variables: { id: event.id } }];
 		}
 	});
 	return (

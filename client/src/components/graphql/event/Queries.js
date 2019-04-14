@@ -60,6 +60,7 @@ export const GET_EVENT = gql`
 			isPublic
 			name
 			abstract
+			banner_URL
 			description
 			city
 			address
