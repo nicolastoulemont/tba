@@ -5,8 +5,6 @@ import DefaultEvent from '../../img/default_event.svg';
 
 const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 	const resizeImage = (file, x, y, func) => {
-		const width = x;
-		const height = y;
 		const fileName = file.name;
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
@@ -15,20 +13,20 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 			img.src = event.target.result;
 			img.onload = () => {
 				const elem = document.createElement('canvas');
-				elem.width = width;
-				elem.height = height;
 				const ctx = elem.getContext('2d');
-				ctx.drawImage(img, 0, 0, width, height);
+				elem.width = x;
+				elem.height = y;
+				ctx.drawImage(img, 0, 0, x, y);
 				ctx.canvas.toBlob(
 					blob => {
 						const file = new File([blob], fileName, {
-							type: 'image/jpeg',
+							type: 'image/auto',
 							lastModified: Date.now()
 						});
 						func(file);
 					},
-					'image/jpeg',
-					1
+					'image/auto',
+					0.6
 				);
 			};
 			reader.onerror = error => console.log(error);
@@ -42,17 +40,17 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 					{!picture ? (
 						<img
 							src={DefaultAvatar}
-							className="extra-large-avatar rounded-circle"
+							className="extra-large-avatar rounded-circle mt-2"
 							alt="Default avatar"
 						/>
 					) : typeof picture !== 'string' ? (
 						<img
 							src={URL.createObjectURL(picture)}
-							className="extra-large-avatar rounded-circle"
+							className="extra-large-avatar rounded-circle mt-2"
 							alt="avatar"
 						/>
 					) : (
-						<img src={picture} className="extra-large-avatar rounded-circle" alt="avatar" />
+						<img src={picture} className="extra-large-avatar rounded-circle mt-2" alt="avatar" />
 					)}
 				</Fragment>
 			);
@@ -61,11 +59,11 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 			return (
 				<Fragment>
 					{!picture ? (
-						<img src={DefaultEvent} className="event-banner" alt="Default Event banner" />
+						<img src={DefaultEvent} alt="Default Event banner" />
 					) : typeof picture !== 'string' ? (
-						<img src={URL.createObjectURL(picture)} className="event-banner" alt="avatar" />
+						<img src={URL.createObjectURL(picture)} alt="avatar" />
 					) : (
-						<img src={picture} className="event-banner" alt="Event banner" />
+						<img src={picture} alt="Event banner" />
 					)}
 				</Fragment>
 			);
@@ -81,7 +79,7 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 			onDrop={acceptedFiles => resizeImage(acceptedFiles[0], x, y, func)}
 		>
 			{({ getRootProps, getInputProps }) => (
-				<section className="mt-2">
+				<section>
 					<div {...getRootProps()} className="h-100">
 						<div>
 							{placeholderAlternator(placeholder)}

@@ -178,14 +178,12 @@ export const UserTags = ({ topic, deleteTopic }) => (
 	</Link>
 );
 
-export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic }) => (
+export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic, main, secondary }) => (
 	<div>
 		<div className="text-left">
-			<p className="m-0 p-0">Choose the topics your are interested in </p>
+			<p className="m-0 p-0">{main}</p>
 			<p>
-				<small className="font-italic">
-					Optional but advised given the large quantity of news and events myEU aggregate
-				</small>
+				<small className="font-italic">{secondary}</small>
 			</p>
 		</div>
 

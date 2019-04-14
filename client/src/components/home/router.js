@@ -10,7 +10,7 @@ import CreateEvent from '../events/createEvent';
 import EditEvent from '../events/editEvent';
 import DeleteEvent from '../events/deleteEvent';
 
-export default function HomeRouter() {
+const HomeRouter = () => {
 	return (
 		<Fragment>
 			<Switch>
@@ -26,4 +26,6 @@ export default function HomeRouter() {
 			</Switch>
 		</Fragment>
 	);
-}
+};
+
+export default HomeRouter;

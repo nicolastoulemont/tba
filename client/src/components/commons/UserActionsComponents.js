@@ -11,7 +11,7 @@ export const Loader = () => (
 	</div>
 );
 
-export const DashboardError = () => (
+export const FetchError = () => (
 	<div className="align-items-center">
 		<div className="form-group">
 			<div className="alert alert-danger" role="alert">

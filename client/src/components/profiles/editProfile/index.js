@@ -144,6 +144,8 @@ const EditProfile = ({ match, history }) => {
 										addTopic={addTopic}
 										userTopics={userTopics}
 										deleteTopic={deleteTopic}
+										main="Choose the topics your are interested in"
+										secondary="Optional but advised given the large quantity of news and events myEU aggregate"
 									/>
 
 									<div className="form-check float-left mt-2">

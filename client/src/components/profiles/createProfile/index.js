@@ -50,19 +50,7 @@ export default function CreateProfile({
 		await axios.put(signedRequest, picture, options).catch(err => console.log(err));
 	};
 
-	const createProfile = async (
-		e,
-		addProfile,
-		signS3,
-		name,
-		position,
-		bio,
-		picture,
-		twitter_URL,
-		linkedin_URL,
-		hideSocial,
-		privateProfile
-	) => {
+	const createProfile = async (e, addProfile, signS3) => {
 		e.preventDefault();
 		if (picture) {
 			const response = await signS3({
@@ -121,24 +109,7 @@ export default function CreateProfile({
 						}}
 					>
 						{(addProfile, e) => (
-							<form
-								onSubmit={async e =>
-									createProfile(
-										e,
-										addProfile,
-										signS3,
-										name,
-										position,
-										bio,
-										picture,
-										twitter_URL,
-										linkedin_URL,
-										hideSocial,
-										privateProfile,
-										userTopics
-									)
-								}
-							>
+							<form onSubmit={async e => createProfile(e, addProfile, signS3)}>
 								<div className="p-0 m-0">
 									<h4 className="text-left pt-4 px-4">Create your profile</h4>
 									<div className="form-row pt-2 px-4">
@@ -175,6 +146,8 @@ export default function CreateProfile({
 										addTopic={addTopic}
 										userTopics={userTopics}
 										deleteTopic={deleteTopic}
+										main="Choose the topics your are interested in"
+										secondary="Optional but advised given the large quantity of news and events myEU aggregate"
 									/>
 
 									<div className="form-check float-left mt-2">

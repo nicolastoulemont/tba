@@ -1,70 +1,68 @@
 import React, { Fragment, useContext } from 'react';
+import { useMutation } from 'react-apollo-hooks';
 import { Link } from 'react-router-dom';
-import { Mutation } from 'react-apollo';
+import { EventContext, UserContext } from '../../contexts';
 import { ADD_LIKE, DELETE_LIKE } from '../../graphql/like/Mutations';
-import { UserContext, EventContext } from '../../contexts';
+import { GET_EVENT_LIKES } from '../../graphql/like/Queries';
 
-export const LikeEvent = ({ refetch }) => {
+export const LikeEvent = () => {
 	const { id } = useContext(UserContext);
-	const value = useContext(EventContext);
+	const event = useContext(EventContext);
+	const addLike = useMutation(ADD_LIKE, {
+		variables: {
+			user_ID: id,
+			event_ID: event.id
+		},
+		refetchQueries: () => {
+			return [{ query: GET_EVENT_LIKES, variables: { _id: event.id } }];
+		}
+	});
 	return (
 		<Fragment>
-			<Mutation mutation={ADD_LIKE}>
-				{(addLike, e) => (
-					<Link
-						to="#"
-						className="mr-2"
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Like this event"
-						onClick={e => {
-							e.preventDefault();
-							addLike({
-								variables: {
-									user_ID: id,
-									event_ID: value.id
-								}
-							}).then(res => {
-								refetch();
-							});
-						}}
-					>
-						<i className="text-secondary far fa-thumbs-up" />
-					</Link>
-				)}
-			</Mutation>
+			<Link
+				to="#"
+				className="mr-2"
+				data-togggle="tooltip"
+				data-placement="bottom"
+				title="Like this event"
+				onClick={e => {
+					e.preventDefault();
+					addLike(e);
+				}}
+			>
+				<i className="text-secondary far fa-thumbs-up" />
+			</Link>
 		</Fragment>
 	);
 };
 
-export const UnLikeEvent = ({ userLike, refetch }) => {
+export const UnLikeEvent = ({ userLike }) => {
 	const { id } = useContext(UserContext);
+	const event = useContext(EventContext);
+	const deleteLike = useMutation(DELETE_LIKE, {
+		variables: {
+			_id: userLike.id,
+			user_ID: id
+		},
+		refetchQueries: () => {
+			return [{ query: GET_EVENT_LIKES, variables: { _id: event.id } }];
+		}
+	});
 	return (
 		<Fragment>
-			<Mutation mutation={DELETE_LIKE}>
-				{(deleteLike, e) => (
-					<Link
-						to="#"
-						className="ml-2"
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Unlike this event"
-						onClick={e => {
-							e.preventDefault();
-							deleteLike({
-								variables: {
-									_id: userLike.id,
-									user_ID: id
-								}
-							}).then(res => {
-								refetch();
-							});
-						}}
-					>
-						<i className="text-secondary  far fa-thumbs-down" />
-					</Link>
-				)}
-			</Mutation>
+			<Link
+				to="#"
+				className="ml-2"
+				data-togggle="tooltip"
+				data-placement="bottom"
+				title="Unlike this event"
+				onClick={e => {
+					e.preventDefault();
+					deleteLike(e);
+				}}
+			>
+				<i className="text-secondary  far fa-thumbs-down" />
+			</Link>
 		</Fragment>
 	);
 };

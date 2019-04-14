@@ -4,40 +4,43 @@ export const CREATE_EVENT = gql`
 	mutation AddEvent(
 		$user_ID: String!
 		$name: String!
+		$abstract: String!
+		$banner_URL: String
 		$description: String!
 		$isPublic: Boolean!
-		$categoryOne: String!
-		$categoryTwo: String
-		$categoryThree: String
-		$location: String!
-		$start: String
-		$end: String
+		$city: String!
+		$address: String!
+		$start: String!
+		$end: String!
+		$tags: [String]
 	) {
 		addEvent(
 			user_ID: $user_ID
 			name: $name
+			abstract: $abstract
+			banner_URL: $banner_URL
 			description: $description
 			isPublic: $isPublic
-			categoryOne: $categoryOne
-			categoryTwo: $categoryTwo
-			categoryThree: $categoryThree
-			location: $location
+			city: $city
+			address: $address
 			start: $start
 			end: $end
+			tags: $tags
 		) {
 			success
 			event {
 				id
 				user_ID
 				name
+				abstract
+				banner_URL
 				description
 				isPublic
-				categoryOne
-				categoryTwo
-				categoryThree
-				location
+				city
+				address
 				start
 				end
+				tags
 			}
 			errors {
 				path
@@ -51,39 +54,42 @@ export const UPDATE_EVENT = gql`
 	mutation UpdateEvent(
 		$_id: ID!
 		$name: String!
+		$abstract: String!
+		$banner_URL: String
 		$description: String!
 		$isPublic: Boolean!
-		$categoryOne: String!
-		$categoryTwo: String
-		$categoryThree: String
-		$location: String!
+		$city: String!
+		$address: String
 		$start: String
 		$end: String
+		$tags: [String]
 	) {
 		updateEvent(
 			_id: $_id
 			name: $name
+			abstract: $abstract
+			banner_URL: $banner_URL
 			description: $description
 			isPublic: $isPublic
-			categoryOne: $categoryOne
-			categoryTwo: $categoryTwo
-			categoryThree: $categoryThree
-			location: $location
+			city: $city
+			address: $address
 			start: $start
 			end: $end
+			tags: $tags
 		) {
 			success
 			event {
 				id
 				name
+				abstract
+				banner_URL
 				description
 				isPublic
-				categoryOne
-				categoryTwo
-				categoryThree
-				location
+				city
+				address
 				start
 				end
+				tags
 			}
 			errors {
 				path
