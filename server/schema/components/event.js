@@ -51,8 +51,8 @@ module.exports = {
 				isPublic: Boolean!
 				city: String!
 				address: String!
-				start: Date!
-				end: Date!
+				start: String!
+				end: String!
 				tags: [String]
 			): EventResp!
 			updateEvent(
