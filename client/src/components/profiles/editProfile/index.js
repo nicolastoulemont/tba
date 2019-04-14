@@ -1,17 +1,17 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { formatFileName } from '../../commons/fileManagers';
-import { TagsChooser } from '../../commons/InputComponents';
-import ImgHandler from '../../commons/ImgHandler';
-import CRProfileHeader from '../createProfile/header';
-import CRProfileSocial from '../createProfile/socialLinks';
-import { tagsList } from '../../commons/TagsList';
+import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
+import { Redirect } from 'react-router-dom';
+import { formatFileName } from '../../commons/fileManagers';
+import ImgHandler from '../../commons/ImgHandler';
+import { TagsChooser } from '../../commons/InputComponents';
+import { tagsList } from '../../commons/TagsList';
+import { UserContext } from '../../contexts';
 import { UPDATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
-import { UserContext } from '../../contexts';
+import CRProfileHeader from '../createProfile/header';
+import CRProfileSocial from '../createProfile/socialLinks';
 
 const EditProfile = ({ match, history }) => {
 	const user = useContext(UserContext);
@@ -75,7 +75,7 @@ const EditProfile = ({ match, history }) => {
 					tags: userTopics
 				}
 			});
-			history.push('/home/news');
+			history.push(`/home/profile/${user.id}`);
 		} else if (picture === user.profile.picture_URL) {
 			await updateProfile({
 				variables: {
@@ -92,7 +92,7 @@ const EditProfile = ({ match, history }) => {
 					tags: userTopics
 				}
 			});
-			history.push('/home/news');
+			history.push(`/home/profile/${user.id}`);
 		}
 	};
 

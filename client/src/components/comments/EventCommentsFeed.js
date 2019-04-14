@@ -16,9 +16,11 @@ const EventCommentsFeed = () => {
 					return (
 						<Fragment>
 							{comments.map(comment => (
-								<CommentContext.Provider value={comment}>
-									<EventCommentItem key={comment.id} />
-								</CommentContext.Provider>
+								<Fragment key={comment.id}>
+									<CommentContext.Provider value={comment}>
+										<EventCommentItem key={comment.id} />
+									</CommentContext.Provider>
+								</Fragment>
 							))}
 
 							<div className="input-group input-group-sm mt-2 mx-0">

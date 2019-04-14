@@ -9,7 +9,6 @@ import NewsFeedItem from './feedItem';
 const NewsFeed = () => {
 	const { data, error } = useQuery(GET_EVENTS, { suspend: true });
 	if (error) return <FetchError />;
-	console.log(data);
 	return (
 		<Fragment>
 			<div className="m-0 px-2">

@@ -16,7 +16,7 @@ const Profile = ({ match }) => {
 		<Fragment key={data.user.profile.id}>
 			<ProfileContext.Provider value={data.user.profile}>
 				<ProfileHeader />
-				<ProfileSocial />
+				{!data.user.profile.hideSocial ? <ProfileSocial /> : null}
 			</ProfileContext.Provider>
 		</Fragment>
 	);

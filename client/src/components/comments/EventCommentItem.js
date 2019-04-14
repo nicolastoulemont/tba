@@ -6,7 +6,6 @@ import EventCommentDisplay from './EventCommentDisplay';
 
 const EventCommentItem = () => {
 	const comment = useContext(CommentContext);
-	console.log(comment);
 	return (
 		<Fragment>
 			<EventCommentDisplay />
@@ -19,9 +18,11 @@ const EventCommentItem = () => {
 							<div className="row">
 								<div className="col-12 child-comment">
 									{comments.map(comment => (
-										<CommentContext.Provider value={comment}>
-											<EventCommentItem key={comment.id} />
-										</CommentContext.Provider>
+										<Fragment key={comment.id}>
+											<CommentContext.Provider value={comment}>
+												<EventCommentItem key={comment.id} />
+											</CommentContext.Provider>
+										</Fragment>
 									))}
 								</div>
 							</div>
