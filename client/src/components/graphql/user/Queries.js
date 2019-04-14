@@ -71,6 +71,7 @@ export const GET_USER_COMMENTS = gql`
 			comments {
 				id
 				text
+				moderated
 				event {
 					id
 					name
@@ -78,6 +79,7 @@ export const GET_USER_COMMENTS = gql`
 				comment {
 					user_ID
 					text
+					moderated
 					creator {
 						profile {
 							name
@@ -103,6 +105,7 @@ export const GET_USER_LIKES = gql`
 				comment {
 					id
 					user_ID
+					moderated
 					creator {
 						profile {
 							name

@@ -23,7 +23,7 @@ const ProfileCommentsFeed = () => {
 	return (
 		<Fragment>
 			{comments.map(comment => {
-				if (comment.event) {
+				if (comment.event && !comment.moderated) {
 					return (
 						<div className="text-left px-3 py-1 border-top" key={comment.id}>
 							<blockquote className="blockquote mb-1">
@@ -48,7 +48,7 @@ const ProfileCommentsFeed = () => {
 						</div>
 					);
 				}
-				if (comment.comment) {
+				if (comment.comment && !comment.moderated) {
 					return (
 						<div className="text-left px-3 py-1 border-top" key={comment.id}>
 							<blockquote className="blockquote mb-1">
