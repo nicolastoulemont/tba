@@ -7,11 +7,11 @@ export default function EventMenu() {
 		<div>
 			<div className="text-right mt-0 mr-2">
 				<Link
-					className="far fa-edit text-white"
+					className="far fa-edit"
 					to={{ pathname: `/home/event/edit/${event.id}`, state: { event: event } }}
 				/>
 				<Link
-					className="fa fa-times mx-2 text-white"
+					className="fa fa-times mx-2"
 					to={{ pathname: `/home/event/delete/${event.id}`, state: { event: event } }}
 				/>
 			</div>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
+import { ProfileContext, UserContext } from '../../../contexts';
 import ProfileMenu from '../profileMenu/index';
-import { UserContext, ProfileContext } from '../../../contexts';
 
 const ProfileHeader = () => {
 	const user = useContext(UserContext);
