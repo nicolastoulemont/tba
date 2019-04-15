@@ -43,7 +43,7 @@ body {
 }
 
 .bg-darkblue {
-	background-color: #005178;
+	background-color: #30446d;
 }
 
 .text-blue {
@@ -51,7 +51,7 @@ body {
 }
 
 .text-darkblue {
-	color: #29456e;
+	color: #30446d;
 }
 
 .btn-blue {
@@ -60,7 +60,7 @@ body {
 }
 
 .btn-darkblue {
-	background-color: #005178;
+	background-color: #30446d;
 	color: white;
 }
 
@@ -109,13 +109,13 @@ a {
 }
 a:hover {
 	text-decoration: none;
-	color: #29456e;
+	color: #30446d;
 }
 
 .link-menu:hover {
 	text-decoration: none;
 	color: #5a6268;
-	border-bottom: 3px solid #29456e;
+	border-bottom: 3px solid #30446d;
 }
 
 .child-comment {
@@ -124,7 +124,7 @@ a:hover {
 
 .fa:hover,
 .far:hover {
-	color: #29456e;
+	color: #30446d;
 }
 
 .lightgrey {
@@ -135,7 +135,7 @@ a:hover {
 	width: 40px;
 	height: 40px;
 	margin: 100px auto;
-	background-color: #29456e;
+	background-color: #30446d;
 
 	border-radius: 100%;
 	-webkit-animation: sk-scaleout 1s infinite ease-in-out;

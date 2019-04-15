@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts';
-
 export default function Navbar() {
 	const Auth = useContext(AuthContext);
 
@@ -31,13 +30,13 @@ export default function Navbar() {
 							<ul className="navbar-nav ml-auto">
 								<li className="nav-item pr-4">
 									<Link
-										className="nav-link"
+										className="nav-link "
 										to="/home/news"
 										data-togggle="tooltip"
 										data-placement="bottom"
 										title="Find out about all the EU affairs news"
 									>
-										<i className="d-inline fa fa-home" />
+										<i className="d-inline fas fa-home" />
 										<h6 className="d-inline ml-2">Home</h6>
 									</Link>
 								</li>

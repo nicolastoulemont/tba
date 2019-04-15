@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import PlaceholderBanner from '../../../img/ep_placeholder_banner.svg';
+import PlaceholderBanner from '../../../img/placeholder_event_banner.svg';
 import { EventContext, UserContext } from '../../contexts';
 import EventMenu from './EventMenu';
 const EventHeader = () => {

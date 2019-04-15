@@ -64,8 +64,8 @@ module.exports = {
 				isPublic: Boolean!
 				city: String!
 				address: String!
-				start: Date!
-				end: Date!
+				start: String!
+				end: String!
 				tags: [String]
 			): EventResp!
 			deleteEvent(_id: ID!, user_ID: String!): EventResp!
@@ -175,8 +175,8 @@ module.exports = {
 						success: false,
 						error: 'You are not logged in'
 					};
-				const { errors, isValid } = await validateUpdEventIntput(args);
-				if (!isValid) return { success: false, errors };
+				// const { errors, isValid } = await validateUpdEventIntput(args);
+				// if (!isValid) return { success: false, errors };
 
 				return await updateEvent(args, EventItem);
 			},

@@ -59,9 +59,9 @@ export const UPDATE_EVENT = gql`
 		$description: String!
 		$isPublic: Boolean!
 		$city: String!
-		$address: String
-		$start: String
-		$end: String
+		$address: String!
+		$start: String!
+		$end: String!
 		$tags: [String]
 	) {
 		updateEvent(

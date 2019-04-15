@@ -39,13 +39,13 @@ const CreateEvent = () => {
 		setEventTags(eventTags.filter(item => item !== tag));
 	};
 
-	const uploadToS3 = async (picture, signedRequest) => {
+	const uploadToS3 = async (banner, signedRequest) => {
 		const options = {
 			headers: {
-				'Content-Type': picture.type
+				'Content-Type': banner.type
 			}
 		};
-		await axios.put(signedRequest, picture, options).catch(err => console.log(err));
+		await axios.put(signedRequest, banner, options).catch(err => console.log(err));
 	};
 
 	const createEvent = async (e, addEvent, signS3) => {
