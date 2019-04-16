@@ -9,7 +9,8 @@ import { formatFileName } from '../../commons/fileManagers';
 import ImgHandler from '../../commons/ImgHandler';
 import { InputField, TagsChooser, TextAreaField } from '../../commons/InputComponents';
 import { tagsList } from '../../commons/TagsList';
-import { UserContext, useStateValue } from '../../contexts';
+import { UserContext } from '../../contexts';
+import { useStateValue } from '../../contexts/InitialState';
 import { UPDATE_EVENT } from '../../graphql/event/Mutations';
 import { GET_EVENT, GET_USER_FUTURE_HOSTED_EVENTS } from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
@@ -36,7 +37,6 @@ const EditEvent = ({ match, history }) => {
 	if (stateEvent.user_ID === null || stateEvent.user_ID !== user.id)
 		return <Redirect to={`/home/event/${match.params.id}`} />;
 
-	console.log(stateEvent);
 	const addTag = tag => {
 		setEventTags([...eventTags, tag]);
 		setTagsGroup(tagsGroup.filter(item => item !== tag));
@@ -81,7 +81,7 @@ const EditEvent = ({ match, history }) => {
 			}
 		});
 
-		dispatch({ type: 'resetEvent' });
+		dispatch({ type: 'RESET_EVENT' });
 		history.push(`/home/event/${match.params.id}`);
 	};
 
@@ -102,7 +102,7 @@ const EditEvent = ({ match, history }) => {
 			}
 		});
 
-		dispatch({ type: 'resetEvent' });
+		dispatch({ type: 'RESET_EVENT' });
 		history.push(`/home/event/${match.params.id}`);
 	};
 

@@ -1,5 +1,5 @@
 import decode from 'jwt-decode';
-import React, { createContext, useContext, useReducer } from 'react';
+import { createContext } from 'react';
 
 const UserContext = createContext();
 const EventContext = createContext();
@@ -16,23 +16,4 @@ const AuthContextValue = () => {
 	return true;
 };
 
-const StateContext = createContext();
-const StateProvider = ({ reducer, initialState, children }) => (
-	<StateContext.Provider value={useReducer(reducer, initialState)}>
-		{children}
-	</StateContext.Provider>
-);
-
-const useStateValue = () => useContext(StateContext);
-
-export {
-	AuthContext,
-	AuthContextValue,
-	UserContext,
-	EventContext,
-	CommentContext,
-	ProfileContext,
-	StateContext,
-	StateProvider,
-	useStateValue
-};
+export { AuthContext, AuthContextValue, UserContext, EventContext, CommentContext, ProfileContext };

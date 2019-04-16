@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { EventContext, useStateValue } from '../../contexts';
+import { EventContext } from '../../contexts';
+import { useStateValue } from '../../contexts/InitialState';
 
 export default function EventMenu() {
 	const event = useContext(EventContext);
 	const [{ stateEvent }, dispatch] = useStateValue();
-
 	return (
 		<div>
 			<div className="text-right mt-0 mr-2">
@@ -14,7 +14,7 @@ export default function EventMenu() {
 					to={{ pathname: `/home/event/edit/${event.id}`, state: { event: stateEvent } }}
 					onClick={() =>
 						dispatch({
-							type: 'addEvent',
+							type: 'ADD_EVENT',
 							newEvent: event
 						})
 					}
@@ -24,7 +24,7 @@ export default function EventMenu() {
 					to={{ pathname: `/home/event/delete/${event.id}`, state: { event: stateEvent } }}
 					onClick={() =>
 						dispatch({
-							type: 'addEvent',
+							type: 'ADD_EVENT',
 							newEvent: event
 						})
 					}
