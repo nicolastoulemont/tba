@@ -12,17 +12,24 @@ const EventCommentsFeed = () => {
 			<CQuery query={GET_EVENT_COMMENTS} variables={{ id: event.id }}>
 				{({ data: { event }, refetch }) => {
 					const comments = event.comments;
-					if (comments.lenght === 0) return <p>No comment yet...</p>;
 					return (
 						<Fragment>
-							{comments.map(comment => (
-								<Fragment key={comment.id}>
-									<CommentContext.Provider value={comment}>
-										<EventCommentItem key={comment.id} refetch={refetch} />
-									</CommentContext.Provider>
+							{comments.length === 0 ? (
+								<Fragment>
+									<p>No comment yet...</p>
+									<br />
 								</Fragment>
-							))}
-
+							) : (
+								<Fragment>
+									{comments.map(comment => (
+										<Fragment key={comment.id}>
+											<CommentContext.Provider value={comment}>
+												<EventCommentItem key={comment.id} refetch={refetch} />
+											</CommentContext.Provider>
+										</Fragment>
+									))}
+								</Fragment>
+							)}
 							<div className="input-group input-group-sm mt-2 mx-0">
 								<br />
 								<EventCommentFeedInput />

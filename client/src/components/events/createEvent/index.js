@@ -48,48 +48,55 @@ const CreateEvent = () => {
 		await axios.put(signedRequest, banner, options).catch(err => console.log(err));
 	};
 
+	const addEventWithBanner = async (addEvent, signS3) => {
+		const response = await signS3({
+			variables: {
+				filename: formatFileName(banner.name),
+				filetype: banner.type
+			}
+		});
+		const { signedRequest, url } = response.data.signS3;
+		await uploadToS3(banner, signedRequest);
+		await addEvent({
+			variables: {
+				user_ID: user.id,
+				name,
+				abstract,
+				banner_URL: url,
+				description,
+				isPublic,
+				city,
+				address,
+				start,
+				end,
+				tags: eventTags
+			}
+		});
+	};
+
+	const addEventWithOutBanner = async addEvent => {
+		await addEvent({
+			variables: {
+				user_ID: user.id,
+				name,
+				abstract,
+				description,
+				isPublic,
+				city,
+				address,
+				start,
+				end,
+				tags: eventTags
+			}
+		});
+	};
+
 	const createEvent = async (e, addEvent, signS3) => {
 		e.preventDefault();
 		if (banner) {
-			const response = await signS3({
-				variables: {
-					filename: formatFileName(banner.name),
-					filetype: banner.type
-				}
-			});
-			const { signedRequest, url } = response.data.signS3;
-			await uploadToS3(banner, signedRequest);
-			await addEvent({
-				variables: {
-					user_ID: user.id,
-					name,
-					abstract,
-					banner_URL: url,
-					description,
-					isPublic,
-					city,
-					address,
-					start,
-					end,
-					tags: eventTags
-				}
-			});
+			await addEventWithBanner(addEvent, signS3);
 		} else if (!banner) {
-			await addEvent({
-				variables: {
-					user_ID: user.id,
-					name,
-					abstract,
-
-					description,
-					isPublic,
-					city,
-					address,
-					start,
-					end,
-					tags: eventTags
-				}
-			});
+			await addEventWithOutBanner(addEvent);
 		}
 	};
 

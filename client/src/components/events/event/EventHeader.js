@@ -59,15 +59,15 @@ const EventHeader = () => {
 								{event.address}, {event.city}
 							</p>
 							{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
-								<small>
+								<p>
 									{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
 									{new Date(event.end).toTimeString().slice(0, 5)}
-								</small>
+								</p>
 							) : (
-								<small>
+								<p>
 									On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
 									{new Date(event.end).toUTCString().slice(0, 22)}
-								</small>
+								</p>
 							)}
 							<div className="d-none d-md-block my-1">
 								<div className="text-left mr-4">

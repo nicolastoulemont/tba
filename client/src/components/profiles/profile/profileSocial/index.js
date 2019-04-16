@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ProfileEventsFeed from './eventsFeed';
 import ProfileCommentsFeed from './commentsFeed';
+import ProfileEventsFeed from './eventsFeed';
 import ProfileLikesFeed from './likesFeed';
 
 const ProfileSocial = () => {

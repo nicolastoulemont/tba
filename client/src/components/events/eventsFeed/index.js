@@ -1,10 +1,9 @@
 import dayjs from 'dayjs';
 import React, { Fragment, useState } from 'react';
-import { useQuery } from 'react-apollo-hooks';
 import { Redirect } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
+import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
-import { FetchError } from '../../commons/UserActionsComponents';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
 import EventFeedItem from './feedItem';
 
@@ -21,11 +20,6 @@ export default function EventFeed({ match }) {
 	if (!dayjs(day).isValid())
 		return <Redirect to={`/home/events/${dayjs(today).format('YYYY-MM-DD')}`} />;
 
-	const { data, error } = useQuery(SEARCH_DAILY_EVENTS, {
-		variables: { date: day, search, limit: 10, sort },
-		suspend: true
-	});
-	if (error) return <FetchError />;
 	return (
 		<Fragment>
 			<div className="row m-0 px-2">
@@ -41,21 +35,30 @@ export default function EventFeed({ match }) {
 						onlyFree={onlyFree}
 						setOnlyFree={setOnlyFree}
 					/>
-					{data.searchDailyEvents.length === 0 ? (
-						<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
-					) : (
-						<div className="border-top">
-							{data.searchDailyEvents.map(event => (
-								<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
-									{props => (
-										<div style={props}>
-											<EventFeedItem key={event.id} event={event} />
-										</div>
+					<CQuery query={SEARCH_DAILY_EVENTS} variables={{ date: day, search, limit: 10, sort }}>
+						{({ data }) => {
+							const events = data.searchDailyEvents;
+							return (
+								<Fragment>
+									{events.length === 0 ? (
+										<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
+									) : (
+										<Fragment>
+											{events.map(event => (
+												<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
+													{props => (
+														<div style={props}>
+															<EventFeedItem key={event.id} event={event} />
+														</div>
+													)}
+												</Spring>
+											))}
+										</Fragment>
 									)}
-								</Spring>
-							))}
-						</div>
-					)}
+								</Fragment>
+							);
+						}}
+					</CQuery>
 				</div>
 			</div>
 		</Fragment>
