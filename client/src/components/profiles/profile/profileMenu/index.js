@@ -7,7 +7,7 @@ const ProfileMenu = () => {
 	return (
 		<div className="text-right mt-0 mr-2">
 			<Link
-				className="far fa-edit mr-2 text-white"
+				className="far fa-edit mr-2"
 				data-togggle="tooltip"
 				data-placement="bottom"
 				title="Edit your profile"
