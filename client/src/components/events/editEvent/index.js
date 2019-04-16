@@ -55,51 +55,58 @@ const EditEvent = ({ match, history }) => {
 		await axios.put(signedRequest, banner, options).catch(err => console.log(err));
 	};
 
-	const createEvent = async (e, updateEvent, signS3) => {
-		e.preventDefault();
+	const updateEventWithNewBanner = async (updateEvent, signS3) => {
+		const response = await signS3({
+			variables: {
+				filename: formatFileName(banner.name),
+				filetype: banner.type
+			}
+		});
+		const { signedRequest, url } = response.data.signS3;
+		await uploadToS3(banner, signedRequest);
+		await updateEvent({
+			variables: {
+				_id: stateEvent.id,
+				name,
+				abstract,
+				banner_URL: url,
+				description,
+				isPublic,
+				city,
+				address,
+				start,
+				end,
+				tags: eventTags
+			}
+		});
+		history.push(`/home/event/${match.params.id}`);
+	};
 
+	const updateEventWithOutNewBanner = async updateEvent => {
+		await updateEvent({
+			variables: {
+				_id: stateEvent.id,
+				name,
+				abstract,
+				banner_URL: banner,
+				description,
+				isPublic,
+				city,
+				address,
+				start,
+				end,
+				tags: eventTags
+			}
+		});
+		history.push(`/home/event/${match.params.id}`);
+	};
+
+	const editEvent = async (e, updateEvent, signS3) => {
+		e.preventDefault();
 		if (banner && typeof banner !== 'string') {
-			const response = await signS3({
-				variables: {
-					filename: formatFileName(banner.name),
-					filetype: banner.type
-				}
-			});
-			const { signedRequest, url } = response.data.signS3;
-			await uploadToS3(banner, signedRequest);
-			await updateEvent({
-				variables: {
-					_id: stateEvent.id,
-					name,
-					abstract,
-					banner_URL: url,
-					description,
-					isPublic,
-					city,
-					address,
-					start,
-					end,
-					tags: eventTags
-				}
-			});
-			history.push(`/home/event/${match.params.id}`);
+			await updateEventWithNewBanner(updateEvent, signS3);
 		} else if (typeof banner !== 'object') {
-			await updateEvent({
-				variables: {
-					_id: stateEvent.id,
-					name,
-					abstract,
-					banner_URL: banner,
-					description,
-					isPublic,
-					city,
-					address,
-					start,
-					end,
-					tags: eventTags
-				}
-			});
-			history.push(`/home/event/${match.params.id}`);
+			await updateEventWithOutNewBanner(updateEvent);
 		}
 	};
 
@@ -119,7 +126,7 @@ const EditEvent = ({ match, history }) => {
 					}}
 				>
 					{(updateEvent, e) => (
-						<form onSubmit={async e => createEvent(e, updateEvent, signS3)} className="mb-4">
+						<form onSubmit={async e => editEvent(e, updateEvent, signS3)} className="mb-4">
 							<div className="p-0 m-0">
 								<ImgHandler func={setBanner} picture={banner} x={760} y={380} placeholder="event" />
 								<h4 className="text-left pt-4 px-4">Edit your Event</h4>
