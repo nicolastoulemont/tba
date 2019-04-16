@@ -18,7 +18,6 @@ import { SIGN_S3 } from '../../graphql/s3/Mutation';
 const EditEvent = ({ match, history }) => {
 	const [{ stateEvent }, dispatch] = useStateValue();
 	const user = useContext(UserContext);
-	const today = dayjs().format('YYYY-MM-DD');
 
 	const [name, setName] = useState(stateEvent.name);
 	const [abstract, setAbstract] = useState(stateEvent.abstract);
@@ -36,6 +35,8 @@ const EditEvent = ({ match, history }) => {
 
 	if (stateEvent.user_ID === null || stateEvent.user_ID !== user.id)
 		return <Redirect to={`/home/event/${match.params.id}`} />;
+
+	const today = dayjs().format('YYYY-MM-DD');
 
 	const addTag = tag => {
 		setEventTags([...eventTags, tag]);

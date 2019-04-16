@@ -15,6 +15,7 @@ import CRProfileSocial from '../createProfile/socialLinks';
 
 const EditProfile = ({ match, history }) => {
 	const user = useContext(UserContext);
+
 	const [name, setName] = useState(user.profile.name);
 	const [position, setPosition] = useState(user.profile.position);
 	const [bio, setBio] = useState(user.profile.bio);
@@ -49,50 +50,58 @@ const EditProfile = ({ match, history }) => {
 		await axios.put(signedRequest, picture, options).catch(err => console.log(err));
 	};
 
+	const updateProfileWithNewPicture = async (updateProfile, signS3) => {
+		const response = await signS3({
+			variables: {
+				filename: formatFileName(picture.name),
+				filetype: picture.type
+			}
+		});
+		const { signedRequest, url } = response.data.signS3;
+		await uploadToS3(picture, signedRequest);
+		await updateProfile({
+			variables: {
+				_id: user.profile.id,
+				organisation_ID: 'aazeazea',
+				name,
+				position,
+				bio,
+				twitter_URL,
+				linkedin_URL,
+				picture_URL: url,
+				hideSocial,
+				privateProfile,
+				tags: userTopics
+			}
+		});
+		history.push(`/home/profile/${user.id}`);
+	};
+
+	const updateProfileWithOutNewPicture = async updateProfile => {
+		await updateProfile({
+			variables: {
+				_id: user.profile.id,
+				organisation_ID: 'aazeazea',
+				name,
+				position,
+				bio,
+				twitter_URL,
+				linkedin_URL,
+				picture_URL: user.profile.picture_URL,
+				hideSocial,
+				privateProfile,
+				tags: userTopics
+			}
+		});
+		history.push(`/home/profile/${user.id}`);
+	};
+
 	const editProfile = async (e, updateProfile, signS3) => {
 		e.preventDefault();
 		if (picture !== user.profile.picture_URL) {
-			const response = await signS3({
-				variables: {
-					filename: formatFileName(picture.name),
-					filetype: picture.type
-				}
-			});
-			const { signedRequest, url } = response.data.signS3;
-			await uploadToS3(picture, signedRequest);
-			await updateProfile({
-				variables: {
-					_id: user.profile.id,
-					organisation_ID: 'aazeazea',
-					name,
-					position,
-					bio,
-					twitter_URL,
-					linkedin_URL,
-					picture_URL: url,
-					hideSocial,
-					privateProfile,
-					tags: userTopics
-				}
-			});
-			history.push(`/home/profile/${user.id}`);
+			await updateProfileWithNewPicture(updateProfile, signS3);
 		} else if (picture === user.profile.picture_URL) {
-			await updateProfile({
-				variables: {
-					_id: user.profile.id,
-					organisation_ID: 'aazeazea',
-					name,
-					position,
-					bio,
-					twitter_URL,
-					linkedin_URL,
-					picture_URL: user.profile.picture_URL,
-					hideSocial,
-					privateProfile,
-					tags: userTopics
-				}
-			});
-			history.push(`/home/profile/${user.id}`);
+			await updateProfileWithOutNewPicture(updateProfile);
 		}
 	};
 
