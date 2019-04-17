@@ -35,30 +35,32 @@ export default function EventFeed({ match }) {
 						onlyFree={onlyFree}
 						setOnlyFree={setOnlyFree}
 					/>
-					<CQuery query={SEARCH_DAILY_EVENTS} variables={{ date: day, search, limit: 10, sort }}>
-						{({ data }) => {
-							const events = data.searchDailyEvents;
-							return (
-								<Fragment>
-									{events.length === 0 ? (
-										<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
-									) : (
-										<Fragment>
-											{events.map(event => (
-												<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
-													{props => (
-														<div style={props}>
-															<EventFeedItem key={event.id} event={event} />
-														</div>
-													)}
-												</Spring>
-											))}
-										</Fragment>
-									)}
-								</Fragment>
-							);
-						}}
-					</CQuery>
+					<div className="border-top">
+						<CQuery query={SEARCH_DAILY_EVENTS} variables={{ date: day, search, limit: 10, sort }}>
+							{({ data }) => {
+								const events = data.searchDailyEvents;
+								return (
+									<Fragment>
+										{events.length === 0 ? (
+											<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
+										) : (
+											<Fragment>
+												{events.map(event => (
+													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
+														{props => (
+															<div style={props}>
+																<EventFeedItem key={event.id} event={event} />
+															</div>
+														)}
+													</Spring>
+												))}
+											</Fragment>
+										)}
+									</Fragment>
+								);
+							}}
+						</CQuery>
+					</div>
 				</div>
 			</div>
 		</Fragment>

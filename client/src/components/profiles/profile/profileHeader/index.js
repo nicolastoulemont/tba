@@ -6,7 +6,7 @@ const ProfileHeader = () => {
 	const user = useContext(UserContext);
 	const profile = useContext(ProfileContext);
 	return (
-		<div className="px-3">
+		<div className="px-3 pb-2">
 			<div className="row">
 				<img src={PlaceHolderBanner} alt="Default Profile Banner" />
 			</div>
@@ -33,7 +33,9 @@ const ProfileHeader = () => {
 								<h6 className="text-muted">{profile.organisation_ID}</h6>
 							</div>
 						</div>
-						<div className="col-md-2">{user.id === profile.user_ID ? <ProfileMenu /> : null}</div>
+						<div className="col-md-2 mt-2">
+							{user.id === profile.user_ID ? <ProfileMenu /> : null}
+						</div>
 					</div>
 				</div>
 			</div>

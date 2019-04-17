@@ -3,15 +3,6 @@
 	padding: 0;
 }
 
-/*
-POTENTIAL COLORS 
-#424B54 OUTER SPACE
-#919EAA MANATEE
-#B5CCE2 LIGHT STEEL BLUE
-#69829B SLATE GRAY
-
-*/
-
 body {
 	background-color: #e6ecf0;
 }
@@ -173,4 +164,13 @@ a:hover {
 		transform: scale(1);
 		opacity: 0;
 	}
+}
+
+.settings:hover .settings-child {
+	background-color: white !important;
+	color: #30446d;
+}
+
+.link-icon:hover .icon-child {
+	color: #30446d;
 }

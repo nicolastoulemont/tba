@@ -6,27 +6,15 @@ import { Link } from 'react-router-dom';
 const NewsFeedItem = ({ event }) => {
 	const eventTags = () => {
 		if (event.tags.length === 0) return null;
-		if (event.tags.length < 2) {
-			return event.tags.map(tag => (
-				<small
-					key={Math.random()
-						.toString(36)
-						.substring(2, 7)}
-				>
-					{tag}
-				</small>
-			));
-		}
 		return event.tags.map(tag => (
-			<small
+			<span
+				className="badge badge-pill border-grey m-1"
 				key={Math.random()
 					.toString(36)
 					.substring(2, 7)}
 			>
-				{' '}
 				{tag}
-				{` | `}
-			</small>
+			</span>
 		));
 	};
 
@@ -76,26 +64,29 @@ const NewsFeedItem = ({ event }) => {
 						</Link>
 					</small>
 				</p>
-				<p className="float-right ">
-					<small className="d-block">
-						<Link
-							to="#"
-							data-togggle="tooltip"
-							data-placement="bottom"
-							title="Read the full article"
-						>
-							<i className="fas fa-external-link-alt mx-2" />
-						</Link>
-						<Link
-							to="#"
-							data-togggle="tooltip"
-							data-placement="bottom"
-							title="Report this news piece"
-						>
-							<i className="far fa-flag mx-2" />
-						</Link>
+				<Link
+					className="float-right"
+					to="#"
+					data-togggle="tooltip"
+					data-placement="bottom"
+					title="Read the full article"
+				>
+					<small>
+						<i className="fas fa-external-link-alt mx-2" />
 					</small>
-				</p>
+				</Link>
+				<Link
+					to="#"
+					data-togggle="tooltip"
+					data-placement="bottom"
+					title="Report this news piece"
+					className="float-right"
+				>
+					<small>
+						{' '}
+						<i className="far fa-flag mx-2" />
+					</small>
+				</Link>
 			</div>
 		</div>
 	);

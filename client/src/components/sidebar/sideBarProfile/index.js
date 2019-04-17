@@ -19,6 +19,11 @@ const SBProfile = () => {
 						)}
 					</Link>
 					<p className="d-inline text-left text-white font-weight-bold align-middle ml-2">{name}</p>
+					<span className="wrp">
+						<Link to="#" className="d-inline text-white ml-4 align-middle settings">
+							<i className="fas fa-cog p-2 border align-middle rounded-circle settings-child" />
+						</Link>
+					</span>
 				</div>
 			</div>
 		</div>

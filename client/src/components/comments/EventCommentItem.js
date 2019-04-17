@@ -8,7 +8,7 @@ const EventCommentItem = ({ refetch }) => {
 	const comment = useContext(CommentContext);
 	return (
 		<Fragment>
-			<EventCommentDisplay parentCommentId={comment.id} refetch={refetch} />
+			<EventCommentDisplay refetch={refetch} />
 			<CQuery query={GET_COMMENT_COMMENTS} variables={{ id: comment.id }}>
 				{({ data: { comment }, refetch }) => {
 					const comments = comment.comments;

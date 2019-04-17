@@ -1,24 +1,24 @@
 import React, { Fragment } from 'react';
-import { useQuery } from 'react-apollo-hooks';
-import { FetchError } from '../../commons/UserActionsComponents';
+import CQuery from '../../commons/CustomQueryComponent';
 import { ProfileContext } from '../../contexts';
 import { GET_USER_FULL_PROFILE } from '../../graphql/profile/Queries';
 import ProfileHeader from './profileHeader/index';
 import ProfileSocial from './profileSocial/index';
 
 const Profile = ({ match }) => {
-	const { data, error } = useQuery(GET_USER_FULL_PROFILE, {
-		variables: { id: match.params.id },
-		suspend: true
-	});
-	if (error) return <FetchError />;
 	return (
-		<Fragment key={data.user.profile.id}>
-			<ProfileContext.Provider value={data.user.profile}>
-				<ProfileHeader />
-				{!data.user.profile.hideSocial ? <ProfileSocial /> : null}
-			</ProfileContext.Provider>
-		</Fragment>
+		<CQuery query={GET_USER_FULL_PROFILE} variables={{ id: match.params.id }}>
+			{({ data }) => {
+				return (
+					<Fragment key={data.user.profile.id}>
+						<ProfileContext.Provider value={data.user.profile}>
+							<ProfileHeader />
+							{!data.user.profile.hideSocial ? <ProfileSocial /> : null}
+						</ProfileContext.Provider>
+					</Fragment>
+				);
+			}}
+		</CQuery>
 	);
 };
 

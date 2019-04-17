@@ -6,7 +6,7 @@ import { CommentContext, EventContext, UserContext } from '../contexts';
 import { MODERATE_COMMENT } from '../graphql/comment/Mutations';
 import EventCommentActions from './commentActions/EventCommentActions';
 
-const EventCommentDisplay = ({ parentCommentId, refetch }) => {
+const EventCommentDisplay = ({ refetch }) => {
 	const user = useContext(UserContext);
 	const event = useContext(EventContext);
 	const comment = useContext(CommentContext);

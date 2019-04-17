@@ -26,19 +26,17 @@ export default function EventFeedIitem({ event }) {
 					)}
 				</h6>
 
-				<p className="text-left p-0 mt-0 mb-1">
-					<small>
-						{event.tags.map(tag => (
-							<span
-								key={Math.random()
-									.toString(36)
-									.substring(0, 7)}
-							>
-								{tag} {` `}
-							</span>
-						))}
-						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}
-					</small>
+				<p className="text-left p-0 my-1">
+					{event.tags.map(tag => (
+						<span
+							className="badge badge-pill border-grey m-1"
+							key={Math.random()
+								.toString(36)
+								.substring(2, 7)}
+						>
+							{tag}
+						</span>
+					))}
 				</p>
 				<p className="text-left">{event.abstract}</p>
 				<p className="text-left mb-0">
@@ -55,6 +53,11 @@ export default function EventFeedIitem({ event }) {
 					)}
 					<small> at {event.city}</small>
 				</p>
+				<p className="text-left mb-0">
+					<small>
+						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}
+					</small>
+				</p>
 				<p className="float-left">
 					<small>
 						by{' '}
@@ -63,26 +66,29 @@ export default function EventFeedIitem({ event }) {
 						</Link>
 					</small>
 				</p>
-				<p className="float-right ">
-					<small className="d-block">
-						<Link
-							to="#"
-							data-togggle="tooltip"
-							data-placement="bottom"
-							title="Read the full article"
-						>
-							<i className="fas fa-external-link-alt mx-2" />
-						</Link>
-						<Link
-							to="#"
-							data-togggle="tooltip"
-							data-placement="bottom"
-							title="Report this news piece"
-						>
-							<i className="far fa-flag mx-2" />
-						</Link>
+				<Link
+					className="float-right"
+					to="#"
+					data-togggle="tooltip"
+					data-placement="bottom"
+					title="Read the full article"
+				>
+					<small>
+						<i className="fas fa-external-link-alt mx-2" />
 					</small>
-				</p>
+				</Link>
+				<Link
+					to="#"
+					data-togggle="tooltip"
+					data-placement="bottom"
+					title="Report this news piece"
+					className="float-right"
+				>
+					<small>
+						{' '}
+						<i className="far fa-flag mx-2" />
+					</small>
+				</Link>
 			</div>
 		</div>
 	);

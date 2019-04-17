@@ -22,6 +22,11 @@ export const InitialState = {
 		start: new Date(),
 		end: new Date(),
 		tags: ['']
+	},
+	userSearchPref: {
+		sort: 'ascending',
+		institutional: false,
+		onlyFree: false
 	}
 };
 
@@ -37,6 +42,24 @@ export const Reducer = (state, action) => {
 			return {
 				...state,
 				stateEvent: InitialState.stateEvent
+			};
+
+		case 'SET_SORT':
+			return {
+				...state,
+				userSearchPref: action.newSort
+			};
+
+		case 'SET_INSTITIONNAL':
+			return {
+				...state,
+				userSearchPref: action.newInstitutionnal
+			};
+
+		case 'SET_ONLYFREE':
+			return {
+				...state,
+				userSearchPref: action.newOnlyFree
 			};
 
 		default:
