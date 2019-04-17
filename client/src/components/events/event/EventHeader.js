@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import PlaceholderBanner from '../../../img/placeholder_event_banner.svg';
 import { EventContext, UserContext } from '../../contexts';
 import EventMenu from './EventMenu';
+
 const EventHeader = () => {
 	const { id } = useContext(UserContext);
 	const event = useContext(EventContext);
@@ -102,4 +103,4 @@ const EventHeader = () => {
 	);
 };
 
-export default EventHeader;
+export default React.memo(EventHeader);

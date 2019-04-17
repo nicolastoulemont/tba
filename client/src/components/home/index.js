@@ -10,7 +10,6 @@ import HomeRouter from './router.js';
 const Home = props => {
 	if (window.location.pathname === '/home' || window.location.pathname === '/home/')
 		return <Redirect to="/home/news" />;
-
 	return (
 		<Fragment>
 			<StateProvider initialState={InitialState} reducer={Reducer}>
@@ -35,4 +34,4 @@ const Home = props => {
 	);
 };
 
-export default Home;
+export default React.memo(Home);

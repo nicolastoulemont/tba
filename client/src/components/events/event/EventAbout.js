@@ -13,4 +13,4 @@ const EventAbout = () => {
 	);
 };
 
-export default EventAbout;
+export default React.memo(EventAbout);

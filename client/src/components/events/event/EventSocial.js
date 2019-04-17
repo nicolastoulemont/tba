@@ -1,11 +1,11 @@
-import React, { Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import RegistrationFeed from '../../registrations/RegistrationFeed';
-import EventSocialSelector from './EventSocialSelector';
-import EventReportModal from '../../reports/EventReportModal';
+import React, { Fragment, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { EventContext } from '../../contexts';
+import RegistrationFeed from '../../registrations/RegistrationFeed';
+import EventReportModal from '../../reports/EventReportModal';
+import EventSocialSelector from './EventSocialSelector';
 
 const EventSocial = () => {
 	const { id } = useContext(EventContext);
@@ -41,4 +41,4 @@ const EventSocial = () => {
 	);
 };
 
-export default EventSocial;
+export default React.memo(EventSocial);

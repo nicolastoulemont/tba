@@ -22,7 +22,6 @@ export default function EventFeed({ match }) {
 
 	if (!dayjs(day).isValid())
 		return <Redirect to={`/home/events/${dayjs(today).format('YYYY-MM-DD')}`} />;
-	console.log(price);
 	return (
 		<Fragment>
 			<div className="row m-0 px-2">
