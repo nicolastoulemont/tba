@@ -1,17 +1,84 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useStateValue } from '../contexts/InitialState';
 
-export default function FeedSearch({
-	date,
-	page,
-	setSearch,
-	sort,
-	setSort,
-	institutional,
-	setInstitutional,
-	onlyFree,
-	setOnlyFree
-}) {
+const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price, setPrice }) => {
+	const [{ userSearchPref }, dispatch] = useStateValue();
+
+	const handleAscending = () => {
+		dispatch({
+			type: 'SET_SORT',
+			newSort: {
+				sort: 'ascending',
+				type: userSearchPref.type,
+				price: userSearchPref.price
+			}
+		});
+		setSort('ascending');
+	};
+
+	const handleDescending = () => {
+		dispatch({
+			type: 'SET_SORT',
+			newSort: {
+				sort: 'descending',
+				type: userSearchPref.type,
+				price: userSearchPref.price
+			}
+		});
+		setSort('descending');
+	};
+
+	const handlePrice = () => {
+		if (price === 0) {
+			dispatch({
+				type: 'SET_PRICE',
+				newPrice: {
+					sort: userSearchPref.sort,
+					type: userSearchPref.type,
+					price: 10000
+				}
+			});
+			setPrice(10000);
+		}
+		if (price === 10000) {
+			dispatch({
+				type: 'SET_PRICE',
+				newPrice: {
+					sort: userSearchPref.sort,
+					type: userSearchPref.type,
+					price: 0
+				}
+			});
+			setPrice(0);
+		}
+	};
+
+	const handleType = () => {
+		if (type === '') {
+			dispatch({
+				type: 'SET_TYPE',
+				newType: {
+					sort: userSearchPref.sort,
+					type: 'institutional',
+					price: userSearchPref.price
+				}
+			});
+			setType('institutional');
+		}
+		if (type === 'institutional') {
+			dispatch({
+				type: 'SET_TYPE',
+				newType: {
+					sort: userSearchPref.sort,
+					type: '',
+					price: userSearchPref.price
+				}
+			});
+			setType('');
+		}
+	};
+
 	return (
 		<div className="mx-auto py-0 px-4">
 			<p className="m-0 p-0 text-left">
@@ -38,7 +105,7 @@ export default function FeedSearch({
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Sort from earliest to lastest"
-						onClick={e => setSort('ascending')}
+						onClick={e => handleAscending(e)}
 					>
 						{' '}
 						{sort === 'ascending' ? (
@@ -52,7 +119,7 @@ export default function FeedSearch({
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Sort from lastest to earliest"
-						onClick={e => setSort('descending')}
+						onClick={e => handleDescending(e)}
 					>
 						{' '}
 						{sort === 'descending' ? (
@@ -66,10 +133,10 @@ export default function FeedSearch({
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Only show institutional events"
-						onClick={e => setInstitutional(!institutional)}
+						onClick={e => handleType(e)}
 					>
 						{' '}
-						{institutional ? (
+						{type === 'institutional' ? (
 							<i className="fas fa-university text-blue mx-2 mt-2" />
 						) : (
 							<i className="fas fa-university mx-2 mt-2" />
@@ -81,10 +148,10 @@ export default function FeedSearch({
 							data-togggle="tooltip"
 							data-placement="bottom"
 							title="Only show free events"
-							onClick={e => setOnlyFree(!onlyFree)}
+							onClick={e => handlePrice(e)}
 						>
 							{' '}
-							{onlyFree ? (
+							{price === 0 ? (
 								<i className="fab fa-creative-commons-nc-eu text-blue mx-2 mt-2" />
 							) : (
 								<i className="fab fa-creative-commons-nc-eu mx-2 mt-2" />
@@ -95,4 +162,6 @@ export default function FeedSearch({
 			</div>
 		</div>
 	);
-}
+};
+
+export default FeedSearch;

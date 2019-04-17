@@ -12,6 +12,8 @@ module.exports = {
 			banner_URL: String
 			description: String!
 			isPublic: Boolean!
+			type: String
+			price: Float!
 			city: String!
 			address: String!
 			start: Date!
@@ -36,7 +38,14 @@ module.exports = {
 		extend type Query {
 			event(id: ID!): EventItem
 			events(limit: Int): [EventItem!]!
-			searchDailyEvents(date: String!, search: String, limit: Int!, sort: String!): [EventItem!]!
+			searchDailyEvents(
+				date: String!
+				search: String
+				limit: Int!
+				sort: String!
+				type: String
+				price: Float
+			): [EventItem!]!
 			userFutureHostedEvents(user_ID: ID!, date: String): [EventItem!]!
 			userPastHostedEvents(user_ID: ID!, date: String): [EventItem!]!
 		}
@@ -49,6 +58,8 @@ module.exports = {
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!
+				type: String
+				price: Float!
 				city: String!
 				address: String!
 				start: String!
@@ -62,6 +73,8 @@ module.exports = {
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!
+				type: String
+				price: Float!
 				city: String!
 				address: String!
 				start: String!
@@ -104,9 +117,11 @@ module.exports = {
 				const date = new Date(args.date);
 				const dayafter = new Date(new Date(args.date).setDate(new Date(args.date).getDate() + 1));
 				try {
-					return await EventItem.find({
+					return EventItem.find({
 						start: { $gte: date, $lte: dayafter },
 						isPublic: true,
+						type: { $regex: new RegExp(args.type, 'i') },
+						price: { $lte: args.price },
 						$or: [
 							{ name: { $regex: new RegExp(args.search, 'i') } },
 							{ abstract: { $regex: new RegExp(args.search, 'i') } }

@@ -12,7 +12,7 @@ export default function Navbar() {
 
 	return (
 		<div className="d-none d-md-block">
-			<nav className="navbar sticky-top navbar-expand-sm bg-white border-bottom">
+			<nav className="navbar sticky-top navbar-expand-sm bg-white">
 				<div className="container px-0">
 					<Link className="navbar-brand text-black" to="/">
 						EU-WATCHER

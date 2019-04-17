@@ -23,7 +23,17 @@ const EventHeader = () => {
 					<div className="col-md-10">
 						<div className="text-center text-md-left my-2">
 							<div className="title">
-								<h4 className="font-weight-bold text-uppercase">{event.name}</h4>
+								<h4 className="font-weight-bold text-uppercase">
+									{event.name}{' '}
+									{event.type === 'institutional' ? (
+										<i
+											data-togggle="tooltip"
+											data-placement="bottom"
+											title="Institutional Event"
+											className="fas fa-university ml-2"
+										/>
+									) : null}
+								</h4>
 								<Link
 									to={{ pathname: `/home/profile/${event.user_ID}` }}
 									className="font-weight-bold d-inline"
@@ -59,15 +69,20 @@ const EventHeader = () => {
 								{event.address}, {event.city}
 							</p>
 							{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
-								<p>
+								<p className="mb-0">
 									{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
 									{new Date(event.end).toTimeString().slice(0, 5)}
 								</p>
 							) : (
-								<p>
+								<p className="mb-0">
 									On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
 									{new Date(event.end).toUTCString().slice(0, 22)}
 								</p>
+							)}
+							{event.price === 0 ? (
+								<small className="font-italic">Free Event</small>
+							) : (
+								<small className="font-italic">Entrance Fee : {event.price} €</small>
 							)}
 							<div className="d-none d-md-block my-1">
 								<div className="text-left mr-4">

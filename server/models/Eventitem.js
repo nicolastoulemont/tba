@@ -24,6 +24,14 @@ const eventSchema = new Schema({
 		default: true,
 		required: true
 	},
+	type: {
+		type: String
+	},
+	price: {
+		type: Number,
+		default: 0,
+		required: true
+	},
 	city: {
 		type: String,
 		required: true

@@ -13,7 +13,7 @@ import { CREATE_EVENT } from '../../graphql/event/Mutations';
 import { GET_USER_FUTURE_HOSTED_EVENTS } from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 
-const CreateEvent = () => {
+const CreateEvent = ({ history }) => {
 	const user = useContext(UserContext);
 	const today = dayjs().format('YYYY-MM-DD');
 
@@ -22,6 +22,8 @@ const CreateEvent = () => {
 	const [banner, setBanner] = useState(null);
 	const [description, setDescription] = useState('');
 	const [isPublic, setIsPublic] = useState(true);
+	const [type, setType] = useState('');
+	const [price, setPrice] = useState(0);
 	const [city, setCity] = useState('');
 	const [address, setAddress] = useState('');
 	const [start, setStart] = useState(new Date());
@@ -37,6 +39,16 @@ const CreateEvent = () => {
 	const deleteTag = tag => {
 		setTagsGroup([...tagsGroup, tag]);
 		setEventTags(eventTags.filter(item => item !== tag));
+	};
+
+	const handleType = () => {
+		if (type === '') setType('institutional');
+		if (type === 'institutional') setType('');
+	};
+
+	const setTypeCheckBox = () => {
+		if (type === '') return false;
+		if (type === 'institutional') return true;
 	};
 
 	const uploadToS3 = async (banner, signedRequest) => {
@@ -57,7 +69,7 @@ const CreateEvent = () => {
 		});
 		const { signedRequest, url } = response.data.signS3;
 		await uploadToS3(banner, signedRequest);
-		await addEvent({
+		const res = await addEvent({
 			variables: {
 				user_ID: user.id,
 				name,
@@ -65,6 +77,8 @@ const CreateEvent = () => {
 				banner_URL: url,
 				description,
 				isPublic,
+				type,
+				price: parseInt(price),
 				city,
 				address,
 				start,
@@ -72,16 +86,19 @@ const CreateEvent = () => {
 				tags: eventTags
 			}
 		});
+		history.push(`/home/event/${res.data.addEvent.event.id}`);
 	};
 
 	const addEventWithOutBanner = async addEvent => {
-		await addEvent({
+		const res = await addEvent({
 			variables: {
 				user_ID: user.id,
 				name,
 				abstract,
 				description,
 				isPublic,
+				type,
+				price: parseInt(price),
 				city,
 				address,
 				start,
@@ -89,6 +106,7 @@ const CreateEvent = () => {
 				tags: eventTags
 			}
 		});
+		history.push(`/home/event/${res.data.addEvent.event.id}`);
 	};
 
 	const createEvent = async (e, addEvent, signS3) => {
@@ -179,7 +197,7 @@ const CreateEvent = () => {
 										<div className="mt-2 pt-2">
 											<p className="p-0 m-0">Event End</p>
 											<DatePicker
-												selected={new Date(start)}
+												selected={new Date(end)}
 												onChange={date => setEnd(dayjs(date).format('YYYY-MM-DDTHH:mm'))}
 												showTimeSelect
 												timeFormat="HH:mm"
@@ -202,8 +220,15 @@ const CreateEvent = () => {
 									main="Add tags to your event"
 									secondary="It will make it easier to find for users"
 								/>
-
-								<div className="form-check float-left my-2">
+								<InputField
+									type="number"
+									labelText="Price in €"
+									value={price}
+									onChange={e => setPrice(e.target.value)}
+									min={0}
+									max={10000}
+								/>
+								<div className="form-check float-left mt-2">
 									<input
 										className="form-check-input"
 										type="checkbox"
@@ -213,14 +238,33 @@ const CreateEvent = () => {
 										checked={isPublic}
 										onChange={e => setIsPublic(!isPublic)}
 									/>
-									<label className="form-check-label text-left" htmlFor="hideSocialcheckBox">
+									<label className="form-check-label text-left" htmlFor="isPublicCheckBox">
 										Public event
 										<small className="font-italic text-muted ml-2">
 											&#40;Private events are not referenced and only accessible with a special URL
-											to share with your selections of persons&#41;
+											to share with your selection of people&#41;
 										</small>
 									</label>
 								</div>
+								<div className="form-check float-left mt-2 mb-4">
+									<input
+										className="form-check-input"
+										type="checkbox"
+										id="isInstitutionalCheckBox"
+										name="institutional"
+										value={setTypeCheckBox(type)}
+										checked={setTypeCheckBox(type)}
+										onChange={e => handleType(e)}
+									/>
+									<label className="form-check-label text-left" htmlFor="isInstitutionalCheckBox">
+										Institutional Event
+										<small className="font-italic text-muted ml-2">
+											&#40;Institutionals Events are the ones organized by or hosted by the EU
+											institutions&#41;
+										</small>
+									</label>
+								</div>
+
 								<input type="submit" className="btn btn-darkblue btn-block my-4" />
 							</div>
 						</form>

@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
+import dayjs from 'dayjs';
+import React, { useContext, useState } from 'react';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import dayjs from 'dayjs';
 import { Spring } from 'react-spring/renderprops';
-import SBProfile from './sideBarProfile';
-import SBPanel from './sideBarPanel';
-import SBNoProfile from './sideBarNoProfile';
 import { UserContext } from '../contexts';
+import SBNoProfile from './sideBarNoProfile';
+import SBPanel from './sideBarPanel';
+import SBProfile from './sideBarProfile';
 
 const SideBar = ({ history }) => {
 	const { profile } = useContext(UserContext);
@@ -34,8 +34,8 @@ const SideBar = ({ history }) => {
 			{path.includes('events') || path.includes('news') ? (
 				<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
 					{props => (
-						<div className="row bg-white pr-0 ml-2 mb-4" style={props}>
-							<div className="col">
+						<div className="row ml-2 mb-4" style={props}>
+							<div className="col mx-auto bg-white px-2">
 								<DayPicker
 									selectedDays={selectedDay}
 									onDayClick={handleDayClick}

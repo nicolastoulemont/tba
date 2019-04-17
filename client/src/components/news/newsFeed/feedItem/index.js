@@ -32,9 +32,7 @@ const NewsFeedItem = ({ event }) => {
 				<h6 className="text-left mb-0">
 					<Link to={`/home/event/${event.id}`}> {event.name} </Link> -{' '}
 					{event.createdAt !== event.updatedAt ? (
-						<small className="font-italic">
-							{dayjs(event.updatedAt).fromNow()} <small>edited</small>{' '}
-						</small>
+						<small className="font-italic">edited {dayjs(event.updatedAt).fromNow()}</small>
 					) : (
 						<small className="font-italic">{dayjs(event.createdAt).fromNow()}</small>
 					)}

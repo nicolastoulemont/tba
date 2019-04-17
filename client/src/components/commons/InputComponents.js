@@ -9,7 +9,9 @@ export const InputField = ({
 	onChange,
 	labelText,
 	usageExpl,
-	optional
+	optional,
+	min,
+	max
 }) => (
 	<div className="form-group">
 		{labelText ? (
@@ -25,12 +27,14 @@ export const InputField = ({
 		) : null}
 		<div className="d-block">
 			<input
-				className="text-secondary form-control form-control-sm my-1"
+				className="form-control form-control-sm my-1"
 				type={type}
 				name={name}
 				value={value}
 				placeholder={placeholder}
 				onChange={onChange}
+				min={min}
+				max={max}
 			/>
 		</div>
 		{usageExpl ? (

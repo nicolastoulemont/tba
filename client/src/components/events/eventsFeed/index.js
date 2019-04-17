@@ -4,14 +4,17 @@ import { Redirect } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
 import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
+import { useStateValue } from '../../contexts/InitialState';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
 import EventFeedItem from './feedItem';
 
 export default function EventFeed({ match }) {
+	const [{ userSearchPref }, dispatch] = useStateValue();
+
 	const [search, setSearch] = useState('');
-	const [sort, setSort] = useState('ascending');
-	const [institutional, setInstitutional] = useState(false);
-	const [onlyFree, setOnlyFree] = useState(false);
+	const [sort, setSort] = useState(userSearchPref.sort);
+	const [type, setType] = useState(userSearchPref.type);
+	const [price, setPrice] = useState(userSearchPref.price);
 
 	const day = match.params.day;
 	const displayDay = dayjs(day).format('dddd');
@@ -19,7 +22,7 @@ export default function EventFeed({ match }) {
 
 	if (!dayjs(day).isValid())
 		return <Redirect to={`/home/events/${dayjs(today).format('YYYY-MM-DD')}`} />;
-
+	console.log(price);
 	return (
 		<Fragment>
 			<div className="row m-0 px-2">
@@ -30,13 +33,23 @@ export default function EventFeed({ match }) {
 						setSearch={setSearch}
 						sort={sort}
 						setSort={setSort}
-						institutional={institutional}
-						setInstitutional={setInstitutional}
-						onlyFree={onlyFree}
-						setOnlyFree={setOnlyFree}
+						type={type}
+						setType={setType}
+						price={price}
+						setPrice={setPrice}
 					/>
 					<div className="border-top">
-						<CQuery query={SEARCH_DAILY_EVENTS} variables={{ date: day, search, limit: 10, sort }}>
+						<CQuery
+							query={SEARCH_DAILY_EVENTS}
+							variables={{
+								date: day,
+								search,
+								limit: 10,
+								sort,
+								type,
+								price: price
+							}}
+						>
 							{({ data }) => {
 								const events = data.searchDailyEvents;
 								return (

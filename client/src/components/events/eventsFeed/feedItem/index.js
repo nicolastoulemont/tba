@@ -17,10 +17,16 @@ export default function EventFeedIitem({ event }) {
 			<div className="media-body">
 				<h6 className="text-left mb-0">
 					<Link to={`/home/event/${event.id}`}> {event.name} </Link> -{' '}
+					{event.type === 'institutional' ? (
+						<i
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Institutional Event"
+							className="fas fa-university mx-2"
+						/>
+					) : null}
 					{event.createdAt !== event.updatedAt ? (
-						<small className="font-italic">
-							{dayjs(event.updatedAt).fromNow()} <small>edited</small>{' '}
-						</small>
+						<small className="font-italic">edited {dayjs(event.updatedAt).fromNow()}</small>
 					) : (
 						<small className="font-italic">{dayjs(event.createdAt).fromNow()}</small>
 					)}
@@ -55,7 +61,12 @@ export default function EventFeedIitem({ event }) {
 				</p>
 				<p className="text-left mb-0">
 					<small>
-						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}
+						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}{' '}
+						{event.price === 0 ? (
+							<span className="font-italic"> - Free Event</span>
+						) : (
+							<span className="font-italic"> - Entrance Fee : {event.price} €</span>
+						)}
 					</small>
 				</p>
 				<p className="float-left">

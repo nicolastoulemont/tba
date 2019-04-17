@@ -17,6 +17,8 @@ export const InitialState = {
 		banner_URL: null,
 		description: '',
 		isPublic: true,
+		type: '',
+		price: 0,
 		city: '',
 		address: '',
 		start: new Date(),
@@ -25,8 +27,8 @@ export const InitialState = {
 	},
 	userSearchPref: {
 		sort: 'ascending',
-		institutional: false,
-		onlyFree: false
+		type: '',
+		price: 10000
 	}
 };
 
@@ -50,16 +52,16 @@ export const Reducer = (state, action) => {
 				userSearchPref: action.newSort
 			};
 
-		case 'SET_INSTITIONNAL':
+		case 'SET_TYPE':
 			return {
 				...state,
-				userSearchPref: action.newInstitutionnal
+				userSearchPref: action.newType
 			};
 
-		case 'SET_ONLYFREE':
+		case 'SET_PRICE':
 			return {
 				...state,
-				userSearchPref: action.newOnlyFree
+				userSearchPref: action.newPrice
 			};
 
 		default:

@@ -1,13 +1,29 @@
 import gql from 'graphql-tag';
 
 export const SEARCH_DAILY_EVENTS = gql`
-	query SearchDailyEvents($date: String!, $search: String, $limit: Int!, $sort: String!) {
-		searchDailyEvents(date: $date, search: $search, limit: $limit, sort: $sort) {
+	query SearchDailyEvents(
+		$date: String!
+		$search: String
+		$limit: Int!
+		$sort: String!
+		$type: String
+		$price: Float
+	) {
+		searchDailyEvents(
+			date: $date
+			search: $search
+			limit: $limit
+			sort: $sort
+			type: $type
+			price: $price
+		) {
 			id
 			user_ID
 			name
 			abstract
 			isPublic
+			type
+			price
 			start
 			end
 			city
@@ -33,6 +49,8 @@ export const GET_EVENTS = gql`
 			name
 			abstract
 			isPublic
+			type
+			price
 			tags
 			city
 			address
@@ -58,6 +76,8 @@ export const GET_EVENT = gql`
 			id
 			user_ID
 			isPublic
+			type
+			price
 			name
 			abstract
 			banner_URL
