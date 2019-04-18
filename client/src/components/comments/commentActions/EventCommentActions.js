@@ -1,12 +1,12 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import LikesFeed from '../../likes/commentLikes/likesFeed/index';
-import CommentReply from './CommentReply';
-import CommentEdit from './CommentEdit';
-import CommentReport from './CommentReport';
+import React, { Fragment, useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CommentContext } from '../../contexts';
+import LikesFeed from '../../likes/commentLikes/likesFeed/index';
+import CommentEdit from './CommentEdit';
+import CommentReply from './CommentReply';
+import CommentReport from './CommentReport';
 
 const EventCommentActions = () => {
 	const { createdAt, updatedAt } = useContext(CommentContext);
@@ -15,19 +15,31 @@ const EventCommentActions = () => {
 	const [reportForm, setReportForm] = useState(false);
 
 	const showReply = e => {
-		setReplyForm(true);
-		setEditForm(false);
-		setReportForm(false);
+		if (replyForm) {
+			hideForms();
+		} else {
+			setReplyForm(true);
+			setEditForm(false);
+			setReportForm(false);
+		}
 	};
 	const showEdit = e => {
-		setReplyForm(false);
-		setEditForm(true);
-		setReportForm(false);
+		if (editForm) {
+			hideForms();
+		} else {
+			setReplyForm(false);
+			setEditForm(true);
+			setReportForm(false);
+		}
 	};
 	const showReport = e => {
-		setReplyForm(false);
-		setEditForm(false);
-		setReportForm(true);
+		if (reportForm) {
+			hideForms();
+		} else {
+			setReplyForm(false);
+			setEditForm(false);
+			setReportForm(true);
+		}
 	};
 
 	const hideForms = e => {

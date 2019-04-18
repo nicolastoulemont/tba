@@ -7,16 +7,16 @@ import DefaultAvatar from '../../../../img/default_avatar.svg';
 const EventFeedItem = ({ event }) => {
 	dayjs.extend(relativeTime);
 	return (
-		<div className="media my-2 px-2 border-bottom">
+		<div className="media my-2  border-bottom">
 			<Link to={`/home/profile/${event.user_ID}`}>
 				{event.creator.profile.picture_URL ? (
 					<img
 						src={event.creator.profile.picture_URL}
-						className="small-avatar rounded-circle mr-3"
+						className="small-avatar rounded-circle mr-2"
 						alt="User Avatar"
 					/>
 				) : (
-					<img src={DefaultAvatar} className="small-avatar rounded-circle mr-3" alt="User Avatar" />
+					<img src={DefaultAvatar} className="small-avatar rounded-circle mr-2" alt="User Avatar" />
 				)}
 			</Link>
 			<div className="media-body">
@@ -51,6 +51,12 @@ const EventFeedItem = ({ event }) => {
 				</p>
 				<p className="text-left">{event.abstract}</p>
 				<p className="text-left mb-0">
+					{' '}
+					<small>
+						{event.address}, {event.city}
+					</small>
+				</p>
+				<p className="text-left mb-0">
 					{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
 						<small>
 							From {new Date(event.start).toTimeString().slice(0, 5)} to{' '}
@@ -62,9 +68,6 @@ const EventFeedItem = ({ event }) => {
 							{new Date(event.end).toUTCString().slice(0, 22)}
 						</small>
 					)}
-					<small>
-						{` `}- {event.address}, {event.city}
-					</small>
 				</p>
 				<p className="text-left mb-0">
 					<small>

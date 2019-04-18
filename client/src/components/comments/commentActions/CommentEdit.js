@@ -1,6 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
-import { Link } from 'react-router-dom';
 import { CommentContext } from '../../contexts';
 import { EDIT_COMMENT } from '../../graphql/comment/Mutations';
 import { GET_COMMENT_COMMENTS } from '../../graphql/comment/Queries';
@@ -10,10 +9,7 @@ const CommentEdit = ({ hideForms }) => {
 	const [text, setText] = useState('');
 
 	const commentEdit = (e, text, editComment) => {
-		if (
-			(e.type === 'click' && e.target.className === 'fa fa-paper-plane text-white') ||
-			(e.type === 'keydown' && e.keyCode === 13)
-		) {
+		if (e.type === 'keydown' && e.keyCode === 13) {
 			e.preventDefault();
 			editComment({
 				variables: { _id: comment.id, text }
@@ -35,22 +31,13 @@ const CommentEdit = ({ hideForms }) => {
 					<div className="input-group input-group-sm py-2">
 						<input
 							type="text"
-							className="form-control"
+							className="form-control rounded-pill"
 							placeholder="Edit your comment..."
 							onChange={e => setText(e.target.value)}
 							name="text"
 							value={text}
 							onKeyDown={e => commentEdit(e, text, editComment)}
 						/>
-						<div className="input-group-append">
-							<Link
-								to="#"
-								className="btn bg-darkblue"
-								onClick={e => commentEdit(e, text, editComment)}
-							>
-								<i className="fa fa-paper-plane text-white" aria-hidden="true" />
-							</Link>
-						</div>
 					</div>
 				)}
 			</Mutation>

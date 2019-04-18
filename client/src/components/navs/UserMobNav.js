@@ -10,27 +10,27 @@ const UserMobNav = () => {
 					<div className="row">
 						<div className="col px-0 text-center pl-1">
 							<Link className="nav-link" to="/home/news">
-								<i className="text-white fa fa-home" />
+								<i className="fa fa-home" />
 							</Link>
 						</div>
-						<div className="col px-0 text-white text-center">
+						<div className="col px-0 text-center">
 							<Link className="nav-link" to={`/home/events/${today}`}>
-								<i className="text-white far fa-calendar" />
+								<i className="far fa-calendar" />
 							</Link>
 						</div>
-						<div className="col px-0 text-white text-center pr-2">
+						<div className="col px-0 text-center pr-2">
 							<Link className="nav-link" to="/home/profiles">
-								<i className="text-white fas fa-users" />
+								<i className="fas fa-users" />
 							</Link>
 						</div>
-						<div className="col px-0 text-white text-center pr-2">
+						<div className="col px-0 text-center pr-2">
 							<Link className="nav-link" to="/home/organisations">
-								<i className="text-white fas fa-building" />
+								<i className="fas fa-building" />
 							</Link>
 						</div>
-						<div className="col px-0 text-white text-center pr-2">
+						<div className="col px-0 text-center pr-2">
 							<Link className="nav-link" to="/home/organisations">
-								<i className="text-white fas fa-bars" />
+								<i className="fas fa-bars" />
 							</Link>
 						</div>
 					</div>

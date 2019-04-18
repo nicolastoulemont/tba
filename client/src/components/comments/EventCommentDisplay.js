@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Mutation } from 'react-apollo';
 import { Link } from 'react-router-dom';
-import { RespSmallAvatarLink, UserNameLink } from '../commons/CustomLinks';
+import DefaultAvatar from '../../img/default_avatar.svg';
 import { CommentContext, EventContext, UserContext } from '../contexts';
 import { MODERATE_COMMENT } from '../graphql/comment/Mutations';
 import EventCommentActions from './commentActions/EventCommentActions';
@@ -32,28 +32,48 @@ const EventCommentDisplay = ({ refetch }) => {
 		return (
 			<div className="list-group-item border-0 py-1 px-2" key={comment.id}>
 				<div className="row">
-					<div className="col-1">
-						<RespSmallAvatarLink
-							id={comment.user_ID}
-							avatar={comment.creator.profile.picture_URL}
-						/>
+					<div className="d-none d-md-block col-md-1">
+						<Link
+							to={{ pathname: `/home/profile/${comment.user_ID}` }}
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="See this person profile"
+						>
+							{comment.creator.profile.picture_URL ? (
+								<img
+									className="rounded-circle border-avatar small-avatar mx-auto"
+									src={comment.creator.profile.picture_URL}
+									alt="User Avatar"
+								/>
+							) : (
+								<img
+									className="rounded-circle border-avatar small-avatar mx-auto"
+									src={DefaultAvatar}
+									alt="User Avatar"
+								/>
+							)}
+						</Link>
 					</div>
-					<div className="col-9 col-md-10 mx-0 pr-0 pl-2">
-						<div className="text-left mx-auto">
-							<UserNameLink id={comment.user_ID} name={comment.creator.profile.name} />
-							<span className="d-none d-md-inline-block ml-2">{comment.text}</span>
-							<span className="d-inline-block d-md-none ml-4">{comment.text}</span>
+					<div className="col-11 col-md-10  pr-0 pl-2">
+						<div className="text-left">
+							<Link
+								to={{
+									pathname: `/home/profile/${comment.user_ID}`
+								}}
+								className="d-inline-block font-weight-bold text-darkblue"
+								data-togggle="tooltip"
+								data-placement="bottom"
+								title="See this person profile"
+							>
+								{comment.creator.profile.name}
+							</Link>
+							<span className="d-inline-block ml-2">{comment.text}</span>
 							<EventCommentActions />
 						</div>
 					</div>
 					<div className="col-1 mx-0">
 						{user.id === comment.user_ID || user.id === event.user_ID ? (
-							<Mutation
-								mutation={MODERATE_COMMENT}
-								// refetchQueries={() => {
-								// 	return [{ query: GET_COMMENT_COMMENTS, variables: { id: parentCommentId } }];
-								// }}
-							>
+							<Mutation mutation={MODERATE_COMMENT}>
 								{(moderateComment, e) => (
 									<Link
 										to="#"

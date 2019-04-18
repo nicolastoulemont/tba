@@ -19,18 +19,19 @@ body {
 	width: 100%;
 }
 
-.user-nav {
+.nav-link {
 	border-radius: 25px;
 }
 
-.user-nav:hover {
+.nav-link:hover {
 	background-color: #e6ecf0;
 }
 
 .mobileNav {
 	position: fixed;
 	bottom: 0;
-	background-color: #29456e;
+	border-top: 1px solid #e6ecf0;
+	background-color: white;
 	z-index: 2;
 	margin-top: 75px;
 	height: 45px;

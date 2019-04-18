@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import DefaultAvatar from '../../../img/default_avatar.svg';
 import { UserContext } from '../../contexts/index';
-
 const UNav = () => {
 	const {
 		id,
@@ -17,9 +17,9 @@ const UNav = () => {
 	return (
 		<div className="collapse navbar-collapse" id="mobile-nav">
 			<ul className="navbar-nav ml-auto">
-				<li className="nav-item pr-4">
+				<li className="nav-item pr-4 mt-1">
 					<Link
-						className="nav-link "
+						className="nav-link"
 						to="/home/news"
 						data-togggle="tooltip"
 						data-placement="bottom"
@@ -29,7 +29,7 @@ const UNav = () => {
 						<h6 className="d-inline ml-2">Home</h6>
 					</Link>
 				</li>
-				<li className="nav-item pr-4">
+				<li className="nav-item pr-4 mt-1">
 					<Link
 						className="nav-link"
 						to={`/home/events/${today}`}
@@ -41,7 +41,7 @@ const UNav = () => {
 						<h6 className="d-inline ml-2">Events</h6>
 					</Link>
 				</li>
-				<li className="nav-item pr-4">
+				<li className="nav-item pr-4 mt-1">
 					<Link
 						className="nav-link"
 						to="/home/profiles"
@@ -53,9 +53,9 @@ const UNav = () => {
 						<h6 className="d-inline ml-2">Profiles</h6>
 					</Link>
 				</li>
-				<li className="nav-item pr-4">
+				<li className="nav-item pr-4 mt-1">
 					<Link
-						className="nav-link"
+						className="nav-link "
 						to="/home/organisations"
 						data-togggle="tooltip"
 						data-placement="bottom"
@@ -67,7 +67,7 @@ const UNav = () => {
 				</li>
 				<li className="nav-item dropdown">
 					<Link
-						className="nav-link user-nav"
+						className="nav-link"
 						to="#"
 						data-toggle="dropdown"
 						href="#"
@@ -85,7 +85,11 @@ const UNav = () => {
 								alt="User Avatar"
 							/>
 						) : (
-							<i className="fas fa-user-astronaut" />
+							<img
+								className="rounded-circle ultra-small-avatar"
+								src={DefaultAvatar}
+								alt="User Avatar"
+							/>
 						)}
 						<p className="d-inline text-left font-weight-bold align-middle ml-2">{name}</p>
 						<i className="fas fa-chevron-down align-middle ml-4" />

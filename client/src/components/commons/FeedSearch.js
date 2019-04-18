@@ -80,7 +80,7 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 	};
 
 	return (
-		<div className="mx-auto py-0 px-4">
+		<div className="mx-auto py-0 px-2">
 			<p className="m-0 p-0 text-left">
 				<small>
 					{' '}
@@ -88,13 +88,8 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 				</small>
 			</p>
 			<div className="input-group input-group-sm mb-3">
-				<div className="input-group-prepend">
-					<span className="input-group-text">
-						<i className="fas fa-search" />
-					</span>
-				</div>
 				<input
-					className="form-control form-control-lg"
+					className="form-control form-control-lg rounded-pill"
 					type="text"
 					placeholder="Search..."
 					onChange={e => setSearch(e.target.value)}
