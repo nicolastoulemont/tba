@@ -2,17 +2,22 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DefaultAvatar from '../../../../img/default_avatar.svg';
 
 const EventFeedItem = ({ event }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2 px-2 border-bottom">
 			<Link to={`/home/profile/${event.user_ID}`}>
-				<img
-					src={event.creator.profile.picture_URL}
-					className="small-avatar rounded-circle mr-3"
-					alt="User Avatar"
-				/>
+				{event.creator.profile.picture_URL ? (
+					<img
+						src={event.creator.profile.picture_URL}
+						className="small-avatar rounded-circle mr-3"
+						alt="User Avatar"
+					/>
+				) : (
+					<img src={DefaultAvatar} className="small-avatar rounded-circle mr-3" alt="User Avatar" />
+				)}
 			</Link>
 			<div className="media-body">
 				<h6 className="text-left mb-0">

@@ -19,6 +19,14 @@ body {
 	width: 100%;
 }
 
+.user-nav {
+	border-radius: 25px;
+}
+
+.user-nav:hover {
+	background-color: #e6ecf0;
+}
+
 .mobileNav {
 	position: fixed;
 	bottom: 0;
@@ -109,7 +117,8 @@ li {
 	list-style: none;
 }
 
-a {
+a,
+.dropdown-item {
 	text-decoration: none;
 	color: #5a6268;
 }

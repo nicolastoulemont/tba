@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
 import { REGISTER_AND_LOGIN_USER } from '../graphql/user/Mutations';
+import UserNav from '../navs/userNav';
 
 const Register = props => {
 	const [email, setEmail] = useState('');
@@ -30,43 +31,46 @@ const Register = props => {
 
 	return (
 		<Fragment>
-			<Mutation mutation={REGISTER_AND_LOGIN_USER}>
-				{(registerAndLogin, e) => (
-					<div className="row">
-						<div className="col-md-6 mt-4 mx-auto">
-							<h1 className="display-4 text-center">Register</h1>
-							<p className="lead text-center">Create your eu-watcher account</p>
-							<form onSubmit={e => registerAndLoginUser(e, email, password, registerAndLogin)}>
-								<InputField
-									type="text"
-									placeholder="Please enter your email adress"
-									name="email"
-									value={email}
-									onChange={onChange}
-								/>
-								<InputField
-									type="password"
-									placeholder="Please enter your password"
-									name="password"
-									value={password}
-									onChange={onChange}
-								/>
-								<input type="submit" className="btn btn-info btn-block mt-4" />
-								{errors ? (
-									<div className="form-group mt-2 sm">
-										<ul className="list-group list-group-flush" />
-										{errors.map(error => (
-											<li className="list-group-item list-group-item-danger" key={error.path}>
-												<small>{error.message}</small>
-											</li>
-										))}
-									</div>
-								) : null}
-							</form>
-						</div>
+			<UserNav />
+			<div className="container">
+				<div className="row">
+					<div className="col-md-6 mt-4 mx-auto">
+						<h1 className="display-4 text-center">Register</h1>
+						<p className="lead text-center">Create your eu-watcher account</p>
+						<Mutation mutation={REGISTER_AND_LOGIN_USER}>
+							{(registerAndLogin, e) => (
+								<form onSubmit={e => registerAndLoginUser(e, email, password, registerAndLogin)}>
+									<InputField
+										type="text"
+										placeholder="Please enter your email adress"
+										name="email"
+										value={email}
+										onChange={onChange}
+									/>
+									<InputField
+										type="password"
+										placeholder="Please enter your password"
+										name="password"
+										value={password}
+										onChange={onChange}
+									/>
+									<input type="submit" className="btn btn-info btn-block mt-4" />
+									{errors ? (
+										<div className="form-group mt-2 sm">
+											<ul className="list-group list-group-flush" />
+											{errors.map(error => (
+												<li className="list-group-item list-group-item-danger" key={error.path}>
+													<small>{error.message}</small>
+												</li>
+											))}
+										</div>
+									) : null}
+								</form>
+							)}
+						</Mutation>
 					</div>
-				)}
-			</Mutation>
+				</div>
+			</div>
 		</Fragment>
 	);
 };

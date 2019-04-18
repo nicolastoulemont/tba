@@ -12,8 +12,6 @@ import Error404 from './components/commons/IncorrectRoute';
 import { AuthContext, AuthContextValue } from './components/contexts';
 import Home from './components/home';
 import Landing from './components/layout/Landing';
-import MobileNav from './components/layout/MobileNav';
-import Navbar from './components/layout/Navbar';
 import { uri } from './config/config';
 
 const client = new ApolloClient({
@@ -36,18 +34,14 @@ const App = () => (
 			<AuthContext.Provider value={AuthContextValue}>
 				<div className="App">
 					<Router>
-						<Route component={Navbar} />
-						<div className="container">
-							<Switch>
-								<Route exact path="/" component={Landing} />
-								<Route exact path="/register" component={Register} />
-								<Route exact path="/login" component={Login} />
-								<PrivateRoute path="/home" component={Home} />
-								<Route component={Error404} />
-								<Route path="/error" component={Error404} />
-							</Switch>
-						</div>
-						<Route component={MobileNav} />
+						<Switch>
+							<Route exact path="/" component={Landing} />
+							<Route exact path="/register" component={Register} />
+							<Route exact path="/login" component={Login} />
+							<PrivateRoute path="/home" component={Home} />
+							<Route component={Error404} />
+							<Route path="/error" component={Error404} />
+						</Switch>
 					</Router>
 				</div>
 			</AuthContext.Provider>
