@@ -8,8 +8,8 @@ import { useStateValue } from '../../contexts/InitialState';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
 import EventFeedItem from './feedItem';
 
-export default function EventFeed({ match }) {
-	const [{ userSearchPref }, dispatch] = useStateValue();
+const EventFeed = ({ match }) => {
+	const [{ userSearchPref }] = useStateValue();
 
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState(userSearchPref.sort);
@@ -46,7 +46,7 @@ export default function EventFeed({ match }) {
 								limit: 10,
 								sort,
 								type,
-								price: price
+								price
 							}}
 						>
 							{({ data }) => {
@@ -77,4 +77,6 @@ export default function EventFeed({ match }) {
 			</div>
 		</Fragment>
 	);
-}
+};
+
+export default EventFeed;

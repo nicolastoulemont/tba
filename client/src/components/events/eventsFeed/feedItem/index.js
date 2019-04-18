@@ -57,7 +57,9 @@ export default function EventFeedIitem({ event }) {
 							{new Date(event.end).toUTCString().slice(0, 22)}
 						</small>
 					)}
-					<small> at {event.city}</small>
+					<small>
+						{` `}- {event.address}, {event.city}
+					</small>
 				</p>
 				<p className="text-left mb-0">
 					<small>
