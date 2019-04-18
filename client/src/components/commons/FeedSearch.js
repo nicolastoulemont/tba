@@ -187,7 +187,7 @@ const FeedSearch = ({
 							to="#"
 							data-togggle="tooltip"
 							data-placement="bottom"
-							title="Filter with your profile Tags"
+							title="Filter with your profile topics"
 							onClick={handleTags}
 						>
 							{' '}

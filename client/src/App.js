@@ -3,7 +3,6 @@ import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloProviderHooks } from 'react-apollo-hooks';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import logo from './logo.svg';
 import './App.css';
 import PrivateRoute from './components/auth/Auth';
 import Login from './components/auth/Login';

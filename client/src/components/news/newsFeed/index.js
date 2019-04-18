@@ -27,7 +27,7 @@ const NewsFeed = ({ match }) => {
 				<div className="w-100 mt-2 mb-4 pb-4">
 					<FeedSearch
 						date={displayDay}
-						page="Events"
+						page="News"
 						setSearch={setSearch}
 						sort={sort}
 						setSort={setSort}

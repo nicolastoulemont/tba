@@ -10,27 +10,21 @@ export default function Landing() {
 	const notAuth = () => {
 		return (
 			<Fragment>
-				<UserNav />
-				<div className="landing">
-					<div className="dark-overlay landing-inner text-light">
-						<div className="container">
-							<div className="row">
-								<div className="col-md-12 text-center">
-									<h1 className="display-3 mb-4">EU-WATCHER</h1>
-									<p className="lead">
-										{' '}
-										Create a profile and monitor the news and events related to the EU
-									</p>
-									<hr />
-									<Link to="/register" className="btn btn-lg btn-info mr-2">
-										Register
-									</Link>
-									<Link to="/login" className="btn btn-lg btn-light">
-										Login
-									</Link>
-								</div>
-							</div>
-						</div>
+				<UserNav />>
+				<div className="row">
+					<div className="col mx-auto text-center">
+						<h3 className="my-4 pt-4 text-muted">MyEU</h3>
+						<p className="lead">
+							{' '}
+							Create a profile and monitor the news and events related to the EU
+						</p>
+						<br />
+						<Link to="/register" className="btn btn-lg btn-info mr-2">
+							Register
+						</Link>
+						<Link to="/login" className="btn btn-lg btn-light ml-2">
+							Login
+						</Link>
 					</div>
 				</div>
 			</Fragment>
