@@ -1,6 +1,11 @@
 const { gql } = require('apollo-server');
 const { validateEventInput, validateUpdEventIntput } = require('../../validation/event');
-const { buildEvent, updateEvent } = require('../../utils/event');
+const {
+	buildEvent,
+	updateEvent,
+	dailyEventsWithTags,
+	dailyEventsWithOutTags
+} = require('../../utils/event');
 
 module.exports = {
 	EventType: gql`
@@ -45,6 +50,7 @@ module.exports = {
 				sort: String!
 				type: String
 				price: Float
+				tags: [String]
 			): [EventItem!]!
 			userFutureHostedEvents(user_ID: ID!, date: String): [EventItem!]!
 			userPastHostedEvents(user_ID: ID!, date: String): [EventItem!]!
@@ -96,41 +102,34 @@ module.exports = {
 			},
 			events: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await EventItem.find({ isPublic: true })
-						.sort({ _id: 'descending' })
-						.limit(args.limit);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
-				// const searchedTags = ['orange', 'green'];
 				// try {
-				// 	return await EventItem.find({ isPublic: true, tags: { $in: searchedTags } })
+				// 	return await EventItem.find({ isPublic: true })
 				// 		.sort({ _id: 'descending' })
 				// 		.limit(args.limit);
 				// } catch (err) {
 				// 	throw new Error('Bad request');
 				// }
+				const searchedTags = [];
+
+				try {
+					return await EventItem.find({
+						isPublic: true,
+						tags: { $in: searchedTags }
+					})
+						.sort({ _id: 'descending' })
+						.limit(args.limit);
+				} catch (err) {
+					throw new Error('Bad request');
+				}
 			},
 			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
 				const date = new Date(args.date);
 				const dayafter = new Date(new Date(args.date).setDate(new Date(args.date).getDate() + 1));
-				try {
-					return EventItem.find({
-						start: { $gte: date, $lte: dayafter },
-						isPublic: true,
-						type: { $regex: new RegExp(args.type, 'i') },
-						price: { $lte: args.price },
-						$or: [
-							{ name: { $regex: new RegExp(args.search, 'i') } },
-							{ abstract: { $regex: new RegExp(args.search, 'i') } }
-						]
-					})
-						.sort({ start: args.sort })
-						.limit(args.limit);
-				} catch (err) {
-					throw new Error('Bad request');
+				if (args.tags.length !== 0) {
+					return await dailyEventsWithTags(date, dayafter, args, EventItem);
+				} else if (args.tags.length === 0) {
+					return await dailyEventsWithOutTags(date, dayafter, args, EventItem);
 				}
 			},
 			userFutureHostedEvents: async (parent, args, { user, models: { EventItem } }) => {

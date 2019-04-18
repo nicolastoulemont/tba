@@ -9,7 +9,7 @@ const UserNav = () => {
 
 	return (
 		<div className="d-none d-md-block">
-			<nav className="navbar sticky-top navbar-expand-sm bg-white">
+			<nav className="navbar sticky-top navbar-expand-sm bg-white py-1">
 				<div className="container px-0">
 					<Link className="navbar-brand text-black align-middle" to="/">
 						EU-WATCHER

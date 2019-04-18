@@ -11,8 +11,11 @@ import SideBar from '../sidebar/';
 import HomeRouter from './router.js';
 
 const Home = props => {
-	if (window.location.pathname === '/home' || window.location.pathname === '/home/')
+	const path = window.location.pathname;
+	if (path === '/home' || path === '/home/' || path === '/home/news' || path === '/home/news/')
 		return <Redirect to={`/home/news/${dayjs().format('YYYY-MM-DD')}`} />;
+	if (path === '/home/events' || path === '/home/events/')
+		return <Redirect to={`/home/events/${dayjs().format('YYYY-MM-DD')}`} />;
 	return (
 		<Fragment>
 			<StateProvider initialState={InitialState} reducer={Reducer}>

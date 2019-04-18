@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, { Fragment, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from '../contexts';
@@ -36,5 +37,9 @@ export default function Landing() {
 		);
 	};
 
-	return <Fragment>{Auth() ? <Redirect to="/home/news" /> : notAuth()}</Fragment>;
+	return (
+		<Fragment>
+			{Auth() ? <Redirect to={`/home/news/${dayjs().format('YYYY-MM-DD')}`} /> : notAuth()}
+		</Fragment>
+	);
 }

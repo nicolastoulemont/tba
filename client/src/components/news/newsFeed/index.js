@@ -10,25 +10,24 @@ import NewsFeedItem from './feedItem';
 
 const NewsFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
-
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState(userSearchPref.sort);
 	const [type, setType] = useState(userSearchPref.type);
 	const [price, setPrice] = useState(userSearchPref.price);
+	const [tags, setTags] = useState(userSearchPref.tags);
 
 	const day = match.params.day;
 	const displayDay = dayjs(day).format('dddd');
-	const today = new Date();
 
 	if (!dayjs(day).isValid())
-		return <Redirect to={`/home/news/${dayjs(today).format('YYYY-MM-DD')}`} />;
+		return <Redirect to={`/home/events/${dayjs().format('YYYY-MM-DD')}`} />;
 	return (
 		<Fragment>
 			<div className="row m-0 px-2">
 				<div className="w-100 mt-2 mb-4 pb-4">
 					<FeedSearch
 						date={displayDay}
-						page="News"
+						page="Events"
 						setSearch={setSearch}
 						sort={sort}
 						setSort={setSort}
@@ -36,6 +35,8 @@ const NewsFeed = ({ match }) => {
 						setType={setType}
 						price={price}
 						setPrice={setPrice}
+						tags={tags}
+						setTags={setTags}
 					/>
 					<div className="border-top">
 						<CQuery
@@ -46,15 +47,17 @@ const NewsFeed = ({ match }) => {
 								limit: 10,
 								sort,
 								type,
-								price
+								price,
+								tags
 							}}
 						>
 							{({ data }) => {
 								const events = data.searchDailyEvents;
+
 								return (
 									<Fragment>
 										{events.length === 0 ? (
-											<div className="mt-4 pl-4 font-italic ">No news that {displayDay}</div>
+											<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
 										) : (
 											<Fragment>
 												{events.map(event => (
@@ -78,4 +81,5 @@ const NewsFeed = ({ match }) => {
 		</Fragment>
 	);
 };
+
 export default NewsFeed;

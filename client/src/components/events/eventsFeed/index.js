@@ -10,11 +10,11 @@ import EventFeedItem from './feedItem';
 
 const EventFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
-
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState(userSearchPref.sort);
 	const [type, setType] = useState(userSearchPref.type);
 	const [price, setPrice] = useState(userSearchPref.price);
+	const [tags, setTags] = useState(userSearchPref.tags);
 
 	const day = match.params.day;
 	const displayDay = dayjs(day).format('dddd');
@@ -35,6 +35,8 @@ const EventFeed = ({ match }) => {
 						setType={setType}
 						price={price}
 						setPrice={setPrice}
+						tags={tags}
+						setTags={setTags}
 					/>
 					<div className="border-top">
 						<CQuery
@@ -45,7 +47,8 @@ const EventFeed = ({ match }) => {
 								limit: 10,
 								sort,
 								type,
-								price
+								price,
+								tags
 							}}
 						>
 							{({ data }) => {

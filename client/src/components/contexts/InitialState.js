@@ -28,7 +28,8 @@ export const InitialState = {
 	userSearchPref: {
 		sort: 'ascending',
 		type: '',
-		price: 10000
+		price: 10000,
+		tags: []
 	}
 };
 
@@ -62,6 +63,12 @@ export const Reducer = (state, action) => {
 			return {
 				...state,
 				userSearchPref: action.newPrice
+			};
+
+		case 'SET_TAGS':
+			return {
+				...state,
+				userSearchPref: action.newTags
 			};
 
 		default:

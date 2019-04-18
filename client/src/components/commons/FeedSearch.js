@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../contexts';
 import { useStateValue } from '../contexts/InitialState';
 
-const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price, setPrice }) => {
+const FeedSearch = ({
+	date,
+	page,
+	setSearch,
+	sort,
+	setSort,
+	type,
+	setType,
+	price,
+	setPrice,
+	tags,
+	setTags
+}) => {
 	const [{ userSearchPref }, dispatch] = useStateValue();
+	const user = useContext(UserContext);
 
 	const handleAscending = () => {
 		dispatch({
@@ -11,7 +25,8 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 			newSort: {
 				sort: 'ascending',
 				type: userSearchPref.type,
-				price: userSearchPref.price
+				price: userSearchPref.price,
+				tags: userSearchPref.tags
 			}
 		});
 		setSort('ascending');
@@ -23,35 +38,11 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 			newSort: {
 				sort: 'descending',
 				type: userSearchPref.type,
-				price: userSearchPref.price
+				price: userSearchPref.price,
+				tags: userSearchPref.tags
 			}
 		});
 		setSort('descending');
-	};
-
-	const handlePrice = () => {
-		if (price === 0) {
-			dispatch({
-				type: 'SET_PRICE',
-				newPrice: {
-					sort: userSearchPref.sort,
-					type: userSearchPref.type,
-					price: 10000
-				}
-			});
-			setPrice(10000);
-		}
-		if (price === 10000) {
-			dispatch({
-				type: 'SET_PRICE',
-				newPrice: {
-					sort: userSearchPref.sort,
-					type: userSearchPref.type,
-					price: 0
-				}
-			});
-			setPrice(0);
-		}
 	};
 
 	const handleType = () => {
@@ -61,7 +52,8 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 				newType: {
 					sort: userSearchPref.sort,
 					type: 'institutional',
-					price: userSearchPref.price
+					price: userSearchPref.price,
+					tags: userSearchPref.tags
 				}
 			});
 			setType('institutional');
@@ -72,10 +64,65 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 				newType: {
 					sort: userSearchPref.sort,
 					type: '',
-					price: userSearchPref.price
+					price: userSearchPref.price,
+					tags: userSearchPref.tags
 				}
 			});
 			setType('');
+		}
+	};
+
+	const handleTags = () => {
+		if (tags.length === 0) {
+			dispatch({
+				type: 'SET_TAGS',
+				newTags: {
+					sort: userSearchPref.sort,
+					type: userSearchPref.type,
+					price: userSearchPref.price,
+					tags: user.profile.tags
+				}
+			});
+			setTags(user.profile.tags);
+		}
+		if (tags.length !== 0) {
+			dispatch({
+				type: 'SET_TAGS',
+				newTags: {
+					sort: userSearchPref.sort,
+					type: userSearchPref.type,
+					price: userSearchPref.price,
+					tags: []
+				}
+			});
+			setTags([]);
+		}
+	};
+
+	const handlePrice = () => {
+		if (price === 0) {
+			dispatch({
+				type: 'SET_PRICE',
+				newPrice: {
+					sort: userSearchPref.sort,
+					type: userSearchPref.type,
+					price: 10000,
+					tags: userSearchPref.tags
+				}
+			});
+			setPrice(10000);
+		}
+		if (price === 10000) {
+			dispatch({
+				type: 'SET_PRICE',
+				newPrice: {
+					sort: userSearchPref.sort,
+					type: userSearchPref.type,
+					price: 0,
+					tags: userSearchPref.tags
+				}
+			});
+			setPrice(0);
 		}
 	};
 
@@ -98,7 +145,7 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Sort from earliest to lastest"
-						onClick={e => handleAscending(e)}
+						onClick={handleAscending}
 					>
 						{' '}
 						{sort === 'ascending' ? (
@@ -112,7 +159,7 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Sort from lastest to earliest"
-						onClick={e => handleDescending(e)}
+						onClick={handleDescending}
 					>
 						{' '}
 						{sort === 'descending' ? (
@@ -126,7 +173,7 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Only show institutional events"
-						onClick={e => handleType(e)}
+						onClick={handleType}
 					>
 						{' '}
 						{type === 'institutional' ? (
@@ -135,13 +182,30 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 							<i className="fas fa-university mx-2 mt-2" />
 						)}
 					</Link>
+					{user.profile.tags.length !== 0 ? (
+						<Link
+							to="#"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Filter with your profile Tags"
+							onClick={handleTags}
+						>
+							{' '}
+							{tags.length === 0 ? (
+								<i className="fas fa-tags mx-2 mt-2" />
+							) : (
+								<i className="fas fa-tags text-blue mx-2 mt-2" />
+							)}
+						</Link>
+					) : null}
+
 					{window.location.pathname.includes('events') ? (
 						<Link
 							to="#"
 							data-togggle="tooltip"
 							data-placement="bottom"
 							title="Only show free events"
-							onClick={e => handlePrice(e)}
+							onClick={handlePrice}
 						>
 							{' '}
 							{price === 0 ? (

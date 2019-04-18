@@ -8,6 +8,7 @@ export const SEARCH_DAILY_EVENTS = gql`
 		$sort: String!
 		$type: String
 		$price: Float
+		$tags: [String]
 	) {
 		searchDailyEvents(
 			date: $date
@@ -16,6 +17,7 @@ export const SEARCH_DAILY_EVENTS = gql`
 			sort: $sort
 			type: $type
 			price: $price
+			tags: $tags
 		) {
 			id
 			user_ID
