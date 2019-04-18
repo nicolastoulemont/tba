@@ -42,10 +42,10 @@ const ProfileHeader = () => {
 			<div className="row">
 				<div className="col-md-3">
 					<a className="pr-2" href={profile.twitter_URL} target="#" aria-label="twitter">
-						<i className="fab fa-twitter fa-2x" />
+						<i className="fab fa-twitter" />
 					</a>
 					<a className="px-2" href={profile.linkedin_URL} target="#" aria-label="linkedin">
-						<i className="fab fa-linkedin fa-2x" />
+						<i className="fab fa-linkedin" />
 					</a>
 					<a
 						className="pl-2"
@@ -53,7 +53,7 @@ const ProfileHeader = () => {
 						target="_blank"
 						aria-label="user organisation website"
 					>
-						<i className="fas fa-globe fa-2x" />
+						<i className="fas fa-globe" />
 					</a>
 				</div>
 				<div className="col-md-9 pl-0">

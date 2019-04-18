@@ -7,6 +7,10 @@ body {
 	background-color: #e6ecf0;
 }
 
+*:focus {
+	box-shadow: none !important;
+}
+
 .App {
 	position: absolute;
 	top: 0;

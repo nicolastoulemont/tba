@@ -3,7 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function EventFeedIitem({ event }) {
+const EventFeedItem = ({ event }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2 px-2 border-bottom">
@@ -80,21 +80,10 @@ export default function EventFeedIitem({ event }) {
 					</small>
 				</p>
 				<Link
-					className="float-right"
 					to="#"
 					data-togggle="tooltip"
 					data-placement="bottom"
-					title="Read the full article"
-				>
-					<small>
-						<i className="fas fa-external-link-alt mx-2" />
-					</small>
-				</Link>
-				<Link
-					to="#"
-					data-togggle="tooltip"
-					data-placement="bottom"
-					title="Report this news piece"
+					title="Report this event"
 					className="float-right"
 				>
 					<small>
@@ -105,4 +94,6 @@ export default function EventFeedIitem({ event }) {
 			</div>
 		</div>
 	);
-}
+};
+
+export default EventFeedItem;
