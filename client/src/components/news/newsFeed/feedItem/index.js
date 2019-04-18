@@ -2,35 +2,34 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DefaultAvatar from '../../../../img/default_avatar.svg';
 
-const NewsFeedItem = ({ event }) => {
-	const eventTags = () => {
-		if (event.tags.length === 0) return null;
-		return event.tags.map(tag => (
-			<span
-				className="badge badge-pill border-grey m-1"
-				key={Math.random()
-					.toString(36)
-					.substring(2, 7)}
-			>
-				{tag}
-			</span>
-		));
-	};
-
+const EventFeedItem = ({ event }) => {
 	dayjs.extend(relativeTime);
 	return (
-		<div className="media my-2 px-2 border-bottom">
+		<div className="media my-2  border-bottom">
 			<Link to={`/home/profile/${event.user_ID}`}>
-				<img
-					src={event.creator.profile.picture_URL}
-					className="small-avatar rounded-circle mr-3"
-					alt="User Avatar"
-				/>
+				{event.creator.profile.picture_URL ? (
+					<img
+						src={event.creator.profile.picture_URL}
+						className="small-avatar rounded-circle mr-2"
+						alt="User Avatar"
+					/>
+				) : (
+					<img src={DefaultAvatar} className="small-avatar rounded-circle mr-2" alt="User Avatar" />
+				)}
 			</Link>
 			<div className="media-body">
 				<h6 className="text-left mb-0">
 					<Link to={`/home/event/${event.id}`}> {event.name} </Link> -{' '}
+					{event.type === 'institutional' ? (
+						<i
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Institutional Event"
+							className="fas fa-university mx-2"
+						/>
+					) : null}
 					{event.createdAt !== event.updatedAt ? (
 						<small className="font-italic">edited {dayjs(event.updatedAt).fromNow()}</small>
 					) : (
@@ -38,8 +37,25 @@ const NewsFeedItem = ({ event }) => {
 					)}
 				</h6>
 
-				<p className="text-left p-0 mt-0 mb-1">{eventTags()}</p>
+				<p className="text-left p-0 my-1">
+					{event.tags.map(tag => (
+						<span
+							className="badge badge-pill border-grey m-1"
+							key={Math.random()
+								.toString(36)
+								.substring(2, 7)}
+						>
+							{tag}
+						</span>
+					))}
+				</p>
 				<p className="text-left">{event.abstract}</p>
+				<p className="text-left mb-0">
+					{' '}
+					<small>
+						{event.address}, {event.city}
+					</small>
+				</p>
 				<p className="text-left mb-0">
 					{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
 						<small>
@@ -52,7 +68,16 @@ const NewsFeedItem = ({ event }) => {
 							{new Date(event.end).toUTCString().slice(0, 22)}
 						</small>
 					)}
-					<small> at {event.city}</small>
+				</p>
+				<p className="text-left mb-0">
+					<small>
+						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}{' '}
+						{event.price === 0 ? (
+							<span className="font-italic"> - Free Event</span>
+						) : (
+							<span className="font-italic"> - Entrance Fee : {event.price} €</span>
+						)}
+					</small>
 				</p>
 				<p className="float-left">
 					<small>
@@ -63,21 +88,10 @@ const NewsFeedItem = ({ event }) => {
 					</small>
 				</p>
 				<Link
-					className="float-right"
 					to="#"
 					data-togggle="tooltip"
 					data-placement="bottom"
-					title="Read the full article"
-				>
-					<small>
-						<i className="fas fa-external-link-alt mx-2" />
-					</small>
-				</Link>
-				<Link
-					to="#"
-					data-togggle="tooltip"
-					data-placement="bottom"
-					title="Report this news piece"
+					title="Report this event"
 					className="float-right"
 				>
 					<small>
@@ -90,4 +104,4 @@ const NewsFeedItem = ({ event }) => {
 	);
 };
 
-export default NewsFeedItem;
+export default EventFeedItem;

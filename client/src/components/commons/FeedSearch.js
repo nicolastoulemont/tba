@@ -81,12 +81,10 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 
 	return (
 		<div className="mx-auto py-0 px-2">
-			<p className="m-0 p-0 text-left">
-				<small>
-					{' '}
-					{date}'s {page}
-				</small>
-			</p>
+			<h6 className="text-left">
+				{' '}
+				{date}'s {page}
+			</h6>
 			<div className="input-group input-group-sm mb-3">
 				<input
 					className="form-control form-control-lg rounded-pill"
@@ -137,7 +135,7 @@ const FeedSearch = ({ date, page, setSearch, sort, setSort, type, setType, price
 							<i className="fas fa-university mx-2 mt-2" />
 						)}
 					</Link>
-					{page === 'events' ? (
+					{window.location.pathname.includes('events') ? (
 						<Link
 							to="#"
 							data-togggle="tooltip"

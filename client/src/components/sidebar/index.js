@@ -17,8 +17,7 @@ const SideBar = ({ history }) => {
 			history.push(`/home/events/${dayjs(day).format('YYYY-MM-DD')}`);
 		}
 		if (path.includes('news')) {
-			// Option to rework the home/news/ component
-			// history.push(`/home/news/${dayjs(day).format('YYYY-MM-DD')}`);
+			history.push(`/home/news/${dayjs(day).format('YYYY-MM-DD')}`);
 			return null;
 		}
 		return null;

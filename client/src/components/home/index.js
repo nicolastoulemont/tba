@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, { Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import CQuery from '../commons/CustomQueryComponent';
@@ -11,7 +12,7 @@ import HomeRouter from './router.js';
 
 const Home = props => {
 	if (window.location.pathname === '/home' || window.location.pathname === '/home/')
-		return <Redirect to="/home/news" />;
+		return <Redirect to={`/home/news/${dayjs().format('YYYY-MM-DD')}`} />;
 	return (
 		<Fragment>
 			<StateProvider initialState={InitialState} reducer={Reducer}>

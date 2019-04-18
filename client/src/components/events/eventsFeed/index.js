@@ -18,17 +18,16 @@ const EventFeed = ({ match }) => {
 
 	const day = match.params.day;
 	const displayDay = dayjs(day).format('dddd');
-	const today = new Date();
 
 	if (!dayjs(day).isValid())
-		return <Redirect to={`/home/events/${dayjs(today).format('YYYY-MM-DD')}`} />;
+		return <Redirect to={`/home/events/${dayjs().format('YYYY-MM-DD')}`} />;
 	return (
 		<Fragment>
 			<div className="row m-0 px-2">
 				<div className="w-100 mt-2 mb-4 pb-4">
 					<FeedSearch
 						date={displayDay}
-						page="events"
+						page="Events"
 						setSearch={setSearch}
 						sort={sort}
 						setSort={setSort}

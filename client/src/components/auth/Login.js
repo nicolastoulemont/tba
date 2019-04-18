@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, { Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
@@ -26,7 +27,7 @@ const Login = props => {
 		} else {
 			props.client.resetStore();
 			localStorage.setItem('token', token);
-			setTimeout(() => props.history.push('/home/news'), 50);
+			setTimeout(() => props.history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 		}
 	};
 

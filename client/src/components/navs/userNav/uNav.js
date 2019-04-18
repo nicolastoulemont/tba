@@ -20,7 +20,7 @@ const UNav = () => {
 				<li className="nav-item pr-4 mt-1">
 					<Link
 						className="nav-link"
-						to="/home/news"
+						to={`/home/news/${today}`}
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Find out about all the EU affairs news"

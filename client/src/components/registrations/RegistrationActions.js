@@ -38,7 +38,7 @@ export const RegisterEvent = () => {
 			title="Register to this event"
 			onClick={e => createRegistration(e)}
 		>
-			<h6 className="d-none d-md-inline font-weight-bold text-uppercase">Register</h6>
+			<h6 className="d-inline font-weight-bold text-uppercase">Register</h6>
 		</Link>
 	);
 };
@@ -66,7 +66,7 @@ export const UnRegisterEvent = ({ userRegistration }) => {
 			title="Cancel your registration to this event"
 			onClick={e => unRegister(e)}
 		>
-			<h6 className="d-none d-md-inline font-weight-bold text-uppercase">Unregister</h6>
+			<h6 className="d-inline font-weight-bold text-uppercase">Unregister</h6>
 		</Link>
 	);
 };

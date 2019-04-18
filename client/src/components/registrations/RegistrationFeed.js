@@ -14,7 +14,7 @@ const RegistrationFeed = () => {
 	};
 
 	return (
-		<div className="text-right pr-4">
+		<div className="float-right pr-2">
 			<CQuery query={GET_EVENT_REGISTRATIONS_IDS} variables={{ id: event.id }}>
 				{({ data }) => {
 					const registrations = data.event.registrations;
