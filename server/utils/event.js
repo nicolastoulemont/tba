@@ -99,4 +99,21 @@ const dailyEventsWithOutTags = async (date, dayafter, args, EventItem) => {
 	}
 };
 
-module.exports = { buildEvent, updateEvent, dailyEventsWithTags, dailyEventsWithOutTags };
+const getDates = dateString => {
+	if (!dateString.includes('+')) {
+		const date = new Date(dateString);
+		const dayafter = new Date(new Date(dateString).setDate(new Date(dateString).getDate() + 1));
+		return {
+			date,
+			dayafter
+		};
+	} else if (dateString.includes('+')) {
+		const date = new Date(dateString.split('+')[0]);
+		const dayafter = new Date(
+			new Date(dateString.split('+')[1]).setDate(new Date(dateString.split('+')[1]).getDate() + 1)
+		);
+		return { date, dayafter };
+	}
+};
+
+module.exports = { buildEvent, updateEvent, dailyEventsWithTags, dailyEventsWithOutTags, getDates };

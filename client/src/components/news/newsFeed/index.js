@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import React, { Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
+import { DateUrlValidation } from '../../commons/DateUrlValidation';
 import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
 import { useStateValue } from '../../contexts/InitialState';
@@ -17,16 +18,30 @@ const NewsFeed = ({ match }) => {
 	const [tags, setTags] = useState(userSearchPref.tags);
 
 	const day = match.params.day;
-	const displayDay = dayjs(day).format('dddd');
 
-	if (!dayjs(day).isValid())
+	const displayDay = () => {
+		if (!day.includes('+')) {
+			const date = dayjs(day).format('dddd');
+			return date;
+		}
+		if (day.includes('+')) {
+			const firstDay = day.split('+')[0];
+			const lastDay = day.split('+')[1];
+			const days = `From ${dayjs(firstDay).format('dddd')}, ${dayjs(firstDay).format(
+				'DD'
+			)} to ${dayjs(lastDay).format('dddd')}, ${dayjs(lastDay).format('DD')}`;
+			return days;
+		}
+	};
+
+	if (!DateUrlValidation(day))
 		return <Redirect to={`/home/events/${dayjs().format('YYYY-MM-DD')}`} />;
 	return (
 		<Fragment>
 			<div className="row m-0 px-2">
 				<div className="w-100 mt-2 mb-4 pb-4">
 					<FeedSearch
-						date={displayDay}
+						date={displayDay()}
 						page="News"
 						setSearch={setSearch}
 						sort={sort}
@@ -53,11 +68,10 @@ const NewsFeed = ({ match }) => {
 						>
 							{({ data }) => {
 								const events = data.searchDailyEvents;
-
 								return (
 									<Fragment>
 										{events.length === 0 ? (
-											<div className="mt-4 pl-4 font-italic ">No events that {displayDay}</div>
+											<div className="mt-4 pl-4 font-italic ">No news {displayDay()}</div>
 										) : (
 											<Fragment>
 												{events.map(event => (
@@ -82,4 +96,4 @@ const NewsFeed = ({ match }) => {
 	);
 };
 
-export default NewsFeed;
+export default React.memo(NewsFeed);

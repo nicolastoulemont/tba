@@ -4,7 +4,8 @@ const {
 	buildEvent,
 	updateEvent,
 	dailyEventsWithTags,
-	dailyEventsWithOutTags
+	dailyEventsWithOutTags,
+	getDates
 } = require('../../utils/event');
 
 module.exports = {
@@ -124,8 +125,7 @@ module.exports = {
 			},
 			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				const date = new Date(args.date);
-				const dayafter = new Date(new Date(args.date).setDate(new Date(args.date).getDate() + 1));
+				const { date, dayafter } = getDates(args.date);
 				if (args.tags.length !== 0) {
 					return await dailyEventsWithTags(date, dayafter, args, EventItem);
 				} else if (args.tags.length === 0) {

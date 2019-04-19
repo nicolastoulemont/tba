@@ -1,28 +1,10 @@
-import dayjs from 'dayjs';
-import React, { useState } from 'react';
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import React from 'react';
 import { Spring } from 'react-spring/renderprops';
+import DatesPicker from './DatesPicker';
 import SBPanel from './sideBarPanel';
 
 const SideBar = ({ history }) => {
-	const [selectedDay, setSelectedDay] = useState(null);
 	const path = window.location.pathname;
-
-	const handleDayClick = (day, { selected }) => {
-		const path = window.location.pathname;
-		setSelectedDay(selected ? undefined : day);
-
-		if (path.includes('events')) {
-			history.push(`/home/events/${dayjs(day).format('YYYY-MM-DD')}`);
-		}
-		if (path.includes('news')) {
-			history.push(`/home/news/${dayjs(day).format('YYYY-MM-DD')}`);
-			return null;
-		}
-		return null;
-	};
-
 	return (
 		<div className="d-none d-lg-block col-lg-4 text-center">
 			{path.includes('events') || path.includes('news') ? (
@@ -30,11 +12,7 @@ const SideBar = ({ history }) => {
 					{props => (
 						<div className="row ml-2 mb-4" style={props}>
 							<div className="col mx-auto bg-white px-2">
-								<DayPicker
-									selectedDays={selectedDay}
-									onDayClick={handleDayClick}
-									// disabledDays={{ daysOfWeek: [0, 6] }}
-								/>
+								<DatesPicker history={history} />
 							</div>
 						</div>
 					)}

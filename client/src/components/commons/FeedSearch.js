@@ -130,7 +130,7 @@ const FeedSearch = ({
 		<div className="mx-auto py-0 px-2">
 			<h6 className="text-left">
 				{' '}
-				{date}'s {page}
+				{date} {page}
 			</h6>
 			<div className="input-group input-group-sm mb-3">
 				<input
@@ -187,7 +187,7 @@ const FeedSearch = ({
 							to="#"
 							data-togggle="tooltip"
 							data-placement="bottom"
-							title="Filter with your profile topics"
+							title="Filter with your Profile topics"
 							onClick={handleTags}
 						>
 							{' '}
