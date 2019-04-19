@@ -33,7 +33,6 @@ const EventFeed = ({ match }) => {
 			return days;
 		}
 	};
-
 	if (!DateUrlValidation(day))
 		return <Redirect to={`/home/events/${dayjs().format('YYYY-MM-DD')}`} />;
 	return (

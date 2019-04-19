@@ -19,6 +19,11 @@ const FeedSearch = ({
 	const [{ userSearchPref }, dispatch] = useStateValue();
 	const user = useContext(UserContext);
 
+	const handleSearch = e => {
+		if (e.type === 'keydown' && e.keyCode === 13) setSearch(e.target.value);
+		if (e.target.value.length === 0) setSearch('');
+	};
+
 	const handleAscending = () => {
 		dispatch({
 			type: 'SET_SORT',
@@ -137,7 +142,7 @@ const FeedSearch = ({
 					className="form-control form-control-lg rounded-pill"
 					type="text"
 					placeholder="Search..."
-					onChange={e => setSearch(e.target.value)}
+					onKeyDown={e => handleSearch(e)}
 				/>
 				<div className="input-group-append">
 					<Link
