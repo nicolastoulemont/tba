@@ -59,13 +59,13 @@ const EventFeedItem = ({ event }) => {
 				<p className="text-left mb-0">
 					{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
 						<small>
-							From {new Date(event.start).toTimeString().slice(0, 5)} to{' '}
-							{new Date(event.end).toTimeString().slice(0, 5)}
+							{dayjs(event.start).format('dddd DD')} from {dayjs(event.start).format('HH:mm')} to{' '}
+							{dayjs(event.end).format('HH:mm')}
 						</small>
 					) : (
 						<small>
-							On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
-							{new Date(event.end).toUTCString().slice(0, 22)}
+							On {dayjs(event.start).format('dddd DD HH:mm')} to{' '}
+							{dayjs(event.end).format('dddd DD HH:mm')}
 						</small>
 					)}
 				</p>
