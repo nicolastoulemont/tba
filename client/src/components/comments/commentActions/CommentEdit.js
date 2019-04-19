@@ -9,7 +9,7 @@ const CommentEdit = ({ hideForms }) => {
 	const [text, setText] = useState('');
 
 	const commentEdit = (e, text, editComment) => {
-		if (e.type === 'keydown' && e.keyCode === 13) {
+		if (e.keyCode === 13) {
 			e.preventDefault();
 			editComment({
 				variables: { _id: comment.id, text }

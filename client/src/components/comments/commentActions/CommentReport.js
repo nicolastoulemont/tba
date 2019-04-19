@@ -9,7 +9,7 @@ const CommentReport = ({ hideForms }) => {
 	const [text, setText] = useState('');
 
 	const reportComment = (e, text, addReport) => {
-		if (e.type === 'keydown' && e.keyCode === 13) {
+		if (e.keyCode === 13) {
 			e.preventDefault();
 			addReport({
 				variables: { user_ID: user.id, text, comment_ID: comment.id }

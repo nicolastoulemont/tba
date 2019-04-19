@@ -20,7 +20,7 @@ const FeedSearch = ({
 	const user = useContext(UserContext);
 
 	const handleSearch = e => {
-		if (e.type === 'keydown' && e.keyCode === 13) setSearch(e.target.value);
+		if (e.keyCode === 13) setSearch(e.target.value);
 		if (e.target.value.length === 0) setSearch('');
 	};
 
@@ -133,16 +133,13 @@ const FeedSearch = ({
 
 	return (
 		<div className="mx-auto py-0 px-2">
-			<h6 className="text-left">
-				{' '}
-				{date} {page}
-			</h6>
+			<h6 className="text-left"> {date}</h6>
 			<div className="input-group input-group-sm mb-3">
 				<input
 					className="form-control form-control-lg rounded-pill"
 					type="text"
 					placeholder="Search..."
-					onKeyDown={e => handleSearch(e)}
+					onKeyUp={e => handleSearch(e)}
 				/>
 				<div className="input-group-append">
 					<Link

@@ -21,13 +21,13 @@ const EventFeed = ({ match }) => {
 
 	const displayDay = () => {
 		if (!day.includes('+')) {
-			const date = dayjs(day).format('dddd');
+			const date = `Events on ${dayjs(day).format('dddd')} `;
 			return date;
 		}
 		if (day.includes('+')) {
 			const firstDay = day.split('+')[0];
 			const lastDay = day.split('+')[1];
-			const days = `From ${dayjs(firstDay).format('dddd')}, ${dayjs(firstDay).format(
+			const days = `Events from ${dayjs(firstDay).format('dddd')}, ${dayjs(firstDay).format(
 				'DD'
 			)} to ${dayjs(lastDay).format('dddd')}, ${dayjs(lastDay).format('DD')}`;
 			return days;
@@ -70,7 +70,7 @@ const EventFeed = ({ match }) => {
 								return (
 									<Fragment>
 										{events.length === 0 ? (
-											<div className="mt-4 pl-4 font-italic ">No events {displayDay()}</div>
+											<div className="mt-4 pl-4 font-italic ">No {displayDay()}</div>
 										) : (
 											<Fragment>
 												{events.map(event => (

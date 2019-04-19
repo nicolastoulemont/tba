@@ -10,7 +10,7 @@ const CommentReply = ({ hideForms }) => {
 	const [text, setText] = useState('');
 
 	const commentReply = (e, text, addComment) => {
-		if (e.type === 'keydown' && e.keyCode === 13) {
+		if (e.keyCode === 13) {
 			e.preventDefault();
 			addComment({
 				variables: { user_ID: user.id, comment_ID: comment.id, text }

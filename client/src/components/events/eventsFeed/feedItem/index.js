@@ -64,7 +64,7 @@ const EventFeedItem = ({ event }) => {
 						</small>
 					) : (
 						<small>
-							On {dayjs(event.start).format('dddd DD HH:mm')} to{' '}
+							From {dayjs(event.start).format('dddd DD HH:mm')} to{' '}
 							{dayjs(event.end).format('dddd DD HH:mm')}
 						</small>
 					)}

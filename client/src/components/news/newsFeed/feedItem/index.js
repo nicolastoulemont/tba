@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import DefaultAvatar from '../../../../img/default_avatar.svg';
 
-const EventFeedItem = ({ event }) => {
+const NewsFeedItem = ({ event }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2  border-bottom">
@@ -64,7 +64,7 @@ const EventFeedItem = ({ event }) => {
 						</small>
 					) : (
 						<small>
-							On {dayjs(event.start).format('dddd DD HH:mm')} to{' '}
+							From {dayjs(event.start).format('dddd DD HH:mm')} to{' '}
 							{dayjs(event.end).format('dddd DD HH:mm')}
 						</small>
 					)}
@@ -104,4 +104,4 @@ const EventFeedItem = ({ event }) => {
 	);
 };
 
-export default EventFeedItem;
+export default NewsFeedItem;
