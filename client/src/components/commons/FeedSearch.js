@@ -183,7 +183,7 @@ const FeedSearch = ({
 							<i className="fas fa-university mx-2 mt-2" />
 						)}
 					</Link>
-					{user.profile.tags.length !== 0 ? (
+					{user.profile && user.profile.tags && user.profile.tags.length !== 0 ? (
 						<Link
 							to="#"
 							data-togggle="tooltip"

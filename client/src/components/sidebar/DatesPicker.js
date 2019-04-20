@@ -76,7 +76,6 @@ const DatesPicker = ({ history }) => {
 		<div>
 			<DayPicker
 				className="Range"
-				fromMonth={from}
 				selectedDays={selectedDays}
 				disabledDays={disabledDays}
 				modifiers={modifiers}

@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import DefaultAvatar from '../../../img/default_avatar.svg';
+import DefaultAvatar from '../../../img/avatar_default.svg';
 import { UserContext } from '../../contexts/index';
 
 const UNav = () => {
-	const {
-		id,
-		profile: { picture_URL, name }
-	} = useContext(UserContext);
+	const user = useContext(UserContext);
 
 	const logOut = e => {
 		localStorage.removeItem('token');
@@ -79,10 +76,10 @@ const UNav = () => {
 						data-placement="bottom"
 						title="Menu"
 					>
-						{picture_URL ? (
+						{user.profile && user.profile.picture_URL ? (
 							<img
 								className="rounded-circle ultra-small-avatar"
-								src={picture_URL}
+								src={user.profile.picture_URL}
 								alt="User Avatar"
 							/>
 						) : (
@@ -92,27 +89,42 @@ const UNav = () => {
 								alt="User Avatar"
 							/>
 						)}
-						<p className="d-inline text-left font-weight-bold align-middle ml-2">{name}</p>
+						<p className="d-inline text-left font-weight-bold align-middle ml-2">
+							{user.profile && user.profile.name ? user.profile.name : <span>Menu</span>}
+						</p>
 						<i className="fas fa-chevron-down align-middle ml-4" />
 					</Link>
 					<div className="dropdown-menu dropdown-menu-right text-right">
-						<Link to={`/home/profile/${id}`} className="dropdown-item py-2 px-4 drop-link">
-							{picture_URL ? (
+						{user.profile && user.profile.picture_URL ? (
+							<Link to={`/home/profile/${user.id}`} className="dropdown-item py-2 px-4 drop-link">
 								<img
 									className="rounded-circle ultra-small-avatar"
-									src={picture_URL}
+									src={user.profile.picture_URL}
 									alt="User Avatar"
 								/>
-							) : (
-								<i className="fas fa-user-astronaut" />
-							)}
-							<h6 className="d-inline align-middle ml-2">Your Profile</h6>
-						</Link>
+								<h6 className="d-inline align-middle ml-2">Your Profile</h6>
+							</Link>
+						) : (
+							<Link
+								to={`/home/profile/create/${user.id}`}
+								className="dropdown-item py-2 px-4 drop-link"
+							>
+								<img
+									className="rounded-circle ultra-small-avatar"
+									src={DefaultAvatar}
+									alt="User Avatar"
+								/>{' '}
+								<h6 className="d-inline align-middle ml-2">Create your Profile</h6>
+							</Link>
+						)}
 						<Link to="#" className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle far fa-user" />
 							<h6 className="d-inline align-middle ml-2">Your Account</h6>
 						</Link>
-						<Link to={`/home/event/create/${id}`} className="dropdown-item py-2 px-4 drop-link">
+						<Link
+							to={`/home/event/create/${user.id}`}
+							className="dropdown-item py-2 px-4 drop-link"
+						>
 							<i className="d-inline align-middle fas fa-plus" />
 							<h6 className="d-inline align-middle ml-2">Add an Event</h6>
 						</Link>
