@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import DefaultAvatar from '../../../img/default_avatar.svg';
 import { UserContext } from '../../contexts/index';
+
 const UNav = () => {
 	const {
 		id,
@@ -95,7 +96,7 @@ const UNav = () => {
 						<i className="fas fa-chevron-down align-middle ml-4" />
 					</Link>
 					<div className="dropdown-menu dropdown-menu-right text-right">
-						<Link to={`/home/profile/${id}`} className="dropdown-item py-2 px-4">
+						<Link to={`/home/profile/${id}`} className="dropdown-item py-2 px-4 drop-link">
 							{picture_URL ? (
 								<img
 									className="rounded-circle ultra-small-avatar"
@@ -107,16 +108,16 @@ const UNav = () => {
 							)}
 							<h6 className="d-inline align-middle ml-2">Your Profile</h6>
 						</Link>
-						<Link to="#" className="dropdown-item py-2 px-4">
+						<Link to="#" className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle far fa-user" />
 							<h6 className="d-inline align-middle ml-2">Your Account</h6>
 						</Link>
-						<Link to={`/home/event/create/${id}`} className="dropdown-item py-2 px-4">
+						<Link to={`/home/event/create/${id}`} className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle fas fa-plus" />
 							<h6 className="d-inline align-middle ml-2">Add an Event</h6>
 						</Link>
 
-						<Link to="#" onClick={logOut} className="dropdown-item py-2 px-4">
+						<Link to="#" onClick={logOut} className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle fas fa-sign-out-alt" />
 							<h6 className="d-inline align-middle ml-2">Log Out</h6>
 						</Link>

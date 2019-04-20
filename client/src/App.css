@@ -24,7 +24,14 @@ body {
 }
 
 .nav-link:hover {
-	background-color: #e6ecf0;
+	background-color: #4f96d5;
+	color: white;
+	border: white;
+}
+
+.drop-link:hover {
+	background-color: #4f96d5;
+	color: white;
 }
 
 .mobileNav {
@@ -138,11 +145,6 @@ a:hover {
 	padding-left: 2em;
 }
 
-.fa:hover,
-.far:hover {
-	color: #30446d;
-}
-
 .lightgrey {
 	color: #bdbebf;
 }
@@ -192,7 +194,7 @@ a:hover {
 .Range
 	.DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
 	background-color: #f0f8ff !important;
-	color: #4a90e2;
+	color: #4f96d5;
 }
 .Range .DayPicker-Day {
 	border-radius: 0 !important;

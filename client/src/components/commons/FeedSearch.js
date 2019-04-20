@@ -5,7 +5,6 @@ import { useStateValue } from '../contexts/InitialState';
 
 const FeedSearch = ({
 	date,
-	page,
 	setSearch,
 	sort,
 	setSort,

@@ -10,8 +10,7 @@ const LikesFeed = () => {
 	const event = useContext(EventContext);
 
 	const getUserLikeId = (likes, id) => {
-		let userLikeObj = likes.find(like => like.user_ID === id);
-		return userLikeObj;
+		return likes.find(like => like.user_ID === id);
 	};
 
 	return (

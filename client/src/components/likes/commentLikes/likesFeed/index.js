@@ -10,8 +10,7 @@ const LikesFeed = () => {
 	const comment = useContext(CommentContext);
 
 	const getUserLikeId = (likes, user) => {
-		let userLikeObj = likes.find(like => like.user_ID === user.id);
-		return userLikeObj;
+		return likes.find(like => like.user_ID === user.id);
 	};
 
 	return (
