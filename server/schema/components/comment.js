@@ -27,6 +27,7 @@ module.exports = {
 		extend type Query {
 			comment(id: ID!): CommentItem
 			comments: [CommentItem!]!
+			eventComments(event_ID: ID!): [CommentItem!]!
 		}
 
 		extend type Mutation {
@@ -56,6 +57,14 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
 					return await CommentItem.find({});
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			eventComments: async (parent, args, { user, models: { CommentItem } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				try {
+					return await CommentItem.find({ event_ID: args.event_ID });
 				} catch (err) {
 					throw new Error('Bad request');
 				}

@@ -1,23 +1,20 @@
 import gql from 'graphql-tag';
 
 export const GET_EVENT_COMMENTS = gql`
-	query Event($id: ID!) {
-		event(id: $id) {
+	query EventComments($event_ID: ID!) {
+		eventComments(event_ID: $event_ID) {
 			id
-			comments {
-				id
-				user_ID
-				text
-				moderated
-				moderationMsg
-				createdAt
-				updatedAt
-				creator {
-					profile {
-						id
-						name
-						picture_URL
-					}
+			user_ID
+			text
+			moderated
+			moderationMsg
+			createdAt
+			updatedAt
+			creator {
+				profile {
+					id
+					name
+					picture_URL
 				}
 			}
 		}

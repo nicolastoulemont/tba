@@ -10,9 +10,9 @@ const EventCommentsFeed = () => {
 	const user = useContext(UserContext);
 	return (
 		<Fragment>
-			<CQuery query={GET_EVENT_COMMENTS} variables={{ id: event.id }}>
-				{({ data: { event }, refetch }) => {
-					const comments = event.comments;
+			<CQuery query={GET_EVENT_COMMENTS} variables={{ event_ID: event.id }}>
+				{({ data, refetch }) => {
+					const comments = data.eventComments;
 					return (
 						<Fragment>
 							{comments.length === 0 ? (
