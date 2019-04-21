@@ -1,10 +1,12 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import DefaultAvatar from '../../../../img/default_avatar.svg';
+import { UserContext } from '../../../contexts';
 
 const EventFeedItem = ({ event }) => {
+	const user = useContext(UserContext);
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2  border-bottom">
@@ -87,18 +89,20 @@ const EventFeedItem = ({ event }) => {
 						</Link>
 					</small>
 				</p>
-				<Link
-					to="#"
-					data-togggle="tooltip"
-					data-placement="bottom"
-					title="Report this event"
-					className="float-right"
-				>
-					<small>
-						{' '}
-						<i className="far fa-flag mx-2" />
-					</small>
-				</Link>
+				{user.profile ? (
+					<Link
+						to="#"
+						data-togggle="tooltip"
+						data-placement="bottom"
+						title="Report this event"
+						className="float-right"
+					>
+						<small>
+							{' '}
+							<i className="far fa-flag mx-2" />
+						</small>
+					</Link>
+				) : null}
 			</div>
 		</div>
 	);
