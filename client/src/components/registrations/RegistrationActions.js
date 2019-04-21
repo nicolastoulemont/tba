@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { useMutation } from 'react-apollo-hooks';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { EventContext, UserContext } from '../contexts';
 import { ADD_REGISTRATION, DELETE_REGISTRATION } from '../graphql/registration/Mutations';
 import {
 	GET_EVENT_REGISTRATIONS,
-	GET_USER_FUTURE_REGISTRATIONS
+	GET_USER_FUTURE_REGISTRATIONS,
+	GET_USER_PAST_REGISTRATIONS
 } from '../graphql/registration/Queries';
 
 export const RegisterEvent = () => {
@@ -13,6 +15,15 @@ export const RegisterEvent = () => {
 	const event = useContext(EventContext);
 
 	const today = new Date().toISOString().slice(0, 10);
+
+	const refetchCorrectQuery = () => {
+		if (dayjs(event.start).isBefore(dayjs(today))) {
+			return { query: GET_USER_PAST_REGISTRATIONS, variables: { user_ID: user.id, date: today } };
+		} else if (dayjs(event.start).isAfter(dayjs(today))) {
+			return { query: GET_USER_FUTURE_REGISTRATIONS, variables: { user_ID: user.id, date: today } };
+		}
+	};
+
 	const createRegistration = useMutation(ADD_REGISTRATION, {
 		variables: {
 			user_ID: user.id,
@@ -26,7 +37,8 @@ export const RegisterEvent = () => {
 		refetchQueries: () => {
 			return [
 				{ query: GET_EVENT_REGISTRATIONS, variables: { id: event.id } },
-				{ query: GET_USER_FUTURE_REGISTRATIONS, variables: { user_ID: user.id, date: today } }
+				refetchCorrectQuery()
+				// { query: GET_USER_FUTURE_REGISTRATIONS, variables: { user_ID: user.id, date: today } }
 			];
 		}
 	});
@@ -47,6 +59,15 @@ export const UnRegisterEvent = ({ userRegistration }) => {
 	const user = useContext(UserContext);
 	const event = useContext(EventContext);
 	const today = new Date().toISOString().slice(0, 10);
+
+	const refetchCorrectQuery = () => {
+		if (dayjs(event.start).isBefore(dayjs(today))) {
+			return { query: GET_USER_PAST_REGISTRATIONS, variables: { user_ID: user.id, date: today } };
+		} else if (dayjs(event.start).isAfter(dayjs(today))) {
+			return { query: GET_USER_FUTURE_REGISTRATIONS, variables: { user_ID: user.id, date: today } };
+		}
+	};
+
 	const unRegister = useMutation(DELETE_REGISTRATION, {
 		variables: {
 			_id: userRegistration.id
@@ -54,7 +75,7 @@ export const UnRegisterEvent = ({ userRegistration }) => {
 		refetchQueries: () => {
 			return [
 				{ query: GET_EVENT_REGISTRATIONS, variables: { id: event.id } },
-				{ query: GET_USER_FUTURE_REGISTRATIONS, variables: { user_ID: user.id, date: today } }
+				refetchCorrectQuery()
 			];
 		}
 	});
