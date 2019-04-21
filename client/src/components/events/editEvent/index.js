@@ -12,7 +12,11 @@ import { tagsList } from '../../commons/TagsList';
 import { UserContext } from '../../contexts';
 import { useStateValue } from '../../contexts/InitialState';
 import { UPDATE_EVENT } from '../../graphql/event/Mutations';
-import { GET_EVENT, GET_USER_FUTURE_HOSTED_EVENTS } from '../../graphql/event/Queries';
+import {
+	GET_EVENT,
+	GET_USER_FUTURE_HOSTED_EVENTS,
+	GET_USER_PAST_HOSTED_EVENTS
+} from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 
 const EditEvent = ({ match, history, location }) => {
@@ -37,8 +41,6 @@ const EditEvent = ({ match, history, location }) => {
 
 	if (stateEvent.user_ID === null || stateEvent.user_ID !== user.id)
 		return <Redirect to={`/home/event/${match.params.id}`} />;
-
-	const today = dayjs().format('YYYY-MM-DD');
 
 	const addTag = tag => {
 		setEventTags([...eventTags, tag]);
@@ -123,6 +125,15 @@ const EditEvent = ({ match, history, location }) => {
 		history.push(`/home/event/${match.params.id}`);
 	};
 
+	const refetchCorrectQuery = () => {
+		const today = new Date().toISOString().slice(0, 10);
+		if (dayjs(start).isBefore(dayjs(today))) {
+			return { query: GET_USER_PAST_HOSTED_EVENTS, variables: { user_ID: user.id, date: today } };
+		} else if (dayjs(start).isAfter(dayjs(today))) {
+			return { query: GET_USER_FUTURE_HOSTED_EVENTS, variables: { user_ID: user.id, date: today } };
+		}
+	};
+
 	const editEvent = async (e, updateEvent, signS3) => {
 		e.preventDefault();
 		if (banner && typeof banner !== 'string') {
@@ -138,13 +149,7 @@ const EditEvent = ({ match, history, location }) => {
 				<Mutation
 					mutation={UPDATE_EVENT}
 					refetchQueries={() => {
-						return [
-							{
-								query: GET_USER_FUTURE_HOSTED_EVENTS,
-								variables: { user_ID: user.id, date: today }
-							},
-							{ query: GET_EVENT, variables: { id: stateEvent.id } }
-						];
+						return [refetchCorrectQuery(), { query: GET_EVENT, variables: { id: stateEvent.id } }];
 					}}
 				>
 					{(updateEvent, e) => (

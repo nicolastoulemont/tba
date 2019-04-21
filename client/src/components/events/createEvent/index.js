@@ -11,12 +11,14 @@ import { InputField, TagsChooser, TextAreaField } from '../../commons/InputCompo
 import { tagsList } from '../../commons/TagsList';
 import { UserContext } from '../../contexts';
 import { CREATE_EVENT } from '../../graphql/event/Mutations';
-import { GET_USER_FUTURE_HOSTED_EVENTS } from '../../graphql/event/Queries';
+import {
+	GET_USER_FUTURE_HOSTED_EVENTS,
+	GET_USER_PAST_HOSTED_EVENTS
+} from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 
 const CreateEvent = ({ history }) => {
 	const user = useContext(UserContext);
-	const today = dayjs().format('YYYY-MM-DD');
 
 	const [name, setName] = useState('');
 	const [abstract, setAbstract] = useState('');
@@ -110,6 +112,15 @@ const CreateEvent = ({ history }) => {
 		history.push(`/home/event/${res.data.addEvent.event.id}`);
 	};
 
+	const refetchCorrectQuery = () => {
+		const today = new Date().toISOString().slice(0, 10);
+		if (dayjs(start).isBefore(dayjs(today))) {
+			return { query: GET_USER_PAST_HOSTED_EVENTS, variables: { user_ID: user.id, date: today } };
+		} else if (dayjs(start).isAfter(dayjs(today))) {
+			return { query: GET_USER_FUTURE_HOSTED_EVENTS, variables: { user_ID: user.id, date: today } };
+		}
+	};
+
 	const createEvent = async (e, addEvent, signS3) => {
 		e.preventDefault();
 		if (banner) {
@@ -124,9 +135,7 @@ const CreateEvent = ({ history }) => {
 				<Mutation
 					mutation={CREATE_EVENT}
 					refetchQueries={() => {
-						return [
-							{ query: GET_USER_FUTURE_HOSTED_EVENTS, variables: { user_ID: user.id, date: today } }
-						];
+						return [refetchCorrectQuery()];
 					}}
 				>
 					{(addEvent, e) => (
