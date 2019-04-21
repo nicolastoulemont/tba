@@ -6,6 +6,7 @@ import { EventContext, UserContext } from '../contexts';
 import { ADD_REGISTRATION, DELETE_REGISTRATION } from '../graphql/registration/Mutations';
 import {
 	GET_EVENT_REGISTRATIONS,
+	GET_EVENT_REGISTRATIONS_IDS,
 	GET_USER_FUTURE_REGISTRATIONS,
 	GET_USER_PAST_REGISTRATIONS
 } from '../graphql/registration/Queries';
@@ -36,9 +37,9 @@ export const RegisterEvent = () => {
 		},
 		refetchQueries: () => {
 			return [
-				{ query: GET_EVENT_REGISTRATIONS, variables: { id: event.id } },
+				{ query: GET_EVENT_REGISTRATIONS, variables: { event_ID: event.id } },
+				{ query: GET_EVENT_REGISTRATIONS_IDS, variables: { event_ID: event.id } },
 				refetchCorrectQuery()
-				// { query: GET_USER_FUTURE_REGISTRATIONS, variables: { user_ID: user.id, date: today } }
 			];
 		}
 	});
@@ -74,7 +75,8 @@ export const UnRegisterEvent = ({ userRegistration }) => {
 		},
 		refetchQueries: () => {
 			return [
-				{ query: GET_EVENT_REGISTRATIONS, variables: { id: event.id } },
+				{ query: GET_EVENT_REGISTRATIONS, variables: { event_ID: event.id } },
+				{ query: GET_EVENT_REGISTRATIONS_IDS, variables: { event_ID: event.id } },
 				refetchCorrectQuery()
 			];
 		}

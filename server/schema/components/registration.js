@@ -29,6 +29,7 @@ module.exports = {
 			registrations: [Registration!]!
 			userFutureRegistrations(user_ID: ID!, date: String): [Registration!]!
 			userPastRegistrations(user_ID: ID!, date: String): [Registration!]!
+			eventRegistrations(event_ID: ID!): [Registration!]!
 		}
 
 		extend type Mutation {
@@ -80,6 +81,14 @@ module.exports = {
 						user_ID: args.user_ID,
 						eventStart: { $lte: date }
 					}).sort({ eventStart: 'descending' });
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			eventRegistrations: async (parent, args, { user, models: { Registration } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				try {
+					return await Registration.find({ event_ID: args.event_ID });
 				} catch (err) {
 					throw new Error('Bad request');
 				}

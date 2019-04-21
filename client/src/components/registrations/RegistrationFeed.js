@@ -9,15 +9,14 @@ const RegistrationFeed = () => {
 	const event = useContext(EventContext);
 
 	const getUserRegistrationId = registrations => {
-		let userRegistrationObj = registrations.find(registration => registration.user_ID === user.id);
-		return userRegistrationObj;
+		return registrations.find(registration => registration.user_ID === user.id);
 	};
 
 	return (
 		<div className="float-right pr-2">
-			<CQuery query={GET_EVENT_REGISTRATIONS_IDS} variables={{ id: event.id }}>
+			<CQuery query={GET_EVENT_REGISTRATIONS_IDS} variables={{ event_ID: event.id }}>
 				{({ data }) => {
-					const registrations = data.event.registrations;
+					const registrations = data.eventRegistrations;
 					const userRegistration = getUserRegistrationId(registrations);
 					return (
 						<Fragment>
