@@ -68,7 +68,7 @@ const EventCommentDisplay = ({ refetch }) => {
 								{comment.creator.profile.name}
 							</Link>
 							<span className="d-inline-block ml-2">{comment.text}</span>
-							<EventCommentActions />
+							{user.profile ? <EventCommentActions /> : null}
 						</div>
 					</div>
 					<div className="col-1 mx-0">

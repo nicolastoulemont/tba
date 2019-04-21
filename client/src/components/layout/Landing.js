@@ -10,7 +10,7 @@ export default function Landing() {
 	const notAuth = () => {
 		return (
 			<Fragment>
-				<UserNav />>
+				<UserNav />
 				<div className="row">
 					<div className="col mx-auto text-center">
 						<h3 className="my-4 pt-4 text-muted">MyEU</h3>

@@ -1,10 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import EventCommentsFeed from '../../comments/EventCommentsFeed';
 import LikesFeed from '../../likes/eventLikes/LikesFeed';
 import EventRegistrationsFeed from '../../registrations/EventRegistrationsFeed';
+import { UserContext } from '../../contexts';
 
 const EventSocialSelector = () => {
+	const user = useContext(UserContext);
 	const [commentDisplay, setCommentDisplay] = useState(true);
 	const [registreeDisplay, setRegistreeDisplay] = useState(false);
 
@@ -22,9 +24,11 @@ const EventSocialSelector = () => {
 		<Fragment>
 			<div className="py-2 border-top border-bottom">
 				<div className="row">
-					<div className="col px-0">
-						<LikesFeed />
-					</div>
+					{user.profile ? (
+						<div className="col px-0">
+							<LikesFeed />
+						</div>
+					) : null}
 					<div className="col px-0">
 						<Link
 							to="#"

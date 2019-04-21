@@ -2,13 +2,15 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { EventContext } from '../../contexts';
+import { EventContext, UserContext } from '../../contexts';
 import RegistrationFeed from '../../registrations/RegistrationFeed';
 import EventReportModal from '../../reports/EventReportModal';
 import EventSocialSelector from './EventSocialSelector';
 
 const EventSocial = () => {
 	const { id } = useContext(EventContext);
+	const user = useContext(UserContext);
+
 	dayjs.extend(relativeTime);
 	return (
 		<Fragment>
@@ -31,9 +33,7 @@ const EventSocial = () => {
 						<EventReportModal event_ID={id} />
 					</div>
 
-					<div className="col-6">
-						<RegistrationFeed />
-					</div>
+					<div className="col-6">{user.profile ? <RegistrationFeed /> : null}</div>
 				</div>
 				<EventSocialSelector />
 			</div>

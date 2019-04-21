@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Spring } from 'react-spring/renderprops';
 import DatesPicker from './DatesPicker';
 import SBPanel from './sideBarPanel';
+import SBNoProfile from './sideBarNoProfile';
+import { UserContext } from '../contexts';
 
 const SideBar = ({ history }) => {
+	const user = useContext(UserContext);
 	const path = window.location.pathname;
 	return (
 		<div className="d-none d-lg-block col-lg-4 text-center">
@@ -18,9 +21,7 @@ const SideBar = ({ history }) => {
 					)}
 				</Spring>
 			) : null}
-			<div className="row">
-				<SBPanel />
-			</div>
+			<div className="row">{user.profile ? <SBPanel /> : <SBNoProfile />}</div>
 		</div>
 	);
 };
