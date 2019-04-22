@@ -45,25 +45,6 @@ export const GET_USER_EVENTS = gql`
 	}
 `;
 
-export const GET_USER_REGISTRATIONS = gql`
-	query User($id: ID!) {
-		user(id: $id) {
-			id
-			registrations {
-				id
-				event {
-					id
-					name
-					city
-					address
-					start
-					end
-				}
-			}
-		}
-	}
-`;
-
 export const GET_USER_COMMENTS = gql`
 	query User($id: ID!) {
 		user(id: $id) {
