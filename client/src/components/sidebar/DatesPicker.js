@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import { useStateValue } from '../contexts/InitialState';
 
 const DatesPicker = ({ history }) => {
 	const [from, setFrom] = useState(null);
 	const [to, setTo] = useState(null);
 	const [enteredTo, setEnteredTo] = useState(null);
+	const [{ userSearchPref }, dispatch] = useStateValue();
 
 	const isSelectingFirstDay = (from, to, day) => {
 		const isBeforeFirstDay = from && DateUtils.isDayBefore(day, from);
@@ -18,8 +20,30 @@ const DatesPicker = ({ history }) => {
 		const path = window.location.pathname;
 		if (path.includes('events')) {
 			if (!enteredTo) {
+				dispatch({
+					type: 'SET_DATESTRING',
+					newDateString: {
+						sort: userSearchPref.sort,
+						type: userSearchPref.type,
+						price: userSearchPref.price,
+						tags: userSearchPref.tags,
+						dateString: dayjs(from).format('YYYY-MM-DD')
+					}
+				});
 				history.push(`/home/events/${dayjs(from).format('YYYY-MM-DD')}`);
 			} else if (enteredTo) {
+				dispatch({
+					type: 'SET_DATESTRING',
+					newDateString: {
+						sort: userSearchPref.sort,
+						type: userSearchPref.type,
+						price: userSearchPref.price,
+						tags: userSearchPref.tags,
+						dateString: `${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
+							'YYYY-MM-DD'
+						)}`
+					}
+				});
 				history.push(
 					`/home/events/${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
 						'YYYY-MM-DD'
@@ -94,4 +118,4 @@ const DatesPicker = ({ history }) => {
 	);
 };
 
-export default DatesPicker;
+export default React.memo(DatesPicker);

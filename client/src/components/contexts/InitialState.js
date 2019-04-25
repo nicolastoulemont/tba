@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import dayjs from 'dayjs';
 
 export const StateContext = createContext();
 
@@ -29,7 +30,8 @@ export const InitialState = {
 		sort: 'ascending',
 		type: '',
 		price: 10000,
-		tags: []
+		tags: [],
+		dateString: dayjs().format('YYYY-MM-DD')
 	}
 };
 
@@ -69,6 +71,12 @@ export const Reducer = (state, action) => {
 			return {
 				...state,
 				userSearchPref: action.newTags
+			};
+
+		case 'SET_DATESTRING':
+			return {
+				...state,
+				userSearchPref: action.newDateString
 			};
 
 		default:

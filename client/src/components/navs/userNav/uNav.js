@@ -1,16 +1,22 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import DefaultAvatar from '../../../img/avatar_default.svg';
 import { UserContext } from '../../contexts/index';
+import { useStateValue } from '../../contexts/InitialState';
 
 const UNav = () => {
 	const user = useContext(UserContext);
+	const [
+		{
+			userSearchPref: { dateString }
+		}
+	] = useStateValue();
 
 	const logOut = e => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('uuid');
 	};
-	const today = new Date().toISOString().slice(0, 10);
 
 	return (
 		<div className="collapse navbar-collapse" id="mobile-nav">
@@ -18,7 +24,7 @@ const UNav = () => {
 				<li className="nav-item pr-4 mt-1">
 					<Link
 						className="nav-link"
-						to={`/home/news/${today}`}
+						to={`/home/news/${dayjs().format('YYYY-MM-DD')}`}
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Find out about all the EU affairs news"
@@ -30,7 +36,7 @@ const UNav = () => {
 				<li className="nav-item pr-4 mt-1">
 					<Link
 						className="nav-link"
-						to={`/home/events/${today}`}
+						to={`/home/events/${dateString}`}
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Find all the EU related events"
