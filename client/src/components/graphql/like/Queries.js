@@ -1,24 +1,19 @@
 import gql from 'graphql-tag';
 
 export const GET_EVENT_LIKES = gql`
-  query Event($id: ID!) {
-    event(id: $id) {
-      id
-      likes {
-        id
-        user_ID
-      }
-    }
-  }
+	query EventLikes($event_ID: ID!) {
+		eventLikes(event_ID: $event_ID) {
+			id
+			user_ID
+		}
+	}
 `;
 
 export const GET_COMMENT_LIKES = gql`
-  query Comment($id: ID!) {
-    comment(id: $id) {
-      likes {
-        id
-        user_ID
-      }
-    }
-  }
+	query CommentLikes($comment_ID: ID!) {
+		commentLikes(comment_ID: $comment_ID) {
+			id
+			user_ID
+		}
+	}
 `;

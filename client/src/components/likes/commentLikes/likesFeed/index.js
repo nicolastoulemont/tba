@@ -9,20 +9,15 @@ const LikesFeed = () => {
 	const user = useContext(UserContext);
 	const comment = useContext(CommentContext);
 
-	const getUserLikeId = (likes, user) => {
-		return likes.find(like => like.user_ID === user.id);
+	const getUserLikeId = (commentLikes, user) => {
+		return commentLikes.find(like => like.user_ID === user.id);
 	};
 
 	return (
 		<Fragment>
-			<CQuery query={GET_COMMENT_LIKES} variables={{ id: comment.id }}>
-				{({
-					data: {
-						comment: { likes }
-					},
-					refetch
-				}) => {
-					let userLike = getUserLikeId(likes, user);
+			<CQuery query={GET_COMMENT_LIKES} variables={{ comment_ID: comment.id }}>
+				{({ data: { commentLikes }, refetch }) => {
+					let userLike = getUserLikeId(commentLikes, user);
 					return (
 						<Fragment>
 							{typeof userLike === 'undefined' ? (
@@ -38,7 +33,9 @@ const LikesFeed = () => {
 									<i className="text-darkblue fa fa-thumbs-up" />
 								</Link>
 							)}
-							{likes.length !== 0 ? <span className="mx-1">{likes.length}</span> : null}
+							{commentLikes.length !== 0 ? (
+								<span className="mx-1">{commentLikes.length}</span>
+							) : null}
 							{typeof userLike !== 'undefined' ? (
 								<UnLikeComment userLike={userLike} refetch={refetch} user={user} />
 							) : (

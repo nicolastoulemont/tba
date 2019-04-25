@@ -26,6 +26,8 @@ module.exports = {
 		extend type Query {
 			like(id: ID!): Like
 			likes: [Like!]!
+			eventLikes(event_ID: ID!): [Like!]!
+			commentLikes(comment_ID: ID!): [Like!]!
 		}
 
 		extend type Mutation {
@@ -48,6 +50,22 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
 					return await Like.find({});
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			eventLikes: async (parent, args, { user, models: { Like } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				try {
+					return await Like.find({ event_ID: args.event_ID });
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			commentLikes: async (parent, args, { user, models: { Like } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				try {
+					return await Like.find({ comment_ID: args.comment_ID });
 				} catch (err) {
 					throw new Error('Bad request');
 				}

@@ -15,7 +15,7 @@ export const LikeEvent = () => {
 			event_ID: event.id
 		},
 		refetchQueries: () => {
-			return [{ query: GET_EVENT_LIKES, variables: { id: event.id } }];
+			return [{ query: GET_EVENT_LIKES, variables: { event_ID: event.id } }];
 		}
 	});
 	return (
@@ -46,7 +46,7 @@ export const UnLikeEvent = ({ userLike }) => {
 			user_ID: user.id
 		},
 		refetchQueries: () => {
-			return [{ query: GET_EVENT_LIKES, variables: { id: event.id } }];
+			return [{ query: GET_EVENT_LIKES, variables: { event_ID: event.id } }];
 		}
 	});
 	return (
