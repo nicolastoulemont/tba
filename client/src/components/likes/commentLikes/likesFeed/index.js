@@ -30,7 +30,7 @@ const LikesFeed = () => {
 									data-placement="bottom"
 									title="You already liked it"
 								>
-									<i className="text-darkblue fa fa-thumbs-up" />
+									<i className="text-blue fa fa-thumbs-up" />
 								</Link>
 							)}
 							{commentLikes.length !== 0 ? (

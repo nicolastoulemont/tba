@@ -50,8 +50,9 @@ export const RegisterEvent = () => {
 			data-placement="bottom"
 			title="Register to this event"
 			onClick={e => createRegistration(e)}
+			className="btn btn-blue rounded-pill"
 		>
-			<h6 className="d-inline font-weight-bold text-uppercase">Register</h6>
+			<h6 className="d-inline font-weight-bold text-uppercase ">Register</h6>
 		</Link>
 	);
 };
@@ -87,6 +88,7 @@ export const UnRegisterEvent = ({ userRegistration }) => {
 			data-togggle="tooltip"
 			data-placement="bottom"
 			title="Cancel your registration to this event"
+			className="btn btn-orange rounded-pill"
 			onClick={e => unRegister(e)}
 		>
 			<h6 className="d-inline font-weight-bold text-uppercase">Unregister</h6>
