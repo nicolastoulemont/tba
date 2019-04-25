@@ -14,7 +14,7 @@ export default function PanelItem({ registration, event }) {
 								}}
 								className="link-menu"
 							>
-								<small className="font-weight-bold mr-2 link-menu">{registration.eventName}</small>
+								<small className="font-weight-bold mr-2">{registration.eventName}</small>
 							</Link>
 							<small className="d-block">
 								{registration.eventAddress},{registration.eventCity}
@@ -48,7 +48,7 @@ export default function PanelItem({ registration, event }) {
 								}}
 								className="link-menu"
 							>
-								<small className="font-weight-bold mr-2 link-menu">{event.name}</small>
+								<small className="font-weight-bold mr-2">{event.name}</small>
 							</Link>
 							<small className="d-block">
 								{event.address}, {event.city}

@@ -9,9 +9,9 @@ const EventCommentItem = ({ refetch }) => {
 	return (
 		<Fragment>
 			<EventCommentDisplay refetch={refetch} />
-			<CQuery query={GET_COMMENT_COMMENTS} variables={{ id: comment.id }}>
-				{({ data: { comment }, refetch }) => {
-					const comments = comment.comments;
+			<CQuery query={GET_COMMENT_COMMENTS} variables={{ comment_ID: comment.id }}>
+				{({ data, refetch }) => {
+					const comments = data.commentComments;
 					if (comments.length === 0) return null;
 					return (
 						<Fragment>

@@ -22,21 +22,19 @@ export const GET_EVENT_COMMENTS = gql`
 `;
 
 export const GET_COMMENT_COMMENTS = gql`
-	query Comment($id: ID!) {
-		comment(id: $id) {
-			comments {
-				id
-				user_ID
-				text
-				moderated
-				moderationMsg
-				createdAt
-				updatedAt
-				creator {
-					profile {
-						name
-						picture_URL
-					}
+	query CommentComments($comment_ID: ID!) {
+		commentComments(comment_ID: $comment_ID) {
+			id
+			user_ID
+			text
+			moderated
+			moderationMsg
+			createdAt
+			updatedAt
+			creator {
+				profile {
+					name
+					picture_URL
 				}
 			}
 		}

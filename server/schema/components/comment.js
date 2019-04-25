@@ -28,6 +28,7 @@ module.exports = {
 			comment(id: ID!): CommentItem
 			comments: [CommentItem!]!
 			eventComments(event_ID: ID!): [CommentItem!]!
+			commentComments(comment_ID: ID!): [CommentItem!]!
 		}
 
 		extend type Mutation {
@@ -65,6 +66,14 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				try {
 					return await CommentItem.find({ event_ID: args.event_ID });
+				} catch (err) {
+					throw new Error('Bad request');
+				}
+			},
+			commentComments: async (parent, args, { user, models: { CommentItem } }) => {
+				if (!user) throw new Error('Error : You are not logged in');
+				try {
+					return await CommentItem.find({ comment_ID: args.comment_ID });
 				} catch (err) {
 					throw new Error('Bad request');
 				}
