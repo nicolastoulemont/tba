@@ -22,18 +22,18 @@ export default function registrationsDisplay({ target }) {
 	return (
 		<CQuery query={chooseQuery(target)} variables={{ user_ID: id, date: today }}>
 			{({ data }) => {
-				if (data.userFutureHostedEvents && data.userFutureHostedEvents.length !== 0) {
+				if (data.userFutureHostedEvents && data.userFutureHostedEvents.body.length !== 0) {
 					return (
 						<Fragment>
-							{data.userFutureHostedEvents.map(event => (
+							{data.userFutureHostedEvents.body.map(event => (
 								<PanelItem event={event} key={event.id} />
 							))}
 						</Fragment>
 					);
-				} else if (data.userPastHostedEvents && data.userPastHostedEvents.length !== 0) {
+				} else if (data.userPastHostedEvents && data.userPastHostedEvents.body.length !== 0) {
 					return (
 						<Fragment>
-							{data.userPastHostedEvents.map(event => (
+							{data.userPastHostedEvents.body.map(event => (
 								<PanelItem event={event} key={event.id} />
 							))}
 						</Fragment>

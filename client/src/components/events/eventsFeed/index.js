@@ -66,7 +66,7 @@ const EventFeed = ({ match }) => {
 							}}
 						>
 							{({ data }) => {
-								const events = data.searchDailyEvents;
+								const events = data.searchDailyEvents.body;
 								return (
 									<Fragment>
 										{events.length === 0 ? (

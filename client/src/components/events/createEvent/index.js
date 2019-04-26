@@ -89,7 +89,13 @@ const CreateEvent = ({ history }) => {
 				tags: eventTags
 			}
 		});
-		history.push(`/home/event/${res.data.addEvent.event.id}`);
+		console.log(res);
+		if (res.data.addEvent.statusCode === 201) {
+			history.push(`/home/event/${res.data.addEvent.body.id}`);
+		} else {
+			// Handle errors
+			return null;
+		}
 	};
 
 	const addEventWithOutBanner = async addEvent => {
@@ -109,7 +115,13 @@ const CreateEvent = ({ history }) => {
 				tags: eventTags
 			}
 		});
-		history.push(`/home/event/${res.data.addEvent.event.id}`);
+		console.log(res);
+		if (res.data.addEvent.statusCode === 201) {
+			history.push(`/home/event/${res.data.addEvent.body.id}`);
+		} else {
+			// Handle errors
+			return null;
+		}
 	};
 
 	const refetchCorrectQuery = () => {
@@ -286,7 +298,7 @@ const CreateEvent = ({ history }) => {
 												</label>
 											</div>
 
-											<input type="submit" className="btn btn-darkblue btn-block my-4" />
+											<input type="submit" className="btn btn-blue btn-block my-4" />
 										</div>
 									</form>
 								</div>

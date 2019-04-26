@@ -19,24 +19,32 @@ export const SEARCH_DAILY_EVENTS = gql`
 			price: $price
 			tags: $tags
 		) {
-			id
-			user_ID
-			name
-			abstract
-			isPublic
-			type
-			price
-			start
-			end
-			city
-			address
-			createdAt
-			updatedAt
-			tags
-			creator {
-				profile {
-					name
-					picture_URL
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				name
+				abstract
+				isPublic
+				type
+				price
+				start
+				end
+				city
+				address
+				createdAt
+				updatedAt
+				tags
+				creator {
+					profile {
+						name
+						picture_URL
+					}
 				}
 			}
 		}
@@ -75,28 +83,36 @@ export const GET_EVENTS = gql`
 export const GET_EVENT = gql`
 	query Event($id: ID!) {
 		event(id: $id) {
-			id
-			user_ID
-			isPublic
-			type
-			price
-			name
-			abstract
-			banner_URL
-			description
-			city
-			address
-			tags
-			start
-			end
-			createdAt
-			updatedAt
-			creator {
-				profile {
-					name
-					position
-					organisation_ID
-					picture_URL
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				isPublic
+				type
+				price
+				name
+				abstract
+				banner_URL
+				description
+				city
+				address
+				tags
+				start
+				end
+				createdAt
+				updatedAt
+				creator {
+					profile {
+						name
+						position
+						organisation_ID
+						picture_URL
+					}
 				}
 			}
 		}
@@ -106,13 +122,21 @@ export const GET_EVENT = gql`
 export const GET_USER_FUTURE_HOSTED_EVENTS = gql`
 	query UserFutureHostedEvents($user_ID: ID!, $date: String!) {
 		userFutureHostedEvents(user_ID: $user_ID, date: $date) {
-			id
-			user_ID
-			name
-			city
-			address
-			start
-			end
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				name
+				city
+				address
+				start
+				end
+			}
 		}
 	}
 `;
@@ -120,13 +144,21 @@ export const GET_USER_FUTURE_HOSTED_EVENTS = gql`
 export const GET_USER_PAST_HOSTED_EVENTS = gql`
 	query UserPastHostedEvents($user_ID: ID!, $date: String!) {
 		userPastHostedEvents(user_ID: $user_ID, date: $date) {
-			id
-			user_ID
-			name
-			city
-			address
-			start
-			end
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				name
+				city
+				address
+				start
+				end
+			}
 		}
 	}
 `;

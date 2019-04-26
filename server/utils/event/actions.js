@@ -19,14 +19,19 @@ const buildEvent = async (args, EventItem) => {
 			tags: args.tags
 		}).save();
 		return {
-			success: true,
-			event
+			statusCode: 201,
+			ok: true,
+			errors: null,
+			body: event
 		};
 	} catch (err) {
-		console.log(err);
 		return {
-			success: false,
-			errors: [err]
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
 		};
 	}
 };
@@ -52,14 +57,64 @@ const updateEvent = async (args, EventItem) => {
 		const updEvent = await EventItem.findOneAndUpdate({ _id: args._id }, updateEvent, {
 			new: true
 		});
-		return { success: true, event: updEvent };
-	} catch (err) {
-		console.log(err);
 		return {
-			success: false,
-			errors: { path: 'save', message: 'Something went wrong' }
+			statusCode: 201,
+			ok: true,
+			errors: null,
+			body: updEvent
+		};
+	} catch (err) {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
 		};
 	}
 };
 
-module.exports = { buildEvent, updateEvent };
+const deleteEvent = async (args, EventItem) => {
+	try {
+		const event = await EventItem.findById(args._id);
+		if (event.user_ID === args.user_ID) {
+			try {
+				await EventItem.findByIdAndDelete(args._id);
+				return {
+					statusCode: 200,
+					ok: true
+				};
+			} catch {
+				return {
+					statusCode: 404,
+					ok: false,
+					errors: {
+						path: 'Not Found',
+						message: 'The server cannot find the requested ressource'
+					}
+				};
+			}
+		} else {
+			return {
+				statusCode: 403,
+				ok: false,
+				errors: {
+					path: 'Forbidden',
+					message: 'You cannot perform this action'
+				}
+			};
+		}
+	} catch (err) {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
+	}
+};
+
+module.exports = { buildEvent, updateEvent, deleteEvent };

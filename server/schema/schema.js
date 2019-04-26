@@ -1,5 +1,5 @@
 const { rootQuery } = require('./general/root');
-const { ErrorType } = require('./general/errors');
+const { ResponseType } = require('./general/response');
 const { DateType, DateRes } = require('./general/date');
 const { s3Type, s3Res } = require('./general/s3');
 const { UserType, UserRes } = require('./components/user');
@@ -22,7 +22,7 @@ const resolvers = {};
 module.exports = schema = makeExecutableSchema({
 	typeDefs: [
 		rootQuery,
-		ErrorType,
+		ResponseType,
 		DateType,
 		s3Type,
 		UserType,
@@ -51,5 +51,8 @@ module.exports = schema = makeExecutableSchema({
 		RegistrationRes,
 		MembershipRes,
 		UserLogRes
-	]
+	],
+	resolverValidationOptions: {
+		requireResolversForResolveType: false
+	}
 });

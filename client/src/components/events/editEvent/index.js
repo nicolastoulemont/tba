@@ -288,7 +288,7 @@ const EditEvent = ({ match, history, location }) => {
 										</small>
 									</label>
 								</div>
-								<input type="submit" className="btn btn-darkblue btn-block my-4" />
+								<input type="submit" className="btn btn-blue btn-block my-4" />
 							</div>
 						</form>
 					)}

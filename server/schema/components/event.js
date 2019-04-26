@@ -1,7 +1,14 @@
 const { gql } = require('apollo-server');
 const { validateEventInput, validateUpdEventIntput } = require('../../utils/event/validation');
-const { dailyEventsWithTags, dailyEventsWithOutTags } = require('../../utils/event/queries');
-const { buildEvent, updateEvent } = require('../../utils/event/actions');
+const {
+	findEvent,
+	findEvents,
+	dailyEventsWithTags,
+	dailyEventsWithOutTags,
+	findUserFutureEvents,
+	findUserPastEvents
+} = require('../../utils/event/queries');
+const { buildEvent, updateEvent, deleteEvent } = require('../../utils/event/actions');
 const { getDatesFromString } = require('../../utils/general');
 
 module.exports = {
@@ -32,15 +39,23 @@ module.exports = {
 			registrations: [Registration]
 		}
 
-		type EventResp {
-			success: Boolean!
-			event: EventItem
+		type EventsResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
 			errors: [Error]
+			body: [EventItem]
+		}
+
+		type EventResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: EventItem
 		}
 
 		extend type Query {
-			event(id: ID!): EventItem
-			events(limit: Int): [EventItem!]!
+			event(id: ID!): EventResponse!
+			events(limit: Int): EventsResponse!
 			searchDailyEvents(
 				date: String!
 				search: String
@@ -49,9 +64,9 @@ module.exports = {
 				type: String
 				price: Float
 				tags: [String]
-			): [EventItem!]!
-			userFutureHostedEvents(user_ID: ID!, date: String): [EventItem!]!
-			userPastHostedEvents(user_ID: ID!, date: String): [EventItem!]!
+			): EventsResponse!
+			userFutureHostedEvents(user_ID: ID!, date: String): EventsResponse!
+			userPastHostedEvents(user_ID: ID!, date: String): EventsResponse!
 		}
 
 		extend type Mutation {
@@ -70,7 +85,7 @@ module.exports = {
 				start: String!
 				end: String!
 				tags: [String]
-			): EventResp!
+			): EventResponse!
 			updateEvent(
 				_id: ID!
 				name: String!
@@ -86,29 +101,19 @@ module.exports = {
 				start: String!
 				end: String!
 				tags: [String]
-			): EventResp!
-			deleteEvent(_id: ID!, user_ID: String!): EventResp!
+			): EventResponse!
+			deleteEvent(_id: ID!, user_ID: String!): EventResponse!
 		}
 	`,
 	// Resolvers
 	EventRes: {
 		Query: {
 			event: async (parent, args, { models: { EventItem } }) => {
-				try {
-					return await EventItem.findById(args.id);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findEvent(args, EventItem);
 			},
 			events: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await EventItem.find({ isPublic: true })
-						.sort({ _id: 'descending' })
-						.limit(args.limit);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findEvents(args, EventItem);
 			},
 			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
@@ -121,23 +126,11 @@ module.exports = {
 			},
 			userFutureHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				const date = new Date(args.date);
-				try {
-					return await EventItem.find({ user_ID: args.user_ID, start: { $gte: date } });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findUserFutureEvents(args, EventItem);
 			},
 			userPastHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				const date = new Date(args.date);
-				try {
-					return await EventItem.find({ user_ID: args.user_ID, start: { $lte: date } }).sort({
-						start: 'descending'
-					});
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findUserPastEvents(args, EventItem);
 			}
 		},
 
@@ -187,20 +180,7 @@ module.exports = {
 						success: false,
 						error: 'You are not logged in'
 					};
-				try {
-					const event = await EventItem.findById(args._id);
-					if (event.user_ID === args.user_ID) {
-						return {
-							success: true,
-							deleteEvent: await EventItem.findByIdAndDelete(args._id)
-						};
-					} else {
-						return { success: false, error: new Error('Bad request') };
-					}
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return await deleteEvent(args, EventItem);
 			}
 		}
 	}

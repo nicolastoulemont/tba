@@ -31,8 +31,13 @@ export const CREATE_EVENT = gql`
 			end: $end
 			tags: $tags
 		) {
-			success
-			event {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
 				id
 				user_ID
 				name
@@ -47,10 +52,6 @@ export const CREATE_EVENT = gql`
 				start
 				end
 				tags
-			}
-			errors {
-				path
-				message
 			}
 		}
 	}
@@ -87,9 +88,15 @@ export const UPDATE_EVENT = gql`
 			end: $end
 			tags: $tags
 		) {
-			success
-			event {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
 				id
+				user_ID
 				name
 				abstract
 				banner_URL
@@ -103,10 +110,6 @@ export const UPDATE_EVENT = gql`
 				end
 				tags
 			}
-			errors {
-				path
-				message
-			}
 		}
 	}
 `;
@@ -114,7 +117,8 @@ export const UPDATE_EVENT = gql`
 export const DELETE_EVENT = gql`
 	mutation DeleteEvent($_id: ID!, $user_ID: String!) {
 		deleteEvent(_id: $_id, user_ID: $user_ID) {
-			success
+			statusCode
+			ok
 			errors {
 				path
 				message
