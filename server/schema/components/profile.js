@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const { buildProfile, updateProfile, deleteProfile } = require('../../utils/profile/actions');
 
 module.exports = {
@@ -67,7 +67,7 @@ module.exports = {
 	ProfileRes: {
 		Query: {
 			profile: async (parent, args, { user, models: { Profile } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Profile.findById(args.id);
 				} catch (err) {
@@ -75,7 +75,7 @@ module.exports = {
 				}
 			},
 			searchProfilesByName: async (parent, args, { user, models: { Profile } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Profile.find({
 						name: { $regex: new RegExp(args.search) }
@@ -87,7 +87,7 @@ module.exports = {
 				}
 			},
 			profiles: async (parent, args, { user, models: { Profile } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Profile.find({});
 				} catch (err) {
@@ -102,29 +102,17 @@ module.exports = {
 
 		Mutation: {
 			addProfile: async (parent, args, { user, models: { Profile } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// TODO : Add input validation function
 				return buildProfile(args, Profile);
 			},
 			updateProfile: async (parent, args, { user, models: { User, Profile } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// TODO : Add input validation function
 				return updateProfile(args, user, User, Profile);
 			},
 			deleteProfile: async (parent, args, { user, models: { User, Profile } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await deleteProfile(args, user, User, Profile);
 				} catch (err) {

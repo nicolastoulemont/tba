@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const {
 	registerUser,
 	registerAndLogin,
@@ -67,7 +67,7 @@ module.exports = {
 	UserRes: {
 		Query: {
 			user: async (parent, args, { user, models: { User } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await User.findById(args.id);
 				} catch (err) {
@@ -75,7 +75,7 @@ module.exports = {
 				}
 			},
 			currentUser: async (parent, args, { user, models: { User } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await User.findOne({ _id: user.user.id });
 				} catch (err) {
@@ -83,7 +83,7 @@ module.exports = {
 				}
 			},
 			users: async (parent, args, { user, models: { User } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await User.find({});
 				} catch (err) {
@@ -132,21 +132,13 @@ module.exports = {
 				return await loginUser(user);
 			},
 			updateUser: async (parent, args, { user, models: { User } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateUpdateInput(args);
 				if (!isValid) return { success: false, errors };
 				return await updateUserInfo(args, user, User);
 			},
 			deleteUser: async (parent, args, { user, models: { User } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await User.findByIdAndDelete(args._id);
 				} catch (err) {

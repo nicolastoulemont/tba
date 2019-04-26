@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const { ValidateAddLike } = require('../../utils/like/validation');
 const { buildLike, deleteLike } = require('../../utils/like/actions');
 
@@ -40,7 +40,7 @@ module.exports = {
 	LikeRes: {
 		Query: {
 			like: async (parent, args, { user, models: { Like } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Like.findById(args.id);
 				} catch (err) {
@@ -48,7 +48,7 @@ module.exports = {
 				}
 			},
 			likes: async (parent, args, { user, models: { Like } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Like.find({});
 				} catch (err) {
@@ -56,7 +56,7 @@ module.exports = {
 				}
 			},
 			eventLikes: async (parent, args, { user, models: { Like } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Like.find({ event_ID: args.event_ID });
 				} catch (err) {
@@ -64,7 +64,7 @@ module.exports = {
 				}
 			},
 			commentLikes: async (parent, args, { user, models: { Like } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Like.find({ comment_ID: args.comment_ID });
 				} catch (err) {
@@ -85,13 +85,13 @@ module.exports = {
 
 		Mutation: {
 			addLike: async (parent, args, { user, models: { Like } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await ValidateAddLike(args);
 				if (!isValid) return { success: false, errors };
 				return await buildLike(args, Like);
 			},
 			deleteLike: async (parent, args, { user, models: { Like } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await deleteLike(args, Like);
 			}
 		}

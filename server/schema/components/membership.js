@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 // const { ValidateAddRegistration } = require('../../validation/registration');
 
 module.exports = {
@@ -49,7 +49,7 @@ module.exports = {
 	MembershipRes: {
 		Query: {
 			membership: async (parent, args, { user, models: { Membership } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Membership.findById(args.id);
 				} catch (err) {
@@ -57,7 +57,7 @@ module.exports = {
 				}
 			},
 			memberships: async (parent, args, { user, models: { Membership } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Membership.find({});
 				} catch (err) {
@@ -74,7 +74,7 @@ module.exports = {
 		},
 		Mutation: {
 			addMembership: async (parent, args, { user, models: { Membership } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// const { errors, isValid } = await ValidateAddRegistration(args);
 				// if (!isValid) return { success: false, errors };
 				try {
@@ -91,11 +91,7 @@ module.exports = {
 				}
 			},
 			updateMembership: async (parent, args, { user, models: { Membership } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// const { errors, isValid } = await validateUpdEventIntput(args);
 				// if (!isValid) return { success: false, errors };
 
@@ -121,7 +117,7 @@ module.exports = {
 				}
 			},
 			deleteMembership: async (parent, args, { user, models: { Membership } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					const deleteMembership = await Membership.findByIdAndDelete(args._id);
 					if (deleteMembership) return { success: true, deleteMembership };

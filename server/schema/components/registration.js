@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const { ValidateAddRegistration } = require('../../utils/registration/validation');
 const { buildRegistration, deleteRegistration } = require('../../utils/registration/actions');
 
@@ -50,7 +50,7 @@ module.exports = {
 	RegistrationRes: {
 		Query: {
 			registration: async (parent, args, { user, models: { Registration } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Registration.findById(args.id);
 				} catch (err) {
@@ -58,7 +58,7 @@ module.exports = {
 				}
 			},
 			registrations: async (parent, args, { user, models: { Registration } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Registration.find({});
 				} catch (err) {
@@ -66,7 +66,7 @@ module.exports = {
 				}
 			},
 			userFutureRegistrations: async (parent, args, { user, models: { Registration } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const date = new Date(args.date);
 				try {
 					return await Registration.find({ user_ID: args.user_ID, eventStart: { $gte: date } });
@@ -75,7 +75,7 @@ module.exports = {
 				}
 			},
 			userPastRegistrations: async (parent, args, { user, models: { Registration } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const date = new Date(args.date);
 				try {
 					return await Registration.find({
@@ -87,7 +87,7 @@ module.exports = {
 				}
 			},
 			eventRegistrations: async (parent, args, { user, models: { Registration } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Registration.find({ event_ID: args.event_ID });
 				} catch (err) {
@@ -103,13 +103,13 @@ module.exports = {
 		},
 		Mutation: {
 			addRegistration: async (parent, args, { user, models: { Registration } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await ValidateAddRegistration(args);
 				if (!isValid) return { success: false, errors };
 				return await buildRegistration(args, Registration);
 			},
 			deleteRegistration: async (parent, args, { user, models: { Registration } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await deleteRegistration(args, Registration);
 			}
 		}

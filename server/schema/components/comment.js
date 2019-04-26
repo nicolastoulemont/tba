@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const { validateCommentInput } = require('../../utils/comment/validation');
 const { buildComment, updateComment, moderateComment } = require('../../utils/comment/actions');
 const {
@@ -67,19 +67,19 @@ module.exports = {
 	CommentRes: {
 		Query: {
 			comment: async (parent, args, { user, models: { CommentItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findComment(args, CommentItem);
 			},
 			comments: async (parent, args, { user, models: { CommentItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findComments(args, CommentItem);
 			},
 			eventComments: async (parent, args, { user, models: { CommentItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findEventComments(args, CommentItem);
 			},
 			commentComments: async (parent, args, { user, models: { CommentItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findCommentComments(args, CommentItem);
 			}
 		},
@@ -102,31 +102,19 @@ module.exports = {
 
 		Mutation: {
 			addComment: async (parent, args, { user, models: { CommentItem } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateCommentInput(args);
 				if (!isValid) return { success: false, errors };
 				return await buildComment(args, CommentItem);
 			},
 			updateComment: async (parent, args, { user, models: { User, CommentItem } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateCommentInput(args);
 				if (!isValid) return { success: false, errors };
 				return await updateComment(args, user, CommentItem);
 			},
 			moderateComment: async (parent, args, { user, models: { CommentItem, EventItem } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await moderateComment(args, CommentItem, EventItem);
 			}
 		}

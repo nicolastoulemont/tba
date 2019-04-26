@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const { validateEventInput, validateUpdEventIntput } = require('../../utils/event/validation');
 const {
 	findEvent,
@@ -112,11 +112,11 @@ module.exports = {
 				return await findEvent(args, EventItem);
 			},
 			events: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findEvents(args, EventItem);
 			},
 			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { date, dayafter } = getDatesFromString(args.date);
 				if (args.tags.length !== 0) {
 					return await dailyEventsWithTags(date, dayafter, args, EventItem);
@@ -125,11 +125,11 @@ module.exports = {
 				}
 			},
 			userFutureHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findUserFutureEvents(args, EventItem);
 			},
 			userPastHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findUserPastEvents(args, EventItem);
 			}
 		},
@@ -149,37 +149,20 @@ module.exports = {
 
 		Mutation: {
 			addEvent: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user)
-					return {
-						success: false,
-						errors: [
-							{
-								path: 'auth',
-								message: 'You are not logged in'
-							}
-						]
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// const { errors, isValid } = await validateEventInput(args);
 				// if (!isValid) return { success: false, errors };
 				return await buildEvent(args, EventItem);
 			},
 			updateEvent: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// const { errors, isValid } = await validateUpdEventIntput(args);
 				// if (!isValid) return { success: false, errors };
 
 				return await updateEvent(args, EventItem);
 			},
 			deleteEvent: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await deleteEvent(args, EventItem);
 			}
 		}

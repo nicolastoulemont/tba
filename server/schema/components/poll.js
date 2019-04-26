@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 
 module.exports = {
 	PollType: gql`
@@ -31,7 +31,7 @@ module.exports = {
 	PollRes: {
 		Query: {
 			poll: async (parent, args, { user, models: { Poll } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Poll.findById(args.id);
 				} catch (err) {
@@ -39,7 +39,7 @@ module.exports = {
 				}
 			},
 			polls: async (parent, args, { user, models: { Poll } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Poll.find({});
 				} catch (err) {
@@ -61,7 +61,7 @@ module.exports = {
 
 		Mutation: {
 			addPoll: async (parent, args, { user, models: { Poll } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await new Poll({
 						user_ID: args.user_ID,
@@ -73,7 +73,7 @@ module.exports = {
 				}
 			},
 			updatePoll: async (parent, args, { user, models: { Poll } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				let updatePoll = {};
 				if (args.text) updatePoll.text = args.text;
 				try {
@@ -85,7 +85,7 @@ module.exports = {
 				}
 			},
 			deletePoll: async (parent, args, { user, models: { Poll } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Poll.findByIdAndDelete(args._id);
 				} catch (err) {

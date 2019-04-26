@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const { validateOrgInput, validateUpdOrgIntput } = require('../../utils/organisation/validation');
 const {
 	buildOrganisation,
@@ -61,7 +61,7 @@ module.exports = {
 	OrganisationRes: {
 		Query: {
 			organisation: async (parent, args, { user, models: { Organisation } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Organisation.findById(args.id);
 				} catch (err) {
@@ -69,7 +69,7 @@ module.exports = {
 				}
 			},
 			searchOrganisationsByName: async (parent, args, { user, models: { Organisation } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Organisation.find({
 						name: { $regex: new RegExp(args.search) }
@@ -81,7 +81,7 @@ module.exports = {
 				}
 			},
 			organisations: async (parent, args, { user, models: { Organisation } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Organisation.find({});
 				} catch (err) {
@@ -120,31 +120,19 @@ module.exports = {
 
 		Mutation: {
 			addOrganisation: async (parent, args, { user, models: { Organisation } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateOrgInput(args);
 				if (!isValid) return { success: false, errors };
 				return await buildOrganisation(args, Organisation);
 			},
 			updateOrganisation: async (parent, args, { user, models: { Organisation } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateUpdOrgIntput(args);
 				if (!isValid) return { success: false, errors };
 				return await updateOrganisation(args, Organisation);
 			},
 			deleteOrganisation: async (parent, args, { user, models: { Organisation } }) => {
-				if (!user)
-					return {
-						success: false,
-						error: 'You are not logged in'
-					};
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await deleteOrganisation(args, Organisation);
 			}
 		}

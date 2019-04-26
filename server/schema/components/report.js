@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql, AuthenticationError } = require('apollo-server');
 const { ValidateAddReport } = require('../../utils/report/validation');
 const { buildReport, deleteReport } = require('../../utils/report/actions');
 
@@ -51,7 +51,7 @@ module.exports = {
 	ReportRes: {
 		Query: {
 			report: async (parent, args, { user, models: { Report } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Report.findById(args.id);
 				} catch (err) {
@@ -59,7 +59,7 @@ module.exports = {
 				}
 			},
 			reports: async (parent, args, { user, models: { Report } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
 					return await Report.find({});
 				} catch (err) {
@@ -85,13 +85,13 @@ module.exports = {
 
 		Mutation: {
 			addReport: async (parent, args, { user, models: { Report } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await ValidateAddReport(args);
 				if (!isValid) return { success: false, errors };
 				return await buildReport(args, Report);
 			},
 			deleteReport: async (parent, args, { user, models: { Report } }) => {
-				if (!user) throw new Error('Error : You are not logged in');
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await deleteReport(args, Report);
 			}
 		}
