@@ -1,9 +1,9 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LikeComment, UnLikeComment } from '../likesActions';
-import CQuery from '../../../commons/CustomQueryComponent';
-import { GET_COMMENT_LIKES } from '../../../graphql/like/Queries';
-import { UserContext, CommentContext } from '../../../contexts';
+import { LikeComment, UnLikeComment } from './LikesActions';
+import CQuery from '../../commons/CustomQueryComponent';
+import { GET_COMMENT_LIKES } from '../../graphql/like/Queries';
+import { UserContext, CommentContext } from '../../contexts';
 
 const LikesFeed = () => {
 	const user = useContext(UserContext);

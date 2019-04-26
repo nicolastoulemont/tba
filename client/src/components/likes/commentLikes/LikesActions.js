@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import { ADD_LIKE, DELETE_LIKE } from '../../../graphql/like/Mutations';
+import { ADD_LIKE, DELETE_LIKE } from '../../graphql/like/Mutations';
 
 export const LikeComment = ({ user, comment_ID, refetch }) => {
 	return (

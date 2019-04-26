@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PlaceHolderBanner from '../../../../img/placeholder_event_banner.svg';
 import { ProfileContext, UserContext } from '../../../contexts';
-import ProfileMenu from '../profileMenu/index';
+import ProfileMenu from './ProfileMenu';
 const ProfileHeader = () => {
 	const user = useContext(UserContext);
 	const profile = useContext(ProfileContext);

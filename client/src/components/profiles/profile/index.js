@@ -3,7 +3,7 @@ import { Spring } from 'react-spring/renderprops';
 import CQuery from '../../commons/CustomQueryComponent';
 import { ProfileContext } from '../../contexts';
 import { GET_USER_FULL_PROFILE } from '../../graphql/profile/Queries';
-import ProfileHeader from './profileHeader/index';
+import ProfileHeader from './';
 import ProfileSocial from './profileSocial/index';
 
 const Profile = ({ match }) => {

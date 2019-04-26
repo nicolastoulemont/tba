@@ -3,7 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CommentContext } from '../../contexts';
-import LikesFeed from '../../likes/commentLikes/likesFeed/index';
+import LikesFeed from '../../likes/commentLikes/LikesFeed';
 import CommentEdit from './CommentEdit';
 import CommentReply from './CommentReply';
 import CommentReport from './CommentReport';

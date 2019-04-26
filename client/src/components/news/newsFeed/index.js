@@ -7,7 +7,7 @@ import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
 import { useStateValue } from '../../contexts/InitialState';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
-import NewsFeedItem from './feedItem';
+import NewsFeedItem from './NewsFeedItem';
 
 const NewsFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
@@ -70,7 +70,8 @@ const NewsFeed = ({ match }) => {
 								const events = data.searchDailyEvents;
 								return (
 									<Fragment>
-										{events.length === 0 ? (
+										<h6>On Hold until news back end ready</h6>
+										{/* {events.length === 0 ? (
 											<div className="mt-4 pl-4 font-italic ">No {displayDay()}</div>
 										) : (
 											<Fragment>
@@ -84,7 +85,7 @@ const NewsFeed = ({ match }) => {
 													</Spring>
 												))}
 											</Fragment>
-										)}
+										)} */}
 									</Fragment>
 								);
 							}}

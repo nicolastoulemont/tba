@@ -7,7 +7,7 @@ import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
 import { useStateValue } from '../../contexts/InitialState';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
-import EventFeedItem from './feedItem';
+import EventFeedItem from './EventFeedItem';
 
 const EventFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
