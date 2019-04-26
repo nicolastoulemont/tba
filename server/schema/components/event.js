@@ -1,12 +1,8 @@
 const { gql } = require('apollo-server');
-const { validateEventInput, validateUpdEventIntput } = require('../../validation/event');
-const {
-	buildEvent,
-	updateEvent,
-	dailyEventsWithTags,
-	dailyEventsWithOutTags,
-	getDates
-} = require('../../utils/event');
+const { validateEventInput, validateUpdEventIntput } = require('../../utils/event/validation');
+const { dailyEventsWithTags, dailyEventsWithOutTags } = require('../../utils/event/queries');
+const { buildEvent, updateEvent } = require('../../utils/event/actions');
+const { getDatesFromString } = require('../../utils/general');
 
 module.exports = {
 	EventType: gql`
@@ -18,6 +14,7 @@ module.exports = {
 			banner_URL: String
 			description: String!
 			isPublic: Boolean!
+			hasComments: Boolean!
 			type: String
 			price: Float!
 			city: String!
@@ -65,6 +62,7 @@ module.exports = {
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!
+				hasComments: Boolean!
 				type: String
 				price: Float!
 				city: String!
@@ -80,6 +78,7 @@ module.exports = {
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!
+				hasComments: Boolean!
 				type: String
 				price: Float!
 				city: String!
@@ -103,20 +102,8 @@ module.exports = {
 			},
 			events: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				// try {
-				// 	return await EventItem.find({ isPublic: true })
-				// 		.sort({ _id: 'descending' })
-				// 		.limit(args.limit);
-				// } catch (err) {
-				// 	throw new Error('Bad request');
-				// }
-				const searchedTags = [];
-
 				try {
-					return await EventItem.find({
-						isPublic: true,
-						tags: { $in: searchedTags }
-					})
+					return await EventItem.find({ isPublic: true })
 						.sort({ _id: 'descending' })
 						.limit(args.limit);
 				} catch (err) {
@@ -125,7 +112,7 @@ module.exports = {
 			},
 			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				const { date, dayafter } = getDates(args.date);
+				const { date, dayafter } = getDatesFromString(args.date);
 				if (args.tags.length !== 0) {
 					return await dailyEventsWithTags(date, dayafter, args, EventItem);
 				} else if (args.tags.length === 0) {

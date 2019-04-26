@@ -1,6 +1,6 @@
 const Validator = require('validator');
-const isEmpty = require('./is-empty');
-const User = require('../models/User');
+const isEmpty = require('../general');
+const { User } = require('../../models/');
 
 // TODO
 

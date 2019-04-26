@@ -7,6 +7,7 @@ const buildEvent = async (args, EventItem) => {
 			banner_URL: args.banner_URL,
 			description: args.description,
 			isPublic: args.isPublic,
+			hasComments: args.hasComments,
 			type: args.type,
 			price: args.price,
 			city: args.city,
@@ -38,6 +39,7 @@ const updateEvent = async (args, EventItem) => {
 		if (typeof args.banner_URL !== null) updateEvent.banner_URL = args.banner_URL;
 		if (args.description) updateEvent.description = args.description;
 		if (typeof args.isPublic !== null) updateEvent.isPublic = args.isPublic;
+		if (typeof args.hasComments !== null) updateEvent.hasComments = args.hasComments;
 		if (args.type) updateEvent.type = args.type;
 		if (args.price) updateEvent.price = args.price;
 		if (args.city) updateEvent.city = args.city;
@@ -60,60 +62,4 @@ const updateEvent = async (args, EventItem) => {
 	}
 };
 
-const dailyEventsWithTags = async (date, dayafter, args, EventItem) => {
-	try {
-		return await EventItem.find({
-			start: { $gte: date, $lte: dayafter },
-			isPublic: true,
-			tags: { $in: args.tags },
-			type: { $regex: new RegExp(args.type, 'i') },
-			price: { $lte: args.price },
-			$or: [
-				{ name: { $regex: new RegExp(args.search, 'i') } },
-				{ abstract: { $regex: new RegExp(args.search, 'i') } }
-			]
-		})
-			.sort({ start: args.sort })
-			.limit(args.limit);
-	} catch (err) {
-		throw new Error('Bad request');
-	}
-};
-
-const dailyEventsWithOutTags = async (date, dayafter, args, EventItem) => {
-	try {
-		return await EventItem.find({
-			start: { $gte: date, $lte: dayafter },
-			isPublic: true,
-			type: { $regex: new RegExp(args.type, 'i') },
-			price: { $lte: args.price },
-			$or: [
-				{ name: { $regex: new RegExp(args.search, 'i') } },
-				{ abstract: { $regex: new RegExp(args.search, 'i') } }
-			]
-		})
-			.sort({ start: args.sort })
-			.limit(args.limit);
-	} catch (err) {
-		throw new Error('Bad request');
-	}
-};
-
-const getDates = dateString => {
-	if (!dateString.includes('+')) {
-		const date = new Date(dateString);
-		const dayafter = new Date(new Date(dateString).setDate(new Date(dateString).getDate() + 1));
-		return {
-			date,
-			dayafter
-		};
-	} else if (dateString.includes('+')) {
-		const date = new Date(dateString.split('+')[0]);
-		const dayafter = new Date(
-			new Date(dateString.split('+')[1]).setDate(new Date(dateString.split('+')[1]).getDate() + 1)
-		);
-		return { date, dayafter };
-	}
-};
-
-module.exports = { buildEvent, updateEvent, dailyEventsWithTags, dailyEventsWithOutTags, getDates };
+module.exports = { buildEvent, updateEvent };

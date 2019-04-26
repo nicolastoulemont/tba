@@ -1,8 +1,13 @@
 const bcrypt = require('bcrypt');
 const { gql } = require('apollo-server');
-const { registerUser, registerAndLogin, loginUser, updateUserInfo } = require('../../utils/user');
+const {
+	registerUser,
+	registerAndLogin,
+	loginUser,
+	updateUserInfo
+} = require('../../utils/user/actions');
 // Validation
-const { validateRegInput, validateUpdateInput } = require('../../validation/user');
+const { validateRegInput, validateUpdateInput } = require('../../utils/user/validation');
 
 module.exports = {
 	UserType: gql`

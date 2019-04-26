@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server');
-const { ValidateAddLike } = require('../../validation/likes');
+const { ValidateAddLike } = require('../../utils/like/validation');
+const { buildLike, deleteLike } = require('../../utils/like/actions');
 
 module.exports = {
 	LikeType: gql`
@@ -87,26 +88,11 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				const { errors, isValid } = await ValidateAddLike(args);
 				if (!isValid) return { success: false, errors };
-				try {
-					let like = await new Like({
-						user_ID: args.user_ID,
-						event_ID: args.event_ID,
-						comment_ID: args.comment_ID,
-						poll_ID: args.poll_ID
-					}).save();
-					return { success: true, like };
-				} catch (err) {
-					console.log(err);
-				}
+				return await buildLike(args, Like);
 			},
-			deleteLike: async (parent, { _id, user_ID }, { user, models: { Like } }) => {
+			deleteLike: async (parent, args, { user, models: { Like } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					const like = await Like.findById(_id);
-					if (like.user_ID === user_ID) return await Like.findByIdAndDelete(_id);
-				} catch (err) {
-					console.log(err);
-				}
+				return await deleteLike(args, Like);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server');
-const { ValidateAddRegistration } = require('../../validation/registration');
+const { ValidateAddRegistration } = require('../../utils/registration/validation');
+const { buildRegistration, deleteRegistration } = require('../../utils/registration/actions');
 
 module.exports = {
 	RegistrationType: gql`
@@ -105,31 +106,11 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				const { errors, isValid } = await ValidateAddRegistration(args);
 				if (!isValid) return { success: false, errors };
-				try {
-					let newRegistration = await new Registration({
-						user_ID: args.user_ID,
-						event_ID: args.event_ID,
-						eventName: args.eventName,
-						eventCity: args.eventCity,
-						eventAddress: args.eventAddress,
-						eventStart: new Date(args.eventStart),
-						eventEnd: new Date(args.eventEnd),
-						createdAt: new Date(),
-						updatedAt: new Date()
-					}).save();
-					return { success: true, newRegistration };
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return await buildRegistration(args, Registration);
 			},
 			deleteRegistration: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await Registration.findByIdAndDelete(args._id);
-				} catch (err) {
-					console.log(err);
-				}
+				return await deleteRegistration(args, Registration);
 			}
 		}
 	}

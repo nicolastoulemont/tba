@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { isAuthorized } = require('../validation/isAuthorized');
 
 const SECRET = process.env.SECRET;
 
@@ -71,7 +70,6 @@ const loginUser = async user => {
 
 const updateUserInfo = async (args, user, User) => {
 	try {
-		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
 		let updateUser = {};
 		if (args.email) updateUser.email = args.email;
 		if (args.access) updateUser.access = args.access;

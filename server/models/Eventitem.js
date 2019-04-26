@@ -24,6 +24,11 @@ const eventSchema = new Schema({
 		default: true,
 		required: true
 	},
+	hasComments: {
+		type: Boolean,
+		default: true,
+		required: true
+	},
 	type: {
 		type: String
 	},

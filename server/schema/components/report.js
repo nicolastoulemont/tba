@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server');
-const { ValidateAddReport } = require('../../validation/report');
+const { ValidateAddReport } = require('../../utils/report/validation');
+const { buildReport, deleteReport } = require('../../utils/report/actions');
 
 module.exports = {
 	ReportType: gql`
@@ -87,29 +88,11 @@ module.exports = {
 				if (!user) throw new Error('Error : You are not logged in');
 				const { errors, isValid } = await ValidateAddReport(args);
 				if (!isValid) return { success: false, errors };
-				try {
-					let report = await new Report({
-						user_ID: args.user_ID,
-						event_ID: args.event_ID,
-						poll_ID: args.poll_ID,
-						comment_ID: args.comment_ID,
-						organisation_ID: args.organisation_ID,
-						profile_ID: args.profile_ID,
-						text: args.text
-					}).save();
-					return { success: true, report };
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return await buildReport(args, Report);
 			},
 			deleteReport: async (parent, args, { user, models: { Report } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await Report.findByIdAndDelete(args._id);
-				} catch (err) {
-					console.log(err);
-				}
+				return await deleteReport(args, Report);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
-const { rootQuery } = require('./root');
-const { ErrorType } = require('./errors');
-const { DateType, DateRes } = require('./date');
-const { s3Type, s3Res } = require('./s3');
+const { rootQuery } = require('./general/root');
+const { ErrorType } = require('./general/errors');
+const { DateType, DateRes } = require('./general/date');
+const { s3Type, s3Res } = require('./general/s3');
 const { UserType, UserRes } = require('./components/user');
 const { OrganisationType, OrganisationRes } = require('./components/organisation');
 const { MembershipType, MembershipRes } = require('./components/membership');

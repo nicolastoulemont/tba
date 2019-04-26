@@ -1,5 +1,10 @@
 const { gql } = require('apollo-server');
-const { validateOrgInput, validateUpdOrgIntput } = require('../../validation/organisation');
+const { validateOrgInput, validateUpdOrgIntput } = require('../../utils/organisation/validation');
+const {
+	buildOrganisation,
+	updateOrganisation,
+	deleteOrganisation
+} = require('../../utils/organisation/actions');
 
 module.exports = {
 	OrganisationType: gql`
@@ -122,19 +127,7 @@ module.exports = {
 					};
 				const { errors, isValid } = await validateOrgInput(args);
 				if (!isValid) return { success: false, errors };
-				try {
-					let organisation = await new Organisation({
-						user_ID: args.user_ID,
-						name: args.name,
-						address: args.address,
-						description: args.description,
-						type: args.type,
-						registryId: args.registryId
-					}).save();
-					return { success: true, organisation };
-				} catch (e) {
-					console.log(e);
-				}
+				return await buildOrganisation(args, Organisation);
 			},
 			updateOrganisation: async (parent, args, { user, models: { Organisation } }) => {
 				if (!user)
@@ -144,30 +137,7 @@ module.exports = {
 					};
 				const { errors, isValid } = await validateUpdOrgIntput(args);
 				if (!isValid) return { success: false, errors };
-
-				let updateOrganisation = {};
-				if (args.name) updateEvent.name = args.name;
-				if (args.description) updateEvent.description = args.description;
-				if (args.address) updateEvent.address = args.address;
-				if (args.type) updateEvent.type = args.type;
-				if (args.registryId) updateEvent.registryId = args.registryId;
-
-				try {
-					const updOrganisation = await Organisation.findByIdAndUpdate(
-						args._id,
-						updateOrganisation,
-						{
-							new: true
-						}
-					);
-					return { success: true, updOrganisation };
-				} catch (err) {
-					console.log(err);
-					return {
-						success: false,
-						errors: { path: 'save', message: 'Something went wrong' }
-					};
-				}
+				return await updateOrganisation(args, Organisation);
 			},
 			deleteOrganisation: async (parent, args, { user, models: { Organisation } }) => {
 				if (!user)
@@ -175,13 +145,7 @@ module.exports = {
 						success: false,
 						error: 'You are not logged in'
 					};
-				try {
-					const deleteOrganisation = await Organisation.findByIdAndDelete(args._id);
-					if (deleteOrganisation) return { success: true };
-				} catch (e) {
-					console.log(e);
-					return { success: false, error };
-				}
+				return await deleteOrganisation(args, Organisation);
 			}
 		}
 	}

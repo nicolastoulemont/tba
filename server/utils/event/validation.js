@@ -1,6 +1,6 @@
 const Validator = require('validator');
-const isEmpty = require('./is-empty');
-const EventItem = require('../models/Eventitem');
+const { isEmpty } = require('../general');
+const { EventItem } = require('../../models/');
 
 const validateEventInput = async data => {
 	let errors = [];

@@ -1,5 +1,3 @@
-const { isAuthorized } = require('../validation/isAuthorized');
-
 const buildProfile = async (args, Profile) => {
 	try {
 		let profile = await new Profile({
@@ -54,8 +52,6 @@ const updateProfile = async (args, user, User, Profile) => {
 
 const deleteProfile = async (args, user, User, Profile) => {
 	try {
-		if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action');
-
 		return {
 			success: true,
 			deleteProfile: await Profile.findByIdAndDelete(args._id)
