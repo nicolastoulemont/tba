@@ -29,6 +29,15 @@ const server = new ApolloServer({
 			return { err, models };
 		}
 	},
+	formatError: error => {
+		const err = {
+			path: error.path,
+			message: error.message,
+			code: error.extensions.code
+		};
+		console.log(err);
+		return err;
+	},
 	playground: true
 });
 
