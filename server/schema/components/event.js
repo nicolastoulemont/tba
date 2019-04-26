@@ -14,7 +14,7 @@ module.exports = {
 			banner_URL: String
 			description: String!
 			isPublic: Boolean!
-			hasComments: Boolean!
+			showComments: Boolean!
 			type: String
 			price: Float!
 			city: String!
@@ -62,7 +62,7 @@ module.exports = {
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!
-				hasComments: Boolean!
+				showComments: Boolean!
 				type: String
 				price: Float!
 				city: String!
@@ -78,7 +78,7 @@ module.exports = {
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!
-				hasComments: Boolean!
+				showComments: Boolean!
 				type: String
 				price: Float!
 				city: String!

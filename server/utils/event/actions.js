@@ -7,7 +7,7 @@ const buildEvent = async (args, EventItem) => {
 			banner_URL: args.banner_URL,
 			description: args.description,
 			isPublic: args.isPublic,
-			hasComments: args.hasComments,
+			showComments: args.showComments,
 			type: args.type,
 			price: args.price,
 			city: args.city,
@@ -39,7 +39,7 @@ const updateEvent = async (args, EventItem) => {
 		if (typeof args.banner_URL !== null) updateEvent.banner_URL = args.banner_URL;
 		if (args.description) updateEvent.description = args.description;
 		if (typeof args.isPublic !== null) updateEvent.isPublic = args.isPublic;
-		if (typeof args.hasComments !== null) updateEvent.hasComments = args.hasComments;
+		if (typeof args.showComments !== null) updateEvent.showComments = args.showComments;
 		if (args.type) updateEvent.type = args.type;
 		if (args.price) updateEvent.price = args.price;
 		if (args.city) updateEvent.city = args.city;
