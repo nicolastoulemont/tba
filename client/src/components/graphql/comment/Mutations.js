@@ -15,7 +15,15 @@ export const ADD_COMMENT = gql`
 			poll_ID: $poll_ID
 			text: $text
 		) {
-			id
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+			}
 		}
 	}
 `;
@@ -23,7 +31,15 @@ export const ADD_COMMENT = gql`
 export const EDIT_COMMENT = gql`
 	mutation UpdateComment($_id: ID!, $text: String) {
 		updateComment(_id: $_id, text: $text) {
-			id
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+			}
 		}
 	}
 `;
@@ -31,7 +47,15 @@ export const EDIT_COMMENT = gql`
 export const MODERATE_COMMENT = gql`
 	mutation ModerateComment($_id: ID!, $user_ID: String!, $event_ID: String!) {
 		moderateComment(_id: $_id, user_ID: $user_ID, event_ID: $event_ID) {
-			id
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+			}
 		}
 	}
 `;

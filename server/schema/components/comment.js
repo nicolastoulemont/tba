@@ -1,6 +1,12 @@
 const { gql } = require('apollo-server');
 const { validateCommentInput } = require('../../utils/comment/validation');
 const { buildComment, updateComment, moderateComment } = require('../../utils/comment/actions');
+const {
+	findComment,
+	findComments,
+	findEventComments,
+	findCommentComments
+} = require('../../utils/comment/queries');
 
 module.exports = {
 	CommentType: gql`
@@ -24,11 +30,25 @@ module.exports = {
 			creator: User
 		}
 
+		type CommentsResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: [CommentItem]
+		}
+
+		type CommentResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: CommentItem
+		}
+
 		extend type Query {
-			comment(id: ID!): CommentItem
-			comments: [CommentItem!]!
-			eventComments(event_ID: ID!): [CommentItem!]!
-			commentComments(comment_ID: ID!): [CommentItem!]!
+			comment(id: ID!): CommentResponse
+			comments: CommentsResponse
+			eventComments(event_ID: ID!): CommentsResponse
+			commentComments(comment_ID: ID!): CommentsResponse
 		}
 
 		extend type Mutation {
@@ -38,9 +58,9 @@ module.exports = {
 				comment_ID: String
 				poll_ID: String
 				text: String!
-			): CommentItem
-			updateComment(_id: ID!, text: String): CommentItem
-			moderateComment(_id: ID!, user_ID: String!, event_ID: String!): CommentItem
+			): CommentResponse
+			updateComment(_id: ID!, text: String): CommentResponse
+			moderateComment(_id: ID!, user_ID: String!, event_ID: String!): CommentResponse
 		}
 	`,
 	// Resolvers
@@ -48,35 +68,19 @@ module.exports = {
 		Query: {
 			comment: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await CommentItem.findById(args.id);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findComment(args, CommentItem);
 			},
 			comments: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await CommentItem.find({});
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findComments(args, CommentItem);
 			},
 			eventComments: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await CommentItem.find({ event_ID: args.event_ID });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findEventComments(args, CommentItem);
 			},
 			commentComments: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user) throw new Error('Error : You are not logged in');
-				try {
-					return await CommentItem.find({ comment_ID: args.comment_ID });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findCommentComments(args, CommentItem);
 			}
 		},
 		CommentItem: {

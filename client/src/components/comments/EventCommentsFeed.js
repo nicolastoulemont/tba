@@ -12,7 +12,8 @@ const EventCommentsFeed = () => {
 		<Fragment>
 			<CQuery query={GET_EVENT_COMMENTS} variables={{ event_ID: event.id }}>
 				{({ data, refetch }) => {
-					const comments = data.eventComments;
+					console.log(data);
+					const comments = data.eventComments.body;
 					return (
 						<Fragment>
 							{comments.length === 0 ? (

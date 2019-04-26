@@ -25,7 +25,7 @@ const CommentReply = ({ hideForms }) => {
 			<Mutation
 				mutation={ADD_COMMENT}
 				refetchQueries={() => {
-					return [{ query: GET_COMMENT_COMMENTS, variables: { id: comment.id } }];
+					return [{ query: GET_COMMENT_COMMENTS, variables: { comment_ID: comment.id } }];
 				}}
 			>
 				{(addComment, e) => (

@@ -1,6 +1,6 @@
 const buildComment = async (args, CommentItem) => {
 	try {
-		return await new CommentItem({
+		const comment = await new CommentItem({
 			user_ID: args.user_ID,
 			event_ID: args.event_ID,
 			comment_ID: args.comment_ID,
@@ -9,14 +9,27 @@ const buildComment = async (args, CommentItem) => {
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();
+
+		return {
+			statusCode: 201,
+			ok: true,
+			errors: null,
+			body: comment
+		};
 	} catch (err) {
-		console.log(err);
-		return err;
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
 const updateComment = async (args, user, CommentItem) => {
 	try {
-		return await CommentItem.findByIdAndUpdate(
+		const newComment = await CommentItem.findByIdAndUpdate(
 			args._id,
 			{
 				updatedAt: new Date(),
@@ -24,11 +37,24 @@ const updateComment = async (args, user, CommentItem) => {
 			},
 			{ new: true }
 		);
+		return {
+			statusCode: 201,
+			ok: true,
+			errors: null,
+			body: newComment
+		};
 	} catch (err) {
-		console.log(err);
-		return null;
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
+
 const moderateComment = async (args, CommentItem, EventItem) => {
 	let deletedComment = {
 		moderated: true,
@@ -41,16 +67,39 @@ const moderateComment = async (args, CommentItem, EventItem) => {
 	try {
 		const comment = await CommentItem.findById(args._id);
 		const event = await EventItem.findById(args.event_ID);
-		if (comment.user_ID === args.user_ID)
-			return await CommentItem.findByIdAndUpdate(args._id, deletedComment, {
+
+		if (comment.user_ID === args.user_ID) {
+			const newComment = await CommentItem.findByIdAndUpdate(args._id, deletedComment, {
 				new: true
 			});
-		if (event.user_ID === args.user_ID && comment.user_ID !== args.user_ID)
-			return await CommentItem.findByIdAndUpdate(args._id, moderatedComment, {
+			return {
+				statusCode: 201,
+				ok: true,
+				errors: null,
+				body: newComment
+			};
+		}
+
+		if (event.user_ID === args.user_ID && comment.user_ID !== args.user_ID) {
+			const newComment = await CommentItem.findByIdAndUpdate(args._id, moderatedComment, {
 				new: true
 			});
+			return {
+				statusCode: 201,
+				ok: true,
+				errors: null,
+				body: newComment
+			};
+		}
 	} catch (err) {
-		console.log(err);
+		return {
+			statusCode: 403,
+			ok: false,
+			errors: {
+				path: 'Forbidden',
+				message: 'You cannot perform this action'
+			}
+		};
 	}
 };
 
