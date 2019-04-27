@@ -27,7 +27,13 @@ export const CREATE_PROFILE = gql`
 			picture_URL: $picture_URL
 			tags: $tags
 		) {
-			profile {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
 				id
 				user_ID
 				organisation_ID
@@ -72,8 +78,13 @@ export const UPDATE_PROFILE = gql`
 			picture_URL: $picture_URL
 			tags: $tags
 		) {
-			success
-			profile {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
 				id
 				organisation_ID
 				name
@@ -86,7 +97,6 @@ export const UPDATE_PROFILE = gql`
 				picture_URL
 				tags
 			}
-			error
 		}
 	}
 `;

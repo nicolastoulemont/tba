@@ -16,14 +16,25 @@ const buildProfile = async (args, Profile) => {
 			tags: args.tags
 		}).save();
 
-		return { success: true, profile };
+		return {
+			statusCode: 201,
+			ok: true,
+			errors: null,
+			body: profile
+		};
 	} catch (err) {
-		console.log(err);
-		return { success: false, error: err };
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
 
-const updateProfile = async (args, user, User, Profile) => {
+const updateProfile = async (args, Profile) => {
 	try {
 		// if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action'); // Need some rework
 		let updateProfile = {};
@@ -38,27 +49,45 @@ const updateProfile = async (args, user, User, Profile) => {
 		if (args.picture_URL) updateProfile.picture_URL = args.picture_URL;
 		if (args.tags) updateProfile.tags = args.tags;
 		updateProfile.updatedAt = new Date();
+
+		const newProfile = await Profile.findOneAndUpdate({ _id: args._id }, updateProfile, {
+			new: true
+		});
+
 		return {
-			success: true,
-			profile: await Profile.findOneAndUpdate({ _id: args._id }, updateProfile, {
-				new: true
-			})
+			statusCode: 201,
+			ok: true,
+			errors: null,
+			body: newProfile
 		};
 	} catch (err) {
-		console.log(err);
-		return { success: false, error: err };
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
 
-const deleteProfile = async (args, user, User, Profile) => {
+const deleteProfile = async (args, Profile) => {
 	try {
+		await Profile.findByIdAndDelete(args._id);
 		return {
-			success: true,
-			deleteProfile: await Profile.findByIdAndDelete(args._id)
+			statusCode: 200,
+			ok: true
 		};
 	} catch (err) {
-		console.log(err);
-		return { success: false, error: err };
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
 

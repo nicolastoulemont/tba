@@ -1,5 +1,11 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const { buildProfile, updateProfile, deleteProfile } = require('../../utils/profile/actions');
+const {
+	findProfile,
+	findProfiles,
+	findProfilesByNames,
+	findUserProfile
+} = require('../../utils/profile/queries');
 
 module.exports = {
 	ProfileType: gql`
@@ -21,16 +27,25 @@ module.exports = {
 			creator: User
 		}
 
-		type ProfileResp {
-			success: Boolean!
-			profile: Profile
-			error: String
+		type ProfilesResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: [Profile]
+		}
+
+		type ProfileResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: Profile
 		}
 
 		extend type Query {
-			profile(id: ID!): Profile
-			searchProfilesByName(search: String, limit: Int): [Profile!]!
-			profiles: [Profile!]!
+			profile(id: ID!): ProfileResponse
+			profiles: ProfilesResponse
+			searchProfilesByName(search: String, limit: Int): ProfilesResponse
+			searchUserProfile(user_ID: ID!): ProfileResponse!
 		}
 
 		extend type Mutation {
@@ -46,7 +61,7 @@ module.exports = {
 				linkedin_URL: String
 				picture_URL: String
 				tags: [String]
-			): ProfileResp
+			): ProfileResponse
 			updateProfile(
 				_id: ID!
 				organisation_ID: String
@@ -59,8 +74,8 @@ module.exports = {
 				linkedin_URL: String
 				picture_URL: String
 				tags: [String]
-			): ProfileResp
-			deleteProfile(_id: ID!, user_ID: String!): ProfileResp
+			): ProfileResponse
+			deleteProfile(_id: ID!, user_ID: String!): ProfileResponse
 		}
 	`,
 	// Resolvers
@@ -68,31 +83,19 @@ module.exports = {
 		Query: {
 			profile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Profile.findById(args.id);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
-			},
-			searchProfilesByName: async (parent, args, { user, models: { Profile } }) => {
-				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Profile.find({
-						name: { $regex: new RegExp(args.search) }
-					})
-						.limit(args.limit)
-						.sort({ name: 1 });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findProfile(args, Profile);
 			},
 			profiles: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Profile.find({});
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findProfiles(args, Profile);
+			},
+			searchProfilesByName: async (parent, args, { user, models: { Profile } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findProfilesByNames(args, Profile);
+			},
+			searchUserProfile: async (parent, args, { user, models: { Profile } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findUserProfile(args, Profile);
 			}
 		},
 
@@ -104,21 +107,16 @@ module.exports = {
 			addProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// TODO : Add input validation function
-				return buildProfile(args, Profile);
+				return await buildProfile(args, Profile);
 			},
-			updateProfile: async (parent, args, { user, models: { User, Profile } }) => {
+			updateProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				// TODO : Add input validation function
-				return updateProfile(args, user, User, Profile);
+				return await updateProfile(args, Profile);
 			},
-			deleteProfile: async (parent, args, { user, models: { User, Profile } }) => {
+			deleteProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await deleteProfile(args, user, User, Profile);
-				} catch (err) {
-					console.log(err);
-					return { success: false, error };
-				}
+				return await deleteProfile(args, Profile);
 			}
 		}
 	}

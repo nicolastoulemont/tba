@@ -8,6 +8,7 @@ export const CREATE_EVENT = gql`
 		$banner_URL: String
 		$description: String!
 		$isPublic: Boolean!
+		$showComments: Boolean!
 		$type: String
 		$price: Float!
 		$city: String!
@@ -23,6 +24,7 @@ export const CREATE_EVENT = gql`
 			banner_URL: $banner_URL
 			description: $description
 			isPublic: $isPublic
+			showComments: $showComments
 			type: $type
 			price: $price
 			city: $city
@@ -45,6 +47,7 @@ export const CREATE_EVENT = gql`
 				banner_URL
 				description
 				isPublic
+				showComments
 				type
 				price
 				city
@@ -65,6 +68,7 @@ export const UPDATE_EVENT = gql`
 		$banner_URL: String
 		$description: String!
 		$isPublic: Boolean!
+		$showComments: Boolean!
 		$type: String
 		$price: Float!
 		$city: String!
@@ -80,6 +84,7 @@ export const UPDATE_EVENT = gql`
 			banner_URL: $banner_URL
 			description: $description
 			isPublic: $isPublic
+			showComments: $showComments
 			type: $type
 			price: $price
 			city: $city
@@ -102,6 +107,7 @@ export const UPDATE_EVENT = gql`
 				banner_URL
 				description
 				isPublic
+				showComments
 				type
 				price
 				city

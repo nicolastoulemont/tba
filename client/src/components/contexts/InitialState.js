@@ -18,6 +18,7 @@ export const InitialState = {
 		banner_URL: null,
 		description: '',
 		isPublic: true,
+		showComments: true,
 		type: '',
 		price: 0,
 		city: '',

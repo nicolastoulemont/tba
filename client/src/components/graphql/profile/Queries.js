@@ -1,10 +1,15 @@
 import gql from 'graphql-tag';
 
 export const GET_USER_FULL_PROFILE = gql`
-	query User($id: ID!) {
-		user(id: $id) {
-			id
-			profile {
+	query SearchUserProfile($user_ID: ID!) {
+		searchUserProfile(user_ID: $user_ID) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
 				id
 				user_ID
 				organisation_ID

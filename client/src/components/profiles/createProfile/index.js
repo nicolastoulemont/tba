@@ -61,7 +61,7 @@ export default function CreateProfile({
 			});
 			const { signedRequest, url } = response.data.signS3;
 			await uploadToS3(picture, signedRequest);
-			await addProfile({
+			const res = await addProfile({
 				variables: {
 					user_ID: id,
 					organisation_ID: 'aazeazea',
@@ -77,9 +77,11 @@ export default function CreateProfile({
 				}
 			});
 
-			history.push('/home/news');
+			if (res.data.addProfile.statusCode === 201) {
+				history.push(`/home/profile/${user.id}`);
+			}
 		} else if (!picture) {
-			await addProfile({
+			const res = await addProfile({
 				variables: {
 					user_ID: id,
 					organisation_ID: 'aazeazea',
@@ -93,7 +95,10 @@ export default function CreateProfile({
 					tags: userTopics
 				}
 			});
-			history.push('/home/news');
+
+			if (res.data.addProfile.statusCode === 201) {
+				history.push(`/home/profile/${user.id}`);
+			}
 		}
 	};
 

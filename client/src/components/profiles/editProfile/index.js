@@ -59,7 +59,7 @@ const EditProfile = ({ match, history }) => {
 		});
 		const { signedRequest, url } = response.data.signS3;
 		await uploadToS3(picture, signedRequest);
-		await updateProfile({
+		const res = await updateProfile({
 			variables: {
 				_id: user.profile.id,
 				organisation_ID: 'aazeazea',
@@ -74,11 +74,13 @@ const EditProfile = ({ match, history }) => {
 				tags: userTopics
 			}
 		});
-		history.push(`/home/profile/${user.id}`);
+		if (res.data.updateProfile.statusCode === 201) {
+			history.push(`/home/profile/${user.id}`);
+		}
 	};
 
 	const updateProfileWithOutNewPicture = async updateProfile => {
-		await updateProfile({
+		const res = await updateProfile({
 			variables: {
 				_id: user.profile.id,
 				organisation_ID: 'aazeazea',
@@ -93,7 +95,9 @@ const EditProfile = ({ match, history }) => {
 				tags: userTopics
 			}
 		});
-		history.push(`/home/profile/${user.id}`);
+		if (res.data.updateProfile.statusCode === 201) {
+			history.push(`/home/profile/${user.id}`);
+		}
 	};
 
 	const editProfile = async (e, updateProfile, signS3) => {
@@ -190,7 +194,7 @@ const EditProfile = ({ match, history }) => {
 											</small>
 										</label>
 									</div>
-									<input type="submit" className="btn btn-darkblue btn-block mt-4 mb-2" />
+									<input type="submit" className="btn btn-blue btn-block mt-4 mb-2" />
 								</div>
 							</form>
 						)}

@@ -82,4 +82,4 @@ const ProfileSocial = () => {
 	);
 };
 
-export default ProfileSocial;
+export default React.memo(ProfileSocial);

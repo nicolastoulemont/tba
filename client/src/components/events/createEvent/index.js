@@ -25,6 +25,7 @@ const CreateEvent = ({ history }) => {
 	const [banner, setBanner] = useState(null);
 	const [description, setDescription] = useState('');
 	const [isPublic, setIsPublic] = useState(true);
+	const [showComments, setShowComments] = useState(true);
 	const [type, setType] = useState('');
 	const [price, setPrice] = useState(0);
 	const [city, setCity] = useState('');
@@ -80,6 +81,7 @@ const CreateEvent = ({ history }) => {
 				banner_URL: url,
 				description,
 				isPublic,
+				showComments,
 				type,
 				price: parseInt(price),
 				city,
@@ -106,6 +108,7 @@ const CreateEvent = ({ history }) => {
 				abstract,
 				description,
 				isPublic,
+				showComments,
 				type,
 				price: parseInt(price),
 				city,
@@ -274,6 +277,23 @@ const CreateEvent = ({ history }) => {
 														&#40;Private events are not referenced and only accessible with a
 														special URL to share with your selection of people&#41;
 													</small>
+												</label>
+											</div>
+											<div className="form-check float-left mt-2">
+												<input
+													className="form-check-input"
+													type="checkbox"
+													id="showCommentsCheckBox"
+													name="showComments"
+													value={showComments}
+													checked={showComments}
+													onChange={e => setShowComments(!showComments)}
+												/>
+												<label
+													className="form-check-label text-left"
+													htmlFor="showCommentsCheckBox"
+												>
+													Allow comments
 												</label>
 											</div>
 											<div className="form-check float-left mt-2 mb-4">

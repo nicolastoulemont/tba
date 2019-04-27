@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import EventCommentsFeed from '../../comments/EventCommentsFeed';
 import LikesFeed from '../../likes/eventLikes/LikesFeed';
 import EventRegistrationsFeed from '../../registrations/EventRegistrationsFeed';
-import { UserContext } from '../../contexts';
+import { UserContext, EventContext } from '../../contexts';
 
 const EventSocialSelector = () => {
 	const user = useContext(UserContext);
-	const [commentDisplay, setCommentDisplay] = useState(true);
+	const event = useContext(EventContext);
+	const [commentDisplay, setCommentDisplay] = useState(event.showComments);
 	const [registreeDisplay, setRegistreeDisplay] = useState(false);
 
 	const displayComments = e => {
@@ -29,18 +30,23 @@ const EventSocialSelector = () => {
 							<LikesFeed />
 						</div>
 					) : null}
-					<div className="col px-0">
-						<Link
-							to="#"
-							onClick={displayComments}
-							data-togggle="tooltip"
-							data-placement="bottom"
-							title="See this event comments"
-						>
-							<i className="d-inline far fa-comment" />
-							<h6 className="d-none d-md-inline font-weight-bold text-uppercase ml-2">COMMENTS</h6>
-						</Link>
-					</div>
+					{event.showComments ? (
+						<div className="col px-0">
+							<Link
+								to="#"
+								onClick={displayComments}
+								data-togggle="tooltip"
+								data-placement="bottom"
+								title="See this event comments"
+							>
+								<i className="d-inline far fa-comment" />
+								<h6 className="d-none d-md-inline font-weight-bold text-uppercase ml-2">
+									COMMENTS
+								</h6>
+							</Link>
+						</div>
+					) : null}
+
 					<div className="col px-0">
 						<Link
 							to="#"

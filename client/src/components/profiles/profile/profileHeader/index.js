@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import PlaceHolderBanner from '../../../../img/placeholder_event_banner.svg';
 import { ProfileContext, UserContext } from '../../../contexts';
 import ProfileMenu from './ProfileMenu';
+
 const ProfileHeader = () => {
 	const user = useContext(UserContext);
 	const profile = useContext(ProfileContext);
+
 	return (
 		<div className="px-3 pb-2">
 			<div className="row">
@@ -76,4 +78,4 @@ const ProfileHeader = () => {
 	);
 };
 
-export default ProfileHeader;
+export default React.memo(ProfileHeader);

@@ -6,7 +6,6 @@ import { GET_USER_EVENTS } from '../../../../graphql/user/Queries';
 
 const ProfileEventsFeed = () => {
 	const profile = useContext(ProfileContext);
-
 	return (
 		<CQuery query={GET_USER_EVENTS} variables={{ id: profile.user_ID }}>
 			{({ data }) => {

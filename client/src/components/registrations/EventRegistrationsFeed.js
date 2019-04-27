@@ -12,8 +12,9 @@ const EventRegistrationFeed = () => {
 			<CQuery query={GET_EVENT_REGISTRATIONS} variables={{ event_ID: event.id }}>
 				{({ data }) => {
 					const registrations = data.eventRegistrations;
-					if (registrations === 0) return <div className="font-italic">No participant yet</div>;
-					if (typeof registrations !== 'undefined')
+					if (typeof registrations !== 'undefined' && registrations.length === 0)
+						return <div className="font-italic">No participant yet</div>;
+					if (typeof registrations !== 'undefined' && registrations.length !== 0)
 						return (
 							<Fragment>
 								{registrations.map(registration => (

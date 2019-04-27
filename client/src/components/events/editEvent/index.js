@@ -19,7 +19,7 @@ import {
 } from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 
-const EditEvent = ({ match, history, location }) => {
+const EditEvent = ({ match, history }) => {
 	const [{ stateEvent }, dispatch] = useStateValue();
 	const user = useContext(UserContext);
 
@@ -28,6 +28,7 @@ const EditEvent = ({ match, history, location }) => {
 	const [banner, setBanner] = useState(stateEvent.banner_URL);
 	const [description, setDescription] = useState(stateEvent.description);
 	const [isPublic, setIsPublic] = useState(stateEvent.isPublic);
+	const [showComments, setShowComments] = useState(stateEvent.showComments);
 	const [type, setType] = useState(stateEvent.type);
 	const [price, setPrice] = useState(stateEvent.price);
 	const [city, setCity] = useState(stateEvent.city);
@@ -80,7 +81,7 @@ const EditEvent = ({ match, history, location }) => {
 		});
 		const { signedRequest, url } = response.data.signS3;
 		await uploadToS3(banner, signedRequest);
-		await updateEvent({
+		const res = await updateEvent({
 			variables: {
 				_id: stateEvent.id,
 				name,
@@ -88,6 +89,7 @@ const EditEvent = ({ match, history, location }) => {
 				banner_URL: url,
 				description,
 				isPublic,
+				showComments,
 				type,
 				price: parseInt(price),
 				city,
@@ -97,9 +99,10 @@ const EditEvent = ({ match, history, location }) => {
 				tags: eventTags
 			}
 		});
-
-		dispatch({ type: 'RESET_EVENT' });
-		history.push(`/home/event/${match.params.id}`);
+		if (res.data.updateEvent.statusCode === 201) {
+			dispatch({ type: 'RESET_EVENT' });
+			history.push(`/home/event/${match.params.id}`);
+		}
 	};
 
 	const updateEventWithOutNewBanner = async updateEvent => {
@@ -111,6 +114,7 @@ const EditEvent = ({ match, history, location }) => {
 				banner_URL: banner,
 				description,
 				isPublic,
+				showComments,
 				type,
 				price: parseInt(price),
 				city,
@@ -120,9 +124,10 @@ const EditEvent = ({ match, history, location }) => {
 				tags: eventTags
 			}
 		});
-		console.log(res);
-		dispatch({ type: 'RESET_EVENT' });
-		history.push(`/home/event/${match.params.id}`);
+		if (res.data.updateEvent.statusCode === 201) {
+			dispatch({ type: 'RESET_EVENT' });
+			history.push(`/home/event/${match.params.id}`);
+		}
 	};
 
 	const refetchCorrectQuery = () => {
@@ -268,6 +273,20 @@ const EditEvent = ({ match, history, location }) => {
 											&#40;Private events are not referenced and only accessible with a special URL
 											to share with your selection of people&#41;
 										</small>
+									</label>
+								</div>
+								<div className="form-check float-left mt-2">
+									<input
+										className="form-check-input"
+										type="checkbox"
+										id="showCommentsCheckBox"
+										name="showComments"
+										value={showComments}
+										checked={showComments}
+										onChange={e => setShowComments(!showComments)}
+									/>
+									<label className="form-check-label text-left" htmlFor="showCommentsCheckBox">
+										Allow comments
 									</label>
 								</div>
 								<div className="form-check float-left mt-2 mb-4">

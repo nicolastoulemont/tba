@@ -35,7 +35,6 @@ const server = new ApolloServer({
 			message: error.message,
 			code: error.extensions.code
 		};
-		console.log(err);
 		return err;
 	},
 	playground: true

@@ -93,6 +93,7 @@ export const GET_EVENT = gql`
 				id
 				user_ID
 				isPublic
+				showComments
 				type
 				price
 				name
