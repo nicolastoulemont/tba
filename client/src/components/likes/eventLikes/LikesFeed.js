@@ -16,7 +16,7 @@ const LikesFeed = () => {
 	return (
 		<CQuery query={GET_EVENT_LIKES} variables={{ event_ID: event.id }}>
 			{({ data }) => {
-				const likes = data.eventLikes;
+				const likes = data.eventLikes.body;
 				const userLike = getUserLikeId(likes, id);
 				return (
 					<Fragment>

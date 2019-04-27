@@ -6,18 +6,52 @@ const buildLike = async (args, Like) => {
 			comment_ID: args.comment_ID,
 			poll_ID: args.poll_ID
 		}).save();
-		return { success: true, like };
+		return {
+			statusCode: 201,
+			ok: true,
+			errors: null,
+			body: like
+		};
 	} catch (err) {
-		console.log(err);
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
 
 const deleteLike = async ({ _id, user_ID }, Like) => {
-	try {
-		const like = await Like.findById(_id);
-		if (like.user_ID === user_ID) return await Like.findByIdAndDelete(_id);
-	} catch (err) {
-		console.log(err);
+	const like = await Like.findById(_id);
+	if (like.user_ID === user_ID) {
+		try {
+			await Like.findByIdAndDelete(_id);
+			return {
+				statusCode: 200,
+				ok: true
+			};
+		} catch {
+			return {
+				statusCode: 404,
+				ok: false,
+				errors: {
+					path: 'Not Found',
+					message: 'The server cannot find the requested ressource'
+				}
+			};
+		}
+	} else {
+		return {
+			statusCode: 403,
+			ok: false,
+			errors: {
+				path: 'Forbidden',
+				message: 'You cannot perform this action'
+			}
+		};
 	}
 };
 

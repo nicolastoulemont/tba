@@ -16,7 +16,8 @@ const LikesFeed = () => {
 	return (
 		<Fragment>
 			<CQuery query={GET_COMMENT_LIKES} variables={{ comment_ID: comment.id }}>
-				{({ data: { commentLikes }, refetch }) => {
+				{({ data, refetch }) => {
+					const commentLikes = data.commentLikes.body;
 					let userLike = getUserLikeId(commentLikes, user);
 					return (
 						<Fragment>

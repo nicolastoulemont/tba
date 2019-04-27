@@ -1,6 +1,12 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const { ValidateAddLike } = require('../../utils/like/validation');
 const { buildLike, deleteLike } = require('../../utils/like/actions');
+const {
+	findLike,
+	findLikes,
+	findEventLikes,
+	findCommentLikes
+} = require('../../utils/like/queries');
 
 module.exports = {
 	LikeType: gql`
@@ -18,22 +24,35 @@ module.exports = {
 			creator: User
 		}
 
-		type LikeResp {
-			success: Boolean!
-			like: Like
+		type LikesResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
 			errors: [Error]
+			body: [Like]
+		}
+
+		type LikeResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: Like
 		}
 
 		extend type Query {
-			like(id: ID!): Like
-			likes: [Like!]!
-			eventLikes(event_ID: ID!): [Like!]!
-			commentLikes(comment_ID: ID!): [Like!]!
+			like(id: ID!): LikeResponse!
+			likes: LikesResponse!
+			eventLikes(event_ID: ID!): LikesResponse!
+			commentLikes(comment_ID: ID!): LikesResponse!
 		}
 
 		extend type Mutation {
-			addLike(user_ID: String!, event_ID: String, poll_ID: String, comment_ID: String): LikeResp!
-			deleteLike(_id: ID!, user_ID: String!): Like
+			addLike(
+				user_ID: String!
+				event_ID: String
+				poll_ID: String
+				comment_ID: String
+			): LikeResponse!
+			deleteLike(_id: ID!, user_ID: String!): LikeResponse
 		}
 	`,
 	// Resolvers
@@ -41,35 +60,19 @@ module.exports = {
 		Query: {
 			like: async (parent, args, { user, models: { Like } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Like.findById(args.id);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findLike(args, Like);
 			},
 			likes: async (parent, args, { user, models: { Like } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Like.find({});
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findLikes(args, Like);
 			},
 			eventLikes: async (parent, args, { user, models: { Like } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Like.find({ event_ID: args.event_ID });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findEventLikes(args, Like);
 			},
 			commentLikes: async (parent, args, { user, models: { Like } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Like.find({ comment_ID: args.comment_ID });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findCommentLikes(args, Like);
 			}
 		},
 
