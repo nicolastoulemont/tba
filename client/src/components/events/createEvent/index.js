@@ -91,7 +91,6 @@ const CreateEvent = ({ history }) => {
 				tags: eventTags
 			}
 		});
-		console.log(res);
 		if (res.data.addEvent.statusCode === 201) {
 			history.push(`/home/event/${res.data.addEvent.body.id}`);
 		} else {
@@ -118,7 +117,6 @@ const CreateEvent = ({ history }) => {
 				tags: eventTags
 			}
 		});
-		console.log(res);
 		if (res.data.addEvent.statusCode === 201) {
 			history.push(`/home/event/${res.data.addEvent.body.id}`);
 		} else {

@@ -40,7 +40,7 @@ const DeleteEvent = ({ match, history }) => {
 		history.push('/home/news');
 	};
 	const redirection = e => {
-		history.push(`/home/event/${match.params.id}`);
+		history.push(`/home/event/${stateEvent.id}`);
 	};
 
 	return (

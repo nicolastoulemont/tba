@@ -101,7 +101,7 @@ const EditEvent = ({ match, history }) => {
 		});
 		if (res.data.updateEvent.statusCode === 201) {
 			dispatch({ type: 'RESET_EVENT' });
-			history.push(`/home/event/${match.params.id}`);
+			history.push(`/home/event/${res.data.updateEvent.body.id}`);
 		}
 	};
 
@@ -126,7 +126,7 @@ const EditEvent = ({ match, history }) => {
 		});
 		if (res.data.updateEvent.statusCode === 201) {
 			dispatch({ type: 'RESET_EVENT' });
-			history.push(`/home/event/${match.params.id}`);
+			history.push(`/home/event/${res.data.updateEvent.body.id}`);
 		}
 	};
 

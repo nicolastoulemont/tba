@@ -41,20 +41,6 @@ export const CREATE_EVENT = gql`
 			}
 			body {
 				id
-				user_ID
-				name
-				abstract
-				banner_URL
-				description
-				isPublic
-				showComments
-				type
-				price
-				city
-				address
-				start
-				end
-				tags
 			}
 		}
 	}
@@ -101,20 +87,6 @@ export const UPDATE_EVENT = gql`
 			}
 			body {
 				id
-				user_ID
-				name
-				abstract
-				banner_URL
-				description
-				isPublic
-				showComments
-				type
-				price
-				city
-				address
-				start
-				end
-				tags
 			}
 		}
 	}

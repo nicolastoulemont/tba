@@ -32,32 +32,52 @@ const DatesPicker = ({ history }) => {
 				});
 				history.push(`/home/events/${dayjs(from).format('YYYY-MM-DD')}`);
 			} else if (enteredTo) {
-				dispatch({
-					type: 'SET_DATESTRING',
-					newDateString: {
-						sort: userSearchPref.sort,
-						type: userSearchPref.type,
-						price: userSearchPref.price,
-						tags: userSearchPref.tags,
-						dateString: `${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
+				if (enteredTo !== from) {
+					dispatch({
+						type: 'SET_DATESTRING',
+						newDateString: {
+							sort: userSearchPref.sort,
+							type: userSearchPref.type,
+							price: userSearchPref.price,
+							tags: userSearchPref.tags,
+							dateString: `${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
+								'YYYY-MM-DD'
+							)}`
+						}
+					});
+					history.push(
+						`/home/events/${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
 							'YYYY-MM-DD'
 						)}`
-					}
-				});
-				history.push(
-					`/home/events/${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
-						'YYYY-MM-DD'
-					)}`
-				);
+					);
+				} else if (enteredTo === from) {
+					dispatch({
+						type: 'SET_DATESTRING',
+						newDateString: {
+							sort: userSearchPref.sort,
+							type: userSearchPref.type,
+							price: userSearchPref.price,
+							tags: userSearchPref.tags,
+							dateString: dayjs(from).format('YYYY-MM-DD')
+						}
+					});
+					history.push(`/home/events/${dayjs(from).format('YYYY-MM-DD')}`);
+				}
 			}
 		}
 		if (path.includes('news')) {
 			if (!enteredTo) {
 				history.push(`/home/news/${dayjs(from).format('YYYY-MM-DD')}`);
 			} else if (enteredTo) {
-				history.push(
-					`/home/news/${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format('YYYY-MM-DD')}`
-				);
+				if (enteredTo !== from) {
+					history.push(
+						`/home/news/${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
+							'YYYY-MM-DD'
+						)}`
+					);
+				} else if (enteredTo === from) {
+					history.push(`/home/news/${dayjs(from).format('YYYY-MM-DD')}`);
+				}
 			}
 			return null;
 		}

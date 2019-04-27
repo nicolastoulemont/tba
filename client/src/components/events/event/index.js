@@ -12,7 +12,6 @@ const Event = ({ match }) => {
 		<Fragment>
 			<CQuery query={GET_EVENT} variables={{ id: match.params.id }}>
 				{({ data }) => {
-					console.log(data);
 					return (
 						<Fragment>
 							{data.event.statusCode === 200 ? (
