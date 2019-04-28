@@ -1,6 +1,15 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const { ValidateAddReport } = require('../../utils/report/validation');
 const { buildReport, deleteReport } = require('../../utils/report/actions');
+const {
+	findReport,
+	findReports,
+	findEventReports,
+	findCommentReports,
+	findOrganisationReports,
+	findPollReports,
+	findProfileReports
+} = require('../../utils/report/queries');
 
 module.exports = {
 	ReportType: gql`
@@ -23,15 +32,28 @@ module.exports = {
 			creator: User
 		}
 
-		type ReportResp {
-			success: Boolean!
-			report: Report
+		type ReportsResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
 			errors: [Error]
+			body: [Report]
+		}
+
+		type ReportResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: Report
 		}
 
 		extend type Query {
-			report(id: ID!): Report
-			reports: [Report!]!
+			report(id: ID!): ReportResponse!
+			reports: ReportsResponse!
+			findEventReports(event_ID: ID!): ReportsResponse!
+			findCommentReports(comment_ID: ID!): ReportsResponse!
+			findPollReports(poll_ID: ID!): ReportsResponse!
+			findOrganisationReports(organisation_ID: ID!): ReportsResponse!
+			findProfileReports(profile_ID: ID!): ReportsResponse!
 		}
 
 		extend type Mutation {
@@ -43,8 +65,8 @@ module.exports = {
 				organisation_ID: String
 				profile_ID: String
 				text: String!
-			): ReportResp!
-			deleteReport(_id: ID!): Report
+			): ReportResponse!
+			deleteReport(_id: ID!): ReportResponse!
 		}
 	`,
 	// Resolvers
@@ -52,19 +74,31 @@ module.exports = {
 		Query: {
 			report: async (parent, args, { user, models: { Report } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Report.findById(args.id);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findReport(args, Report);
 			},
 			reports: async (parent, args, { user, models: { Report } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Report.find({});
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findReports(args, Report);
+			},
+			findEventReports: async (parent, args, { user, models: { Report } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findEventReports(args, Report);
+			},
+			findCommentReports: async (parent, args, { user, models: { Report } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findCommentReports(args, Report);
+			},
+			findPollReports: async (parent, args, { user, models: { Report } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findPollReports(args, Report);
+			},
+			findOrganisationReports: async (parent, args, { user, models: { Report } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findOrganisationReports(args, Report);
+			},
+			findProfileReports: async (parent, args, { user, models: { Report } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findProfileReports(args, Report);
 			}
 		},
 

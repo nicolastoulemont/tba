@@ -32,7 +32,6 @@ const buildRegistration = async (args, Registration) => {
 const deleteRegistration = async (args, Registration) => {
 	try {
 		await Registration.findByIdAndDelete(args._id);
-
 		return {
 			statusCode: 200,
 			ok: true

@@ -17,12 +17,13 @@ export const ADD_REPORT = gql`
 			organisation_ID: $organisation_ID
 			text: $text
 		) {
-			success
+			statusCode
+			ok
 			errors {
 				path
 				message
 			}
-			report {
+			body {
 				id
 			}
 		}
