@@ -11,18 +11,41 @@ const buildRegistration = async (args, Registration) => {
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();
-		return { success: true, newRegistration };
+
+		return {
+			statusCode: 201,
+			ok: true,
+			body: newRegistration
+		};
 	} catch (err) {
-		console.log(err);
-		return { success: false, error };
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
 
 const deleteRegistration = async (args, Registration) => {
 	try {
-		return await Registration.findByIdAndDelete(args._id);
-	} catch (err) {
-		console.log(err);
+		await Registration.findByIdAndDelete(args._id);
+
+		return {
+			statusCode: 200,
+			ok: true
+		};
+	} catch {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
 	}
 };
 

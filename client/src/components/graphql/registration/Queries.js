@@ -3,14 +3,22 @@ import gql from 'graphql-tag';
 export const GET_EVENT_REGISTRATIONS = gql`
 	query EventRegistrations($event_ID: ID!) {
 		eventRegistrations(event_ID: $event_ID) {
-			id
-			user_ID
-			creator {
-				profile {
-					name
-					position
-					organisation_ID
-					picture_URL
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				creator {
+					profile {
+						name
+						position
+						organisation_ID
+						picture_URL
+					}
 				}
 			}
 		}
@@ -20,8 +28,16 @@ export const GET_EVENT_REGISTRATIONS = gql`
 export const GET_EVENT_REGISTRATIONS_IDS = gql`
 	query EventRegistrations($event_ID: ID!) {
 		eventRegistrations(event_ID: $event_ID) {
-			id
-			user_ID
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+			}
 		}
 	}
 `;
@@ -29,14 +45,22 @@ export const GET_EVENT_REGISTRATIONS_IDS = gql`
 export const GET_USER_FUTURE_REGISTRATIONS = gql`
 	query UserFutureRegistrations($user_ID: ID!, $date: String!) {
 		userFutureRegistrations(user_ID: $user_ID, date: $date) {
-			id
-			user_ID
-			event_ID
-			eventName
-			eventCity
-			eventAddress
-			eventStart
-			eventEnd
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				event_ID
+				eventName
+				eventCity
+				eventAddress
+				eventStart
+				eventEnd
+			}
 		}
 	}
 `;
@@ -44,14 +68,22 @@ export const GET_USER_FUTURE_REGISTRATIONS = gql`
 export const GET_USER_PAST_REGISTRATIONS = gql`
 	query UserPastRegistrations($user_ID: ID!, $date: String!) {
 		userPastRegistrations(user_ID: $user_ID, date: $date) {
-			id
-			user_ID
-			event_ID
-			eventName
-			eventCity
-			eventAddress
-			eventStart
-			eventEnd
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				event_ID
+				eventName
+				eventCity
+				eventAddress
+				eventStart
+				eventEnd
+			}
 		}
 	}
 `;

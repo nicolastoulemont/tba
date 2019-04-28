@@ -19,12 +19,13 @@ export const ADD_REGISTRATION = gql`
 			eventStart: $eventStart
 			eventEnd: $eventEnd
 		) {
-			success
+			statusCode
+			ok
 			errors {
 				path
 				message
 			}
-			registration {
+			body {
 				id
 			}
 		}
@@ -34,7 +35,12 @@ export const ADD_REGISTRATION = gql`
 export const DELETE_REGISTRATION = gql`
 	mutation DeleteRegistration($_id: ID!) {
 		deleteRegistration(_id: $_id) {
-			id
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
 		}
 	}
 `;

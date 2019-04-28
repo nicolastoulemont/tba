@@ -22,18 +22,18 @@ export default function registrationsDisplay({ target }) {
 	return (
 		<CQuery query={chooseQuery(target)} variables={{ user_ID: user.id, date: today }}>
 			{({ data }) => {
-				if (data.userFutureRegistrations && data.userFutureRegistrations.length !== 0) {
+				if (data.userFutureRegistrations && data.userFutureRegistrations.body.length !== 0) {
 					return (
 						<Fragment>
-							{data.userFutureRegistrations.map(registration => (
+							{data.userFutureRegistrations.body.map(registration => (
 								<PanelItem registration={registration} key={registration.id} />
 							))}
 						</Fragment>
 					);
-				} else if (data.userPastRegistrations && data.userPastRegistrations.length !== 0) {
+				} else if (data.userPastRegistrations && data.userPastRegistrations.body.length !== 0) {
 					return (
 						<Fragment>
-							{data.userPastRegistrations.map(registration => (
+							{data.userPastRegistrations.body.map(registration => (
 								<PanelItem registration={registration} key={registration.id} />
 							))}
 						</Fragment>

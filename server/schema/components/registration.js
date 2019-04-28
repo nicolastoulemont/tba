@@ -1,6 +1,13 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const { ValidateAddRegistration } = require('../../utils/registration/validation');
 const { buildRegistration, deleteRegistration } = require('../../utils/registration/actions');
+const {
+	findRegistration,
+	findRegistrations,
+	findUserFutureRegistrations,
+	findUserPastRegistrations,
+	findEventRegistrations
+} = require('../../utils/registration/queries');
 
 module.exports = {
 	RegistrationType: gql`
@@ -19,18 +26,26 @@ module.exports = {
 			creator: User
 		}
 
-		type RegistrationResp {
-			success: Boolean!
-			registration: Registration
+		type RegistrationsResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
 			errors: [Error]
+			body: [Registration]
+		}
+
+		type RegistrationResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			body: Registration
 		}
 
 		extend type Query {
-			registration(id: ID!): Registration
-			registrations: [Registration!]!
-			userFutureRegistrations(user_ID: ID!, date: String): [Registration!]!
-			userPastRegistrations(user_ID: ID!, date: String): [Registration!]!
-			eventRegistrations(event_ID: ID!): [Registration!]!
+			registration(id: ID!): RegistrationResponse!
+			registrations: RegistrationsResponse!
+			userFutureRegistrations(user_ID: ID!, date: String): RegistrationsResponse!
+			userPastRegistrations(user_ID: ID!, date: String): RegistrationsResponse!
+			eventRegistrations(event_ID: ID!): RegistrationsResponse!
 		}
 
 		extend type Mutation {
@@ -42,8 +57,8 @@ module.exports = {
 				eventAddress: String
 				eventStart: String!
 				eventEnd: String!
-			): RegistrationResp!
-			deleteRegistration(_id: ID!): Registration
+			): RegistrationResponse!
+			deleteRegistration(_id: ID!): RegistrationResponse!
 		}
 	`,
 	// Resolvers
@@ -51,48 +66,23 @@ module.exports = {
 		Query: {
 			registration: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Registration.findById(args.id);
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findRegistration(args, Registration);
 			},
 			registrations: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Registration.find({});
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findRegistrations(args, Registration);
 			},
 			userFutureRegistrations: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				const date = new Date(args.date);
-				try {
-					return await Registration.find({ user_ID: args.user_ID, eventStart: { $gte: date } });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findUserFutureRegistrations(args, Registration);
 			},
 			userPastRegistrations: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				const date = new Date(args.date);
-				try {
-					return await Registration.find({
-						user_ID: args.user_ID,
-						eventStart: { $lte: date }
-					}).sort({ eventStart: 'descending' });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findUserPastRegistrations(args, Registration);
 			},
 			eventRegistrations: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await Registration.find({ event_ID: args.event_ID });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findEventRegistrations(args, Registration);
 			}
 		},
 		Registration: {

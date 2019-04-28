@@ -16,7 +16,7 @@ const RegistrationFeed = () => {
 		<div className="float-right pr-2">
 			<CQuery query={GET_EVENT_REGISTRATIONS_IDS} variables={{ event_ID: event.id }}>
 				{({ data }) => {
-					const registrations = data.eventRegistrations;
+					const registrations = data.eventRegistrations.body;
 					const userRegistration = getUserRegistrationId(registrations);
 					return (
 						<Fragment>
