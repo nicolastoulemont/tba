@@ -150,15 +150,14 @@ module.exports = {
 		Mutation: {
 			addEvent: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				// const { errors, isValid } = await validateEventInput(args);
-				// if (!isValid) return { success: false, errors };
+				const { errors, isValid } = await validateEventInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await buildEvent(args, EventItem);
 			},
 			updateEvent: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				// const { errors, isValid } = await validateUpdEventIntput(args);
-				// if (!isValid) return { success: false, errors };
-
+				const { errors, isValid } = await validateUpdEventIntput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await updateEvent(args, EventItem);
 			},
 			deleteEvent: async (parent, args, { user, models: { EventItem } }) => {

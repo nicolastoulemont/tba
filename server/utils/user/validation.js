@@ -1,4 +1,5 @@
 const Validator = require('validator');
+const bcrypt = require('bcrypt');
 const { isEmpty } = require('../general');
 const { User } = require('../../models');
 
@@ -8,33 +9,52 @@ const validateRegInput = async data => {
 	data.email = !isEmpty(data.email) ? data.email : '';
 	data.password = !isEmpty(data.password) ? data.password : '';
 
-	if (!Validator.isEmail(data.email)) {
-		let emailError = {
+	if (!Validator.isEmail(data.email))
+		errors.push({
 			path: 'email',
 			message: 'Email is invalid'
-		};
-		errors.push(emailError);
-	}
-	if (!Validator.isLength(data.password, { min: 5, max: 25 })) {
-		let pwdError = {
+		});
+
+	if (!Validator.isLength(data.password, { min: 5, max: 25 }))
+		errors.push({
 			path: 'password',
 			message: 'Your password must be between 5 and 25 characters'
-		};
-		errors.push(pwdError);
-	}
+		});
 
 	const usedEmail = await User.findOne({ email: data.email });
-	if (usedEmail) {
-		let usedEmailError = {
+	if (usedEmail)
+		errors.push({
 			path: 'email',
 			message: 'This email adress is already used'
-		};
-		errors.push(usedEmailError);
-	}
+		});
 
 	return {
 		errors,
 		isValid: isEmpty(errors)
+	};
+};
+
+const validateLoginInput = async data => {
+	let errors = [];
+	console.log(data);
+	data.email = !isEmpty(data.email) ? data.email : '';
+	data.password = !isEmpty(data.password) ? data.password : '';
+
+	if (data.password.length === 0) errors.push({ path: 'password', message: 'Enter a password' });
+	if (!Validator.isEmail(data.email)) errors.push({ path: 'email', message: 'Invalid Email' });
+
+	const user = await User.findOne({ email: data.email });
+	if (!user) {
+		errors.push({ path: 'email', message: 'Wrong email' });
+	} else if (user) {
+		const validPwd = await bcrypt.compare(data.password, user.password);
+		if (!validPwd) errors.push({ path: 'password', message: 'Invalid Password' });
+	}
+
+	return {
+		errors,
+		isValid: isEmpty(errors),
+		user
 	};
 };
 
@@ -43,22 +63,18 @@ const validateUpdateInput = async data => {
 
 	data.email = !isEmpty(data.email) ? data.email : '';
 
-	if (!Validator.isEmail(data.email)) {
-		let emailError = {
+	if (!Validator.isEmail(data.email))
+		errors.push({
 			path: 'email',
 			message: 'Email is invalid'
-		};
-		errors.push(emailError);
-	}
+		});
 
 	const usedEmail = await User.findOne({ email: data.email });
-	if (usedEmail) {
-		let usedEmailError = {
+	if (usedEmail)
+		errors.push({
 			path: 'email',
 			message: 'This email adress is already used'
-		};
-		errors.push(usedEmailError);
-	}
+		});
 
 	return {
 		errors,
@@ -66,4 +82,4 @@ const validateUpdateInput = async data => {
 	};
 };
 
-module.exports = { validateRegInput, validateUpdateInput };
+module.exports = { validateRegInput, validateLoginInput, validateUpdateInput };

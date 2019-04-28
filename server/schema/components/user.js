@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const { gql, AuthenticationError } = require('apollo-server');
 const {
 	registerUser,
@@ -7,7 +6,11 @@ const {
 	updateUserInfo
 } = require('../../utils/user/actions');
 // Validation
-const { validateRegInput, validateUpdateInput } = require('../../utils/user/validation');
+const {
+	validateRegInput,
+	validateLoginInput,
+	validateUpdateInput
+} = require('../../utils/user/validation');
 
 module.exports = {
 	UserType: gql`
@@ -29,6 +32,14 @@ module.exports = {
 			userLog: UserLog
 		}
 
+		type UserResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			token: String
+			user: User
+		}
+
 		type RegisterResp {
 			success: Boolean!
 			user: User
@@ -39,7 +50,7 @@ module.exports = {
 			success: Boolean!
 			token: String
 			user: User
-			error: String
+			errors: [Error]
 		}
 
 		type RegisterAndLoginResponse {
@@ -56,9 +67,8 @@ module.exports = {
 		}
 
 		extend type Mutation {
-			register(email: String!, password: String!): RegisterResp!
-			registerAndLogin(email: String!, password: String!): RegisterAndLoginResponse!
-			login(email: String!, password: String!): LoginResp!
+			registerAndLogin(email: String!, password: String!): UserResponse!
+			login(email: String!, password: String!): UserResponse!
 			updateUser(_id: ID!, email: String): User
 			deleteUser(_id: ID!): User
 		}
@@ -114,21 +124,14 @@ module.exports = {
 		},
 
 		Mutation: {
-			register: async (parent, args, { models: { User } }) => {
-				const { errors, isValid } = await validateRegInput(args);
-				if (!isValid) return { success: false, errors };
-				return await registerUser(args, User);
-			},
 			registerAndLogin: async (parent, args, { models: { User } }) => {
 				const { errors, isValid } = await validateRegInput(args);
-				if (!isValid) return { success: false, errors };
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await registerAndLogin(args, User);
 			},
 			login: async (parent, args, { models: { User } }) => {
-				const user = await User.findOne({ email: args.email });
-				if (!user) return { success: false, error: 'Invalid Email' };
-				const valid = await bcrypt.compare(args.password, user.password);
-				if (!valid) return { success: false, error: 'Invalid Password' };
+				const { errors, isValid, user } = await validateLoginInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await loginUser(user);
 			},
 			updateUser: async (parent, args, { user, models: { User } }) => {

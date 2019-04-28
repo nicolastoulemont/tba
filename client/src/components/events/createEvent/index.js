@@ -5,6 +5,7 @@ import { Mutation } from 'react-apollo';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Spring } from 'react-spring/renderprops';
+import classNames from 'classnames';
 import { formatFileName } from '../../commons/fileManagers';
 import ImgHandler from '../../commons/ImgHandler';
 import { InputField, TagsChooser, TextAreaField } from '../../commons/InputComponents';
@@ -16,6 +17,7 @@ import {
 	GET_USER_PAST_HOSTED_EVENTS
 } from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
+import { findErrorInErrorsArr } from '../../commons/ErrorsHandling';
 
 const CreateEvent = ({ history }) => {
 	const user = useContext(UserContext);
@@ -35,6 +37,8 @@ const CreateEvent = ({ history }) => {
 	const [eventTags, setEventTags] = useState([]);
 	const [tagsGroup, setTagsGroup] = useState(tagsList);
 
+	const [errors, setErrors] = useState([]);
+
 	const addTag = tag => {
 		setEventTags([...eventTags, tag]);
 		setTagsGroup(tagsGroup.filter(item => item !== tag));
@@ -53,6 +57,15 @@ const CreateEvent = ({ history }) => {
 	const setTypeCheckBox = () => {
 		if (type === '') return false;
 		if (type === 'institutional') return true;
+	};
+
+	const onChange = e => {
+		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
+		if (e.target.name === 'name') setName(e.target.value);
+		if (e.target.name === 'abstract') setAbstract(e.target.value);
+		if (e.target.name === 'description') setDescription(e.target.value);
+		if (e.target.name === 'city') setCity(e.target.value);
+		if (e.target.name === 'address') setAddress(e.target.value);
 	};
 
 	const uploadToS3 = async (banner, signedRequest) => {
@@ -121,6 +134,8 @@ const CreateEvent = ({ history }) => {
 			history.push(`/home/event/${res.data.addEvent.body.id}`);
 		} else {
 			// Handle errors
+			console.log(res.data.addEvent.errors);
+			setErrors(res.data.addEvent.errors);
 			return null;
 		}
 	};
@@ -166,14 +181,15 @@ const CreateEvent = ({ history }) => {
 											/>
 											<h4 className="text-left pt-4 px-4">Create an Event</h4>
 										</div>
-										<div className="px-4 py-2">
+										<div className="px-4 py-2 text-left">
 											<InputField
 												type="text"
 												placeholder="e.g. EU Digital communications with europeans citizens in the next MFF"
 												name="name"
 												labelText="Event Name"
 												value={name}
-												onChange={e => setName(e.target.value)}
+												onChange={onChange}
+												error={findErrorInErrorsArr(errors, 'name')}
 											/>
 											<TextAreaField
 												type="text"
@@ -181,7 +197,8 @@ const CreateEvent = ({ history }) => {
 												name="abstract"
 												labelText="Abstract"
 												value={abstract}
-												onChange={e => setAbstract(e.target.value)}
+												onChange={onChange}
+												error={findErrorInErrorsArr(errors, 'abstract')}
 											/>
 											<TextAreaField
 												type="text"
@@ -190,7 +207,8 @@ const CreateEvent = ({ history }) => {
 												labelText="Description"
 												value={description}
 												rows={8}
-												onChange={e => setDescription(e.target.value)}
+												onChange={onChange}
+												error={findErrorInErrorsArr(errors, 'description')}
 											/>
 											<div className="form-row">
 												<div className="col-md-6">
@@ -200,7 +218,8 @@ const CreateEvent = ({ history }) => {
 														name="city"
 														labelText="Event City"
 														value={city}
-														onChange={e => setCity(e.target.value)}
+														onChange={onChange}
+														error={findErrorInErrorsArr(errors, 'city')}
 													/>
 													<InputField
 														type="text"
@@ -208,35 +227,58 @@ const CreateEvent = ({ history }) => {
 														name="address"
 														labelText="Event Address"
 														value={address}
-														onChange={e => setAddress(e.target.value)}
+														onChange={onChange}
+														error={findErrorInErrorsArr(errors, 'address')}
 													/>
 												</div>
 												<div className="col-md-6 text-left">
 													<div className="mb-2">
 														<p className="p-0 m-0">Event Start</p>
 														<DatePicker
-															selected={new Date(start)}
-															onChange={date => setStart(dayjs(date).format('YYYY-MM-DDTHH:mm'))}
+															selected={start}
+															onChange={date => {
+																if (errors)
+																	setErrors(errors.filter(error => error.path !== 'start'));
+																setStart(dayjs(date).format('YYYY-MM-DDTHH:mm'));
+															}}
 															showTimeSelect
 															timeFormat="HH:mm"
 															timeIntervals={30}
 															dateFormat="YYYY/MM/d HH:mm"
 															timeCaption="time"
-															className="form-control form-control-sm"
+															className={classNames('form-control form-control-sm', {
+																'is-invalid': findErrorInErrorsArr(errors, 'start')
+															})}
 														/>
+														{findErrorInErrorsArr(errors, 'start') ? (
+															<small className="d-block text-danger">
+																{findErrorInErrorsArr(errors, 'start').message}
+															</small>
+														) : null}
 													</div>
 													<div className="mt-2 pt-2">
 														<p className="p-0 m-0">Event End</p>
 														<DatePicker
-															selected={new Date(end)}
-															onChange={date => setEnd(dayjs(date).format('YYYY-MM-DDTHH:mm'))}
+															selected={end}
+															onChange={date => {
+																if (errors)
+																	setErrors(errors.filter(error => error.path !== 'start'));
+																setEnd(dayjs(date).format('YYYY-MM-DDTHH:mm'));
+															}}
 															showTimeSelect
 															timeFormat="HH:mm"
 															timeIntervals={30}
 															dateFormat="YYYY/MM/d HH:mm"
 															timeCaption="time"
-															className="form-control form-control-sm"
+															className={classNames('form-control form-control-sm', {
+																'is-invalid': findErrorInErrorsArr(errors, 'start')
+															})}
 														/>
+														{findErrorInErrorsArr(errors, 'start') ? (
+															<small className="d-block text-danger">
+																{findErrorInErrorsArr(errors, 'start').message}
+															</small>
+														) : null}
 													</div>
 												</div>
 											</div>
@@ -329,4 +371,4 @@ const CreateEvent = ({ history }) => {
 	);
 };
 
-export default CreateEvent;
+export default React.memo(CreateEvent);

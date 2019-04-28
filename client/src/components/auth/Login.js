@@ -4,14 +4,15 @@ import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
 import { LOGIN_USER } from '../graphql/user/Mutations';
 import UserNav from '../navs/userNav';
+import { findErrorInErrorsArr } from '../commons/ErrorsHandling';
 
 const Login = props => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [errors, setErrors] = useState(!!'');
+	const [errors, setErrors] = useState([]);
 
 	const onChange = e => {
-		if (errors) setErrors(!{});
+		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
 		if (e.target.name === 'password') setPassword(e.target.value);
 		if (e.target.name === 'email') setEmail(e.target.value);
 	};
@@ -21,9 +22,9 @@ const Login = props => {
 		const response = await login({
 			variables: { email, password }
 		});
-		const { success, token, error } = response.data.login;
-		if (!success) {
-			setErrors(error);
+		const { ok, token, errors } = response.data.login;
+		if (!ok) {
+			setErrors(errors);
 		} else {
 			props.client.resetStore();
 			localStorage.setItem('token', token);
@@ -44,25 +45,22 @@ const Login = props => {
 								<form onSubmit={e => logIn(e, email, password, login)}>
 									<InputField
 										type="text"
+										labelText="Email"
 										placeholder="Please enter your email adress"
 										name="email"
 										value={email}
 										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'email')}
 									/>
 									<InputField
 										type="password"
+										labelText="Password"
 										placeholder="Please enter your password"
 										name="password"
 										value={password}
 										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'password')}
 									/>
-									{errors ? (
-										<div className="form-group">
-											<div className="alert alert-danger" role="alert">
-												{errors}
-											</div>
-										</div>
-									) : null}
 									<input type="submit" className="btn btn-info btn-block mt-4" />
 								</form>
 							)}

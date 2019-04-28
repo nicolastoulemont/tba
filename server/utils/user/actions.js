@@ -30,6 +30,7 @@ const registerAndLogin = async (args, User) => {
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();
+
 		const token = await jwt.sign(
 			{
 				user: {
@@ -40,13 +41,12 @@ const registerAndLogin = async (args, User) => {
 			{ expiresIn: '1y' }
 		);
 		return {
-			success: true,
-			user,
+			statusCode: 201,
+			ok: true,
 			token
 		};
 	} catch (err) {
-		console.log(err);
-		return { success: false, errors: [err] };
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
 };
 
@@ -61,10 +61,9 @@ const loginUser = async user => {
 			SECRET,
 			{ expiresIn: '1y' }
 		);
-		return { success: true, token, user };
+		return { statusCode: 200, ok: true, token };
 	} catch (err) {
-		console.log(err);
-		return { success: false, error: err };
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
 };
 
