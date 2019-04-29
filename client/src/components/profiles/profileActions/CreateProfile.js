@@ -12,6 +12,7 @@ import { CREATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
 import { UserContext } from '../../contexts';
+import { findErrorInErrorsArr, frontEndProfileInputValidation } from '../../commons/ErrorsHandling';
 
 const CreateProfile = ({
 	match: {
@@ -31,6 +32,8 @@ const CreateProfile = ({
 	const [userTopics, setUserTopics] = useState([]);
 	const [topicsPool, setTopicsPool] = useState(tagsList);
 
+	const [errors, setErrors] = useState([]);
+
 	const addTopic = topic => {
 		setUserTopics([...userTopics, topic]);
 		setTopicsPool(topicsPool.filter(item => item !== topic));
@@ -43,8 +46,22 @@ const CreateProfile = ({
 
 	if (user.id !== id) return <Redirect to="/error" />;
 
+	const onChange = e => {
+		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
+		if (e.target.name === 'name') setName(e.target.value);
+		if (e.target.name === 'position') setPosition(e.target.value);
+		if (e.target.name === 'bio') setBio(e.target.value);
+		if (e.target.name === 'twitter_URL') setTwitter_URL(e.target.value);
+		if (e.target.name === 'linkedin_URL') setLinkedin_URL(e.target.value);
+	};
+
 	const createProfile = async (e, addProfile, signS3) => {
 		e.preventDefault();
+		const err = frontEndProfileInputValidation(name, position, bio);
+		if (err.length !== 0) {
+			setErrors(err);
+			return null;
+		}
 		if (picture) {
 			await addProfileWithBanner(addProfile, signS3);
 		} else if (!picture) {
@@ -79,6 +96,9 @@ const CreateProfile = ({
 
 		if (res.data.addProfile.statusCode === 201) {
 			history.push(`/home/profile/${user.id}`);
+		} else {
+			setErrors(res.data.addProfile.errors);
+			return null;
 		}
 	};
 
@@ -109,6 +129,9 @@ const CreateProfile = ({
 
 		if (res.data.addProfile.statusCode === 201) {
 			history.push(`/home/profile/${user.id}`);
+		} else {
+			setErrors(res.data.addProfile.errors);
+			return null;
 		}
 	};
 
@@ -146,7 +169,8 @@ const CreateProfile = ({
 												name="name"
 												labelText="Name"
 												value={name}
-												onChange={e => setName(e.target.value)}
+												onChange={onChange}
+												error={findErrorInErrorsArr(errors, 'name')}
 											/>
 										</div>
 									</div>
@@ -156,7 +180,8 @@ const CreateProfile = ({
 										name="position"
 										labelText="Position"
 										value={position}
-										onChange={e => setPosition(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'position')}
 									/>
 									<TextAreaField
 										type="text"
@@ -164,25 +189,28 @@ const CreateProfile = ({
 										name="bio"
 										labelText="Bio"
 										value={bio}
-										onChange={e => setBio(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'bio')}
 										optional={true}
 									/>
 									<InputField
-										type="text"
+										type="url"
 										placeholder="e.g. https://twitter.com/yourprofile"
-										name="twitter_URl"
+										name="twitter_URL"
 										labelText="Twitter"
 										value={twitter_URL}
-										onChange={e => setTwitter_URL(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'twitter_URL')}
 										optional={true}
 									/>
 									<InputField
-										type="text"
+										type="url"
 										placeholder="e.g. https://www.linkedin.com/in/yourprofile"
 										name="linkedin_URL"
 										labelText="LinkedIn"
 										value={linkedin_URL}
-										onChange={e => setLinkedin_URL(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'linkedin_URL')}
 										optional={true}
 									/>
 

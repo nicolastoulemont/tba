@@ -38,3 +38,27 @@ export const frontEndEventInputValidation = (
 
 	return err;
 };
+
+export const frontEndProfileInputValidation = (name, position, bio) => {
+	let err = [];
+
+	if (name.length > 70 || name.length === 0)
+		err.push({
+			path: 'name',
+			message: 'Your name must be between 1 and 70 characters'
+		});
+
+	if (position.length > 70 || position.length === 0)
+		err.push({
+			path: 'position',
+			message: 'Your position must be between 1 and 70 characters'
+		});
+
+	if (bio.length > 280)
+		err.push({
+			path: 'bio',
+			message: 'Your bio must be between 0 and 280 characters'
+		});
+
+	return err;
+};

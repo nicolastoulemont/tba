@@ -1,44 +1,46 @@
 const Validator = require('validator');
 const isEmpty = require('../general');
-const { User } = require('../../models/');
 
 // TODO
 
 const validateProfileInput = async data => {
 	let errors = [];
 
-	data.organisation_ID = !isEmpty(data.organisation_ID) ? data.organisation_ID : '';
 	data.name = !isEmpty(data.name) ? data.name : '';
 	data.position = !isEmpty(data.position) ? data.position : '';
 	data.bio = !isEmpty(data.bio) ? data.bio : '';
 	data.twitter_URL = !isEmpty(data.twitter_URL) ? data.twitter_URL : '';
 	data.linkedin_URL = !isEmpty(data.linkedin_URL) ? data.linkedin_URL : '';
-	data.picture_URL = !isEmpty(data.picture_URL) ? data.picture_URL : '';
-	data.interests = !isEmpty(data.interests) ? data.interests : '';
 
-	if (!Validator.isEmail(data.email)) {
-		let emailError = {
-			path: 'email',
-			message: 'Email is invalid'
-		};
-		errors.push(emailError);
-	}
-	if (!Validator.isLength(data.password, { min: 5, max: 25 })) {
-		let pwdError = {
-			path: 'password',
-			message: 'Your password must be between 5 and 25 characters'
-		};
-		errors.push(pwdError);
-	}
+	if (!Validator.isLength(data.name, { min: 1, max: 70 }))
+		errors.push({
+			path: 'name',
+			message: 'Your name must be between 1 and 70 characters'
+		});
 
-	const usedEmail = await User.findOne({ email: data.email });
-	if (usedEmail) {
-		let usedEmailError = {
-			path: 'email',
-			message: 'This email adress is already used'
-		};
-		errors.push(usedEmailError);
-	}
+	if (!Validator.isLength(data.position, { min: 1, max: 70 }))
+		errors.push({
+			path: 'position',
+			message: 'Your position must be between 1 and 70 characters'
+		});
+
+	if (!Validator.isLength(data.bio, { min: 0, max: 280 }))
+		errors.push({
+			path: 'bio',
+			message: 'Your bio must be between 0 and 280 characters'
+		});
+
+	if (!Validator.isURL(data.twitter_URL))
+		errors.push({
+			path: 'twitter_URL',
+			message: 'Your twitter URL must be a valid URL'
+		});
+
+	if (!Validator.isURL(data.linkedin_URL))
+		errors.push({
+			path: 'linkedin_URL',
+			message: 'Your linkedin URL must be a valid URL'
+		});
 
 	return {
 		errors,

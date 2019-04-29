@@ -12,6 +12,7 @@ import { UserContext } from '../../contexts';
 import { UPDATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
+import { findErrorInErrorsArr, frontEndProfileInputValidation } from '../../commons/ErrorsHandling';
 
 const EditProfile = ({ match, history }) => {
 	const user = useContext(UserContext);
@@ -29,6 +30,8 @@ const EditProfile = ({ match, history }) => {
 		tagsList.filter(tag => !user.profile.tags.includes(tag))
 	);
 
+	const [errors, setErrors] = useState([]);
+
 	if (user.id !== match.params.id) return <Redirect to="/error" />;
 
 	const addTopic = topic => {
@@ -41,13 +44,28 @@ const EditProfile = ({ match, history }) => {
 		setUserTopics(userTopics.filter(item => item !== topic));
 	};
 
-	const uploadToS3 = async (picture, signedRequest) => {
-		const options = {
-			headers: {
-				'Content-Type': picture.type
-			}
-		};
-		await axios.put(signedRequest, picture, options).catch(err => console.log(err));
+	const onChange = e => {
+		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
+		if (e.target.name === 'name') setName(e.target.value);
+		if (e.target.name === 'position') setPosition(e.target.value);
+		if (e.target.name === 'bio') setBio(e.target.value);
+		if (e.target.name === 'twitter_URL') setTwitter_URL(e.target.value);
+		if (e.target.name === 'linkedin_URL') setLinkedin_URL(e.target.value);
+	};
+
+	const editProfile = async (e, updateProfile, signS3) => {
+		e.preventDefault();
+		const err = frontEndProfileInputValidation(name, position, bio);
+		if (err.length !== 0) {
+			setErrors(err);
+			return null;
+		}
+
+		if (picture !== user.profile.picture_URL) {
+			await updateProfileWithNewPicture(updateProfile, signS3);
+		} else if (picture === user.profile.picture_URL) {
+			await updateProfileWithOutNewPicture(updateProfile);
+		}
 	};
 
 	const updateProfileWithNewPicture = async (updateProfile, signS3) => {
@@ -79,6 +97,15 @@ const EditProfile = ({ match, history }) => {
 		}
 	};
 
+	const uploadToS3 = async (picture, signedRequest) => {
+		const options = {
+			headers: {
+				'Content-Type': picture.type
+			}
+		};
+		await axios.put(signedRequest, picture, options).catch(err => console.log(err));
+	};
+
 	const updateProfileWithOutNewPicture = async updateProfile => {
 		const res = await updateProfile({
 			variables: {
@@ -97,15 +124,6 @@ const EditProfile = ({ match, history }) => {
 		});
 		if (res.data.updateProfile.statusCode === 201) {
 			history.push(`/home/profile/${user.id}`);
-		}
-	};
-
-	const editProfile = async (e, updateProfile, signS3) => {
-		e.preventDefault();
-		if (picture !== user.profile.picture_URL) {
-			await updateProfileWithNewPicture(updateProfile, signS3);
-		} else if (picture === user.profile.picture_URL) {
-			await updateProfileWithOutNewPicture(updateProfile);
 		}
 	};
 
@@ -143,7 +161,8 @@ const EditProfile = ({ match, history }) => {
 												name="name"
 												labelText="Name"
 												value={name}
-												onChange={e => setName(e.target.value)}
+												onChange={onChange}
+												error={findErrorInErrorsArr(errors, 'name')}
 											/>
 										</div>
 									</div>
@@ -153,7 +172,8 @@ const EditProfile = ({ match, history }) => {
 										name="position"
 										labelText="Position"
 										value={position}
-										onChange={e => setPosition(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'position')}
 									/>
 									<TextAreaField
 										type="text"
@@ -161,25 +181,28 @@ const EditProfile = ({ match, history }) => {
 										name="bio"
 										labelText="Bio"
 										value={bio}
-										onChange={e => setBio(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'bio')}
 										optional={true}
 									/>
 									<InputField
-										type="text"
+										type="url"
 										placeholder="e.g. https://twitter.com/yourprofile"
-										name="twitter_URl"
+										name="twitter_URL"
 										labelText="Twitter"
 										value={twitter_URL}
-										onChange={e => setTwitter_URL(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'twitter_URL')}
 										optional={true}
 									/>
 									<InputField
-										type="text"
+										type="url"
 										placeholder="e.g. https://www.linkedin.com/in/yourprofile"
 										name="linkedin_URL"
 										labelText="LinkedIn"
 										value={linkedin_URL}
-										onChange={e => setLinkedin_URL(e.target.value)}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'linkedin_URL')}
 										optional={true}
 									/>
 
