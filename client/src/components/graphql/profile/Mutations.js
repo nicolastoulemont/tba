@@ -35,17 +35,6 @@ export const CREATE_PROFILE = gql`
 			}
 			body {
 				id
-				user_ID
-				organisation_ID
-				name
-				position
-				hideSocial
-				privateProfile
-				bio
-				twitter_URL
-				linkedin_URL
-				picture_URL
-				tags
 			}
 		}
 	}
@@ -86,16 +75,6 @@ export const UPDATE_PROFILE = gql`
 			}
 			body {
 				id
-				organisation_ID
-				name
-				position
-				hideSocial
-				privateProfile
-				bio
-				twitter_URL
-				linkedin_URL
-				picture_URL
-				tags
 			}
 		}
 	}
