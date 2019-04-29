@@ -237,8 +237,8 @@ const CreateEvent = ({ history }) => {
 														labelText="Event City"
 														value={city}
 														onChange={onChange}
-														min={5}
-														max={70}
+														min={1}
+														max={30}
 														error={findErrorInErrorsArr(errors, 'city')}
 													/>
 													<InputField
@@ -257,7 +257,7 @@ const CreateEvent = ({ history }) => {
 													<div className="mb-2">
 														<p className="p-0 m-0">Event Start</p>
 														<DatePicker
-															selected={start}
+															selected={new Date(start)}
 															onChange={date => {
 																if (errors)
 																	setErrors(errors.filter(error => error.path !== 'start'));
@@ -281,7 +281,7 @@ const CreateEvent = ({ history }) => {
 													<div className="mt-2 pt-2">
 														<p className="p-0 m-0">Event End</p>
 														<DatePicker
-															selected={end}
+															selected={new Date(end)}
 															onChange={date => {
 																if (errors)
 																	setErrors(errors.filter(error => error.path !== 'start'));

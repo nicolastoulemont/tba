@@ -18,6 +18,7 @@ import {
 	GET_USER_PAST_HOSTED_EVENTS
 } from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
+import { findErrorInErrorsArr, frontEndEventInputValidation } from '../../commons/ErrorsHandling';
 
 const EditEvent = ({ match, history }) => {
 	const [{ stateEvent }, dispatch] = useStateValue();
@@ -40,6 +41,8 @@ const EditEvent = ({ match, history }) => {
 		tagsList.filter(tag => !stateEvent.tags.includes(tag))
 	);
 
+	const [errors, setErrors] = useState([]);
+
 	if (stateEvent.user_ID === null || stateEvent.user_ID !== user.id)
 		return <Redirect to={`/home/event/${match.params.id}`} />;
 
@@ -61,6 +64,15 @@ const EditEvent = ({ match, history }) => {
 	const setTypeCheckBox = () => {
 		if (type === '') return false;
 		if (type === 'institutional') return true;
+	};
+
+	const onChange = e => {
+		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
+		if (e.target.name === 'name') setName(e.target.value);
+		if (e.target.name === 'abstract') setAbstract(e.target.value);
+		if (e.target.name === 'description') setDescription(e.target.value);
+		if (e.target.name === 'city') setCity(e.target.value);
+		if (e.target.name === 'address') setAddress(e.target.value);
 	};
 
 	const uploadToS3 = async (banner, signedRequest) => {
@@ -141,6 +153,20 @@ const EditEvent = ({ match, history }) => {
 
 	const editEvent = async (e, updateEvent, signS3) => {
 		e.preventDefault();
+		const err = frontEndEventInputValidation(
+			name,
+			abstract,
+			description,
+			city,
+			address,
+			start,
+			end
+		);
+		if (typeof price === 'string') setPrice(0);
+		if (err.length !== 0) {
+			setErrors(err);
+			return null;
+		}
 		if (banner && typeof banner !== 'string') {
 			await updateEventWithNewBanner(updateEvent, signS3);
 		} else if (typeof banner === 'string' || banner == null) {
@@ -170,7 +196,10 @@ const EditEvent = ({ match, history }) => {
 									name="name"
 									labelText="Event Name"
 									value={name}
-									onChange={e => setName(e.target.value)}
+									onChange={onChange}
+									min={5}
+									max={140}
+									error={findErrorInErrorsArr(errors, 'name')}
 								/>
 								<TextAreaField
 									type="text"
@@ -178,7 +207,10 @@ const EditEvent = ({ match, history }) => {
 									name="abstract"
 									labelText="Abstract"
 									value={abstract}
-									onChange={e => setAbstract(e.target.value)}
+									onChange={onChange}
+									min={5}
+									max={280}
+									error={findErrorInErrorsArr(errors, 'abstract')}
 								/>
 								<TextAreaField
 									type="text"
@@ -187,7 +219,10 @@ const EditEvent = ({ match, history }) => {
 									labelText="Description"
 									value={description}
 									rows={8}
-									onChange={e => setDescription(e.target.value)}
+									onChange={onChange}
+									min={5}
+									max={2000}
+									error={findErrorInErrorsArr(errors, 'description')}
 								/>
 								<div className="form-row">
 									<div className="col-md-6">
@@ -197,7 +232,10 @@ const EditEvent = ({ match, history }) => {
 											name="city"
 											labelText="Event City"
 											value={city}
-											onChange={e => setCity(e.target.value)}
+											onChange={onChange}
+											min={1}
+											max={30}
+											error={findErrorInErrorsArr(errors, 'city')}
 										/>
 										<InputField
 											type="text"
@@ -205,7 +243,10 @@ const EditEvent = ({ match, history }) => {
 											name="address"
 											labelText="Event Address"
 											value={address}
-											onChange={e => setAddress(e.target.value)}
+											onChange={onChange}
+											min={5}
+											max={70}
+											error={findErrorInErrorsArr(errors, 'address')}
 										/>
 									</div>
 									<div className="col-md-6 text-left">
@@ -213,7 +254,10 @@ const EditEvent = ({ match, history }) => {
 											<p className="p-0 m-0">Event Start</p>
 											<DatePicker
 												selected={new Date(start)}
-												onChange={date => setStart(dayjs(date).format('YYYY-MM-DDTHH:mm'))}
+												onChange={date => {
+													if (errors) setErrors(errors.filter(error => error.path !== 'start'));
+													setStart(dayjs(date).format('YYYY-MM-DDTHH:mm'));
+												}}
 												showTimeSelect
 												timeFormat="HH:mm"
 												timeIntervals={30}
@@ -222,11 +266,19 @@ const EditEvent = ({ match, history }) => {
 												className="form-control form-control-sm"
 											/>
 										</div>
+										{findErrorInErrorsArr(errors, 'start') ? (
+											<small className="d-block text-danger">
+												{findErrorInErrorsArr(errors, 'start').message}
+											</small>
+										) : null}
 										<div className="mt-2 pt-2">
 											<p className="p-0 m-0">Event End</p>
 											<DatePicker
 												selected={new Date(end)}
-												onChange={date => setEnd(dayjs(date).format('YYYY-MM-DDTHH:mm'))}
+												onChange={date => {
+													if (errors) setErrors(errors.filter(error => error.path !== 'start'));
+													setEnd(dayjs(date).format('YYYY-MM-DDTHH:mm'));
+												}}
 												showTimeSelect
 												timeFormat="HH:mm"
 												timeIntervals={30}
@@ -234,21 +286,17 @@ const EditEvent = ({ match, history }) => {
 												timeCaption="time"
 												className="form-control form-control-sm"
 											/>
+											{findErrorInErrorsArr(errors, 'start') ? (
+												<small className="d-block text-danger">
+													{findErrorInErrorsArr(errors, 'start').message}
+												</small>
+											) : null}
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div className="px-4 py-2">
-								<TagsChooser
-									topicsPool={tagsGroup}
-									addTopic={addTag}
-									userTopics={eventTags}
-									deleteTopic={deleteTag}
-									main="Add tags to your event"
-									secondary="It will make it easier to find for users"
-								/>
-
+							<div className="px-4 pb-2">
 								<InputField
 									type="number"
 									labelText="Price in €"
@@ -257,7 +305,27 @@ const EditEvent = ({ match, history }) => {
 									min={0}
 									max={10000}
 								/>
-								<div className="form-check float-left mt-2">
+
+								<div className="form-check text-left">
+									<input
+										className="form-check-input"
+										type="checkbox"
+										id="isInstitutionalCheckBox"
+										name="institutional"
+										value={setTypeCheckBox(type)}
+										checked={setTypeCheckBox(type)}
+										onChange={e => handleType(e)}
+									/>
+									<label className="form-check-label text-left" htmlFor="isInstitutionalCheckBox">
+										Institutional Event
+										<small className="font-italic text-muted d-block">
+											Institutionals Events are the ones organized by or hosted by the EU
+											institutions.
+										</small>
+									</label>
+								</div>
+
+								<div className="form-check text-left">
 									<input
 										className="form-check-input"
 										type="checkbox"
@@ -269,13 +337,14 @@ const EditEvent = ({ match, history }) => {
 									/>
 									<label className="form-check-label text-left" htmlFor="isPublicCheckBox">
 										Public event
-										<small className="font-italic text-muted ml-2">
-											&#40;Private events are not referenced and only accessible with a special URL
-											to share with your selection of people&#41;
+										<small className="font-italic text-muted d-block">
+											Private events are not referenced and only accessible with a special URL to
+											share with your selection of people.
 										</small>
 									</label>
 								</div>
-								<div className="form-check float-left mt-2">
+
+								<div className="form-check text-left">
 									<input
 										className="form-check-input"
 										type="checkbox"
@@ -289,24 +358,15 @@ const EditEvent = ({ match, history }) => {
 										Allow comments
 									</label>
 								</div>
-								<div className="form-check float-left mt-2 mb-4">
-									<input
-										className="form-check-input"
-										type="checkbox"
-										id="isInstitutionalCheckBox"
-										name="institutional"
-										value={setTypeCheckBox(type)}
-										checked={setTypeCheckBox(type)}
-										onChange={e => handleType(e)}
-									/>
-									<label className="form-check-label text-left" htmlFor="isInstitutionalCheckBox">
-										Institutional Event
-										<small className="font-italic text-muted ml-2">
-											&#40;Institutionals Events are the ones organized by or hosted by the EU
-											institutions&#41;
-										</small>
-									</label>
-								</div>
+
+								<TagsChooser
+									topicsPool={tagsGroup}
+									addTopic={addTag}
+									userTopics={eventTags}
+									deleteTopic={deleteTag}
+									main="Tag your event"
+									secondary="It will make it easier to find by users and increase participation"
+								/>
 								<input type="submit" className="btn btn-blue btn-block my-4" />
 							</div>
 						</form>

@@ -30,16 +30,16 @@ const validateEventInput = async data => {
 			message: 'The event description must be between 5 and 2000 characters'
 		});
 
-	if (!Validator.isLength(data.city, { min: 1, max: 70 }))
+	if (!Validator.isLength(data.city, { min: 1, max: 30 }))
 		errors.push({
 			path: 'city',
-			message: 'The event city name must be between 1 and 70 characters'
+			message: 'The event city name must be between 1 and 30 characters'
 		});
 
-	if (!Validator.isLength(data.address, { min: 1, max: 140 }))
+	if (!Validator.isLength(data.address, { min: 1, max: 70 }))
 		errors.push({
 			path: 'address',
-			message: 'The event address must be between 1 and 140 characters'
+			message: 'The event address must be between 1 and 70 characters'
 		});
 
 	if (await EventItem.findOne({ name: data.name }))
