@@ -3,6 +3,7 @@ import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
 import { formatFileName } from '../../commons/fileManagers';
+import PlaceHolderBanner from '../../../img/placeholder_event_banner.svg';
 import { InputField, TextAreaField } from '../../commons/InputComponents';
 import ImgHandler from '../../commons/ImgHandler';
 import { TagsChooser } from '../../commons/InputComponents';
@@ -120,78 +121,12 @@ const EditProfile = ({ match, history }) => {
 					>
 						{(updateProfile, e) => (
 							<form onSubmit={e => editProfile(e, updateProfile, signS3)}>
-								<div className="p-0 m-0">
-									<h4 className="text-left pt-4 px-4">Edit your profile</h4>
-									<div className="form-row pt-2 px-4">
-										<div className="col-md-8">
-											<InputField
-												type="text"
-												placeholder="e.g. Frederic Von Brexit"
-												name="name"
-												labelText="Name"
-												value={name}
-												onChange={e => setName(e.target.value)}
-											/>
-											<InputField
-												type="text"
-												placeholder="e.g. Policy Officer / Citizen"
-												name="position"
-												labelText="Position"
-												value={position}
-												onChange={e => setPosition(e.target.value)}
-											/>
-											<TextAreaField
-												type="text"
-												placeholder="e.g. I'm an EU affairs professional in EU digital policies"
-												name="bio"
-												labelText="Bio"
-												value={bio}
-												onChange={e => setBio(e.target.value)}
-												optional={true}
-											/>
-											<div className="m-0 p-0">
-												<p className="float-right m-0 p-0">
-													<small>Optional</small>
-												</p>
-											</div>
-											<div className="input-group input-group-sm mb-2">
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="twitter_input">
-														<i className="fab fa-twitter" />
-													</span>
-												</div>
-												<input
-													type="text"
-													value={twitter_URL}
-													onChange={e => setTwitter_URL(e.target.value)}
-													className="form-control"
-													placeholder="e.g. https://twitter.com/yourprofile"
-													aria-describedby="twitter_input"
-												/>
-											</div>
-											<div className="p-0 m-0">
-												<p className="float-right m-0 p-0">
-													<small>Optional</small>
-												</p>
-												<div className="input-group input-group-sm mb-2">
-													<div className="input-group-prepend">
-														<span className="input-group-text" id="linkedin_input">
-															<i className="fab fa-linkedin-in" />
-														</span>
-													</div>
-													<input
-														type="text"
-														value={linkedin_URL}
-														onChange={e => setLinkedin_URL(e.target.value)}
-														className="form-control"
-														placeholder="e.g. https://www.linkedin.com/in/yourprofile"
-														aria-describedby="linkedin_input"
-													/>
-												</div>
-											</div>
-										</div>
-
-										<div className="col-md-4">
+								<div className="px-3 pb-2 m-0">
+									<div className="row">
+										<img src={PlaceHolderBanner} alt="Default Profile Banner" />
+									</div>
+									<div className="row">
+										<div className="col-md-3">
 											<ImgHandler
 												func={setPicture}
 												picture={picture}
@@ -200,19 +135,55 @@ const EditProfile = ({ match, history }) => {
 												placeholder="avatar"
 											/>
 										</div>
+										<div className="col-md-9">
+											<h4 className="text-left">Edit your profile</h4>
+											<InputField
+												type="text"
+												placeholder="e.g. Frederic Von Brexit"
+												name="name"
+												labelText="Name"
+												value={name}
+												onChange={e => setName(e.target.value)}
+											/>
+										</div>
 									</div>
-								</div>
-								<div className="px-4 py-2">
-									<TagsChooser
-										topicsPool={topicsPool}
-										addTopic={addTopic}
-										userTopics={userTopics}
-										deleteTopic={deleteTopic}
-										main="Choose the topics your are interested in"
-										secondary="Optional but advised given the large quantity of news and events myEU aggregate"
+									<InputField
+										type="text"
+										placeholder="e.g. Policy Officer / Citizen"
+										name="position"
+										labelText="Position"
+										value={position}
+										onChange={e => setPosition(e.target.value)}
+									/>
+									<TextAreaField
+										type="text"
+										placeholder="e.g. I'm an EU affairs professional in EU digital policies"
+										name="bio"
+										labelText="Bio"
+										value={bio}
+										onChange={e => setBio(e.target.value)}
+										optional={true}
+									/>
+									<InputField
+										type="text"
+										placeholder="e.g. https://twitter.com/yourprofile"
+										name="twitter_URl"
+										labelText="Twitter"
+										value={twitter_URL}
+										onChange={e => setTwitter_URL(e.target.value)}
+										optional={true}
+									/>
+									<InputField
+										type="text"
+										placeholder="e.g. https://www.linkedin.com/in/yourprofile"
+										name="linkedin_URL"
+										labelText="LinkedIn"
+										value={linkedin_URL}
+										onChange={e => setLinkedin_URL(e.target.value)}
+										optional={true}
 									/>
 
-									<div className="form-check float-left mt-2">
+									<div className="form-check text-left mt-2">
 										<input
 											className="form-check-input"
 											type="checkbox"
@@ -222,6 +193,7 @@ const EditProfile = ({ match, history }) => {
 											checked={hideSocial}
 											onChange={e => setHideSocial(!hideSocial)}
 										/>
+
 										<label className="form-check-label" htmlFor="hideSocialcheckBox">
 											<small className="font-italic text-muted">
 												Hide your social activities &#40; registrations, comments, likes &#41; from
@@ -229,7 +201,7 @@ const EditProfile = ({ match, history }) => {
 											</small>
 										</label>
 									</div>
-									<div className="form-check float-left mb-4">
+									<div className="form-check text-left">
 										<input
 											className="form-check-input"
 											type="checkbox"
@@ -245,7 +217,19 @@ const EditProfile = ({ match, history }) => {
 											</small>
 										</label>
 									</div>
-									<input type="submit" className="btn btn-blue btn-block mt-4 mb-2" />
+
+									<div className="py-2 text-left">
+										<TagsChooser
+											topicsPool={topicsPool}
+											addTopic={addTopic}
+											userTopics={userTopics}
+											deleteTopic={deleteTopic}
+											main="Choose the topics your are interested in"
+											secondary="Optional but advised given the large quantity of news and events myEU aggregate"
+										/>
+
+										<input type="submit" className="btn btn-blue btn-block mt-4 mb-2" />
+									</div>
 								</div>
 							</form>
 						)}

@@ -2,7 +2,6 @@ import React, { Fragment, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import PlaceHolderBanner from '../../../img/placeholder_event_banner.svg';
 import axios from 'axios';
-import dayjs from 'dayjs';
 import { formatFileName } from '../../commons/fileManagers';
 import { TagsChooser } from '../../commons/InputComponents';
 import ImgHandler from '../../commons/ImgHandler';
