@@ -140,7 +140,7 @@ export const SelectListGroup = ({ name, options, value, onChange }) => {
 
 export const TagsInput = ({ topic, addTopic }) => (
 	<Link to="#" onClick={addTopic}>
-		<span className="badge tag">
+		<span className="badge tag actiontags">
 			{topic} <i className="fas fa-plus ml-1" />
 		</span>
 	</Link>
@@ -148,7 +148,7 @@ export const TagsInput = ({ topic, addTopic }) => (
 
 export const UserTags = ({ topic, deleteTopic }) => (
 	<Link to="#" onClick={deleteTopic}>
-		<span className="badge tag">
+		<span className="badge tag actiontags">
 			{topic} <i className="fas fa-times ml-1" />
 		</span>
 	</Link>
