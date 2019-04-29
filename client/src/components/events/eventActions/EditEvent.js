@@ -75,13 +75,27 @@ const EditEvent = ({ match, history }) => {
 		if (e.target.name === 'address') setAddress(e.target.value);
 	};
 
-	const uploadToS3 = async (banner, signedRequest) => {
-		const options = {
-			headers: {
-				'Content-Type': banner.type
-			}
-		};
-		await axios.put(signedRequest, banner, options).catch(err => console.log(err));
+	const editEvent = async (e, updateEvent, signS3) => {
+		e.preventDefault();
+		const err = frontEndEventInputValidation(
+			name,
+			abstract,
+			description,
+			city,
+			address,
+			start,
+			end
+		);
+		if (typeof price === 'string') setPrice(0);
+		if (err.length !== 0) {
+			setErrors(err);
+			return null;
+		}
+		if (banner && typeof banner !== 'string') {
+			await updateEventWithNewBanner(updateEvent, signS3);
+		} else if (typeof banner === 'string' || banner == null) {
+			await updateEventWithOutNewBanner(updateEvent);
+		}
 	};
 
 	const updateEventWithNewBanner = async (updateEvent, signS3) => {
@@ -117,6 +131,15 @@ const EditEvent = ({ match, history }) => {
 		}
 	};
 
+	const uploadToS3 = async (banner, signedRequest) => {
+		const options = {
+			headers: {
+				'Content-Type': banner.type
+			}
+		};
+		await axios.put(signedRequest, banner, options).catch(err => console.log(err));
+	};
+
 	const updateEventWithOutNewBanner = async updateEvent => {
 		const res = await updateEvent({
 			variables: {
@@ -148,29 +171,6 @@ const EditEvent = ({ match, history }) => {
 			return { query: GET_USER_PAST_HOSTED_EVENTS, variables: { user_ID: user.id, date: today } };
 		} else if (dayjs(start).isAfter(dayjs(today))) {
 			return { query: GET_USER_FUTURE_HOSTED_EVENTS, variables: { user_ID: user.id, date: today } };
-		}
-	};
-
-	const editEvent = async (e, updateEvent, signS3) => {
-		e.preventDefault();
-		const err = frontEndEventInputValidation(
-			name,
-			abstract,
-			description,
-			city,
-			address,
-			start,
-			end
-		);
-		if (typeof price === 'string') setPrice(0);
-		if (err.length !== 0) {
-			setErrors(err);
-			return null;
-		}
-		if (banner && typeof banner !== 'string') {
-			await updateEventWithNewBanner(updateEvent, signS3);
-		} else if (typeof banner === 'string' || banner == null) {
-			await updateEventWithOutNewBanner(updateEvent);
 		}
 	};
 

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PlaceHolderBanner from '../../../../img/placeholder_event_banner.svg';
+import DefaultAvatar from '../../../../img/avatar_default.svg';
 import { ProfileContext, UserContext } from '../../../contexts';
 import ProfileMenu from './ProfileMenu';
 
@@ -22,7 +23,11 @@ const ProfileHeader = () => {
 								alt="User Avatar"
 							/>
 						) : (
-							<i className="fas fa-user-astronaut fa-4x" />
+							<img
+								src={DefaultAvatar}
+								className="rounded-circle large-avatar profile-avatar"
+								alt="Default Profile Banner"
+							/>
 						)}
 					</div>
 				</div>

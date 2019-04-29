@@ -6,8 +6,8 @@ import EditEvent from '../events/eventActions/EditEvent';
 import Event from '../events/event';
 import EventFeed from '../events/eventsFeed';
 import NewsFeed from '../news/newsFeed/index';
-import CreateProfile from '../profiles/createProfile';
-import EditProfile from '../profiles/editProfile';
+import CreateProfile from '../profiles/profileActions/CreateProfile';
+import EditProfile from '../profiles/profileActions/EditProfile';
 import Profile from '../profiles/profile';
 
 const HomeRouter = () => {

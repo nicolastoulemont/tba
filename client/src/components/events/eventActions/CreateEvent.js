@@ -68,13 +68,27 @@ const CreateEvent = ({ history }) => {
 		if (e.target.name === 'address') setAddress(e.target.value);
 	};
 
-	const uploadToS3 = async (banner, signedRequest) => {
-		const options = {
-			headers: {
-				'Content-Type': banner.type
-			}
-		};
-		await axios.put(signedRequest, banner, options).catch(err => console.log(err));
+	const createEvent = async (e, addEvent, signS3) => {
+		e.preventDefault();
+		const err = frontEndEventInputValidation(
+			name,
+			abstract,
+			description,
+			city,
+			address,
+			start,
+			end
+		);
+		if (typeof price === 'string') setPrice(0);
+		if (err.length !== 0) {
+			setErrors(err);
+			return null;
+		}
+		if (banner) {
+			await addEventWithBanner(addEvent, signS3);
+		} else if (!banner) {
+			await addEventWithOutBanner(addEvent);
+		}
 	};
 
 	const addEventWithBanner = async (addEvent, signS3) => {
@@ -112,6 +126,15 @@ const CreateEvent = ({ history }) => {
 		}
 	};
 
+	const uploadToS3 = async (banner, signedRequest) => {
+		const options = {
+			headers: {
+				'Content-Type': banner.type
+			}
+		};
+		await axios.put(signedRequest, banner, options).catch(err => console.log(err));
+	};
+
 	const addEventWithOutBanner = async addEvent => {
 		const res = await addEvent({
 			variables: {
@@ -147,28 +170,6 @@ const CreateEvent = ({ history }) => {
 		}
 	};
 
-	const createEvent = async (e, addEvent, signS3) => {
-		e.preventDefault();
-		const err = frontEndEventInputValidation(
-			name,
-			abstract,
-			description,
-			city,
-			address,
-			start,
-			end
-		);
-		if (typeof price === 'string') setPrice(0);
-		if (err.length !== 0) {
-			setErrors(err);
-			return null;
-		}
-		if (banner) {
-			await addEventWithBanner(addEvent, signS3);
-		} else if (!banner) {
-			await addEventWithOutBanner(addEvent);
-		}
-	};
 	return (
 		<Mutation mutation={SIGN_S3}>
 			{(signS3, e) => (

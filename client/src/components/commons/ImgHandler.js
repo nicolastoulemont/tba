@@ -40,17 +40,21 @@ const ImgHandler = ({ func, picture, x, y, placeholder }) => {
 					{!picture ? (
 						<img
 							src={DefaultAvatar}
-							className="extra-large-avatar rounded-circle mt-2"
+							className="extra-large-avatar rounded-circle profile-avatar"
 							alt="Default avatar"
 						/>
 					) : typeof picture !== 'string' ? (
 						<img
 							src={URL.createObjectURL(picture)}
-							className="extra-large-avatar rounded-circle mt-2"
+							className="extra-large-avatar rounded-circle profile-avatar"
 							alt="avatar"
 						/>
 					) : (
-						<img src={picture} className="extra-large-avatar rounded-circle mt-2" alt="avatar" />
+						<img
+							src={picture}
+							className="extra-large-avatar rounded-circle profile-avatar"
+							alt="avatar"
+						/>
 					)}
 				</Fragment>
 			);

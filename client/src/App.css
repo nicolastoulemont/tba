@@ -153,6 +153,7 @@ a:hover {
 .extra-large-avatar {
 	height: 156px;
 	width: 156px;
+	border: 3px solid #ffffff;
 }
 
 .profile-avatar {

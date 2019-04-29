@@ -3,6 +3,7 @@ import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
 import { formatFileName } from '../../commons/fileManagers';
+import { InputField, TextAreaField } from '../../commons/InputComponents';
 import ImgHandler from '../../commons/ImgHandler';
 import { TagsChooser } from '../../commons/InputComponents';
 import { tagsList } from '../../commons/TagsList';
@@ -10,8 +11,6 @@ import { UserContext } from '../../contexts';
 import { UPDATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
-import CRProfileHeader from '../createProfile/header';
-import CRProfileSocial from '../createProfile/socialLinks';
 
 const EditProfile = ({ match, history }) => {
 	const user = useContext(UserContext);
@@ -125,21 +124,73 @@ const EditProfile = ({ match, history }) => {
 									<h4 className="text-left pt-4 px-4">Edit your profile</h4>
 									<div className="form-row pt-2 px-4">
 										<div className="col-md-8">
-											<CRProfileHeader
-												name={name}
-												setName={setName}
-												position={position}
-												setPosition={setPosition}
-												bio={bio}
-												setBio={setBio}
+											<InputField
+												type="text"
+												placeholder="e.g. Frederic Von Brexit"
+												name="name"
+												labelText="Name"
+												value={name}
+												onChange={e => setName(e.target.value)}
 											/>
-											<CRProfileSocial
-												twitter_URL={twitter_URL}
-												setTwitter_URL={setTwitter_URL}
-												linkedin_URL={linkedin_URL}
-												setLinkedin_URL={setLinkedin_URL}
+											<InputField
+												type="text"
+												placeholder="e.g. Policy Officer / Citizen"
+												name="position"
+												labelText="Position"
+												value={position}
+												onChange={e => setPosition(e.target.value)}
 											/>
+											<TextAreaField
+												type="text"
+												placeholder="e.g. I'm an EU affairs professional in EU digital policies"
+												name="bio"
+												labelText="Bio"
+												value={bio}
+												onChange={e => setBio(e.target.value)}
+												optional={true}
+											/>
+											<div className="m-0 p-0">
+												<p className="float-right m-0 p-0">
+													<small>Optional</small>
+												</p>
+											</div>
+											<div className="input-group input-group-sm mb-2">
+												<div className="input-group-prepend">
+													<span className="input-group-text" id="twitter_input">
+														<i className="fab fa-twitter" />
+													</span>
+												</div>
+												<input
+													type="text"
+													value={twitter_URL}
+													onChange={e => setTwitter_URL(e.target.value)}
+													className="form-control"
+													placeholder="e.g. https://twitter.com/yourprofile"
+													aria-describedby="twitter_input"
+												/>
+											</div>
+											<div className="p-0 m-0">
+												<p className="float-right m-0 p-0">
+													<small>Optional</small>
+												</p>
+												<div className="input-group input-group-sm mb-2">
+													<div className="input-group-prepend">
+														<span className="input-group-text" id="linkedin_input">
+															<i className="fab fa-linkedin-in" />
+														</span>
+													</div>
+													<input
+														type="text"
+														value={linkedin_URL}
+														onChange={e => setLinkedin_URL(e.target.value)}
+														className="form-control"
+														placeholder="e.g. https://www.linkedin.com/in/yourprofile"
+														aria-describedby="linkedin_input"
+													/>
+												</div>
+											</div>
 										</div>
+
 										<div className="col-md-4">
 											<ImgHandler
 												func={setPicture}
