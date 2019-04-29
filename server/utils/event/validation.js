@@ -48,7 +48,7 @@ const validateEventInput = async data => {
 			message: 'An event with this name already exist'
 		});
 
-	if (!dayjs(data.start).isBefore(dayjs(data.end)))
+	if (!dayjs(data.start).isBefore(dayjs(data.end)) || !dayjs(data.start).isSame(dayjs(data.end)))
 		errors.push({ path: 'start', message: 'The event start must precede its end' });
 
 	return {

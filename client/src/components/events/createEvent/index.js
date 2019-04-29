@@ -17,7 +17,7 @@ import {
 	GET_USER_PAST_HOSTED_EVENTS
 } from '../../graphql/event/Queries';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
-import { findErrorInErrorsArr } from '../../commons/ErrorsHandling';
+import { findErrorInErrorsArr, frontEndEventInputValidation } from '../../commons/ErrorsHandling';
 
 const CreateEvent = ({ history }) => {
 	const user = useContext(UserContext);
@@ -107,7 +107,7 @@ const CreateEvent = ({ history }) => {
 		if (res.data.addEvent.statusCode === 201) {
 			history.push(`/home/event/${res.data.addEvent.body.id}`);
 		} else {
-			// Handle errors
+			setErrors(res.data.addEvent.errors);
 			return null;
 		}
 	};
@@ -133,8 +133,6 @@ const CreateEvent = ({ history }) => {
 		if (res.data.addEvent.statusCode === 201) {
 			history.push(`/home/event/${res.data.addEvent.body.id}`);
 		} else {
-			// Handle errors
-			console.log(res.data.addEvent.errors);
 			setErrors(res.data.addEvent.errors);
 			return null;
 		}
@@ -151,6 +149,20 @@ const CreateEvent = ({ history }) => {
 
 	const createEvent = async (e, addEvent, signS3) => {
 		e.preventDefault();
+		const err = frontEndEventInputValidation(
+			name,
+			abstract,
+			description,
+			city,
+			address,
+			start,
+			end
+		);
+		if (typeof price === 'string') setPrice(0);
+		if (err.length !== 0) {
+			setErrors(err);
+			return null;
+		}
 		if (banner) {
 			await addEventWithBanner(addEvent, signS3);
 		} else if (!banner) {
@@ -189,6 +201,8 @@ const CreateEvent = ({ history }) => {
 												labelText="Event Name"
 												value={name}
 												onChange={onChange}
+												min={5}
+												max={140}
 												error={findErrorInErrorsArr(errors, 'name')}
 											/>
 											<TextAreaField
@@ -198,6 +212,8 @@ const CreateEvent = ({ history }) => {
 												labelText="Abstract"
 												value={abstract}
 												onChange={onChange}
+												min={5}
+												max={280}
 												error={findErrorInErrorsArr(errors, 'abstract')}
 											/>
 											<TextAreaField
@@ -208,6 +224,8 @@ const CreateEvent = ({ history }) => {
 												value={description}
 												rows={8}
 												onChange={onChange}
+												min={5}
+												max={2000}
 												error={findErrorInErrorsArr(errors, 'description')}
 											/>
 											<div className="form-row">
@@ -219,6 +237,8 @@ const CreateEvent = ({ history }) => {
 														labelText="Event City"
 														value={city}
 														onChange={onChange}
+														min={5}
+														max={70}
 														error={findErrorInErrorsArr(errors, 'city')}
 													/>
 													<InputField
@@ -228,6 +248,8 @@ const CreateEvent = ({ history }) => {
 														labelText="Event Address"
 														value={address}
 														onChange={onChange}
+														min={5}
+														max={70}
 														error={findErrorInErrorsArr(errors, 'address')}
 													/>
 												</div>
@@ -284,15 +306,7 @@ const CreateEvent = ({ history }) => {
 											</div>
 										</div>
 
-										<div className="px-4 py-2">
-											<TagsChooser
-												topicsPool={tagsGroup}
-												addTopic={addTag}
-												userTopics={eventTags}
-												deleteTopic={deleteTag}
-												main="Add tags to your event"
-												secondary="It will make it easier to find for users"
-											/>
+										<div className="px-4 pb-2">
 											<InputField
 												type="number"
 												labelText="Price in €"
@@ -301,7 +315,30 @@ const CreateEvent = ({ history }) => {
 												min={0}
 												max={10000}
 											/>
-											<div className="form-check float-left mt-2">
+
+											<div className="form-check text-left">
+												<input
+													className="form-check-input"
+													type="checkbox"
+													id="isInstitutionalCheckBox"
+													name="institutional"
+													value={setTypeCheckBox(type)}
+													checked={setTypeCheckBox(type)}
+													onChange={e => handleType(e)}
+												/>
+												<label
+													className="form-check-label text-left"
+													htmlFor="isInstitutionalCheckBox"
+												>
+													Institutional Event
+													<small className="font-italic text-muted d-block">
+														Institutionals Events are the ones organized by or hosted by the EU
+														institutions.
+													</small>
+												</label>
+											</div>
+
+											<div className="form-check text-left">
 												<input
 													className="form-check-input"
 													type="checkbox"
@@ -313,13 +350,14 @@ const CreateEvent = ({ history }) => {
 												/>
 												<label className="form-check-label text-left" htmlFor="isPublicCheckBox">
 													Public event
-													<small className="font-italic text-muted ml-2">
-														&#40;Private events are not referenced and only accessible with a
-														special URL to share with your selection of people&#41;
+													<small className="font-italic text-muted d-block">
+														Private events are not referenced and only accessible with a special URL
+														to share with your selection of people.
 													</small>
 												</label>
 											</div>
-											<div className="form-check float-left mt-2">
+
+											<div className="form-check text-left">
 												<input
 													className="form-check-input"
 													type="checkbox"
@@ -336,27 +374,15 @@ const CreateEvent = ({ history }) => {
 													Allow comments
 												</label>
 											</div>
-											<div className="form-check float-left mt-2 mb-4">
-												<input
-													className="form-check-input"
-													type="checkbox"
-													id="isInstitutionalCheckBox"
-													name="institutional"
-													value={setTypeCheckBox(type)}
-													checked={setTypeCheckBox(type)}
-													onChange={e => handleType(e)}
-												/>
-												<label
-													className="form-check-label text-left"
-													htmlFor="isInstitutionalCheckBox"
-												>
-													Institutional Event
-													<small className="font-italic text-muted ml-2">
-														&#40;Institutionals Events are the ones organized by or hosted by the EU
-														institutions&#41;
-													</small>
-												</label>
-											</div>
+
+											<TagsChooser
+												topicsPool={tagsGroup}
+												addTopic={addTag}
+												userTopics={eventTags}
+												deleteTopic={deleteTag}
+												main="Tag your event"
+												secondary="It will make it easier to find by users and increase participation"
+											/>
 
 											<input type="submit" className="btn btn-blue btn-block my-4" />
 										</div>

@@ -36,8 +36,15 @@ export const InputField = ({
 				onChange={onChange}
 				min={min}
 				max={max}
+				minLength={min}
+				maxLength={max}
 			/>
 			<small className="invalid-feedback">{error && error.message ? error.message : null}</small>
+			{max && type === 'text' && !error ? (
+				<small className="float-right">
+					{value.length} / {max}
+				</small>
+			) : null}
 		</div>
 	</div>
 );
@@ -55,7 +62,7 @@ export const InputCheck = ({ type, name, id, value, checked, onChange }) => (
 				onChange={onChange}
 			/>
 			<label className="text-secondary form-check-label" htmlFor="iseventpublic">
-				Pubic Event
+				Public Event
 			</label>
 		</div>
 	</div>
@@ -70,6 +77,8 @@ export const TextAreaField = ({
 	labelText,
 	rows,
 	optional,
+	min,
+	max,
 	error
 }) => (
 	<div className="form-group">
@@ -95,9 +104,16 @@ export const TextAreaField = ({
 				placeholder={placeholder}
 				onChange={onChange}
 				rows={rows}
+				minLength={min}
+				maxLength={max}
 			/>
 		</div>
 		{error && error.message ? <small className="text-danger">{error.message}</small> : null}
+		{max && !error ? (
+			<small className="float-right">
+				{value.length} / {max}
+			</small>
+		) : null}
 	</div>
 );
 
@@ -139,12 +155,10 @@ export const UserTags = ({ topic, deleteTopic }) => (
 );
 
 export const TagsChooser = ({ topicsPool, addTopic, userTopics, deleteTopic, main, secondary }) => (
-	<div>
+	<div className="mt-2">
 		<div className="text-left">
 			<p className="m-0 p-0">{main}</p>
-			<p>
-				<small className="font-italic">{secondary}</small>
-			</p>
+			<small className="font-italic text-muted d-block">{secondary}</small>
 		</div>
 
 		<div className="form-row my-2">
