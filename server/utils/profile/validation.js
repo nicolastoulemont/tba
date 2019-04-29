@@ -1,8 +1,6 @@
 const Validator = require('validator');
 const isEmpty = require('../general');
 
-// TODO
-
 const validateProfileInput = async data => {
 	let errors = [];
 

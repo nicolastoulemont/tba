@@ -1,5 +1,6 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const { buildProfile, updateProfile, deleteProfile } = require('../../utils/profile/actions');
+const { validateProfileInput } = require('../../utils/profile/validation');
 const {
 	findProfile,
 	findProfiles,
@@ -61,7 +62,7 @@ module.exports = {
 				linkedin_URL: String
 				picture_URL: String
 				tags: [String]
-			): ProfileResponse
+			): ProfileResponse!
 			updateProfile(
 				_id: ID!
 				organisation_ID: String
@@ -74,7 +75,7 @@ module.exports = {
 				linkedin_URL: String
 				picture_URL: String
 				tags: [String]
-			): ProfileResponse
+			): ProfileResponse!
 			deleteProfile(_id: ID!, user_ID: String!): ProfileResponse
 		}
 	`,
@@ -106,12 +107,14 @@ module.exports = {
 		Mutation: {
 			addProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				// TODO : Add input validation function
+				const { errors, isValid } = await validateProfileInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await buildProfile(args, Profile);
 			},
 			updateProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				// TODO : Add input validation function
+				const { errors, isValid } = await validateProfileInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await updateProfile(args, Profile);
 			},
 			deleteProfile: async (parent, args, { user, models: { Profile } }) => {
