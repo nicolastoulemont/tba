@@ -71,7 +71,9 @@ a:hover {
 	width: 100%;
 }
 
-.border-grey {
+.tag {
+	border-radius: 25px;
+	margin: 1px;
 	border: 1px solid #6c757d;
 }
 

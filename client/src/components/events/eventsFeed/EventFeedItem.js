@@ -42,7 +42,7 @@ const EventFeedItem = ({ event }) => {
 				<p className="text-left p-0 my-1">
 					{event.tags.map(tag => (
 						<span
-							className="badge badge-pill border-grey m-1"
+							className="badge tag"
 							key={Math.random()
 								.toString(36)
 								.substring(2, 7)}
