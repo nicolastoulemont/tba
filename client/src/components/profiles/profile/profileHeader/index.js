@@ -68,7 +68,7 @@ const ProfileHeader = () => {
 					<div className="text-center text-md-left pl-0">
 						{profile.tags.map(tag => (
 							<span
-								className="badge badge-pill border-grey m-1"
+								className="badge badge-pill tag"
 								key={Math.random()
 									.toString(36)
 									.substring(2, 7)}
