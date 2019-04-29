@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import CreateEvent from '../events/createEvent';
-import DeleteEvent from '../events/deleteEvent';
-import EditEvent from '../events/editEvent';
+import CreateEvent from '../events/eventActions/CreateEvent';
+import DeleteEvent from '../events/eventActions/DeleteEvent';
+import EditEvent from '../events/eventActions/EditEvent';
 import Event from '../events/event';
 import EventFeed from '../events/eventsFeed';
 import NewsFeed from '../news/newsFeed/index';
