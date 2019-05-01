@@ -75,7 +75,6 @@ const EditEvent = ({ match, history }) => {
 		if (e.target.name === 'address') setAddress(e.target.value);
 	};
 
-	console.log(errors);
 	const editEvent = async (e, updateEvent, signS3) => {
 		e.preventDefault();
 		const err = frontEndEventInputValidation(
