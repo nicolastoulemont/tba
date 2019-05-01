@@ -1,12 +1,13 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Mutation } from 'react-apollo';
-import { CommentContext } from '../../contexts';
+import { CommentContext, EventContext } from '../../contexts';
 import { EDIT_COMMENT } from '../../graphql/comment/Mutations';
-import { GET_COMMENT_COMMENTS } from '../../graphql/comment/Queries';
+import { GET_COMMENT_COMMENTS, GET_EVENT_COMMENTS } from '../../graphql/comment/Queries';
 
 const CommentEdit = ({ hideForms }) => {
 	const comment = useContext(CommentContext);
-	const [text, setText] = useState('');
+	const event = useContext(EventContext);
+	const [text, setText] = useState(comment.text);
 
 	const commentEdit = (e, text, editComment) => {
 		if (e.keyCode === 13) {
@@ -24,7 +25,10 @@ const CommentEdit = ({ hideForms }) => {
 			<Mutation
 				mutation={EDIT_COMMENT}
 				refetchQueries={() => {
-					return [{ query: GET_COMMENT_COMMENTS, variables: { comment_ID: comment.id } }];
+					return [
+						{ query: GET_EVENT_COMMENTS, variables: { event_ID: event.id } },
+						{ query: GET_COMMENT_COMMENTS, variables: { comment_ID: comment.id } }
+					];
 				}}
 			>
 				{(editComment, e) => (
