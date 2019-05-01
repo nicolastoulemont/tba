@@ -36,7 +36,6 @@ const buildProfile = async (args, Profile) => {
 
 const updateProfile = async (args, Profile) => {
 	try {
-		// if (!(await isAuthorized(args, user, User))) return new Error('You cannot perform this action'); // Need some rework
 		let updateProfile = {};
 		if (args.organisation_ID) updateProfile.organisation_ID = args.organisation_ID;
 		if (args.name) updateProfile.name = args.name;

@@ -42,10 +42,62 @@ const validateEventInput = async data => {
 			message: 'The event address must be between 1 and 70 characters'
 		});
 
+	if (!Validator.isLength(data.type, { min: 1, max: 30 }))
+		errors.push({
+			path: 'type',
+			message: 'The event address must be between 1 and 30 characters'
+		});
+
+	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
+	const stringRegExp = new RegExp(ValidString);
+
+	if (!data.name.match(stringRegExp))
+		errors.push({
+			path: 'name',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.abstract.match(stringRegExp))
+		errors.push({
+			path: 'abstract',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.description.match(stringRegExp))
+		errors.push({
+			path: 'description',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.city.match(stringRegExp))
+		errors.push({
+			path: 'city',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.address.match(stringRegExp))
+		errors.push({
+			path: 'address',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
+	if (!data.type.match(stringRegExp))
+		errors.push({
+			path: 'type',
+			message: 'Invalid event type'
+		});
+
 	if (await EventItem.findOne({ name: data.name }))
 		errors.push({
 			path: 'name',
 			message: 'An event with this name already exist'
+		});
+
+	if (!dayjs(data.start).isValid())
+		errors.push({
+			path: 'start',
+			message: 'Invalid start date'
+		});
+	if (!dayjs(data.end).isValid())
+		errors.push({
+			path: 'end',
+			message: 'Invalid end date'
 		});
 
 	if (!dayjs(data.start).isBefore(dayjs(data.end)) || !dayjs(data.start).isSame(dayjs(data.end)))
@@ -96,6 +148,47 @@ const validateUpdEventIntput = async data => {
 			message: 'The event address must be between 1 and 140 characters'
 		});
 
+	if (!Validator.isLength(data.type, { min: 1, max: 30 }))
+		errors.push({
+			path: 'type',
+			message: 'The event address must be between 1 and 30 characters'
+		});
+
+	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
+	const stringRegExp = new RegExp(ValidString);
+
+	if (!data.name.match(stringRegExp))
+		errors.push({
+			path: 'name',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.abstract.match(stringRegExp))
+		errors.push({
+			path: 'abstract',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.description.match(stringRegExp))
+		errors.push({
+			path: 'description',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.city.match(stringRegExp))
+		errors.push({
+			path: 'city',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.address.match(stringRegExp))
+		errors.push({
+			path: 'address',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
+	if (!data.type.match(stringRegExp))
+		errors.push({
+			path: 'type',
+			message: 'Invalid event type'
+		});
+
 	const usedName = await EventItem.findOne({ name: data.name });
 	if (usedName && data._id !== usedName._id) {
 		errors.push({
@@ -103,6 +196,20 @@ const validateUpdEventIntput = async data => {
 			message: 'An event with this name already exist'
 		});
 	}
+
+	if (!dayjs(data.start).isValid())
+		errors.push({
+			path: 'start',
+			message: 'Invalid start date'
+		});
+	if (!dayjs(data.end).isValid())
+		errors.push({
+			path: 'end',
+			message: 'Invalid end date'
+		});
+
+	if (!dayjs(data.start).isBefore(dayjs(data.end)) || !dayjs(data.start).isSame(dayjs(data.end)))
+		errors.push({ path: 'start', message: 'The event start must precede its end' });
 
 	return {
 		errors,

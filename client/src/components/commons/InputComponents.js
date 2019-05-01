@@ -14,7 +14,7 @@ export const InputField = ({
 	max,
 	error
 }) => (
-	<div className="form-group">
+	<div className="form-group my-4">
 		{labelText ? (
 			<div className="d-block">
 				{' '}
@@ -39,9 +39,11 @@ export const InputField = ({
 				minLength={min}
 				maxLength={max}
 			/>
-			<small className="invalid-feedback">{error && error.message ? error.message : null}</small>
-			{max && type === 'text' && !error ? (
-				<small className="float-right">
+			<small className="invalid-feedback text-left">
+				{error && error.message ? error.message : null}
+			</small>
+			{max && (type === 'text' || type === 'url') && !error ? (
+				<small className="float-right text-muted">
 					{value.length} / {max}
 				</small>
 			) : null}
@@ -108,9 +110,11 @@ export const TextAreaField = ({
 				maxLength={max}
 			/>
 		</div>
-		{error && error.message ? <small className="text-danger">{error.message}</small> : null}
+		{error && error.message ? (
+			<small className="float-left text-danger">{error.message}</small>
+		) : null}
 		{max && !error ? (
-			<small className="float-right">
+			<small className="float-right text-muted">
 				{value.length} / {max}
 			</small>
 		) : null}

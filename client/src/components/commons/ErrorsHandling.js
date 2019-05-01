@@ -31,6 +31,36 @@ export const frontEndEventInputValidation = (
 		err.push({ path: 'city', message: 'The event city must between 1 and 30 characters' });
 	if (address.length > 70 || address.length < 5)
 		err.push({ path: 'address', message: 'The event address must between 5 and 140 characters' });
+
+	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
+	const stringRegExp = new RegExp(ValidString);
+
+	if (!name.match(stringRegExp))
+		err.push({
+			path: 'name',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!abstract.match(stringRegExp))
+		err.push({
+			path: 'abstract',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!description.match(stringRegExp))
+		err.push({
+			path: 'description',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!city.match(stringRegExp))
+		err.push({
+			path: 'city',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!address.match(stringRegExp))
+		err.push({
+			path: 'address',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
 	if (dayjs(end).isBefore(start))
 		err.push({ path: 'start', message: 'The event start must precede its end' });
 	if (dayjs(start).isSame(end))
@@ -39,7 +69,7 @@ export const frontEndEventInputValidation = (
 	return err;
 };
 
-export const frontEndProfileInputValidation = (name, position, bio) => {
+export const frontEndProfileInputValidation = (name, position, bio, twitter_URL, linkedin_URL) => {
 	let err = [];
 
 	if (name.length > 70 || name.length === 0)
@@ -59,6 +89,45 @@ export const frontEndProfileInputValidation = (name, position, bio) => {
 			path: 'bio',
 			message: 'Your bio must be between 0 and 280 characters'
 		});
+
+	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
+	const stringRegExp = new RegExp(ValidString);
+
+	if (!name.match(stringRegExp))
+		err.push({
+			path: 'name',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!position.match(stringRegExp))
+		err.push({
+			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!bio.match(stringRegExp))
+		err.push({
+			path: 'bio',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
+	if (twitter_URL.length > 140)
+		err.push({
+			path: 'twitter_URL',
+			message: 'Your Twitter URL cannot exceed 140 characters'
+		});
+
+	if (linkedin_URL.length > 140)
+		err.push({
+			path: 'linkedin_URL',
+			message: 'Your LinkedIn URL cannot exceed 140 characters'
+		});
+
+	const ValidURL = /^(?:http(s)?:\/\/)?[\w.-]+(?:.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g;
+	const urlRegExp = new RegExp(ValidURL);
+
+	if (!twitter_URL.match(urlRegExp))
+		err.push({ path: 'twitter_URL', message: 'Your Twitter URL must be a valid URL' });
+	if (!linkedin_URL.match(urlRegExp))
+		err.push({ path: 'linkedin_URL', message: 'Your LinkedIn URL must be a valid URL' });
 
 	return err;
 };

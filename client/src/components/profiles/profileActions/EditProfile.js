@@ -55,7 +55,7 @@ const EditProfile = ({ match, history }) => {
 
 	const editProfile = async (e, updateProfile, signS3) => {
 		e.preventDefault();
-		const err = frontEndProfileInputValidation(name, position, bio);
+		const err = frontEndProfileInputValidation(name, position, bio, twitter_URL, linkedin_URL);
 		if (err.length !== 0) {
 			setErrors(err);
 			return null;
@@ -163,6 +163,8 @@ const EditProfile = ({ match, history }) => {
 												value={name}
 												onChange={onChange}
 												error={findErrorInErrorsArr(errors, 'name')}
+												min={1}
+												max={70}
 											/>
 										</div>
 									</div>
@@ -174,6 +176,7 @@ const EditProfile = ({ match, history }) => {
 										value={position}
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'position')}
+										max={70}
 									/>
 									<TextAreaField
 										type="text"
@@ -184,6 +187,7 @@ const EditProfile = ({ match, history }) => {
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'bio')}
 										optional={true}
+										max={280}
 									/>
 									<InputField
 										type="url"
@@ -194,6 +198,7 @@ const EditProfile = ({ match, history }) => {
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'twitter_URL')}
 										optional={true}
+										max={140}
 									/>
 									<InputField
 										type="url"
@@ -204,6 +209,7 @@ const EditProfile = ({ match, history }) => {
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'linkedin_URL')}
 										optional={true}
+										max={140}
 									/>
 
 									<div className="form-check text-left mt-2">
@@ -248,7 +254,7 @@ const EditProfile = ({ match, history }) => {
 											userTopics={userTopics}
 											deleteTopic={deleteTopic}
 											main="Choose the topics your are interested in"
-											secondary="Optional but advised given the large quantity of news and events myEU aggregate"
+											secondary="Will allow you to quickly find the informations you are interested in"
 										/>
 
 										<input type="submit" className="btn btn-blue btn-block mt-4 mb-2" />

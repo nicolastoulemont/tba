@@ -1,5 +1,5 @@
 const Validator = require('validator');
-const isEmpty = require('../general');
+const { isEmpty } = require('../general');
 
 const validateProfileInput = async data => {
 	let errors = [];
@@ -28,6 +28,25 @@ const validateProfileInput = async data => {
 			message: 'Your bio must be between 0 and 280 characters'
 		});
 
+	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
+	const stringRegExp = new RegExp(ValidString);
+
+	if (!data.name.match(stringRegExp))
+		errors.push({
+			path: 'name',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.position.match(stringRegExp))
+		errors.push({
+			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.bio.match(stringRegExp))
+		errors.push({
+			path: 'bio',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
 	if (!Validator.isURL(data.twitter_URL))
 		errors.push({
 			path: 'twitter_URL',
@@ -46,4 +65,4 @@ const validateProfileInput = async data => {
 	};
 };
 
-module.exports = validateProfileInput;
+module.exports = { validateProfileInput };

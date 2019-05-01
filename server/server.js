@@ -12,7 +12,7 @@ const DB_URI = `${process.env.DB_NAME}://${process.env.DB_USERNAME}:${process.en
 
 // DB CONNECTION
 mongoose
-	.connect(DB_URI, { useNewUrlParser: true })
+	.connect(DB_URI, { useNewUrlParser: true, useFindAndModify: false })
 	.then(() => console.log('DB connected'))
 	.catch(err => console.log(err));
 mongoose.set('useCreateIndex', true);

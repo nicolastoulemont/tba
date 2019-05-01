@@ -229,33 +229,32 @@ const CreateEvent = ({ history }) => {
 												max={2000}
 												error={findErrorInErrorsArr(errors, 'description')}
 											/>
+											<InputField
+												type="text"
+												placeholder="e.g. Brussels"
+												name="city"
+												labelText="Event City"
+												value={city}
+												onChange={onChange}
+												min={1}
+												max={30}
+												error={findErrorInErrorsArr(errors, 'city')}
+											/>
+											<InputField
+												type="text"
+												placeholder="e.g. Rond-point Robert Schuman"
+												name="address"
+												labelText="Event Address"
+												value={address}
+												onChange={onChange}
+												min={5}
+												max={70}
+												error={findErrorInErrorsArr(errors, 'address')}
+											/>
+
 											<div className="form-row">
 												<div className="col-md-6">
-													<InputField
-														type="text"
-														placeholder="e.g. Brussels"
-														name="city"
-														labelText="Event City"
-														value={city}
-														onChange={onChange}
-														min={1}
-														max={30}
-														error={findErrorInErrorsArr(errors, 'city')}
-													/>
-													<InputField
-														type="text"
-														placeholder="e.g. Rond-point Robert Schuman"
-														name="address"
-														labelText="Event Address"
-														value={address}
-														onChange={onChange}
-														min={5}
-														max={70}
-														error={findErrorInErrorsArr(errors, 'address')}
-													/>
-												</div>
-												<div className="col-md-6 text-left">
-													<div className="mb-2">
+													<div className="text-left">
 														<p className="p-0 m-0">Event Start</p>
 														<DatePicker
 															selected={new Date(start)}
@@ -269,17 +268,17 @@ const CreateEvent = ({ history }) => {
 															timeIntervals={30}
 															dateFormat="YYYY/MM/d HH:mm"
 															timeCaption="time"
-															className={classNames('form-control form-control-sm', {
-																'is-invalid': findErrorInErrorsArr(errors, 'start')
-															})}
+															className="form-control form-control-sm"
 														/>
-														{findErrorInErrorsArr(errors, 'start') ? (
-															<small className="d-block text-danger">
-																{findErrorInErrorsArr(errors, 'start').message}
-															</small>
-														) : null}
 													</div>
-													<div className="mt-2 pt-2">
+													{findErrorInErrorsArr(errors, 'start') ? (
+														<small className="d-block text-danger">
+															{findErrorInErrorsArr(errors, 'start').message}
+														</small>
+													) : null}
+												</div>
+												<div className="col-md-6">
+													<div className="text-left">
 														<p className="p-0 m-0">Event End</p>
 														<DatePicker
 															selected={new Date(end)}
@@ -293,9 +292,7 @@ const CreateEvent = ({ history }) => {
 															timeIntervals={30}
 															dateFormat="YYYY/MM/d HH:mm"
 															timeCaption="time"
-															className={classNames('form-control form-control-sm', {
-																'is-invalid': findErrorInErrorsArr(errors, 'start')
-															})}
+															className="form-control form-control-sm"
 														/>
 														{findErrorInErrorsArr(errors, 'start') ? (
 															<small className="d-block text-danger">

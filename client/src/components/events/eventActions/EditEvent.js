@@ -224,33 +224,32 @@ const EditEvent = ({ match, history }) => {
 									max={2000}
 									error={findErrorInErrorsArr(errors, 'description')}
 								/>
+								<InputField
+									type="text"
+									placeholder="e.g. Brussels"
+									name="city"
+									labelText="Event City"
+									value={city}
+									onChange={onChange}
+									min={1}
+									max={30}
+									error={findErrorInErrorsArr(errors, 'city')}
+								/>
+								<InputField
+									type="text"
+									placeholder="e.g. Rond-point Robert Schuman"
+									name="address"
+									labelText="Event Address"
+									value={address}
+									onChange={onChange}
+									min={5}
+									max={70}
+									error={findErrorInErrorsArr(errors, 'address')}
+								/>
+
 								<div className="form-row">
 									<div className="col-md-6">
-										<InputField
-											type="text"
-											placeholder="e.g. Brussels"
-											name="city"
-											labelText="Event City"
-											value={city}
-											onChange={onChange}
-											min={1}
-											max={30}
-											error={findErrorInErrorsArr(errors, 'city')}
-										/>
-										<InputField
-											type="text"
-											placeholder="e.g. Rond-point Robert Schuman"
-											name="address"
-											labelText="Event Address"
-											value={address}
-											onChange={onChange}
-											min={5}
-											max={70}
-											error={findErrorInErrorsArr(errors, 'address')}
-										/>
-									</div>
-									<div className="col-md-6 text-left">
-										<div className="mb-2">
+										<div className="text-left">
 											<p className="p-0 m-0">Event Start</p>
 											<DatePicker
 												selected={new Date(start)}
@@ -271,7 +270,9 @@ const EditEvent = ({ match, history }) => {
 												{findErrorInErrorsArr(errors, 'start').message}
 											</small>
 										) : null}
-										<div className="mt-2 pt-2">
+									</div>
+									<div className="col-md-6">
+										<div className="text-left">
 											<p className="p-0 m-0">Event End</p>
 											<DatePicker
 												selected={new Date(end)}
