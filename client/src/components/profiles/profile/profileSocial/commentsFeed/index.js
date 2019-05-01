@@ -2,16 +2,16 @@ import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CQuery from '../../../../commons/CustomQueryComponent';
 import { ProfileContext } from '../../../../contexts';
-import { GET_USER_COMMENTS } from '../../../../graphql/user/Queries';
+import { GET_USER_COMMENTS } from '../../../../graphql/comment/Queries';
 
 const ProfileCommentsFeed = () => {
 	const profile = useContext(ProfileContext);
 
 	return (
-		<CQuery query={GET_USER_COMMENTS} variables={{ id: profile.user_ID }}>
+		<CQuery query={GET_USER_COMMENTS} variables={{ user_ID: profile.user_ID }}>
 			{({ data }) => {
-				const comments = data.user.comments;
-				if (comments.length === 0)
+				const comments = data.userComments.body;
+				if (comments && comments.length === 0)
 					return (
 						<div className="text-left px-3 py-2 border-top">
 							<small>{profile.name} did not write a comment yet</small>

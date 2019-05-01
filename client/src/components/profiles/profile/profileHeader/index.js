@@ -70,18 +70,20 @@ const ProfileHeader = () => {
 				</div>
 				<div className="col-md-9 pl-0">
 					{profile.bio ? <p className="text-center text-md-left">{profile.bio}</p> : null}
-					<div className="text-center text-md-left pl-0">
-						{profile.tags.map(tag => (
-							<span
-								className="badge badge-pill tag"
-								key={Math.random()
-									.toString(36)
-									.substring(2, 7)}
-							>
-								{tag}
-							</span>
-						))}
-					</div>
+					{profile.tags ? (
+						<div className="text-center text-md-left pl-0">
+							{profile.tags.map(tag => (
+								<span
+									className="badge badge-pill tag"
+									key={Math.random()
+										.toString(36)
+										.substring(2, 7)}
+								>
+									{tag}
+								</span>
+							))}
+						</div>
+					) : null}
 				</div>
 			</div>
 		</div>

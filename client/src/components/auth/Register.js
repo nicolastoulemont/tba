@@ -46,7 +46,7 @@ const Register = props => {
 									<InputField
 										type="text"
 										labelText="Email"
-										placeholder="Any valid Email"
+										placeholder="Your email address"
 										name="email"
 										value={email}
 										onChange={onChange}

@@ -154,11 +154,33 @@ const findUserPastEvents = async (args, EventItem) => {
 	}
 };
 
+const findUserEvents = async (args, EventItem) => {
+	try {
+		const events = await EventItem.find({ user_ID: args.user_ID });
+		return {
+			statusCode: 200,
+			ok: true,
+			errors: null,
+			body: events
+		};
+	} catch (err) {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
+	}
+};
+
 module.exports = {
 	findEvent,
 	findEvents,
 	dailyEventsWithOutTags,
 	dailyEventsWithTags,
 	findUserFutureEvents,
-	findUserPastEvents
+	findUserPastEvents,
+	findUserEvents
 };

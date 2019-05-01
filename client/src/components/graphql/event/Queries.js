@@ -163,3 +163,24 @@ export const GET_USER_PAST_HOSTED_EVENTS = gql`
 		}
 	}
 `;
+
+export const GET_USER_EVENTS = gql`
+	query UserEvents($user_ID: ID!) {
+		userEvents(user_ID: $user_ID) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				name
+				city
+				address
+				start
+				end
+			}
+		}
+	}
+`;

@@ -5,7 +5,8 @@ const {
 	findComment,
 	findComments,
 	findEventComments,
-	findCommentComments
+	findCommentComments,
+	findUserComments
 } = require('../../utils/comment/queries');
 
 module.exports = {
@@ -45,10 +46,11 @@ module.exports = {
 		}
 
 		extend type Query {
-			comment(id: ID!): CommentResponse
-			comments: CommentsResponse
-			eventComments(event_ID: ID!): CommentsResponse
-			commentComments(comment_ID: ID!): CommentsResponse
+			comment(id: ID!): CommentResponse!
+			comments: CommentsResponse!
+			eventComments(event_ID: ID!): CommentsResponse!
+			commentComments(comment_ID: ID!): CommentsResponse!
+			userComments(user_ID: ID!): CommentsResponse!
 		}
 
 		extend type Mutation {
@@ -58,9 +60,9 @@ module.exports = {
 				comment_ID: String
 				poll_ID: String
 				text: String!
-			): CommentResponse
-			updateComment(_id: ID!, text: String): CommentResponse
-			moderateComment(_id: ID!, user_ID: String!, event_ID: String!): CommentResponse
+			): CommentResponse!
+			updateComment(_id: ID!, text: String): CommentResponse!
+			moderateComment(_id: ID!, user_ID: String!, event_ID: String!): CommentResponse!
 		}
 	`,
 	// Resolvers
@@ -81,6 +83,10 @@ module.exports = {
 			commentComments: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findCommentComments(args, CommentItem);
+			},
+			userComments: async (parent, args, { user, models: { CommentItem } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findUserComments(args, CommentItem);
 			}
 		},
 		CommentItem: {

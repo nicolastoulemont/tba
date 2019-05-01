@@ -56,3 +56,35 @@ export const GET_COMMENT_COMMENTS = gql`
 		}
 	}
 `;
+
+export const GET_USER_COMMENTS = gql`
+	query UserComments($user_ID: ID!) {
+		userComments(user_ID: $user_ID) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				text
+				moderated
+				event {
+					id
+					name
+				}
+				comment {
+					user_ID
+					text
+					moderated
+					creator {
+						profile {
+							name
+						}
+					}
+				}
+			}
+		}
+	}
+`;

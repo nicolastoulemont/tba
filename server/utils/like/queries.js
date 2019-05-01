@@ -78,4 +78,24 @@ const findCommentLikes = async (args, Like) => {
 	}
 };
 
-module.exports = { findLike, findLikes, findEventLikes, findCommentLikes };
+findUserLikes = async (args, Like) => {
+	try {
+		const likes = await Like.find({ user_ID: args.user_ID });
+		return {
+			statusCode: 200,
+			ok: true,
+			body: likes
+		};
+	} catch (err) {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
+	}
+};
+
+module.exports = { findLike, findLikes, findEventLikes, findCommentLikes, findUserLikes };

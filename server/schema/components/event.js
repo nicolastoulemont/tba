@@ -6,7 +6,8 @@ const {
 	dailyEventsWithTags,
 	dailyEventsWithOutTags,
 	findUserFutureEvents,
-	findUserPastEvents
+	findUserPastEvents,
+	findUserEvents
 } = require('../../utils/event/queries');
 const { buildEvent, updateEvent, deleteEvent } = require('../../utils/event/actions');
 const { getDatesFromString } = require('../../utils/general');
@@ -67,6 +68,7 @@ module.exports = {
 			): EventsResponse!
 			userFutureHostedEvents(user_ID: ID!, date: String): EventsResponse!
 			userPastHostedEvents(user_ID: ID!, date: String): EventsResponse!
+			userEvents(user_ID: ID!): EventsResponse!
 		}
 
 		extend type Mutation {
@@ -131,6 +133,10 @@ module.exports = {
 			userPastHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findUserPastEvents(args, EventItem);
+			},
+			userEvents: async (parent, args, { user, models: { EventItem } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findUserEvents(args, EventItem);
 			}
 		},
 

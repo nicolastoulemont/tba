@@ -25,3 +25,30 @@ export const GET_COMMENT_LIKES = gql`
 		}
 	}
 `;
+
+export const GET_USER_LIKES = gql`
+	query UserLikes($user_ID: ID!) {
+		userLikes(user_ID: $user_ID) {
+			statusCode
+			ok
+			body {
+				id
+				event {
+					id
+					name
+					isPublic
+				}
+				comment {
+					id
+					user_ID
+					moderated
+					creator {
+						profile {
+							name
+						}
+					}
+				}
+			}
+		}
+	}
+`;

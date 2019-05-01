@@ -5,7 +5,8 @@ const {
 	findLike,
 	findLikes,
 	findEventLikes,
-	findCommentLikes
+	findCommentLikes,
+	findUserLikes
 } = require('../../utils/like/queries');
 
 module.exports = {
@@ -43,6 +44,7 @@ module.exports = {
 			likes: LikesResponse!
 			eventLikes(event_ID: ID!): LikesResponse!
 			commentLikes(comment_ID: ID!): LikesResponse!
+			userLikes(user_ID: ID!): LikesResponse!
 		}
 
 		extend type Mutation {
@@ -73,6 +75,10 @@ module.exports = {
 			commentLikes: async (parent, args, { user, models: { Like } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findCommentLikes(args, Like);
+			},
+			userLikes: async (parent, args, { user, models: { Like } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findUserLikes(args, Like);
 			}
 		},
 

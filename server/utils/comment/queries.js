@@ -82,4 +82,31 @@ const findCommentComments = async (args, CommentItem) => {
 	}
 };
 
-module.exports = { findComment, findComments, findEventComments, findCommentComments };
+const findUserComments = async (args, CommentItem) => {
+	try {
+		const comments = await CommentItem.find({ user_ID: args.user_ID });
+		return {
+			statusCode: 200,
+			ok: true,
+			errors: null,
+			body: comments
+		};
+	} catch (err) {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
+	}
+};
+
+module.exports = {
+	findComment,
+	findComments,
+	findEventComments,
+	findCommentComments,
+	findUserComments
+};
