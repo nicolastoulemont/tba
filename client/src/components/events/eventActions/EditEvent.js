@@ -75,6 +75,7 @@ const EditEvent = ({ match, history }) => {
 		if (e.target.name === 'address') setAddress(e.target.value);
 	};
 
+	console.log(errors);
 	const editEvent = async (e, updateEvent, signS3) => {
 		e.preventDefault();
 		const err = frontEndEventInputValidation(
@@ -128,6 +129,9 @@ const EditEvent = ({ match, history }) => {
 		if (res.data.updateEvent.statusCode === 201) {
 			dispatch({ type: 'RESET_EVENT' });
 			history.push(`/home/event/${res.data.updateEvent.body.id}`);
+		} else {
+			setErrors(res.data.updateEvent.errors);
+			return null;
 		}
 	};
 
@@ -162,6 +166,9 @@ const EditEvent = ({ match, history }) => {
 		if (res.data.updateEvent.statusCode === 201) {
 			dispatch({ type: 'RESET_EVENT' });
 			history.push(`/home/event/${res.data.updateEvent.body.id}`);
+		} else {
+			setErrors(res.data.updateEvent.errors);
+			return null;
 		}
 	};
 
@@ -266,7 +273,7 @@ const EditEvent = ({ match, history }) => {
 											/>
 										</div>
 										{findErrorInErrorsArr(errors, 'start') ? (
-											<small className="d-block text-danger">
+											<small className="d-block text-danger text-left">
 												{findErrorInErrorsArr(errors, 'start').message}
 											</small>
 										) : null}
@@ -288,7 +295,7 @@ const EditEvent = ({ match, history }) => {
 												className="form-control form-control-sm"
 											/>
 											{findErrorInErrorsArr(errors, 'start') ? (
-												<small className="d-block text-danger">
+												<small className="d-block text-danger text-left">
 													{findErrorInErrorsArr(errors, 'start').message}
 												</small>
 											) : null}

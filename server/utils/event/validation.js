@@ -42,10 +42,10 @@ const validateEventInput = async data => {
 			message: 'The event address must be between 1 and 70 characters'
 		});
 
-	if (!Validator.isLength(data.type, { min: 1, max: 30 }))
+	if (!Validator.isLength(data.type, { min: 0, max: 30 }))
 		errors.push({
 			path: 'type',
-			message: 'The event address must be between 1 and 30 characters'
+			message: 'The event address must be between 0 and 30 characters'
 		});
 
 	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
@@ -77,7 +77,7 @@ const validateEventInput = async data => {
 			message: 'Only alphanumeric characters are accepted'
 		});
 
-	if (!data.type.match(stringRegExp))
+	if (!data.type === 'institutional' || !data.type === '')
 		errors.push({
 			path: 'type',
 			message: 'Invalid event type'
@@ -100,7 +100,7 @@ const validateEventInput = async data => {
 			message: 'Invalid end date'
 		});
 
-	if (!dayjs(data.start).isBefore(dayjs(data.end)) || !dayjs(data.start).isSame(dayjs(data.end)))
+	if (!dayjs(data.start).isBefore(dayjs(data.end)) || dayjs(data.start).isSame(dayjs(data.end)))
 		errors.push({ path: 'start', message: 'The event start must precede its end' });
 
 	return {
@@ -148,10 +148,10 @@ const validateUpdEventIntput = async data => {
 			message: 'The event address must be between 1 and 140 characters'
 		});
 
-	if (!Validator.isLength(data.type, { min: 1, max: 30 }))
+	if (!Validator.isLength(data.type, { min: 0, max: 30 }))
 		errors.push({
 			path: 'type',
-			message: 'The event address must be between 1 and 30 characters'
+			message: 'The event address must be between 0 and 30 characters'
 		});
 
 	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
@@ -183,14 +183,14 @@ const validateUpdEventIntput = async data => {
 			message: 'Only alphanumeric characters are accepted'
 		});
 
-	if (!data.type.match(stringRegExp))
+	if (!data.type === 'institutional' || !data.type === '')
 		errors.push({
 			path: 'type',
 			message: 'Invalid event type'
 		});
 
 	const usedName = await EventItem.findOne({ name: data.name });
-	if (usedName && data._id !== usedName._id) {
+	if (usedName && !data._id === usedName._id) {
 		errors.push({
 			path: 'name',
 			message: 'An event with this name already exist'
@@ -208,7 +208,7 @@ const validateUpdEventIntput = async data => {
 			message: 'Invalid end date'
 		});
 
-	if (!dayjs(data.start).isBefore(dayjs(data.end)) || !dayjs(data.start).isSame(dayjs(data.end)))
+	if (!dayjs(data.start).isBefore(dayjs(data.end)) || dayjs(data.start).isSame(dayjs(data.end)))
 		errors.push({ path: 'start', message: 'The event start must precede its end' });
 
 	return {
