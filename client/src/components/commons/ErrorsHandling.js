@@ -69,7 +69,14 @@ export const frontEndEventInputValidation = (
 	return err;
 };
 
-export const frontEndProfileInputValidation = (name, position, bio, twitter_URL, linkedin_URL) => {
+export const frontEndProfileInputValidation = (
+	name,
+	position,
+	bio,
+	twitter_URL,
+	linkedin_URL,
+	website_URL
+) => {
 	let err = [];
 
 	if (name.length > 70 || name.length === 0)
@@ -121,6 +128,12 @@ export const frontEndProfileInputValidation = (name, position, bio, twitter_URL,
 			message: 'Your LinkedIn URL cannot exceed 140 characters'
 		});
 
+	if (website_URL.length > 140)
+		err.push({
+			path: 'website_URL',
+			message: 'Your Website URL cannot exceed 140 characters'
+		});
+
 	const ValidURL = /^(?:http(s)?:\/\/)?[\w.-]+(?:.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g;
 	const urlRegExp = new RegExp(ValidURL);
 
@@ -128,6 +141,8 @@ export const frontEndProfileInputValidation = (name, position, bio, twitter_URL,
 		err.push({ path: 'twitter_URL', message: 'Your Twitter URL must be a valid URL' });
 	if (!linkedin_URL.match(urlRegExp))
 		err.push({ path: 'linkedin_URL', message: 'Your LinkedIn URL must be a valid URL' });
+	if (!website_URL.match(urlRegExp))
+		err.push({ path: 'website_URL', message: 'Your Website URL must be a valid URL' });
 
 	return err;
 };

@@ -10,6 +10,7 @@ const buildProfile = async (args, Profile) => {
 			bio: args.bio,
 			twitter_URL: args.twitter_URL,
 			linkedin_URL: args.linkedin_URL,
+			website_URL: args.website_URL,
 			picture_URL: args.picture_URL,
 			createdAt: new Date(),
 			updatedAt: new Date(),
@@ -45,6 +46,7 @@ const updateProfile = async (args, Profile) => {
 		if (args.bio) updateProfile.bio = args.bio;
 		if (args.twitter_URL) updateProfile.twitter_URL = args.twitter_URL;
 		if (args.linkedin_URL) updateProfile.linkedin_URL = args.linkedin_URL;
+		if (args.website_URL) updateProfile.website_URL = args.website_URL;
 		if (args.picture_URL) updateProfile.picture_URL = args.picture_URL;
 		if (args.tags) updateProfile.tags = args.tags;
 		updateProfile.updatedAt = new Date();

@@ -37,7 +37,6 @@ const ProfileHeader = () => {
 							<div className="text-center text-md-left mt-2">
 								<h4 className="d-inline font-weight-bold text-uppercase">{profile.name}</h4>
 								<h5 className="text-muted">{profile.position}</h5>
-								<h6 className="text-muted">{profile.organisation_ID}</h6>
 							</div>
 						</div>
 						<div className="col-md-2 mt-2">
@@ -48,23 +47,29 @@ const ProfileHeader = () => {
 			</div>
 			<div className="row">
 				<div className="col-md-3">
-					<a className="pr-2" href={profile.twitter_URL} target="#" aria-label="twitter">
-						<i className="fab fa-twitter" />
-					</a>
-					<a className="px-2" href={profile.linkedin_URL} target="#" aria-label="linkedin">
-						<i className="fab fa-linkedin" />
-					</a>
-					<a
-						className="pl-2"
-						href="user-organisationwebsite-url"
-						target="_blank"
-						aria-label="user organisation website"
-					>
-						<i className="fas fa-globe" />
-					</a>
+					{profile.twitter_URL ? (
+						<a className="pr-2" href={profile.twitter_URL} target="#" aria-label="twitter">
+							<i className="fab fa-twitter" />
+						</a>
+					) : null}
+					{profile.linkedin_URL ? (
+						<a className="px-2" href={profile.linkedin_URL} target="#" aria-label="linkedin">
+							<i className="fab fa-linkedin" />
+						</a>
+					) : null}
+					{profile.website_URL ? (
+						<a
+							className="pl-2"
+							href={profile.website_URL}
+							target="#"
+							aria-label="user organisation website"
+						>
+							<i className="fas fa-globe" />
+						</a>
+					) : null}
 				</div>
 				<div className="col-md-9 pl-0">
-					<p className="text-center text-md-left">{profile.bio}</p>
+					{profile.bio ? <p className="text-center text-md-left">{profile.bio}</p> : null}
 					<div className="text-center text-md-left pl-0">
 						{profile.tags.map(tag => (
 							<span

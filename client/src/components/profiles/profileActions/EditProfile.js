@@ -19,10 +19,11 @@ const EditProfile = ({ match, history }) => {
 
 	const [name, setName] = useState(user.profile.name);
 	const [position, setPosition] = useState(user.profile.position);
-	const [bio, setBio] = useState(user.profile.bio);
+	const [bio, setBio] = useState(user.profile.bio || '');
 	const [picture, setPicture] = useState(user.profile.picture_URL);
-	const [twitter_URL, setTwitter_URL] = useState(user.profile.twitter_URL);
-	const [linkedin_URL, setLinkedin_URL] = useState(user.profile.linkedin_URL);
+	const [twitter_URL, setTwitter_URL] = useState(user.profile.twitter_URL || '');
+	const [linkedin_URL, setLinkedin_URL] = useState(user.profile.linkedin_URL || '');
+	const [website_URL, setWebsite_URL] = useState(user.profile.website_URL || '');
 	const [hideSocial, setHideSocial] = useState(user.profile.hideSocial);
 	const [privateProfile, setprivateProfile] = useState(user.profile.privateProfile);
 	const [userTopics, setUserTopics] = useState(user.profile.tags);
@@ -51,11 +52,19 @@ const EditProfile = ({ match, history }) => {
 		if (e.target.name === 'bio') setBio(e.target.value);
 		if (e.target.name === 'twitter_URL') setTwitter_URL(e.target.value);
 		if (e.target.name === 'linkedin_URL') setLinkedin_URL(e.target.value);
+		if (e.target.name === 'website_URL') setWebsite_URL(e.target.value);
 	};
 
 	const editProfile = async (e, updateProfile, signS3) => {
 		e.preventDefault();
-		const err = frontEndProfileInputValidation(name, position, bio, twitter_URL, linkedin_URL);
+		const err = frontEndProfileInputValidation(
+			name,
+			position,
+			bio,
+			twitter_URL,
+			linkedin_URL,
+			website_URL
+		);
 		if (err.length !== 0) {
 			setErrors(err);
 			return null;
@@ -86,6 +95,7 @@ const EditProfile = ({ match, history }) => {
 				bio,
 				twitter_URL,
 				linkedin_URL,
+				website_URL,
 				picture_URL: url,
 				hideSocial,
 				privateProfile,
@@ -116,6 +126,7 @@ const EditProfile = ({ match, history }) => {
 				bio,
 				twitter_URL,
 				linkedin_URL,
+				website_URL,
 				picture_URL: user.profile.picture_URL,
 				hideSocial,
 				privateProfile,
@@ -208,6 +219,17 @@ const EditProfile = ({ match, history }) => {
 										value={linkedin_URL}
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'linkedin_URL')}
+										optional={true}
+										max={140}
+									/>
+									<InputField
+										type="url"
+										placeholder="e.g. https://www.myeu.eu"
+										name="website_URL"
+										labelText="Your organisation website"
+										value={website_URL}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'website_URL')}
 										optional={true}
 										max={140}
 									/>

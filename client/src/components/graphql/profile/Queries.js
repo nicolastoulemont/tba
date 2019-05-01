@@ -12,7 +12,6 @@ export const GET_USER_FULL_PROFILE = gql`
 			body {
 				id
 				user_ID
-				organisation_ID
 				name
 				position
 				bio
@@ -20,6 +19,7 @@ export const GET_USER_FULL_PROFILE = gql`
 				privateProfile
 				twitter_URL
 				linkedin_URL
+				website_URL
 				picture_URL
 				tags
 			}

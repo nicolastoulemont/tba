@@ -27,6 +27,7 @@ const CreateProfile = ({
 	const [picture, setPicture] = useState(null);
 	const [twitter_URL, setTwitter_URL] = useState('');
 	const [linkedin_URL, setLinkedin_URL] = useState('');
+	const [website_URL, setWebsite_URL] = useState('');
 	const [hideSocial, setHideSocial] = useState(false);
 	const [privateProfile, setprivateProfile] = useState(false);
 	const [userTopics, setUserTopics] = useState([]);
@@ -53,11 +54,19 @@ const CreateProfile = ({
 		if (e.target.name === 'bio') setBio(e.target.value);
 		if (e.target.name === 'twitter_URL') setTwitter_URL(e.target.value);
 		if (e.target.name === 'linkedin_URL') setLinkedin_URL(e.target.value);
+		if (e.target.name === 'website_URL') setWebsite_URL(e.target.value);
 	};
 
 	const createProfile = async (e, addProfile, signS3) => {
 		e.preventDefault();
-		const err = frontEndProfileInputValidation(name, position, bio, twitter_URL, linkedin_URL);
+		const err = frontEndProfileInputValidation(
+			name,
+			position,
+			bio,
+			twitter_URL,
+			linkedin_URL,
+			website_URL
+		);
 		if (err.length !== 0) {
 			setErrors(err);
 			return null;
@@ -87,6 +96,7 @@ const CreateProfile = ({
 				bio,
 				twitter_URL,
 				linkedin_URL,
+				website_URL,
 				picture_URL: url,
 				hideSocial,
 				privateProfile,
@@ -121,6 +131,7 @@ const CreateProfile = ({
 				bio,
 				twitter_URL,
 				linkedin_URL,
+				website_URL,
 				hideSocial,
 				privateProfile,
 				tags: userTopics
@@ -216,6 +227,18 @@ const CreateProfile = ({
 										value={linkedin_URL}
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'linkedin_URL')}
+										optional={true}
+										max={140}
+									/>
+
+									<InputField
+										type="url"
+										placeholder="e.g. https://www.myeu.eu"
+										name="website_URL"
+										labelText="Your organisation website"
+										value={website_URL}
+										onChange={onChange}
+										error={findErrorInErrorsArr(errors, 'website_URL')}
 										optional={true}
 										max={140}
 									/>

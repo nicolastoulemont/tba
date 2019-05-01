@@ -11,6 +11,7 @@ export const CREATE_PROFILE = gql`
 		$bio: String
 		$twitter_URL: String
 		$linkedin_URL: String
+		$website_URL: String
 		$picture_URL: String
 		$tags: [String]
 	) {
@@ -24,6 +25,7 @@ export const CREATE_PROFILE = gql`
 			bio: $bio
 			twitter_URL: $twitter_URL
 			linkedin_URL: $linkedin_URL
+			website_URL: $website_URL
 			picture_URL: $picture_URL
 			tags: $tags
 		) {
@@ -51,6 +53,7 @@ export const UPDATE_PROFILE = gql`
 		$bio: String
 		$twitter_URL: String
 		$linkedin_URL: String
+		$website_URL: String
 		$picture_URL: String
 		$tags: [String]
 	) {
@@ -64,6 +67,7 @@ export const UPDATE_PROFILE = gql`
 			bio: $bio
 			twitter_URL: $twitter_URL
 			linkedin_URL: $linkedin_URL
+			website_URL: $website_URL
 			picture_URL: $picture_URL
 			tags: $tags
 		) {

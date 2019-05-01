@@ -20,6 +20,7 @@ const profileSchema = new Schema({
 	bio: String,
 	twitter_URL: String,
 	linkedin_URL: String,
+	website_URL: String,
 	picture_URL: String,
 	createdAt: {
 		type: Date,

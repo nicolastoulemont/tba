@@ -22,6 +22,7 @@ module.exports = {
 			twitter_URL: String
 			linkedin_URL: String
 			picture_URL: String
+			website_URL: String
 			createdAt: Date
 			updatedAt: Date
 			tags: [String]
@@ -60,6 +61,7 @@ module.exports = {
 				bio: String
 				twitter_URL: String
 				linkedin_URL: String
+				website_URL: String
 				picture_URL: String
 				tags: [String]
 			): ProfileResponse!
@@ -73,6 +75,7 @@ module.exports = {
 				bio: String
 				twitter_URL: String
 				linkedin_URL: String
+				website_URL: String
 				picture_URL: String
 				tags: [String]
 			): ProfileResponse!

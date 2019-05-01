@@ -9,6 +9,7 @@ const validateProfileInput = async data => {
 	data.bio = !isEmpty(data.bio) ? data.bio : '';
 	data.twitter_URL = !isEmpty(data.twitter_URL) ? data.twitter_URL : '';
 	data.linkedin_URL = !isEmpty(data.linkedin_URL) ? data.linkedin_URL : '';
+	data.website_URL = !isEmpty(data.website_URL) ? data.website_URL : '';
 
 	if (!Validator.isLength(data.name, { min: 1, max: 70 }))
 		errors.push({
@@ -57,6 +58,12 @@ const validateProfileInput = async data => {
 		errors.push({
 			path: 'linkedin_URL',
 			message: 'Your linkedin URL must be a valid URL'
+		});
+
+	if (!Validator.isURL(data.website_URL))
+		errors.push({
+			path: 'website_URL',
+			message: 'Your website URL must be a valid URL'
 		});
 
 	return {
