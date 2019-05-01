@@ -53,19 +53,6 @@ const EventHeader = () => {
 									</small>
 								)}
 							</div>
-							<div className="d-block d-md-none">
-								<div className="d-inline">
-									<Link
-										to={{ pathname: `/home/profile/${event.user_ID}` }}
-										className="font-weight-bold"
-									>
-										{event.creator.profile.name}
-									</Link>
-								</div>
-								<div className="d-inline ml-2">
-									<small>{event.creator.profile.organisation_ID}</small>
-								</div>
-							</div>
 							<p className="my-1">
 								{event.address}, {event.city}
 							</p>

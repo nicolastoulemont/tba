@@ -54,7 +54,7 @@ const EventCommentDisplay = ({ refetch }) => {
 							)}
 						</Link>
 					</div>
-					<div className="col-11 col-md-10  pr-0 pl-2">
+					<div className="col-10 pr-0 pl-2">
 						<div className="text-left">
 							<Link
 								to={{

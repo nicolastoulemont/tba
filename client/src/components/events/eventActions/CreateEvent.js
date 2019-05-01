@@ -5,7 +5,6 @@ import { Mutation } from 'react-apollo';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Spring } from 'react-spring/renderprops';
-import classNames from 'classnames';
 import { formatFileName } from '../../commons/fileManagers';
 import ImgHandler from '../../commons/ImgHandler';
 import { InputField, TagsChooser, TextAreaField } from '../../commons/InputComponents';
