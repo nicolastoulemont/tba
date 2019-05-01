@@ -50,8 +50,8 @@ module.exports = {
 
 		extend type Mutation {
 			addRegistration(
-				user_ID: String!
-				event_ID: String!
+				user_ID: ID!
+				event_ID: ID!
 				eventName: String!
 				eventCity: String
 				eventAddress: String
@@ -95,7 +95,7 @@ module.exports = {
 			addRegistration: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await ValidateAddRegistration(args);
-				if (!isValid) return { success: false, errors };
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await buildRegistration(args, Registration);
 			},
 			deleteRegistration: async (parent, args, { user, models: { Registration } }) => {

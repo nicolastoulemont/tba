@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 
 export const ADD_REGISTRATION = gql`
 	mutation AddRegistration(
-		$user_ID: String!
-		$event_ID: String!
+		$user_ID: ID!
+		$event_ID: ID!
 		$eventName: String!
 		$eventCity: String
 		$eventAddress: String
