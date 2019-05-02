@@ -49,13 +49,13 @@ const UNav = () => {
 					<li className="nav-item pr-4 mt-1">
 						<Link
 							className="nav-link"
-							to="/home/profiles"
+							to={`/home/activities/${user.id}`}
 							data-togggle="tooltip"
 							data-placement="bottom"
-							title="Find the people your looking for"
+							title="Monitor your events and registrations in depth"
 						>
-							<i className="d-inline fas fa-users" />
-							<h6 className="d-inline ml-2">Profiles</h6>
+							<i className="d-inline fas fa-clipboard" />
+							<h6 className="d-inline ml-2">My Activities</h6>
 						</Link>
 					</li>
 				) : null}
@@ -115,25 +115,13 @@ const UNav = () => {
 							</Link>
 						)}
 						{user.profile ? (
-							<Fragment>
-								<Link
-									to={`/home/activities/${user.id}`}
-									className="dropdown-item py-2 px-4 drop-link"
-									data-togggle="tooltip"
-									data-placement="bottom"
-									title="Monitor your events and registrations in depth"
-								>
-									<i className="d-inline align-middle fas fa-clipboard" />
-									<h6 className="d-inline align-middle ml-2">My Activities</h6>
-								</Link>
-								<Link
-									to={`/home/event/create/${user.id}`}
-									className="dropdown-item py-2 px-4 drop-link"
-								>
-									<i className="d-inline align-middle fas fa-plus" />
-									<h6 className="d-inline align-middle ml-2">Host an Event</h6>
-								</Link>
-							</Fragment>
+							<Link
+								to={`/home/event/create/${user.id}`}
+								className="dropdown-item py-2 px-4 drop-link"
+							>
+								<i className="d-inline align-middle fas fa-plus" />
+								<h6 className="d-inline align-middle ml-2">Host an Event</h6>
+							</Link>
 						) : null}
 						<Link to={`/home/account/${user.id}`} className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle far fa-user" />
