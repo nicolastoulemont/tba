@@ -45,30 +45,36 @@ const UNav = () => {
 						<h6 className="d-inline ml-2">Events</h6>
 					</Link>
 				</li>
-				<li className="nav-item pr-4 mt-1">
-					<Link
-						className="nav-link"
-						to="/home/profiles"
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Find the people your looking for"
-					>
-						<i className="d-inline fas fa-users" />
-						<h6 className="d-inline ml-2">Profiles</h6>
-					</Link>
-				</li>
-				<li className="nav-item pr-4 mt-1">
-					<Link
-						className="nav-link "
-						to="/home/organisations"
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Find all the EU related organisations (EU institutions, political parties, associations, etc)"
-					>
-						<i className="d-inline fas fa-building" />
-						<h6 className="d-inline ml-2">Organisations</h6>
-					</Link>
-				</li>
+				{user && user.profile ? (
+					<li className="nav-item pr-4 mt-1">
+						<Link
+							className="nav-link"
+							to="/home/profiles"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Find the people your looking for"
+						>
+							<i className="d-inline fas fa-users" />
+							<h6 className="d-inline ml-2">Profiles</h6>
+						</Link>
+					</li>
+				) : null}
+
+				{user && user.profile ? (
+					<li className="nav-item pr-4 mt-1">
+						<Link
+							className="nav-link "
+							to="/home/profile/myevents"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Monitor your events and registrations in depth"
+						>
+							<i className="d-inline fas fa-clipboard" />
+							<h6 className="d-inline ml-2">My Activities</h6>
+						</Link>
+					</li>
+				) : null}
+
 				<li className="nav-item dropdown">
 					<Link
 						className="nav-link"

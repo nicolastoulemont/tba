@@ -14,7 +14,7 @@ export const InputField = ({
 	max,
 	error
 }) => (
-	<div className="form-group my-4">
+	<div className={classNames('form-group', { 'my-4': optional })}>
 		{labelText ? (
 			<div className="d-block">
 				{' '}
