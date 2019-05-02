@@ -67,6 +67,20 @@ const loginUser = async user => {
 	}
 };
 
+const changeEmail = async (args, user) => {
+	let updateUser = {};
+	if (args.email) updateUser.email = args.email;
+	updateUser.updatedAt = new Date();
+	try {
+		const newUserInfo = await User.findByIdAndUpdate(user.id, updateUser, {
+			new: true
+		});
+		return { statusCode: 201, ok: true, body: newUserInfo };
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+};
+
 const updateUserInfo = async (args, user, User) => {
 	try {
 		let updateUser = {};
@@ -82,4 +96,4 @@ const updateUserInfo = async (args, user, User) => {
 	}
 };
 
-module.exports = { registerUser, registerAndLogin, loginUser, updateUserInfo };
+module.exports = { registerUser, registerAndLogin, loginUser, changeEmail, updateUserInfo };
