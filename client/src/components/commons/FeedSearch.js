@@ -12,6 +12,8 @@ const FeedSearch = ({
 	setType,
 	price,
 	setPrice,
+	setDisplayRegistrations,
+	displayRegistrations,
 	tags,
 	setTags
 }) => {
@@ -213,6 +215,38 @@ const FeedSearch = ({
 								<i className="fab fa-creative-commons-nc-eu text-blue mx-2 mt-2" />
 							) : (
 								<i className="fab fa-creative-commons-nc-eu mx-2 mt-2" />
+							)}
+						</Link>
+					) : null}
+					{window.location.pathname.includes('activities') ? (
+						<Link
+							to="#"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Show your events"
+							onClick={e => setDisplayRegistrations(false)}
+						>
+							{' '}
+							{!displayRegistrations ? (
+								<i className="far fa-calendar text-blue mx-2 mt-2" />
+							) : (
+								<i className="far fa-calendar mx-2 mt-2" />
+							)}
+						</Link>
+					) : null}
+					{window.location.pathname.includes('activities') ? (
+						<Link
+							to="#"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Show your registrations"
+							onClick={e => setDisplayRegistrations(true)}
+						>
+							{' '}
+							{displayRegistrations ? (
+								<i className="fas fa-bookmark text-blue mx-2 mt-2" />
+							) : (
+								<i className="fas fa-bookmark mx-2 mt-2" />
 							)}
 						</Link>
 					) : null}

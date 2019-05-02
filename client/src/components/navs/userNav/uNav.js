@@ -117,7 +117,7 @@ const UNav = () => {
 						{user.profile ? (
 							<Fragment>
 								<Link
-									to={`/home/profile/activities/${user.id}`}
+									to={`/home/activities/${user.id}`}
 									className="dropdown-item py-2 px-4 drop-link"
 									data-togggle="tooltip"
 									data-placement="bottom"

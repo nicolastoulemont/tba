@@ -81,6 +81,22 @@ const DatesPicker = ({ history }) => {
 			}
 			return null;
 		}
+		if (path.includes('activities')) {
+			if (!enteredTo) {
+				history.push(`/home/activities/${dayjs(from).format('YYYY-MM-DD')}`);
+			} else if (enteredTo) {
+				if (enteredTo !== from) {
+					history.push(
+						`/home/activities/${dayjs(from).format('YYYY-MM-DD')}+${dayjs(enteredTo).format(
+							'YYYY-MM-DD'
+						)}`
+					);
+				} else if (enteredTo === from) {
+					history.push(`/home/activities/${dayjs(from).format('YYYY-MM-DD')}`);
+				}
+			}
+			return null;
+		}
 		return null;
 	};
 
