@@ -83,7 +83,7 @@ export const TextAreaField = ({
 	max,
 	error
 }) => (
-	<div className="form-group">
+	<div className={classNames('form-group', { 'my-4': optional })}>
 		{labelText ? (
 			<div className="d-block">
 				{' '}

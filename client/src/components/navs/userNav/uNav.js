@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import DefaultAvatar from '../../../img/avatar_default.svg';
@@ -60,21 +60,6 @@ const UNav = () => {
 					</li>
 				) : null}
 
-				{user && user.profile ? (
-					<li className="nav-item pr-4 mt-1">
-						<Link
-							className="nav-link "
-							to="/home/profile/myevents"
-							data-togggle="tooltip"
-							data-placement="bottom"
-							title="Monitor your events and registrations in depth"
-						>
-							<i className="d-inline fas fa-clipboard" />
-							<h6 className="d-inline ml-2">My Activities</h6>
-						</Link>
-					</li>
-				) : null}
-
 				<li className="nav-item dropdown">
 					<Link
 						className="nav-link"
@@ -129,20 +114,31 @@ const UNav = () => {
 								<h6 className="d-inline align-middle ml-2">Create your Profile</h6>
 							</Link>
 						)}
-						<Link to="#" className="dropdown-item py-2 px-4 drop-link">
+						{user.profile ? (
+							<Fragment>
+								<Link
+									to={`/home/profile/activities/${user.id}`}
+									className="dropdown-item py-2 px-4 drop-link"
+									data-togggle="tooltip"
+									data-placement="bottom"
+									title="Monitor your events and registrations in depth"
+								>
+									<i className="d-inline align-middle fas fa-clipboard" />
+									<h6 className="d-inline align-middle ml-2">My Activities</h6>
+								</Link>
+								<Link
+									to={`/home/event/create/${user.id}`}
+									className="dropdown-item py-2 px-4 drop-link"
+								>
+									<i className="d-inline align-middle fas fa-plus" />
+									<h6 className="d-inline align-middle ml-2">Host an Event</h6>
+								</Link>
+							</Fragment>
+						) : null}
+						<Link to={`/home/account/${user.id}`} className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle far fa-user" />
 							<h6 className="d-inline align-middle ml-2">Your Account</h6>
 						</Link>
-						{user.profile ? (
-							<Link
-								to={`/home/event/create/${user.id}`}
-								className="dropdown-item py-2 px-4 drop-link"
-							>
-								<i className="d-inline align-middle fas fa-plus" />
-								<h6 className="d-inline align-middle ml-2">Add an Event</h6>
-							</Link>
-						) : null}
-
 						<Link to="#" onClick={logOut} className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle fas fa-sign-out-alt" />
 							<h6 className="d-inline align-middle ml-2">Log Out</h6>
