@@ -129,7 +129,7 @@ module.exports = {
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await registerAndLogin(args, User);
 			},
-			login: async (parent, args, { models: { User } }) => {
+			login: async (parent, args, { SECRET, models: { User } }) => {
 				const { errors, isValid, user } = await validateLoginInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await loginUser(user);

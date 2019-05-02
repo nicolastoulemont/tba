@@ -124,8 +124,8 @@ const UNav = () => {
 							</Link>
 						) : null}
 						<Link to={`/home/account/${user.id}`} className="dropdown-item py-2 px-4 drop-link">
-							<i className="d-inline align-middle far fa-user" />
-							<h6 className="d-inline align-middle ml-2">Your Account</h6>
+							<i className="d-inline align-middle fas fa-cog" />
+							<h6 className="d-inline align-middle ml-2">User settings</h6>
 						</Link>
 						<Link to="#" onClick={logOut} className="dropdown-item py-2 px-4 drop-link">
 							<i className="d-inline align-middle fas fa-sign-out-alt" />

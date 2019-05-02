@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
 import FeedSearch from '../commons/FeedSearch';
 import { DateUrlValidation } from '../commons/DateUrlValidation';
@@ -22,15 +22,15 @@ const ManageActivities = ({ match }) => {
 
 	const displayDay = () => {
 		if (!day.includes('+')) {
-			const date = `${displayRegistrations ? `Registrations` : `Events`} on ${dayjs(day).format(
-				'dddd'
-			)} `;
+			const date = `Your ${displayRegistrations ? `Registrations` : `Events`} on ${dayjs(
+				day
+			).format('dddd')} `;
 			return date;
 		}
 		if (day.includes('+')) {
 			const firstDay = day.split('+')[0];
 			const lastDay = day.split('+')[1];
-			const days = `${displayRegistrations ? `Registrations` : `Events`} from ${dayjs(
+			const days = `Your ${displayRegistrations ? `Registrations` : `Events`} from ${dayjs(
 				firstDay
 			).format('dddd')}, ${dayjs(firstDay).format('DD')} to ${dayjs(lastDay).format(
 				'dddd'

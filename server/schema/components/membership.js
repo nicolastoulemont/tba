@@ -1,5 +1,4 @@
 const { gql, AuthenticationError } = require('apollo-server');
-// const { ValidateAddRegistration } = require('../../validation/registration');
 
 module.exports = {
 	MembershipType: gql`
