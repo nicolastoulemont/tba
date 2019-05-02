@@ -9,12 +9,23 @@ const ManageAccount = () => {
 
 	const [showChangeEmail, setShowChangeEmail] = useState(false);
 	const [showChangePassword, setShowChangePassword] = useState(false);
+	const [showDeleteAccount, setShowDeleteAccount] = useState(false);
 	const [email, setEmail] = useState('');
 	const [oldPassword, setOldPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
 	const changeEmail = () => {
+		console.log(email);
+		console.log(oldPassword);
+	};
+
+	const changePassword = () => {
+		console.log(oldPassword);
+		console.log(newPassword);
+	};
+
+	const deleteAccount = () => {
 		console.log(email);
 		console.log(oldPassword);
 	};
@@ -120,13 +131,76 @@ const ManageAccount = () => {
 									/>
 									<InputField
 										type="password"
-										name="newpassword"
-										value={newPassword}
-										labelText="New password"
-										onChange={e => setNewPassword(e.target.value)}
+										name="confirmwewpassword"
+										value={confirmNewPassword}
+										labelText="Confirm your new password"
+										onChange={e => setConfirmNewPassword(e.target.value)}
 										min={1}
 										max={140}
 									/>
+									<Link
+										to="#"
+										data-togggle="tooltip"
+										data-placement="bottom"
+										title="Change your email"
+										onClick={e => changePassword()}
+										className="btn btn-blue float-right mb-2"
+									>
+										<p className="d-inline font-weight-bold text-uppercase ">
+											Change your password
+										</p>
+									</Link>
+								</div>
+							</div>
+						</div>
+					)}
+				</Spring>
+			) : null}
+			<div className="row">
+				<div className="col-md-8">
+					<h6 className="text-left pt-2">Delete Account</h6>
+					<small className="d-block text-left text-muted">This action is irreversible</small>
+				</div>
+				<div className="col-md-4">
+					<Link
+						to="#"
+						data-togggle="tooltip"
+						data-placement="bottom"
+						title="Change your email"
+						onClick={e => setShowDeleteAccount(!showDeleteAccount)}
+						className="btn btn-blue mt-2 float-right"
+					>
+						<h6 className="d-inline font-weight-bold text-uppercase ">Delete</h6>
+					</Link>
+				</div>
+			</div>
+			{showDeleteAccount ? (
+				<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+					{props => (
+						<div style={props}>
+							<div className="row mt-2">
+								<div className="col">
+									<InputField
+										type="text"
+										name="email"
+										value={email}
+										labelText="Email"
+										placeholder="Enter your email address"
+										onChange={e => setEmail(e.target.value)}
+										min={1}
+										max={140}
+									/>
+									<InputField
+										type="password"
+										name="oldpassword"
+										value={oldPassword}
+										labelText="Current password"
+										placeholder="Enter your current password"
+										onChange={e => setOldPassword(e.target.value)}
+										min={1}
+										max={140}
+									/>
+
 									<InputField
 										type="password"
 										name="confirmwewpassword"
@@ -141,12 +215,10 @@ const ManageAccount = () => {
 										data-togggle="tooltip"
 										data-placement="bottom"
 										title="Change your email"
-										onClick={e => changeEmail()}
+										onClick={e => deleteAccount()}
 										className="btn btn-blue float-right mb-2"
 									>
-										<p className="d-inline font-weight-bold text-uppercase ">
-											Change your password
-										</p>
+										<p className="d-inline font-weight-bold text-uppercase ">Delete your account</p>
 									</Link>
 								</div>
 							</div>
