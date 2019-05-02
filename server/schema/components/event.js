@@ -5,6 +5,7 @@ const {
 	findEvents,
 	dailyEventsWithTags,
 	dailyEventsWithOutTags,
+	searchUserEvents,
 	findUserFutureEvents,
 	findUserPastEvents,
 	findUserEvents
@@ -66,6 +67,13 @@ module.exports = {
 				price: Float
 				tags: [String]
 			): EventsResponse!
+			searchUserEvents(
+				user_ID: ID!
+				date: String!
+				search: String
+				limit: Int!
+				sort: String!
+			): EventsResponse!
 			userFutureHostedEvents(user_ID: ID!, date: String): EventsResponse!
 			userPastHostedEvents(user_ID: ID!, date: String): EventsResponse!
 			userEvents(user_ID: ID!): EventsResponse!
@@ -125,6 +133,11 @@ module.exports = {
 				} else if (args.tags.length === 0) {
 					return await dailyEventsWithOutTags(date, dayafter, args, EventItem);
 				}
+			},
+			searchUserEvents: async (parent, args, { user, models: { EventItem } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				const { date, dayafter } = getDatesFromString(args.date);
+				return await searchUserEvents(date, dayafter, args, EventItem);
 			},
 			userFutureHostedEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');

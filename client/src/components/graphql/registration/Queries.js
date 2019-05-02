@@ -87,3 +87,37 @@ export const GET_USER_PAST_REGISTRATIONS = gql`
 		}
 	}
 `;
+
+export const SEARCH_USER_REGISTRATIONS = gql`
+	query SearchUserRegistrations(
+		$user_ID: ID!
+		$date: String!
+		$search: String
+		$limit: Int!
+		$sort: String!
+	) {
+		searchUserRegistrations(
+			user_ID: $user_ID
+			date: $date
+			search: $search
+			limit: $limit
+			sort: $sort
+		) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				event_ID
+				eventName
+				eventCity
+				eventAddress
+				eventStart
+				eventEnd
+			}
+		}
+	}
+`;

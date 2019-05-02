@@ -4,10 +4,12 @@ const { buildRegistration, deleteRegistration } = require('../../utils/registrat
 const {
 	findRegistration,
 	findRegistrations,
+	searchUserRegistrations,
 	findUserFutureRegistrations,
 	findUserPastRegistrations,
 	findEventRegistrations
 } = require('../../utils/registration/queries');
+const { getDatesFromString } = require('../../utils/general');
 
 module.exports = {
 	RegistrationType: gql`
@@ -43,6 +45,13 @@ module.exports = {
 		extend type Query {
 			registration(id: ID!): RegistrationResponse!
 			registrations: RegistrationsResponse!
+			searchUserRegistrations(
+				user_ID: ID!
+				date: String!
+				search: String
+				limit: Int!
+				sort: String!
+			): RegistrationsResponse!
 			userFutureRegistrations(user_ID: ID!, date: String): RegistrationsResponse!
 			userPastRegistrations(user_ID: ID!, date: String): RegistrationsResponse!
 			eventRegistrations(event_ID: ID!): RegistrationsResponse!
@@ -71,6 +80,11 @@ module.exports = {
 			registrations: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findRegistrations(args, Registration);
+			},
+			searchUserRegistrations: async (parent, args, { user, models: { Registration } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				const { date, dayafter } = getDatesFromString(args.date);
+				return await searchUserRegistrations(date, dayafter, args, Registration);
 			},
 			userFutureRegistrations: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');

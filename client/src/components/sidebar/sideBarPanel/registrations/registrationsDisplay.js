@@ -6,7 +6,7 @@ import {
 	GET_USER_FUTURE_REGISTRATIONS,
 	GET_USER_PAST_REGISTRATIONS
 } from '../../../graphql/registration/Queries';
-import PanelItem from '../panelItem';
+import PanelItem from '../../../commons/PanelItem';
 
 export default function registrationsDisplay({ target }) {
 	const user = useContext(UserContext);

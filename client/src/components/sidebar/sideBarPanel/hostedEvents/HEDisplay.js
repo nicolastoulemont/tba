@@ -5,7 +5,7 @@ import {
 	GET_USER_FUTURE_HOSTED_EVENTS,
 	GET_USER_PAST_HOSTED_EVENTS
 } from '../../../graphql/event/Queries';
-import PanelItem from '../panelItem';
+import PanelItem from '../../../commons/PanelItem';
 import { UserContext } from '../../../contexts';
 
 export default function registrationsDisplay({ target }) {

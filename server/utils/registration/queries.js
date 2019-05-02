@@ -36,6 +36,34 @@ const findRegistrations = async (args, Registration) => {
 		};
 	}
 };
+
+const searchUserRegistrations = async (date, dayafter, args, Registration) => {
+	try {
+		const registrations = await Registration.find({
+			user_ID: args.user_ID,
+			eventStart: { $gte: date, $lte: dayafter },
+			eventName: { $regex: new RegExp(args.search, 'i') }
+		})
+			.sort({ start: args.sort })
+			.limit(args.limit);
+		return {
+			statusCode: 200,
+			ok: true,
+			errors: null,
+			body: registrations
+		};
+	} catch (err) {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
+	}
+};
+
 const findUserFutureRegistrations = async (args, Registration) => {
 	const date = new Date(args.date);
 	try {
@@ -106,6 +134,7 @@ const findEventRegistrations = async (args, Registration) => {
 module.exports = {
 	findRegistration,
 	findRegistrations,
+	searchUserRegistrations,
 	findUserFutureRegistrations,
 	findUserPastRegistrations,
 	findEventRegistrations

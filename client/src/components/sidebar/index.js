@@ -21,7 +21,13 @@ const SideBar = ({ history }) => {
 					)}
 				</Spring>
 			) : null}
-			<div className="row">{user.profile ? <SBPanel /> : <SBNoProfile />}</div>
+			<div className="row">
+				{user.profile && !path.includes('activities') ? (
+					<SBPanel />
+				) : path.includes('activities') ? null : (
+					<SBNoProfile />
+				)}
+			</div>
 		</div>
 	);
 };

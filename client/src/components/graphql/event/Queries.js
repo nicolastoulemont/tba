@@ -184,3 +184,30 @@ export const GET_USER_EVENTS = gql`
 		}
 	}
 `;
+
+export const SEARCH_USER_EVENTS = gql`
+	query SearchUserEvents(
+		$user_ID: ID!
+		$date: String!
+		$search: String
+		$limit: Int!
+		$sort: String!
+	) {
+		searchUserEvents(user_ID: $user_ID, date: $date, search: $search, limit: $limit, sort: $sort) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				name
+				city
+				address
+				start
+				end
+			}
+		}
+	}
+`;

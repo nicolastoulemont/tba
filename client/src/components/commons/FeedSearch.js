@@ -132,6 +132,8 @@ const FeedSearch = ({
 		}
 	};
 
+	const path = window.location.pathname;
+
 	return (
 		<div className="mx-auto py-0 px-2">
 			<h6 className="text-left"> {date}</h6>
@@ -171,21 +173,27 @@ const FeedSearch = ({
 							<i className="fas fa-sort-amount-up mx-2 mt-2" />
 						)}
 					</Link>
-					<Link
-						to="#"
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Only show institutional events"
-						onClick={handleType}
-					>
-						{' '}
-						{type === 'institutional' ? (
-							<i className="fas fa-university text-blue mx-2 mt-2" />
-						) : (
-							<i className="fas fa-university mx-2 mt-2" />
-						)}
-					</Link>
-					{user.profile && user.profile.tags && user.profile.tags.length !== 0 ? (
+					{path.includes('news') || path.includes('events') ? (
+						<Link
+							to="#"
+							data-togggle="tooltip"
+							data-placement="bottom"
+							title="Only show institutional events"
+							onClick={handleType}
+						>
+							{' '}
+							{type === 'institutional' ? (
+								<i className="fas fa-university text-blue mx-2 mt-2" />
+							) : (
+								<i className="fas fa-university mx-2 mt-2" />
+							)}
+						</Link>
+					) : null}
+
+					{user.profile &&
+					user.profile.tags &&
+					user.profile.tags.length !== 0 &&
+					!path.includes('activities') ? (
 						<Link
 							to="#"
 							data-togggle="tooltip"
@@ -202,7 +210,7 @@ const FeedSearch = ({
 						</Link>
 					) : null}
 
-					{window.location.pathname.includes('events') ? (
+					{path.includes('events') ? (
 						<Link
 							to="#"
 							data-togggle="tooltip"
@@ -218,7 +226,7 @@ const FeedSearch = ({
 							)}
 						</Link>
 					) : null}
-					{window.location.pathname.includes('activities') ? (
+					{path.includes('activities') ? (
 						<Link
 							to="#"
 							data-togggle="tooltip"
@@ -234,7 +242,7 @@ const FeedSearch = ({
 							)}
 						</Link>
 					) : null}
-					{window.location.pathname.includes('activities') ? (
+					{path.includes('activities') ? (
 						<Link
 							to="#"
 							data-togggle="tooltip"

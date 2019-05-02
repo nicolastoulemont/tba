@@ -108,6 +108,36 @@ const dailyEventsWithOutTags = async (date, dayafter, args, EventItem) => {
 	}
 };
 
+const searchUserEvents = async (date, dayafter, args, EventItem) => {
+	try {
+		const events = await EventItem.find({
+			user_ID: args.user_ID,
+			start: { $gte: date, $lte: dayafter },
+			$or: [
+				{ name: { $regex: new RegExp(args.search, 'i') } },
+				{ abstract: { $regex: new RegExp(args.search, 'i') } }
+			]
+		})
+			.sort({ start: args.sort })
+			.limit(args.limit);
+		return {
+			statusCode: 200,
+			ok: true,
+			errors: null,
+			body: events
+		};
+	} catch (err) {
+		return {
+			statusCode: 404,
+			ok: false,
+			errors: {
+				path: 'Not Found',
+				message: 'The server cannot find the requested ressource'
+			}
+		};
+	}
+};
+
 const findUserFutureEvents = async (args, EventItem) => {
 	const date = new Date(args.date);
 	try {
@@ -180,6 +210,7 @@ module.exports = {
 	findEvents,
 	dailyEventsWithOutTags,
 	dailyEventsWithTags,
+	searchUserEvents,
 	findUserFutureEvents,
 	findUserPastEvents,
 	findUserEvents
