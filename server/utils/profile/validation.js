@@ -48,19 +48,19 @@ const validateProfileInput = async data => {
 			message: 'Only alphanumeric characters are accepted'
 		});
 
-	if (!Validator.isURL(data.twitter_URL))
+	if (data.twitter_URL !== '' && !Validator.isURL(data.twitter_URL))
 		errors.push({
 			path: 'twitter_URL',
 			message: 'Your twitter URL must be a valid URL'
 		});
 
-	if (!Validator.isURL(data.linkedin_URL))
+	if (data.linkedin_URL !== '' && !Validator.isURL(data.linkedin_URL))
 		errors.push({
 			path: 'linkedin_URL',
 			message: 'Your linkedin URL must be a valid URL'
 		});
 
-	if (!Validator.isURL(data.website_URL))
+	if (data.website_URL !== '' && !Validator.isURL(data.website_URL))
 		errors.push({
 			path: 'website_URL',
 			message: 'Your website URL must be a valid URL'

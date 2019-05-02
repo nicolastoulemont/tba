@@ -137,11 +137,11 @@ export const frontEndProfileInputValidation = (
 	const ValidURL = /^(?:http(s)?:\/\/)?[\w.-]+(?:.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g;
 	const urlRegExp = new RegExp(ValidURL);
 
-	if (!twitter_URL.match(urlRegExp))
+	if (twitter_URL !== '' && !twitter_URL.match(urlRegExp))
 		err.push({ path: 'twitter_URL', message: 'Your Twitter URL must be a valid URL' });
-	if (!linkedin_URL.match(urlRegExp))
+	if (linkedin_URL !== '' && !linkedin_URL.match(urlRegExp))
 		err.push({ path: 'linkedin_URL', message: 'Your LinkedIn URL must be a valid URL' });
-	if (!website_URL.match(urlRegExp))
+	if (website_URL !== '' && !website_URL.match(urlRegExp))
 		err.push({ path: 'website_URL', message: 'Your Website URL must be a valid URL' });
 
 	return err;

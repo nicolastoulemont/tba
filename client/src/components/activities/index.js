@@ -57,7 +57,7 @@ const ManageActivities = ({ match }) => {
 					displayRegistrations={displayRegistrations}
 					setDisplayRegistrations={setDisplayRegistrations}
 				/>
-				<div>
+				<div className="border-top">
 					<CQuery
 						query={chooseQuery()}
 						variables={{

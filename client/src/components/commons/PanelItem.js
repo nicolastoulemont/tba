@@ -7,7 +7,7 @@ export default function PanelItem({ registration, event }) {
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={registration.id}>
 				{props => (
 					<div style={props}>
-						<div className="text-left px-3 py-2 border-top">
+						<div className="text-left px-3 py-2 border-bottom">
 							<Link
 								to={{
 									pathname: `/home/event/${registration.event_ID}`
@@ -41,7 +41,7 @@ export default function PanelItem({ registration, event }) {
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 				{props => (
 					<div style={props}>
-						<div className="text-left px-3 py-2 border-top">
+						<div className="text-left px-3 py-2 border-bottom">
 							<Link
 								to={{
 									pathname: `/home/event/${event.id}`

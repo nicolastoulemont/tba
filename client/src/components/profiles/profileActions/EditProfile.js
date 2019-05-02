@@ -104,6 +104,9 @@ const EditProfile = ({ match, history }) => {
 		});
 		if (res.data.updateProfile.statusCode === 201) {
 			history.push(`/home/profile/${user.id}`);
+		} else {
+			setErrors(res.data.updateProfile.errors);
+			return null;
 		}
 	};
 
@@ -135,6 +138,9 @@ const EditProfile = ({ match, history }) => {
 		});
 		if (res.data.updateProfile.statusCode === 201) {
 			history.push(`/home/profile/${user.id}`);
+		} else {
+			setErrors(res.data.updateProfile.errors);
+			return null;
 		}
 	};
 
