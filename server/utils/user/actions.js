@@ -69,7 +69,23 @@ const loginUser = async user => {
 
 const changeEmail = async (args, targetUser, User) => {
 	const updateUser = {
-		email: args.email,
+		password: args.email,
+		updatedAt: new Date()
+	};
+	try {
+		const newUserInfo = await User.findByIdAndUpdate(targetUser._id, updateUser, {
+			new: true
+		});
+		return { statusCode: 201, ok: true, body: newUserInfo };
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+};
+
+const changePassword = async (args, targetUser, User) => {
+	const hashedPwd = await bcrypt.hash(args.newPassword, 12);
+	const updateUser = {
+		password: hashedPwd,
 		updatedAt: new Date()
 	};
 	try {
@@ -97,4 +113,11 @@ const updateUserInfo = async (args, user, User) => {
 	}
 };
 
-module.exports = { registerUser, registerAndLogin, loginUser, changeEmail, updateUserInfo };
+module.exports = {
+	registerUser,
+	registerAndLogin,
+	loginUser,
+	changeEmail,
+	changePassword,
+	updateUserInfo
+};

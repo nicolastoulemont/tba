@@ -3,6 +3,7 @@ const {
 	registerUser,
 	registerAndLogin,
 	changeEmail,
+	changePassword,
 	loginUser,
 	updateUserInfo
 } = require('../../utils/user/actions');
@@ -11,6 +12,7 @@ const {
 	validateRegInput,
 	validateLoginInput,
 	validateChangeEmailInput,
+	validateChangePasswordInput,
 	validateUpdateInput
 } = require('../../utils/user/validation');
 
@@ -42,26 +44,6 @@ module.exports = {
 			body: User
 		}
 
-		type RegisterResp {
-			success: Boolean!
-			user: User
-			errors: [Error]
-		}
-
-		type LoginResp {
-			success: Boolean!
-			token: String
-			user: User
-			errors: [Error]
-		}
-
-		type RegisterAndLoginResponse {
-			success: Boolean!
-			user: User
-			token: String
-			errors: [Error]
-		}
-
 		extend type Query {
 			user(id: ID!): User
 			currentUser: User
@@ -72,6 +54,7 @@ module.exports = {
 			registerAndLogin(email: String!, password: String!): UserResponse!
 			login(email: String!, password: String!): UserResponse!
 			changeEmail(user_ID: ID!, email: String!, password: String!): UserResponse!
+			changePassword(user_ID: ID!, currentPassword: String!, newPassword: String!): UserResponse!
 			updateUser(_id: ID!, email: String): User
 			deleteUser(_id: ID!): User
 		}
@@ -141,8 +124,13 @@ module.exports = {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid, targetUser } = await validateChangeEmailInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
-
 				return await changeEmail(args, targetUser, User);
+			},
+			changePassword: async (parent, args, { user, models: { User } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				const { errors, isValid, targetUser } = await validateChangePasswordInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
+				return await changePassword(args, targetUser, User);
 			},
 			updateUser: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');

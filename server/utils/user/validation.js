@@ -82,6 +82,36 @@ const validateChangeEmailInput = async data => {
 	};
 };
 
+const validateChangePasswordInput = async data => {
+	let errors = [];
+
+	data.currentPassword = !isEmpty(data.currentPassword) ? data.currentPassword : '';
+	data.newPassword = !isEmpty(data.newPassword) ? data.newPassword : '';
+
+	if (data.currentPassword.length === 0)
+		errors.push({ path: 'currentpassword', message: 'Enter your current password' });
+
+	if (!Validator.isLength(data.newPassword, { min: 5, max: 25 }))
+		errors.push({
+			path: 'newpassword',
+			message: 'Your new password must be between 5 and 25 characters'
+		});
+
+	const targetUser = await User.findById(data.user_ID);
+	if (!targetUser) errors.push({ path: 'user', message: 'The provided ID is invalid' });
+	if (targetUser) {
+		if (!(await bcrypt.compare(data.currentPassword, targetUser.password))) {
+			errors.push({ path: 'currentpassword', message: 'Invalid password' });
+		}
+	}
+
+	return {
+		errors,
+		isValid: isEmpty(errors),
+		targetUser
+	};
+};
+
 const validateUpdateInput = async data => {
 	let errors = [];
 
@@ -110,5 +140,6 @@ module.exports = {
 	validateRegInput,
 	validateLoginInput,
 	validateChangeEmailInput,
+	validateChangePasswordInput,
 	validateUpdateInput
 };

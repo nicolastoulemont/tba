@@ -30,7 +30,10 @@ const ManageEmail = ({ user }) => {
 		});
 		const { ok, errors } = res.data.changeEmail;
 		if (!ok) setErrors(errors);
-		if (ok) setSuccess(true);
+		if (ok) {
+			setSuccess(true);
+			setErrors([]);
+		}
 	};
 
 	return (
