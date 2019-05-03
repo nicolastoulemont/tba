@@ -63,14 +63,15 @@ const validateChangeEmailInput = async data => {
 	data.email = !isEmpty(data.email) ? data.email : '';
 	data.password = !isEmpty(data.password) ? data.password : '';
 
-	if (data.password.length === 0) errors.push({ path: 'password', message: 'Enter a password' });
+	if (data.password.length === 0)
+		errors.push({ path: 'currentpassword', message: 'Enter a password' });
 	if (!Validator.isEmail(data.email)) errors.push({ path: 'email', message: 'Invalid Email' });
 
 	const targetUser = await User.findById(data.user_ID);
 	if (!targetUser) errors.push({ path: 'user', message: 'The provided ID is invalid' });
 	if (targetUser) {
 		if (!(await bcrypt.compare(data.password, targetUser.password))) {
-			errors.push({ path: 'password', message: 'Invalid password' });
+			errors.push({ path: 'currentpassword', message: 'Invalid password' });
 		}
 	}
 

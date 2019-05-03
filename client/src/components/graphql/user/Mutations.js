@@ -27,3 +27,19 @@ export const REGISTER_AND_LOGIN_USER = gql`
 		}
 	}
 `;
+
+export const CHANGE_USER_EMAIL = gql`
+	mutation ChangeEmail($user_ID: ID!, $email: String!, $password: String!) {
+		changeEmail(user_ID: $user_ID, email: $email, password: $password) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+			}
+		}
+	}
+`;
