@@ -67,12 +67,13 @@ const loginUser = async user => {
 	}
 };
 
-const changeEmail = async (args, user) => {
-	let updateUser = {};
-	if (args.email) updateUser.email = args.email;
-	updateUser.updatedAt = new Date();
+const changeEmail = async (args, targetUser, User) => {
+	const updateUser = {
+		email: args.email,
+		updatedAt: new Date()
+	};
 	try {
-		const newUserInfo = await User.findByIdAndUpdate(user.id, updateUser, {
+		const newUserInfo = await User.findByIdAndUpdate(targetUser._id, updateUser, {
 			new: true
 		});
 		return { statusCode: 201, ok: true, body: newUserInfo };

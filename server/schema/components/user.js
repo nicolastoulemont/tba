@@ -10,6 +10,7 @@ const {
 const {
 	validateRegInput,
 	validateLoginInput,
+	validateChangeEmailInput,
 	validateUpdateInput
 } = require('../../utils/user/validation');
 
@@ -38,7 +39,7 @@ module.exports = {
 			ok: Boolean!
 			errors: [Error]
 			token: String
-			user: User
+			body: User
 		}
 
 		type RegisterResp {
@@ -70,7 +71,7 @@ module.exports = {
 		extend type Mutation {
 			registerAndLogin(email: String!, password: String!): UserResponse!
 			login(email: String!, password: String!): UserResponse!
-			changeEmail(email: String!, password: String!): UserResponse!
+			changeEmail(user_ID: ID!, email: String!, password: String!): UserResponse!
 			updateUser(_id: ID!, email: String): User
 			deleteUser(_id: ID!): User
 		}
@@ -136,10 +137,12 @@ module.exports = {
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await loginUser(user);
 			},
-			changeEmail: async (parent, args, { SECRET, models: { User } }) => {
-				const { errors, isValid, user } = await validateLoginInput(args);
+			changeEmail: async (parent, args, { user, models: { User } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				const { errors, isValid, targetUser } = await validateChangeEmailInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
-				return await changeEmail(args, user);
+
+				return await changeEmail(args, targetUser, User);
 			},
 			updateUser: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
