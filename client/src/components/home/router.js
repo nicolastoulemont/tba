@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import ManageAccount from '../user/ManageAccount';
+import ManageAccount from '../user/';
 import CreateEvent from '../events/eventActions/CreateEvent';
 import DeleteEvent from '../events/eventActions/DeleteEvent';
 import EditEvent from '../events/eventActions/EditEvent';
