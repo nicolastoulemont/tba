@@ -112,27 +112,28 @@ const validateChangePasswordInput = async data => {
 	};
 };
 
-const validateUpdateInput = async data => {
+const validateDeleteAccountInput = async data => {
 	let errors = [];
 
 	data.email = !isEmpty(data.email) ? data.email : '';
+	data.password = !isEmpty(data.password) ? data.password : '';
 
-	if (!Validator.isEmail(data.email))
-		errors.push({
-			path: 'email',
-			message: 'Email is invalid'
-		});
+	if (data.password.length === 0)
+		errors.push({ path: 'currentpassword', message: 'Enter a password' });
+	if (!Validator.isEmail(data.email)) errors.push({ path: 'email', message: 'Invalid Email' });
 
-	const usedEmail = await User.findOne({ email: data.email });
-	if (usedEmail)
-		errors.push({
-			path: 'email',
-			message: 'This email adress is already used'
-		});
+	const targetUser = await User.findById(data.user_ID);
+	if (!targetUser) errors.push({ path: 'user', message: 'The provided ID is invalid' });
+	if (targetUser) {
+		if (!(await bcrypt.compare(data.password, targetUser.password))) {
+			errors.push({ path: 'currentpassword', message: 'Invalid password' });
+		}
+	}
 
 	return {
 		errors,
-		isValid: isEmpty(errors)
+		isValid: isEmpty(errors),
+		targetUser
 	};
 };
 
@@ -141,5 +142,5 @@ module.exports = {
 	validateLoginInput,
 	validateChangeEmailInput,
 	validateChangePasswordInput,
-	validateUpdateInput
+	validateDeleteAccountInput
 };

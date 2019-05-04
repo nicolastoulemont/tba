@@ -98,19 +98,82 @@ const changePassword = async (args, targetUser, User) => {
 	}
 };
 
-const updateUserInfo = async (args, user, User) => {
-	try {
-		let updateUser = {};
-		if (args.email) updateUser.email = args.email;
-		if (args.access) updateUser.access = args.access;
-		updateUser.updatedAt = new Date();
-		return await User.findByIdAndUpdate(args._id, updateUser, {
-			new: true
-		});
-	} catch (err) {
-		console.log(err);
-		return new Error('An error has occured');
+const deleteAccount = async (
+	{ user_ID },
+	{
+		User,
+		Profile,
+		CommentItem,
+		EventItem,
+		Like,
+		Report,
+		Registration,
+		Membership,
+		Organisation,
+		Poll,
+		UserLog
 	}
+) => {
+	try {
+		await Profile.deleteOne({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await CommentItem.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await EventItem.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await Like.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await Report.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await Registration.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await Membership.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await Organisation.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await Poll.deleteMany({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await UserLog.deleteOne({ user_ID });
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		await User.findByIdAndDelete(user_ID);
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+
+	return {
+		statusCode: 200,
+		ok: true
+	};
 };
 
 module.exports = {
@@ -119,5 +182,5 @@ module.exports = {
 	loginUser,
 	changeEmail,
 	changePassword,
-	updateUserInfo
+	deleteAccount
 };

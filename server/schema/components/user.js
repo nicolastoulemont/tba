@@ -2,10 +2,10 @@ const { gql, AuthenticationError } = require('apollo-server');
 const {
 	registerUser,
 	registerAndLogin,
+	loginUser,
 	changeEmail,
 	changePassword,
-	loginUser,
-	updateUserInfo
+	deleteAccount
 } = require('../../utils/user/actions');
 // Validation
 const {
@@ -13,7 +13,7 @@ const {
 	validateLoginInput,
 	validateChangeEmailInput,
 	validateChangePasswordInput,
-	validateUpdateInput
+	validateDeleteAccountInput
 } = require('../../utils/user/validation');
 
 module.exports = {
@@ -55,8 +55,7 @@ module.exports = {
 			login(email: String!, password: String!): UserResponse!
 			changeEmail(user_ID: ID!, email: String!, password: String!): UserResponse!
 			changePassword(user_ID: ID!, currentPassword: String!, newPassword: String!): UserResponse!
-			updateUser(_id: ID!, email: String): User
-			deleteUser(_id: ID!): User
+			deleteAccount(user_ID: ID!, email: String!, password: String!): UserResponse!
 		}
 	`,
 	// Resolvers
@@ -132,19 +131,11 @@ module.exports = {
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await changePassword(args, targetUser, User);
 			},
-			updateUser: async (parent, args, { user, models: { User } }) => {
+			deleteAccount: async (parent, args, { user, models }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				const { errors, isValid } = await validateUpdateInput(args);
-				if (!isValid) return { success: false, errors };
-				return await updateUserInfo(args, user, User);
-			},
-			deleteUser: async (parent, args, { user, models: { User } }) => {
-				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await User.findByIdAndDelete(args._id);
-				} catch (err) {
-					console.log(err);
-				}
+				const { errors, isValid, targetUser } = await validateDeleteAccountInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
+				return await deleteAccount(args, models);
 			}
 		}
 	}
