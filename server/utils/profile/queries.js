@@ -21,11 +21,10 @@ const findProfile = async (args, Profile) => {
 
 const findProfiles = async (args, Profile) => {
 	try {
-		const profiles = await Profile.findById({});
+		const profiles = await Profile.find({});
 		return {
 			statusCode: 200,
 			ok: true,
-			errors: null,
 			body: profiles
 		};
 	} catch (err) {

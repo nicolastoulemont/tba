@@ -63,3 +63,16 @@ export const CHANGE_USER_PASSWORD = gql`
 		}
 	}
 `;
+
+export const DELETE_USER_ACCOUNT = gql`
+	mutation DeleteAccount($user_ID: ID!, $email: String!, $password: String!) {
+		deleteAccount(user_ID: $user_ID, email: $email, password: $password) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+		}
+	}
+`;
