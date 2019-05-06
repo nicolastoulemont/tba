@@ -19,7 +19,7 @@ const EditProfile = ({ match, history }) => {
 
 	const [name, setName] = useState(user.profile.name);
 	const [position, setPosition] = useState(user.profile.position);
-	const [bio, setBio] = useState(user.profile.bio || '');
+	const [bio, setBio] = useState(user.profile.bio);
 	const [picture, setPicture] = useState(user.profile.picture_URL);
 	const [twitter_URL, setTwitter_URL] = useState(user.profile.twitter_URL || '');
 	const [linkedin_URL, setLinkedin_URL] = useState(user.profile.linkedin_URL || '');

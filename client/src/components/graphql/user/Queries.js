@@ -15,6 +15,7 @@ export const LOGGED_USER = gql`
 				bio
 				twitter_URL
 				linkedin_URL
+				website_URL
 				picture_URL
 				tags
 			}

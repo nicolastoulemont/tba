@@ -48,7 +48,7 @@ const validateEventInput = async data => {
 			message: 'The event address must be between 0 and 30 characters'
 		});
 
-	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
+	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. ]*$/;
 	const stringRegExp = new RegExp(ValidString);
 
 	if (!data.name.match(stringRegExp))

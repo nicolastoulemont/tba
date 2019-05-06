@@ -135,7 +135,7 @@ module.exports = {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid, targetUser } = await validateDeleteAccountInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
-				return await deleteAccount(args, models);
+				return await deleteAccount(targetUser, models);
 			}
 		}
 	}

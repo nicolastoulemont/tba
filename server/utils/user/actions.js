@@ -99,7 +99,7 @@ const changePassword = async (args, targetUser, User) => {
 };
 
 const deleteAccount = async (
-	{ user_ID },
+	targetUser,
 	{
 		User,
 		Profile,
@@ -115,60 +115,60 @@ const deleteAccount = async (
 	}
 ) => {
 	try {
-		await Profile.deleteOne({ user_ID });
+		await Profile.deleteOne({ user_ID: targetUser.id });
 	} catch (err) {
 		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
 	try {
-		await CommentItem.deleteMany({ user_ID });
+		await CommentItem.deleteMany({ user_ID: targetUser.id });
 	} catch (err) {
 		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
-	try {
-		await EventItem.deleteMany({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await Like.deleteMany({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await Report.deleteMany({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await Registration.deleteMany({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await Membership.deleteMany({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await Organisation.deleteMany({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await Poll.deleteMany({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await UserLog.deleteOne({ user_ID });
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-	try {
-		await User.findByIdAndDelete(user_ID);
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
+	// try {
+	// 	await EventItem.deleteMany({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await Like.deleteMany({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await Report.deleteMany({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await Registration.deleteMany({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await Membership.deleteMany({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await Organisation.deleteMany({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await Poll.deleteMany({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await UserLog.deleteOne({ user_ID : targetUser.id });
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
+	// try {
+	// 	await User.findByIdAndDelete(user_ID : targetUser.id);
+	// } catch (err) {
+	// 	return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	// }
 
 	return {
 		statusCode: 200,
