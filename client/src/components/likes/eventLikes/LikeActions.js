@@ -43,7 +43,8 @@ export const UnLikeEvent = ({ userLike }) => {
 	const deleteLike = useMutation(DELETE_LIKE, {
 		variables: {
 			_id: userLike.id,
-			user_ID: user.id
+			user_ID: user.id,
+			event_ID: event.id
 		},
 		refetchQueries: () => {
 			return [{ query: GET_EVENT_LIKES, variables: { event_ID: event.id } }];

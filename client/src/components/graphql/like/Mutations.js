@@ -17,8 +17,8 @@ export const ADD_LIKE = gql`
 `;
 
 export const DELETE_LIKE = gql`
-	mutation DeleteLike($_id: ID!, $user_ID: String!) {
-		deleteLike(_id: $_id, user_ID: $user_ID) {
+	mutation DeleteLike($_id: ID!, $user_ID: String!, $event_ID: String) {
+		deleteLike(_id: $_id, user_ID: $user_ID, event_ID: $event_ID) {
 			statusCode
 			ok
 			errors {

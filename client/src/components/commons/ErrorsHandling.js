@@ -32,7 +32,7 @@ export const frontEndEventInputValidation = (
 	if (address.length > 70 || address.length < 5)
 		err.push({ path: 'address', message: 'The event address must between 5 and 140 characters' });
 
-	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. ]*$/;
+	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. -]*$/;
 	const stringRegExp = new RegExp(ValidString);
 
 	if (!name.match(stringRegExp))
@@ -97,7 +97,7 @@ export const frontEndProfileInputValidation = (
 			message: 'Your bio must be between 0 and 280 characters'
 		});
 
-	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. ]*$/;
+	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. -]*$/;
 	const stringRegExp = new RegExp(ValidString);
 
 	if (!name.match(stringRegExp))

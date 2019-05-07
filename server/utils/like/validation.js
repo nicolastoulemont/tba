@@ -10,11 +10,10 @@ const ValidateAddLike = async data => {
 			user_ID: data.user_ID
 		});
 		if (EventLiked) {
-			let EventLikedError = {
+			errors.push({
 				path: 'event',
 				message: 'You already liked this event'
-			};
-			errors.push(EventLikedError);
+			});
 		}
 	}
 
@@ -24,11 +23,10 @@ const ValidateAddLike = async data => {
 			user_ID: data.user_ID
 		});
 		if (CommentLike) {
-			let CommentLikedError = {
+			errors.push({
 				path: 'comment',
 				message: 'You already liked this comment'
-			};
-			errors.push(CommentLikedError);
+			});
 		}
 	}
 

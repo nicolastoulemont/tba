@@ -54,7 +54,7 @@ module.exports = {
 				poll_ID: String
 				comment_ID: String
 			): LikeResponse!
-			deleteLike(_id: ID!, user_ID: String!): LikeResponse
+			deleteLike(_id: ID!, user_ID: String!, event_ID: String): LikeResponse!
 		}
 	`,
 	// Resolvers
@@ -93,15 +93,15 @@ module.exports = {
 		},
 
 		Mutation: {
-			addLike: async (parent, args, { user, models: { Like } }) => {
+			addLike: async (parent, args, { user, models: { Like, EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await ValidateAddLike(args);
-				if (!isValid) return { success: false, errors };
-				return await buildLike(args, Like);
+				if (!isValid) return { statusCode: 404, ok: false, errors };
+				return await buildLike(args, Like, EventItem);
 			},
-			deleteLike: async (parent, args, { user, models: { Like } }) => {
+			deleteLike: async (parent, args, { user, models: { Like, EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				return await deleteLike(args, Like);
+				return await deleteLike(args, Like, EventItem);
 			}
 		}
 	}

@@ -32,6 +32,7 @@ module.exports = {
 			end: Date!
 			createdAt: Date
 			updatedAt: Date
+			likesCount: Int
 			tags: [String]
 			creator: User
 			comments: [CommentItem]

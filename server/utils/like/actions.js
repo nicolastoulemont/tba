@@ -1,4 +1,4 @@
-const buildLike = async (args, Like) => {
+const buildLike = async (args, Like, EventItem) => {
 	try {
 		let like = await new Like({
 			user_ID: args.user_ID,
@@ -6,10 +6,18 @@ const buildLike = async (args, Like) => {
 			comment_ID: args.comment_ID,
 			poll_ID: args.poll_ID
 		}).save();
+
+		if (args.event_ID) {
+			await EventItem.findOneAndUpdate(
+				{ _id: args.event_ID },
+				{ $inc: { likesCount: 1 } },
+				{ new: true }
+			);
+		}
+
 		return {
 			statusCode: 201,
 			ok: true,
-			errors: null,
 			body: like
 		};
 	} catch (err) {
@@ -24,11 +32,19 @@ const buildLike = async (args, Like) => {
 	}
 };
 
-const deleteLike = async ({ _id, user_ID }, Like) => {
-	const like = await Like.findById(_id);
-	if (like.user_ID === user_ID) {
+const deleteLike = async (args, Like, EventItem) => {
+	const like = await Like.findById(args._id);
+	if (like.user_ID === args.user_ID) {
 		try {
-			await Like.findByIdAndDelete(_id);
+			await Like.findByIdAndDelete(args._id);
+			if (args.event_ID) {
+				await EventItem.findOneAndUpdate(
+					{ _id: args.event_ID },
+					{ $inc: { likesCount: -1 } },
+					{ new: true }
+				);
+			}
+
 			return {
 				statusCode: 200,
 				ok: true
