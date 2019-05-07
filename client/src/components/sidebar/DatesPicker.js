@@ -141,6 +141,7 @@ const DatesPicker = ({ history }) => {
 				modifiers={modifiers}
 				onDayClick={handleDayClick}
 				onDayMouseEnter={handleDayMouseEnter}
+				showOutsideDays
 			/>
 			<div>
 				{!from && !to && 'Please select the first day.'}
