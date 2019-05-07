@@ -4,7 +4,7 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { useStateValue } from '../contexts/InitialState';
 
-const DatesPicker = ({ history }) => {
+const DatesPicker = ({ history, setShowDatePicker, mobile }) => {
 	const [from, setFrom] = useState(null);
 	const [to, setTo] = useState(null);
 	const [enteredTo, setEnteredTo] = useState(null);
@@ -31,6 +31,7 @@ const DatesPicker = ({ history }) => {
 					}
 				});
 				history.push(`/home/events/${dayjs(from).format('YYYY-MM-DD')}`);
+				if (mobile) setShowDatePicker(false);
 			} else if (enteredTo) {
 				if (enteredTo !== from) {
 					dispatch({
@@ -50,6 +51,7 @@ const DatesPicker = ({ history }) => {
 							'YYYY-MM-DD'
 						)}`
 					);
+					if (mobile) setShowDatePicker(false);
 				} else if (enteredTo === from) {
 					dispatch({
 						type: 'SET_DATESTRING',
@@ -62,12 +64,14 @@ const DatesPicker = ({ history }) => {
 						}
 					});
 					history.push(`/home/events/${dayjs(from).format('YYYY-MM-DD')}`);
+					if (mobile) setShowDatePicker(false);
 				}
 			}
 		}
 		if (path.includes('news')) {
 			if (!enteredTo) {
 				history.push(`/home/news/${dayjs(from).format('YYYY-MM-DD')}`);
+				if (mobile) setShowDatePicker(false);
 			} else if (enteredTo) {
 				if (enteredTo !== from) {
 					history.push(
@@ -75,8 +79,10 @@ const DatesPicker = ({ history }) => {
 							'YYYY-MM-DD'
 						)}`
 					);
+					if (mobile) setShowDatePicker(false);
 				} else if (enteredTo === from) {
 					history.push(`/home/news/${dayjs(from).format('YYYY-MM-DD')}`);
+					if (mobile) setShowDatePicker(false);
 				}
 			}
 			return null;
@@ -84,6 +90,7 @@ const DatesPicker = ({ history }) => {
 		if (path.includes('activities')) {
 			if (!enteredTo) {
 				history.push(`/home/activities/${dayjs(from).format('YYYY-MM-DD')}`);
+				if (mobile) setShowDatePicker(false);
 			} else if (enteredTo) {
 				if (enteredTo !== from) {
 					history.push(
@@ -91,8 +98,10 @@ const DatesPicker = ({ history }) => {
 							'YYYY-MM-DD'
 						)}`
 					);
+					if (mobile) setShowDatePicker(false);
 				} else if (enteredTo === from) {
 					history.push(`/home/activities/${dayjs(from).format('YYYY-MM-DD')}`);
+					if (mobile) setShowDatePicker(false);
 				}
 			}
 			return null;
@@ -144,12 +153,16 @@ const DatesPicker = ({ history }) => {
 				showOutsideDays
 			/>
 			<div>
-				{!from && !to && 'Please select the first day.'}
-				{from && !to && 'Please select the last day.'}
-				{from &&
-					to &&
-					`Selected from ${from.toLocaleDateString()} to
-                ${to.toLocaleDateString()}`}
+				{!mobile ? (
+					<span>
+						{!from && !to && 'Please select the first day.'}
+						{from && !to && 'Please select the last day.'}
+						{from &&
+							to &&
+							`Selected from ${from.toLocaleDateString()} to
+					${to.toLocaleDateString()}`}
+					</span>
+				) : null}
 			</div>
 		</div>
 	);

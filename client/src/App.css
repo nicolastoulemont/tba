@@ -71,6 +71,17 @@ a:hover {
 	width: 100%;
 }
 
+.show-datepicker {
+	background-color: white;
+	z-index: 2;
+	position: fixed;
+	bottom: 50px;
+	right: 5px;
+	-webkit-box-shadow: -5px 0px 14px 3px rgba(148, 142, 148, 0.75);
+	-moz-box-shadow: -5px 0px 14px 3px rgba(148, 142, 148, 0.75);
+	box-shadow: -5px 0px 14px 3px rgba(148, 142, 148, 0.75);
+}
+
 .tag {
 	border-radius: 25px;
 	margin: 1px;

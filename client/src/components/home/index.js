@@ -34,7 +34,7 @@ const Home = props => {
 										</div>
 									</div>
 								</div>
-								<UserMobNav />
+								<UserMobNav history={props.history} />
 							</UserContext.Provider>
 						);
 					}}

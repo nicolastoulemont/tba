@@ -1,11 +1,12 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import DatesPicker from '../sidebar/DatesPicker';
 import DefaultAvatar from '../../img/avatar_default.svg';
 import { UserContext } from '../contexts';
 import { useStateValue } from '../contexts/InitialState';
 
-const UserMobNav = () => {
+const UserMobNav = ({ history }) => {
 	const user = useContext(UserContext);
 	const [
 		{
@@ -13,12 +14,14 @@ const UserMobNav = () => {
 		}
 	] = useStateValue();
 
+	const [showDatePicker, setShowDatePicker] = useState(false);
+
 	const logOut = e => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('uuid');
 	};
 
-	const today = new Date().toISOString().slice(0, 10);
+	const path = window.location.pathname;
 	return (
 		<Fragment>
 			<div className="justify-text-center">
@@ -59,6 +62,20 @@ const UserMobNav = () => {
 								</Link>
 							) : null}
 						</div>
+						{path.includes('news') || path.includes('activities') || path.includes('events') ? (
+							<div className="col px-0 text-center pr-2">
+								<Link
+									className="nav-link"
+									to="#"
+									onClick={e => setShowDatePicker(!showDatePicker)}
+									data-togggle="tooltip"
+									data-placement="bottom"
+									title="Select a date or a range of dates"
+								>
+									<i className="d-inline fas fa-calendar-day" />
+								</Link>
+							</div>
+						) : null}
 						<div className="col px-0 text-center pr-2">
 							<li className="nav-item dropup">
 								<Link
@@ -127,6 +144,11 @@ const UserMobNav = () => {
 					</div>
 				</div>
 			</div>
+			{showDatePicker ? (
+				<div className="d-block d-md-none show-datepicker text-center">
+					<DatesPicker history={history} setShowDatePicker={setShowDatePicker} mobile={true} />
+				</div>
+			) : null}
 		</Fragment>
 	);
 };
