@@ -10,6 +10,8 @@ import { SEARCH_USER_EVENTS } from '../graphql/event/Queries';
 import { SEARCH_USER_REGISTRATIONS } from '../graphql/registration/Queries';
 import CQuery from '../commons/CustomQueryComponent';
 import PanelItem from '../commons/PanelItem';
+import EventDetails from './EventDetails';
+import RegistrationDetails from './RegistrationDetails';
 
 const ManageActivities = ({ match }) => {
 	const user = useContext(UserContext);
@@ -80,7 +82,7 @@ const ManageActivities = ({ match }) => {
 													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 														{props => (
 															<div style={props}>
-																<PanelItem event={event} key={event.id} />
+																<EventDetails event={event} key={event.id} />
 															</div>
 														)}
 													</Spring>
@@ -100,7 +102,10 @@ const ManageActivities = ({ match }) => {
 													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={registration.id}>
 														{props => (
 															<div style={props}>
-																<PanelItem registration={registration} key={registration.id} />
+																<RegistrationDetails
+																	registration={registration}
+																	key={registration.id}
+																/>
 															</div>
 														)}
 													</Spring>
@@ -119,4 +124,4 @@ const ManageActivities = ({ match }) => {
 	);
 };
 
-export default ManageActivities;
+export default React.memo(ManageActivities);

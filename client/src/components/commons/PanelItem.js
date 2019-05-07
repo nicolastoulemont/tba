@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
-export default function PanelItem({ registration, event }) {
+
+const PanelItem = ({ registration, event }) => {
 	if (registration) {
 		return (
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={registration.id}>
@@ -37,6 +38,7 @@ export default function PanelItem({ registration, event }) {
 			</Spring>
 		);
 	} else if (event) {
+		console.log(event);
 		return (
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 				{props => (
@@ -71,4 +73,6 @@ export default function PanelItem({ registration, event }) {
 		);
 	}
 	return null;
-}
+};
+
+export default React.memo(PanelItem);

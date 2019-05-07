@@ -44,7 +44,7 @@ const DeleteAccount = ({ user, history }) => {
 						data-togggle="tooltip"
 						data-placement="bottom"
 						title="Change your email"
-						onClick={e => setShowDeleteAccount(!showDeleteAccount)}
+						onClick={showChangeDeleteAccountForm}
 						className="btn btn-blue mt-2 float-right"
 					>
 						<h6 className="d-inline font-weight-bold text-uppercase ">Delete</h6>

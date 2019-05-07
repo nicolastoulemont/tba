@@ -207,6 +207,18 @@ export const SEARCH_USER_EVENTS = gql`
 				address
 				start
 				end
+				likes {
+					id
+				}
+				registrations {
+					id
+				}
+				reports {
+					id
+				}
+				comments {
+					id
+				}
 			}
 		}
 	}
