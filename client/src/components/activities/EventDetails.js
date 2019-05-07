@@ -7,7 +7,7 @@ const EventDetails = ({ event }) => {
 		<div className="px-4 py-2 border-bottom">
 			<div className="row align-items-center justify-content-center">
 				<div className="col-7">
-					<div className="text-left ">
+					<div className="text-left">
 						<Link
 							to={{
 								pathname: `/home/event/${event.id}`

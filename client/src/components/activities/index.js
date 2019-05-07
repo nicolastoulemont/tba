@@ -9,7 +9,6 @@ import { UserContext } from '../contexts';
 import { SEARCH_USER_EVENTS } from '../graphql/event/Queries';
 import { SEARCH_USER_REGISTRATIONS } from '../graphql/registration/Queries';
 import CQuery from '../commons/CustomQueryComponent';
-import PanelItem from '../commons/PanelItem';
 import EventDetails from './EventDetails';
 import RegistrationDetails from './RegistrationDetails';
 
@@ -24,15 +23,15 @@ const ManageActivities = ({ match }) => {
 
 	const displayDay = () => {
 		if (!day.includes('+')) {
-			const date = `Your ${displayRegistrations ? `Registrations` : `Events`} on ${dayjs(
-				day
-			).format('dddd')} `;
+			const date = `${displayRegistrations ? `Registrations` : `Events`} on ${dayjs(day).format(
+				'dddd'
+			)} `;
 			return date;
 		}
 		if (day.includes('+')) {
 			const firstDay = day.split('+')[0];
 			const lastDay = day.split('+')[1];
-			const days = `Your ${displayRegistrations ? `Registrations` : `Events`} from ${dayjs(
+			const days = `${displayRegistrations ? `Registrations` : `Events`} from ${dayjs(
 				firstDay
 			).format('dddd')}, ${dayjs(firstDay).format('DD')} to ${dayjs(lastDay).format(
 				'dddd'
