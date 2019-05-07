@@ -34,11 +34,11 @@ const DeleteAccount = ({ user, history }) => {
 	return (
 		<Fragment>
 			<div className="row">
-				<div className="col-md-8">
+				<div className="col-8">
 					<h6 className="text-left pt-2">Delete Account</h6>
 					<small className="d-block text-left text-muted">This action is irreversible</small>
 				</div>
-				<div className="col-md-4">
+				<div className="col-4">
 					<Link
 						to="#"
 						data-togggle="tooltip"

@@ -38,7 +38,6 @@ const PanelItem = ({ registration, event }) => {
 			</Spring>
 		);
 	} else if (event) {
-		console.log(event);
 		return (
 			<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 				{props => (

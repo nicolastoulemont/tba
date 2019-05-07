@@ -23,7 +23,7 @@ const Home = props => {
 					{({ data }) => {
 						return (
 							<UserContext.Provider value={data.currentUser}>
-								<UserNav history={props.history} />
+								<UserNav />
 								<div className="container">
 									<div className="mt-2 text-center">
 										<div className="row">
