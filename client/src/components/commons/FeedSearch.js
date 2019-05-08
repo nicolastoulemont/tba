@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts';
 import { useStateValue } from '../contexts/InitialState';
+import classNames from 'classnames';
 
 const FeedSearch = ({
 	date,
@@ -15,12 +16,15 @@ const FeedSearch = ({
 	setDisplayRegistrations,
 	displayRegistrations,
 	tags,
-	setTags
+	setTags,
+	errors,
+	setErrors
 }) => {
 	const [{ userSearchPref }, dispatch] = useStateValue();
 	const user = useContext(UserContext);
 
 	const handleSearch = e => {
+		if (errors.length !== 0) setErrors([]);
 		if (e.keyCode === 13) setSearch(e.target.value);
 		if (e.target.value.length === 0) setSearch('');
 	};
@@ -139,7 +143,9 @@ const FeedSearch = ({
 			<h6 className="text-left"> {date}</h6>
 			<div className="input-group input-group-sm mb-3">
 				<input
-					className="form-control form-control-lg rounded-pill"
+					className={classNames('form-control form-control-lg rounded-pill', {
+						'is-invalid': errors.length !== 0
+					})}
 					type="text"
 					placeholder="Search..."
 					onKeyUp={e => handleSearch(e)}
@@ -259,6 +265,20 @@ const FeedSearch = ({
 						</Link>
 					) : null}
 				</div>
+				{errors.length !== 0 ? (
+					<Fragment>
+						{errors.map(error => (
+							<small
+								className="invalid-feedback text-left"
+								key={Math.random()
+									.toString(36)
+									.substring(2, 7)}
+							>
+								{error.message}
+							</small>
+						))}
+					</Fragment>
+				) : null}
 			</div>
 		</div>
 	);

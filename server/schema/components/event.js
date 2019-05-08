@@ -1,5 +1,9 @@
 const { gql, AuthenticationError } = require('apollo-server');
-const { validateEventInput, validateUpdEventIntput } = require('../../utils/event/validation');
+const {
+	validateSearchInput,
+	validateEventInput,
+	validateUpdEventIntput
+} = require('../../utils/event/validation');
 const {
 	findEvent,
 	findEvents,
@@ -147,6 +151,8 @@ module.exports = {
 			},
 			searchDailyEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				const { errors, isValid } = validateSearchInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				const { date, dayafter } = getDatesFromString(args.date);
 				if (args.tags.length !== 0) {
 					return await dailyEventsWithTags(date, dayafter, args, EventItem);
@@ -156,6 +162,8 @@ module.exports = {
 			},
 			searchUserEvents: async (parent, args, { user, models: { EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				const { errors, isValid } = validateSearchInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				const { date, dayafter } = getDatesFromString(args.date);
 				return await searchUserEvents(date, dayafter, args, EventItem);
 			},

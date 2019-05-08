@@ -16,6 +16,7 @@ const EventFeed = ({ match }) => {
 	const [type, setType] = useState(userSearchPref.type);
 	const [price, setPrice] = useState(userSearchPref.price);
 	const [tags, setTags] = useState(userSearchPref.tags);
+	const [errors, setErrors] = useState([]);
 
 	const day = match.params.day;
 
@@ -51,6 +52,8 @@ const EventFeed = ({ match }) => {
 						setPrice={setPrice}
 						tags={tags}
 						setTags={setTags}
+						errors={errors}
+						setErrors={setErrors}
 					/>
 					<div className="border-top">
 						<CQuery
@@ -66,27 +69,31 @@ const EventFeed = ({ match }) => {
 							}}
 						>
 							{({ data }) => {
-								const events = data.searchDailyEvents.body;
-								console.log(events);
-								return (
-									<Fragment>
-										{events.length === 0 ? (
-											<div className="mt-4 pl-4 font-italic ">No {displayDay()}</div>
-										) : (
-											<Fragment>
-												{events.map(event => (
-													<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
-														{props => (
-															<div style={props}>
-																<EventFeedItem key={event.id} event={event} />
-															</div>
-														)}
-													</Spring>
-												))}
-											</Fragment>
-										)}
-									</Fragment>
-								);
+								if (data.searchDailyEvents.ok) {
+									const events = data.searchDailyEvents.body;
+									return (
+										<Fragment>
+											{events.length === 0 ? (
+												<div className="mt-4 pl-4 font-italic ">No {displayDay()}</div>
+											) : (
+												<Fragment>
+													{events.map(event => (
+														<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
+															{props => (
+																<div style={props}>
+																	<EventFeedItem key={event.id} event={event} />
+																</div>
+															)}
+														</Spring>
+													))}
+												</Fragment>
+											)}
+										</Fragment>
+									);
+								} else if (!data.searchDailyEvents.ok) {
+									setErrors(data.searchDailyEvents.errors);
+									return null;
+								}
 							}}
 						</CQuery>
 					</div>
