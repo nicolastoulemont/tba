@@ -1,41 +1,7 @@
 const Validator = require('validator');
 const dayjs = require('dayjs');
-const { isEmpty, ValidStringRegExp, DateUrlValidation } = require('../general');
+const { isEmpty, ValidStringRegExp } = require('../general');
 const { EventItem } = require('../../models/');
-
-const validateSearchInput = data => {
-	let errors = [];
-
-	if (!data.search.match(ValidStringRegExp))
-		errors.push({
-			path: 'search',
-			message: 'Only alphanumeric characters are accepted'
-		});
-
-	if (data.type && !data.type.match(ValidStringRegExp))
-		errors.push({
-			path: 'type',
-			message: 'Only alphanumeric characters are accepted'
-		});
-
-	if (data.sort && !data.sort.match(ValidStringRegExp))
-		errors.push({
-			path: 'type',
-			message: 'Only alphanumeric characters are accepted'
-		});
-
-	if (!DateUrlValidation(data.date))
-		errors.push({
-			path: 'Invalid Date format',
-			message:
-				'The date format must be YYYY-MM-DD for a single day or YYYY-MM-DD+YYYY-MM-DD for a range of dates'
-		});
-
-	return {
-		errors,
-		isValid: isEmpty(errors)
-	};
-};
 
 const validateEventInput = async data => {
 	let errors = [];
@@ -245,4 +211,4 @@ const validateUpdEventIntput = async data => {
 	};
 };
 
-module.exports = { validateSearchInput, validateUpdEventIntput, validateEventInput };
+module.exports = { validateUpdEventIntput, validateEventInput };

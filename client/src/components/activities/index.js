@@ -116,8 +116,11 @@ const ManageActivities = ({ match }) => {
 										)}
 									</Fragment>
 								);
-							} else if (data.searchUserEvents.errors || data.searchUserRegistrations.errors) {
-								setErrors(data.searchUserEvents.errors || data.searchUserRegistrations.errors);
+							} else if (data.searchUserEvents && data.searchUserEvents.errors) {
+								setErrors(data.searchUserEvents.errors);
+								return null;
+							} else if (data.searchUserRegistrations && data.searchUserRegistrations.errors) {
+								setErrors(data.searchUserRegistrations.errors);
 								return null;
 							}
 							return <p>No Registrations or Events to manage</p>;

@@ -199,7 +199,7 @@ const searchUserEvents = async (date, dayafter, args, EventItem) => {
 const findUserFutureEvents = async (args, EventItem) => {
 	const date = new Date(args.date);
 	try {
-		const events = await EventItem.find({ user_ID: args.user_ID, start: { $gte: date } });
+		const events = await EventItem.find({ user_ID: args.user_ID, start: { $gte: date } }).limit(5);
 		return {
 			statusCode: 200,
 			ok: true,
@@ -221,9 +221,12 @@ const findUserFutureEvents = async (args, EventItem) => {
 const findUserPastEvents = async (args, EventItem) => {
 	const date = new Date(args.date);
 	try {
-		const events = await EventItem.find({ user_ID: args.user_ID, start: { $lte: date } }).sort({
-			start: 'descending'
-		});
+		const events = await EventItem.find({ user_ID: args.user_ID, start: { $lte: date } })
+			.sort({
+				start: 'descending'
+			})
+			.limit(5);
+
 		return {
 			statusCode: 200,
 			ok: true,

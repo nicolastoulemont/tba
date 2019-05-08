@@ -9,7 +9,7 @@ const {
 	findUserPastRegistrations,
 	findEventRegistrations
 } = require('../../utils/registration/queries');
-const { getDatesFromString } = require('../../utils/general');
+const { getDatesFromString, validateSearchInput } = require('../../utils/general');
 
 module.exports = {
 	RegistrationType: gql`
@@ -83,6 +83,8 @@ module.exports = {
 			},
 			searchUserRegistrations: async (parent, args, { user, models: { Registration } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				const { errors, isValid } = validateSearchInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
 				const { date, dayafter } = getDatesFromString(args.date);
 				return await searchUserRegistrations(date, dayafter, args, Registration);
 			},

@@ -70,7 +70,7 @@ const findUserFutureRegistrations = async (args, Registration) => {
 		const registrations = await Registration.find({
 			user_ID: args.user_ID,
 			eventStart: { $gte: date }
-		});
+		}).limit(5);
 		return {
 			statusCode: 200,
 			ok: true,
@@ -93,7 +93,9 @@ const findUserPastRegistrations = async (args, Registration) => {
 		const registrations = await Registration.find({
 			user_ID: args.user_ID,
 			eventStart: { $lte: date }
-		}).sort({ eventStart: 'descending' });
+		})
+			.sort({ eventStart: 'descending' })
+			.limit(5);
 		return {
 			statusCode: 200,
 			ok: true,

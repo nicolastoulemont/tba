@@ -1,9 +1,5 @@
 const { gql, AuthenticationError } = require('apollo-server');
-const {
-	validateSearchInput,
-	validateEventInput,
-	validateUpdEventIntput
-} = require('../../utils/event/validation');
+const { validateEventInput, validateUpdEventIntput } = require('../../utils/event/validation');
 const {
 	findEvent,
 	findEvents,
@@ -17,7 +13,7 @@ const {
 	findUserEvents
 } = require('../../utils/event/queries');
 const { buildEvent, updateEvent, deleteEvent } = require('../../utils/event/actions');
-const { getDatesFromString } = require('../../utils/general');
+const { getDatesFromString, validateSearchInput } = require('../../utils/general');
 
 module.exports = {
 	EventType: gql`
