@@ -18,6 +18,7 @@ const ManageActivities = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState(userSearchPref.sort);
+	const [errors, setErrors] = useState([]);
 
 	const day = match.params.day;
 
@@ -57,6 +58,8 @@ const ManageActivities = ({ match }) => {
 					setSort={setSort}
 					displayRegistrations={displayRegistrations}
 					setDisplayRegistrations={setDisplayRegistrations}
+					errors={errors}
+					setErrors={setErrors}
 				/>
 				<div className="border-top">
 					<CQuery

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const EventDetails = ({ event }) => {
+	console.log(event);
 	return (
 		<div className="px-4 py-2 border-bottom">
 			<div className="row align-items-center justify-content-center">
@@ -38,12 +39,12 @@ const EventDetails = ({ event }) => {
 							<small className="ml-1">{event.comments.length}</small>
 						</span>
 					) : null}
-					{event.likes ? (
-						<span className="text-secondary mx-2">
-							<i className="fa fa-thumbs-up  mr-1" />
-							<small className="ml-1">{event.likes.length}</small>
-						</span>
-					) : null}
+
+					<span className="text-secondary mx-2">
+						<i className="fa fa-thumbs-up  mr-1" />
+						<small className="ml-1">{event.likesCount}</small>
+					</span>
+
 					{event.registrations ? (
 						<span className="text-secondary mx-2">
 							<i className="fas fa-users  mr-1" />
