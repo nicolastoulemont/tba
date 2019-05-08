@@ -7,7 +7,7 @@ import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
 import { useStateValue } from '../../contexts/InitialState';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
-import EventFeedItem from './EventFeedItem';
+import EventFeedItem from './feedItems';
 
 const EventFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
@@ -67,6 +67,7 @@ const EventFeed = ({ match }) => {
 						>
 							{({ data }) => {
 								const events = data.searchDailyEvents.body;
+								console.log(events);
 								return (
 									<Fragment>
 										{events.length === 0 ? (

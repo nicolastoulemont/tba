@@ -2,10 +2,10 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import DefaultAvatar from '../../../img/default_avatar.svg';
-import { UserContext } from '../../contexts';
+import DefaultAvatar from '../../../../img/default_avatar.svg';
+import { UserContext } from '../../../contexts';
 
-const EventFeedItem = ({ event }) => {
+const HostedItem = ({ event }) => {
 	const user = useContext(UserContext);
 	dayjs.extend(relativeTime);
 	return (
@@ -108,4 +108,4 @@ const EventFeedItem = ({ event }) => {
 	);
 };
 
-export default EventFeedItem;
+export default HostedItem;
