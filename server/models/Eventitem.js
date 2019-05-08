@@ -65,6 +65,11 @@ const eventSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	scraped: {
+		type: Boolean,
+		default: false,
+		required: true
+	},
 	tags: {
 		type: [String]
 	}

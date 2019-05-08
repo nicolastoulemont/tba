@@ -158,19 +158,23 @@ const SBSuggestions = () => {
 				<div className="mt-1 w-100">
 					<CQuery
 						query={GET_MOST_LIKED_EVENTS}
-						variables={{ date: returnDateString(), limit: 5, type, price, tags }}
+						variables={{ date: returnDateString(), limit: 3, type, price, tags }}
 					>
 						{({ data }) => {
-							const events = data.mostLikedEvents.body;
-							if (events.length !== 0) {
-								return (
-									<Fragment>
-										{events.map(event => (
-											<PanelItem event={event} key={event.id} />
-										))}
-									</Fragment>
-								);
-							} else if (events.length === 0) {
+							if (data.mostLikedEvents && data.mostLikedEvents.body) {
+								const events = data.mostLikedEvents.body;
+								if (events.length !== 0) {
+									return (
+										<Fragment>
+											{events.map(event => (
+												<PanelItem event={event} key={event.id} />
+											))}
+										</Fragment>
+									);
+								} else if (events.length === 0) {
+									return <small>No events yet</small>;
+								}
+							} else {
 								return <small>No events yet</small>;
 							}
 						}}

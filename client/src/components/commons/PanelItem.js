@@ -59,9 +59,11 @@ const PanelItem = ({ registration, event }) => {
 												{event.address}, {event.city}
 											</small>
 										</div>
-										<div className="col-3">
-											<span className=" text-secondary">
-												<i className="fa fa-thumbs-up text-blue mr-1" />
+										<div className="col-3 justify-content-end">
+											<span className="text-secondary text-right">
+												<small>
+													<i className="fa fa-thumbs-up mr-1" />
+												</small>
 												<small className="ml-1">{event.likesCount}</small>
 											</span>
 										</div>

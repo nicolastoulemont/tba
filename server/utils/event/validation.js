@@ -1,6 +1,6 @@
 const Validator = require('validator');
 const dayjs = require('dayjs');
-const { isEmpty } = require('../general');
+const { isEmpty, ValidStringRegExp } = require('../general');
 const { EventItem } = require('../../models/');
 
 const validateEventInput = async data => {
@@ -48,30 +48,27 @@ const validateEventInput = async data => {
 			message: 'The event address must be between 0 and 30 characters'
 		});
 
-	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. ]*$/;
-	const stringRegExp = new RegExp(ValidString);
-
-	if (!data.name.match(stringRegExp))
+	if (!data.name.match(ValidStringRegExp))
 		errors.push({
 			path: 'name',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.abstract.match(stringRegExp))
+	if (!data.abstract.match(ValidStringRegExp))
 		errors.push({
 			path: 'abstract',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.description.match(stringRegExp))
+	if (!data.description.match(ValidStringRegExp))
 		errors.push({
 			path: 'description',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.city.match(stringRegExp))
+	if (!data.city.match(ValidStringRegExp))
 		errors.push({
 			path: 'city',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.address.match(stringRegExp))
+	if (!data.address.match(ValidStringRegExp))
 		errors.push({
 			path: 'address',
 			message: 'Only alphanumeric characters are accepted'
@@ -154,30 +151,27 @@ const validateUpdEventIntput = async data => {
 			message: 'The event address must be between 0 and 30 characters'
 		});
 
-	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
-	const stringRegExp = new RegExp(ValidString);
-
-	if (!data.name.match(stringRegExp))
+	if (!data.name.match(ValidStringRegExp))
 		errors.push({
 			path: 'name',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.abstract.match(stringRegExp))
+	if (!data.abstract.match(ValidStringRegExp))
 		errors.push({
 			path: 'abstract',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.description.match(stringRegExp))
+	if (!data.description.match(ValidStringRegExp))
 		errors.push({
 			path: 'description',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.city.match(stringRegExp))
+	if (!data.city.match(ValidStringRegExp))
 		errors.push({
 			path: 'city',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.address.match(stringRegExp))
+	if (!data.address.match(ValidStringRegExp))
 		errors.push({
 			path: 'address',
 			message: 'Only alphanumeric characters are accepted'

@@ -5,6 +5,10 @@ export const findErrorInErrorsArr = (errors, target) => {
 	return errors.find(error => error.path === target);
 };
 
+export const ValidStringRegExp = new RegExp(
+	/^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!:;,€.\s-]*$/
+);
+
 export const frontEndEventInputValidation = (
 	name,
 	abstract,
@@ -32,30 +36,27 @@ export const frontEndEventInputValidation = (
 	if (address.length > 70 || address.length < 5)
 		err.push({ path: 'address', message: 'The event address must between 5 and 140 characters' });
 
-	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. -]*$/;
-	const stringRegExp = new RegExp(ValidString);
-
-	if (!name.match(stringRegExp))
+	if (!name.match(ValidStringRegExp))
 		err.push({
 			path: 'name',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!abstract.match(stringRegExp))
+	if (!abstract.match(ValidStringRegExp))
 		err.push({
 			path: 'abstract',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!description.match(stringRegExp))
+	if (!description.match(ValidStringRegExp))
 		err.push({
 			path: 'description',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!city.match(stringRegExp))
+	if (!city.match(ValidStringRegExp))
 		err.push({
 			path: 'city',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!address.match(stringRegExp))
+	if (!address.match(ValidStringRegExp))
 		err.push({
 			path: 'address',
 			message: 'Only alphanumeric characters are accepted'
@@ -97,20 +98,17 @@ export const frontEndProfileInputValidation = (
 			message: 'Your bio must be between 0 and 280 characters'
 		});
 
-	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. -]*$/;
-	const stringRegExp = new RegExp(ValidString);
-
-	if (!name.match(stringRegExp))
+	if (!name.match(ValidStringRegExp))
 		err.push({
 			path: 'name',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!position.match(stringRegExp))
+	if (!position.match(ValidStringRegExp))
 		err.push({
 			path: 'position',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!bio.match(stringRegExp))
+	if (!bio.match(ValidStringRegExp))
 		err.push({
 			path: 'bio',
 			message: 'Only alphanumeric characters are accepted'

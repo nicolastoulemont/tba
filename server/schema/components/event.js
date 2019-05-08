@@ -35,6 +35,7 @@ module.exports = {
 			createdAt: Date
 			updatedAt: Date
 			likesCount: Int
+			scraped: Boolean
 			tags: [String]
 			creator: User
 			comments: [CommentItem]
