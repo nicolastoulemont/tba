@@ -10,57 +10,60 @@ const ProfileLikesFeed = () => {
 	return (
 		<CQuery query={GET_USER_LIKES} variables={{ user_ID: profile.user_ID }}>
 			{({ data }) => {
-				const likes = data.userLikes.body;
-				if (likes && likes.length === 0)
+				if (data.userLikes && data.userLikes.body) {
+					const likes = data.userLikes.body;
+					if (likes && likes.length === 0)
+						return (
+							<div className="text-left px-3 py-2 border-top">
+								<small>{profile.name} did not like anything yet</small>
+							</div>
+						);
 					return (
-						<div className="text-left px-3 py-2 border-top">
-							<small>{profile.name} did not like anything yet</small>
-						</div>
-					);
-				return (
-					<Fragment>
-						{likes.map(like => {
-							if (like.event) {
-								if (!like.event.isPublic) {
-									return null;
-								} else {
+						<Fragment>
+							{likes.map(like => {
+								if (like.event) {
+									if (!like.event.isPublic) {
+										return null;
+									} else {
+										return (
+											<div className="text-left px-3 py-2 border-top" key={like.id}>
+												<small>
+													{profile.name} liked the event{' '}
+													<Link
+														to={{
+															pathname: `/home/event/${like.event.id}`
+														}}
+														className="font-weight-bold"
+													>
+														{like.event.name}
+													</Link>{' '}
+												</small>
+											</div>
+										);
+									}
+								} else if (like.comment) {
 									return (
 										<div className="text-left px-3 py-2 border-top" key={like.id}>
 											<small>
-												{profile.name} liked the event{' '}
+												{profile.name} liked a comment by
 												<Link
 													to={{
-														pathname: `/home/event/${like.event.id}`
+														pathname: `/home/profile/${like.comment.user_ID}`
 													}}
 													className="font-weight-bold"
 												>
-													{like.event.name}
+													{' '}
+													{like.comment.creator.profile.name}
 												</Link>{' '}
 											</small>
 										</div>
 									);
-								}
-							} else if (like.comment) {
-								return (
-									<div className="text-left px-3 py-2 border-top" key={like.id}>
-										<small>
-											{profile.name} liked a comment by
-											<Link
-												to={{
-													pathname: `/home/profile/${like.comment.user_ID}`
-												}}
-												className="font-weight-bold"
-											>
-												{' '}
-												{like.comment.creator.profile.name}
-											</Link>{' '}
-										</small>
-									</div>
-								);
-							} else return null;
-						})}
-					</Fragment>
-				);
+								} else return null;
+							})}
+						</Fragment>
+					);
+				}
+				return null;
 			}}
 		</CQuery>
 	);
