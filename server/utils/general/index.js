@@ -12,6 +12,7 @@ const DateUrlValidation = day => {
 		if (!dayjs(startDay).isBefore(dayjs(endDay))) return false;
 		if (!dayjs(endDay).isAfter(dayjs(startDay))) return false;
 		if (dayjs(startDay).isSame(dayjs(endDay))) return false;
+		if (dayjs(endDay).month() - dayjs(startDay).month() > 1) return false;
 		return true;
 	}
 	if (!day.includes('+')) {
