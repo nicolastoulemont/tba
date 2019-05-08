@@ -60,7 +60,7 @@ const PanelItem = ({ registration, event }) => {
 											</small>
 										</div>
 										<div className="col-3 justify-content-end">
-											<span className="text-secondary text-right">
+											<span className="pl-4 text-secondary text-right">
 												<small>
 													<i className="fa fa-thumbs-up mr-1" />
 												</small>

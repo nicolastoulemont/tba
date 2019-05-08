@@ -3,20 +3,27 @@ import { Mutation } from 'react-apollo';
 import { CommentContext, EventContext } from '../../contexts';
 import { EDIT_COMMENT } from '../../graphql/comment/Mutations';
 import { GET_COMMENT_COMMENTS, GET_EVENT_COMMENTS } from '../../graphql/comment/Queries';
+import classNames from 'classnames';
 
 const CommentEdit = ({ hideForms }) => {
 	const comment = useContext(CommentContext);
 	const event = useContext(EventContext);
 	const [text, setText] = useState(comment.text);
+	const [errors, setErrors] = useState([]);
 
-	const commentEdit = (e, text, editComment) => {
+	const commentEdit = async (e, text, editComment) => {
+		setErrors([]);
 		if (e.keyCode === 13) {
 			e.preventDefault();
-			editComment({
+			const response = await editComment({
 				variables: { _id: comment.id, text }
-			}).then(res => {
-				hideForms();
 			});
+			const { ok, errors } = response.data.updateComment;
+			if (!ok) setErrors(errors);
+			if (ok) {
+				setText('');
+				hideForms();
+			}
 		}
 	};
 
@@ -35,13 +42,31 @@ const CommentEdit = ({ hideForms }) => {
 					<div className="input-group input-group-sm py-2">
 						<input
 							type="text"
-							className="form-control rounded-pill"
+							className={classNames('form-control rounded-pill', {
+								'is-invalid': errors.length !== 0
+							})}
 							placeholder="Edit your comment..."
 							onChange={e => setText(e.target.value)}
 							name="text"
 							value={text}
 							onKeyDown={e => commentEdit(e, text, editComment)}
+							maxLength={250}
+							minLength={1}
 						/>
+						{errors.length !== 0 ? (
+							<Fragment>
+								{errors.map(error => (
+									<small
+										className="invalid-feedback text-left"
+										key={Math.random()
+											.toString(36)
+											.substring(2, 7)}
+									>
+										{error.message}
+									</small>
+								))}
+							</Fragment>
+						) : null}
 					</div>
 				)}
 			</Mutation>

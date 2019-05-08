@@ -1,21 +1,17 @@
-const Validator = require('validator');
-const { isEmpty } = require('../general');
+const { isEmpty, ValidStringRegExp } = require('../general');
 
 const validateCommentInput = async data => {
 	let errors = [];
 
 	data.text = !isEmpty(data.text) ? data.text : '';
 
-	if (!Validator.isLength(data.text, { min: 1, max: 250 }))
+	if (data.text.length < 1 || data.text.length > 250)
 		errors.push({
 			path: 'text',
 			message: 'Your comment must be between 1 and 250 characters'
 		});
 
-	const ValidString = /^[\wáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€._-\s]+$/;
-	const stringRegExp = new RegExp(ValidString);
-
-	if (!data.text.match(stringRegExp))
+	if (!data.text.match(ValidStringRegExp))
 		errors.push({
 			path: 'text',
 			message: 'Only alphanumeric characters are accepted'

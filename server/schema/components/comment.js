@@ -110,13 +110,13 @@ module.exports = {
 			addComment: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateCommentInput(args);
-				if (!isValid) return { success: false, errors };
+				if (!isValid) return { statusCode: 404, ok: false, errors };
 				return await buildComment(args, CommentItem);
 			},
 			updateComment: async (parent, args, { user, models: { User, CommentItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateCommentInput(args);
-				if (!isValid) return { success: false, errors };
+				if (!isValid) return { statusCode: 404, ok: false, errors };
 				return await updateComment(args, user, CommentItem);
 			},
 			moderateComment: async (parent, args, { user, models: { CommentItem, EventItem } }) => {
