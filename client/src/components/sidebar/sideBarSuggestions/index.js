@@ -116,7 +116,7 @@ const SBSuggestions = () => {
 					</div>
 				</div>
 			</div>
-			<div className="row m-0 p-0 border-bottom">
+			<div className="row m-0 py-2 border-bottom">
 				<div className="col border-right p-0">
 					<Link
 						className="link-menu"

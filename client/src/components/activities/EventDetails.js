@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const EventDetails = ({ event }) => {
-	console.log(event);
 	return (
 		<div className="px-4 py-2 border-bottom">
 			<div className="row align-items-center justify-content-center">

@@ -73,7 +73,7 @@ const ManageActivities = ({ match }) => {
 						}}
 					>
 						{({ data }) => {
-							if (data.searchUserEvents) {
+							if (data.searchUserEvents && data.searchUserEvents.ok) {
 								return (
 									<Fragment>
 										{data.searchUserEvents.body.length === 0 ? (
@@ -93,7 +93,7 @@ const ManageActivities = ({ match }) => {
 										)}
 									</Fragment>
 								);
-							} else if (data.searchUserRegistrations) {
+							} else if (data.searchUserRegistrations && data.searchUserRegistrations.ok) {
 								return (
 									<Fragment>
 										{data.searchUserRegistrations.body.length === 0 ? (
@@ -116,6 +116,9 @@ const ManageActivities = ({ match }) => {
 										)}
 									</Fragment>
 								);
+							} else if (data.searchUserEvents.errors || data.searchUserRegistrations.errors) {
+								setErrors(data.searchUserEvents.errors || data.searchUserRegistrations.errors);
+								return null;
 							}
 							return <p>No Registrations or Events to manage</p>;
 						}}
