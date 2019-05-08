@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Spring } from 'react-spring/renderprops';
 import DatesPicker from './DatesPicker';
+import SBSuggestions from './sideBarSuggestions';
 import SBPanel from './sideBarPanel';
 import SBNoProfile from './sideBarNoProfile';
 import { UserContext } from '../contexts';
@@ -21,6 +22,11 @@ const SideBar = ({ history }) => {
 					)}
 				</Spring>
 			) : null}
+			<div className="row ml-2 mb-4">
+				<div className="col mx-auto bg-white px-2">
+					<SBSuggestions />
+				</div>
+			</div>
 			<div className="row">
 				{user.profile && !path.includes('activities') ? (
 					<SBPanel />

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { EventContext, UserContext } from '../../contexts';
 import { ADD_LIKE, DELETE_LIKE } from '../../graphql/like/Mutations';
 import { GET_EVENT_LIKES } from '../../graphql/like/Queries';
+import { GET_EVENT_LIKES_COUNT } from '../../graphql/event/Queries';
 
 export const LikeEvent = () => {
 	const user = useContext(UserContext);
@@ -15,7 +16,10 @@ export const LikeEvent = () => {
 			event_ID: event.id
 		},
 		refetchQueries: () => {
-			return [{ query: GET_EVENT_LIKES, variables: { event_ID: event.id } }];
+			return [
+				{ query: GET_EVENT_LIKES, variables: { event_ID: event.id } },
+				{ query: GET_EVENT_LIKES_COUNT, variables: { id: event.id } }
+			];
 		}
 	});
 	return (
@@ -47,7 +51,10 @@ export const UnLikeEvent = ({ userLike }) => {
 			event_ID: event.id
 		},
 		refetchQueries: () => {
-			return [{ query: GET_EVENT_LIKES, variables: { event_ID: event.id } }];
+			return [
+				{ query: GET_EVENT_LIKES, variables: { event_ID: event.id } },
+				{ query: GET_EVENT_LIKES_COUNT, variables: { id: event.id } }
+			];
 		}
 	});
 	return (

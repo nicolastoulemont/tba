@@ -25,7 +25,7 @@ const UserMobNav = ({ history }) => {
 	return (
 		<Fragment>
 			<div className="justify-text-center">
-				<div className="mobileNav d-block d-md-none">
+				<div className="mobileNav d-block d-lg-none">
 					<div className="row">
 						<div className="col px-0 text-center pl-1">
 							<Link
@@ -145,7 +145,7 @@ const UserMobNav = ({ history }) => {
 				</div>
 			</div>
 			{showDatePicker ? (
-				<div className="d-block d-md-none show-datepicker text-center">
+				<div className="d-block d-lg-none show-datepicker text-center">
 					<DatesPicker history={history} setShowDatePicker={setShowDatePicker} mobile={true} />
 				</div>
 			) : null}

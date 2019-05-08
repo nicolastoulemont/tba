@@ -51,6 +51,35 @@ export const SEARCH_DAILY_EVENTS = gql`
 	}
 `;
 
+export const GET_MOST_LIKED_EVENTS = gql`
+	query mostLikedEvents(
+		$date: String!
+		$limit: Int!
+		$type: String
+		$price: Float
+		$tags: [String]
+	) {
+		mostLikedEvents(date: $date, limit: $limit, type: $type, price: $price, tags: $tags) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				name
+				city
+				address
+				start
+				end
+				likesCount
+			}
+		}
+	}
+`;
+
 export const GET_EVENTS = gql`
 	{
 		events(limit: 10) {
@@ -115,6 +144,23 @@ export const GET_EVENT = gql`
 						picture_URL
 					}
 				}
+			}
+		}
+	}
+`;
+
+export const GET_EVENT_LIKES_COUNT = gql`
+	query Event($id: ID!) {
+		event(id: $id) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				likesCount
 			}
 		}
 	}

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import EventCommentsFeed from '../../comments/EventCommentsFeed';
 import LikesFeed from '../../likes/eventLikes/LikesFeed';
 import EventRegistrationsFeed from '../../registrations/EventRegistrationsFeed';
+import CQuery from '../../commons/CustomQueryComponent';
+import { GET_EVENT_LIKES_COUNT } from '../../graphql/event/Queries';
 import { UserContext, EventContext } from '../../contexts';
 
 const EventSocialSelector = () => {
@@ -20,15 +22,21 @@ const EventSocialSelector = () => {
 		setCommentDisplay(false);
 		setRegistreeDisplay(true);
 	};
-
 	return (
 		<Fragment>
 			<div className="py-2 border-top border-bottom">
 				<div className="row">
 					{user.profile ? (
-						<div className="col px-0">
-							<LikesFeed />
-						</div>
+						<CQuery query={GET_EVENT_LIKES_COUNT} variables={{ id: event.id }}>
+							{({ data }) => {
+								const likesCount = data.event.body.likesCount;
+								return (
+									<div className="col px-0">
+										<LikesFeed likesCount={likesCount} />
+									</div>
+								);
+							}}
+						</CQuery>
 					) : null}
 					{event.showComments ? (
 						<div className="col px-0">

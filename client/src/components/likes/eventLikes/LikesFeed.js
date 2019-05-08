@@ -5,7 +5,7 @@ import { EventContext, UserContext } from '../../contexts';
 import { GET_EVENT_LIKES } from '../../graphql/like/Queries';
 import { LikeEvent, UnLikeEvent } from './LikeActions';
 
-const LikesFeed = () => {
+const LikesFeed = ({ likesCount }) => {
 	const { id } = useContext(UserContext);
 	const event = useContext(EventContext);
 
@@ -33,7 +33,7 @@ const LikesFeed = () => {
 								<i className="text-blue fa fa-thumbs-up" />
 							</Link>
 						)}
-						{likes.length !== 0 ? <span className="mx-1">{likes.length}</span> : null}
+						{likes.length !== 0 ? <span className="mx-1">{likesCount}</span> : null}
 						{typeof userLike !== 'undefined' ? (
 							<UnLikeEvent userLike={userLike} />
 						) : (
@@ -48,4 +48,4 @@ const LikesFeed = () => {
 	);
 };
 
-export default LikesFeed;
+export default React.memo(LikesFeed);

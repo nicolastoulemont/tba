@@ -51,20 +51,40 @@ const PanelItem = ({ registration, event }) => {
 							>
 								<small className="font-weight-bold mr-2">{event.name}</small>
 							</Link>
-							<small className="d-block">
-								{event.address}, {event.city}
-							</small>
-							{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
-								<small>
-									{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
-									{new Date(event.end).toTimeString().slice(0, 5)}
-								</small>
-							) : (
-								<small>
-									On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
-									{new Date(event.end).toUTCString().slice(0, 22)}
-								</small>
-							)}
+							<div className="d-block">
+								{event.likesCount ? (
+									<div className="row">
+										<div className="col-9">
+											<small className="text-left">
+												{event.address}, {event.city}
+											</small>
+										</div>
+										<div className="col-3">
+											<span className=" text-secondary">
+												<i className="fa fa-thumbs-up text-blue mr-1" />
+												<small className="ml-1">{event.likesCount}</small>
+											</span>
+										</div>
+									</div>
+								) : (
+									<small className="text-left">
+										{event.address}, {event.city}
+									</small>
+								)}
+							</div>
+							<div className="d-block">
+								{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
+									<small>
+										{new Date(event.start).toUTCString().slice(0, 22)} -{' '}
+										{new Date(event.end).toTimeString().slice(0, 5)}
+									</small>
+								) : (
+									<small>
+										On {new Date(event.start).toUTCString().slice(0, 22)} to{' '}
+										{new Date(event.end).toUTCString().slice(0, 22)}
+									</small>
+								)}
+							</div>
 						</div>
 					</div>
 				)}
