@@ -30,7 +30,7 @@ const EventCommentDisplay = ({ refetch }) => {
 
 	const regularComment = () => {
 		return (
-			<div className="list-group-item border-0 py-1 px-2" key={comment.id}>
+			<div className="list-group-item border-0  mob-comment" key={comment.id}>
 				<div className="row">
 					<div className="d-none d-md-block col-md-1">
 						<Link
@@ -54,7 +54,7 @@ const EventCommentDisplay = ({ refetch }) => {
 							)}
 						</Link>
 					</div>
-					<div className="col-10 pr-0 pl-2">
+					<div className="col-11 col-md-10 pr-0">
 						<div className="text-left">
 							<Link
 								to={{
@@ -71,7 +71,7 @@ const EventCommentDisplay = ({ refetch }) => {
 							{user.profile ? <EventCommentActions /> : null}
 						</div>
 					</div>
-					<div className="col-1 mx-0">
+					<div className="col-1 mx-0 pl-0">
 						{user.id === comment.user_ID || user.id === event.user_ID ? (
 							<Mutation mutation={MODERATE_COMMENT}>
 								{(moderateComment, e) => (

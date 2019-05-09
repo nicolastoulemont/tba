@@ -27,7 +27,7 @@ const Home = props => {
 								<div className="container">
 									<div className="mt-2 text-center">
 										<div className="row">
-											<main className="col-sm-12 col-lg-8 bg-white px-0">
+											<main className="col-12 col-lg-8 bg-white px-0">
 												<HomeRouter />
 											</main>
 											<SideBar history={props.history} />

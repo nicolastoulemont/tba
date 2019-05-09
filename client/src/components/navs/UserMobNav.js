@@ -20,11 +20,10 @@ const UserMobNav = ({ history }) => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('uuid');
 	};
-
 	const path = window.location.pathname;
 	return (
 		<Fragment>
-			<div className="justify-text-center">
+			<div className="justify-content-center">
 				<div className="mobileNav d-block d-lg-none">
 					<div className="row">
 						<div className="col px-0 text-center pl-1">
@@ -89,6 +88,7 @@ const UserMobNav = ({ history }) => {
 									data-togggle="tooltip"
 									data-placement="bottom"
 									title="Menu"
+									onMouseEnter={e => setShowDatePicker(false)}
 								>
 									<i className="fas fa-bars" />
 								</Link>

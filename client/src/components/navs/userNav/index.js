@@ -8,7 +8,7 @@ const UserNav = () => {
 	const Auth = useContext(AuthContext);
 
 	return (
-		<div className="d-none d-md-block">
+		<div className="d-none d-lg-block">
 			<nav className="navbar sticky-top navbar-expand-sm bg-white py-1">
 				<div className="container px-0">
 					<Link className="navbar-brand font-bold align-middle" to="/">
