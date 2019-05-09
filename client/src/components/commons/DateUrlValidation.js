@@ -12,7 +12,11 @@ export const DateUrlValidation = day => {
 		if (!dayjs(startDay).isBefore(dayjs(endDay))) return false;
 		if (!dayjs(endDay).isAfter(dayjs(startDay))) return false;
 		if (dayjs(startDay).isSame(dayjs(endDay))) return false;
-		if (dayjs(endDay).month() - dayjs(startDay).month() > 1) return false;
+		const oneDay = 24 * 60 * 60 * 1000;
+		const firstDate = new Date(startDay);
+		const secondDate = new Date(endDay);
+		const diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay));
+		if (diffDays > 30) return false;
 		return true;
 	}
 	if (!day.includes('+')) {
