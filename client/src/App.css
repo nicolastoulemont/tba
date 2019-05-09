@@ -251,6 +251,15 @@ a:hover {
 	padding: 10px 20px;
 }
 
+.brand {
+	padding: 20px;
+	margin: 0;
+}
+
+.register {
+	border-left: 1px solid #b7b8b8;
+}
+
 @media only screen and (max-width: 990px) {
 	.nav-link {
 		border-radius: 50px;
@@ -264,6 +273,22 @@ a:hover {
 		background-color: #4f96d5;
 		color: white;
 		border: white;
+	}
+
+	.landing-call {
+		position: relative;
+		margin: auto;
+		padding: 25px 0 0;
+	}
+
+	.brand {
+		padding: 10px;
+		margin: 0;
+	}
+
+	.register {
+		border-left: none;
+		margin-top: 10px;
 	}
 }
 
@@ -280,6 +305,22 @@ a:hover {
 	.social-links {
 		padding-left: 25px;
 		padding-right: 0px;
+	}
+
+	.landing-call {
+		position: relative;
+		margin: auto;
+		padding: 25px 0 0;
+	}
+
+	.brand {
+		padding: 10px;
+		margin: 0;
+	}
+
+	.register {
+		border-left: none;
+		margin-top: 10px;
 	}
 }
 
@@ -303,5 +344,21 @@ a:hover {
 		background-color: var(--main-blue-color);
 		color: white;
 		border: white;
+	}
+
+	.landing-call {
+		position: relative;
+		margin: auto;
+		padding: 25px 0 0;
+	}
+
+	.brand {
+		padding: 10px;
+		margin: 0;
+	}
+
+	.register {
+		border-left: none;
+		margin-top: 10px;
 	}
 }

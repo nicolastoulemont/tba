@@ -11,7 +11,6 @@ import classNames from 'classnames';
 const Landing = props => {
 	const Auth = useContext(AuthContext);
 	const [showLogIn, setShowLogIn] = useState(false);
-	console.log(props);
 	const notAuth = () => {
 		return (
 			<Fragment>
@@ -20,10 +19,10 @@ const Landing = props => {
 					<div className="row">
 						<div className="col landing-call">
 							<div className="row px-4">
-								<div className="col text-center bg-white">
+								<div className="col-lg text-center bg-white">
 									<div className="row">
 										<div className="col">
-											<h3 className="text-muted p-3">MyEU</h3>
+											<h3 className="text-muted brand">MyEU</h3>
 										</div>
 									</div>
 									<div className="row">
@@ -45,7 +44,7 @@ const Landing = props => {
 										</div>
 									</div>
 								</div>
-								<div className="col text-center bg-white border-left">
+								<div className="col-lg text-center bg-white register">
 									<div className="row border-bottom">
 										<div className={classNames('col', { 'bg-blue text-white': !showLogIn })}>
 											<Link

@@ -13,7 +13,7 @@ const Login = ({ history, client }) => {
 	const onChange = e => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
 		if (e.target.name === 'password') setPassword(e.target.value);
-		if (e.target.name === 'email') setEmail(e.target.value);
+		if (e.target.name === 'email') setEmail(e.target.value.toLowerCase());
 	};
 
 	const logIn = async (e, email, password, login) => {
@@ -30,7 +30,6 @@ const Login = ({ history, client }) => {
 			setTimeout(() => history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 		}
 	};
-
 	return (
 		<Fragment>
 			<div className="col p-4">
@@ -41,7 +40,7 @@ const Login = ({ history, client }) => {
 							<InputField
 								type="text"
 								labelText="Email"
-								placeholder="Please enter your email adress"
+								placeholder="Your email address"
 								name="email"
 								value={email}
 								onChange={onChange}
@@ -50,13 +49,13 @@ const Login = ({ history, client }) => {
 							<InputField
 								type="password"
 								labelText="Password"
-								placeholder="Please enter your password"
+								placeholder="Your password"
 								name="password"
 								value={password}
 								onChange={onChange}
 								error={findErrorInErrorsArr(errors, 'password')}
 							/>
-							<input type="submit" className="btn btn-blue btn-block my-4" />
+							<input type="submit" className="btn bg-blue text-white btn-block my-4" />
 						</form>
 					)}
 				</Mutation>

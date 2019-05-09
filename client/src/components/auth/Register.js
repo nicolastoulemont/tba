@@ -13,7 +13,7 @@ const Register = props => {
 	const onChange = e => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
 		if (e.target.name === 'password') setPassword(e.target.value);
-		if (e.target.name === 'email') setEmail(e.target.value);
+		if (e.target.name === 'email') setEmail(e.target.value.toLowerCase());
 	};
 
 	const registerAndLoginUser = async (e, email, password, registerAndLogin) => {
@@ -30,7 +30,6 @@ const Register = props => {
 			setTimeout(() => props.history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 		}
 	};
-
 	return (
 		<Fragment>
 			<div className="col p-4">
@@ -56,7 +55,7 @@ const Register = props => {
 								onChange={onChange}
 								error={findErrorInErrorsArr(errors, 'password')}
 							/>
-							<input type="submit" className="btn btn-blue btn-block my-4" />
+							<input type="submit" className="btn bg-blue text-white btn-block my-4" />
 						</form>
 					)}
 				</Mutation>
