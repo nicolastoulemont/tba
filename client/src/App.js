@@ -5,8 +5,6 @@ import { ApolloProvider as ApolloProviderHooks } from 'react-apollo-hooks';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import PrivateRoute from './components/auth/Auth';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
 import Error404 from './components/commons/IncorrectRoute';
 import { AuthContext, AuthContextValue } from './components/contexts';
 import Home from './components/home';
@@ -35,8 +33,6 @@ const App = () => (
 					<Router>
 						<Switch>
 							<Route exact path="/" component={Landing} />
-							<Route exact path="/register" component={Register} />
-							<Route exact path="/login" component={Login} />
 							<PrivateRoute path="/home" component={Home} />
 							<Route component={Error404} />
 							<Route path="/error" component={Error404} />

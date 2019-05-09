@@ -3,10 +3,9 @@ import React, { Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
 import { LOGIN_USER } from '../graphql/user/Mutations';
-import UserNav from '../navs/userNav';
 import { findErrorInErrorsArr } from '../commons/ErrorsHandling';
 
-const Login = props => {
+const Login = ({ history, client }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [errors, setErrors] = useState([]);
@@ -26,47 +25,41 @@ const Login = props => {
 		if (!ok) {
 			setErrors(errors);
 		} else {
-			props.client.resetStore();
+			client.resetStore();
 			localStorage.setItem('token', token);
-			setTimeout(() => props.history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
+			setTimeout(() => history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 		}
 	};
 
 	return (
 		<Fragment>
-			<UserNav />
-			<div className="container">
-				<div className="row">
-					<div className="col-md-6 mt-4 mx-auto">
-						<h1 className="display-4 text-center">Login</h1>
-						<p className="lead text-center">Login to your user account</p>
-						<Mutation mutation={LOGIN_USER}>
-							{(login, e) => (
-								<form onSubmit={e => logIn(e, email, password, login)}>
-									<InputField
-										type="text"
-										labelText="Email"
-										placeholder="Please enter your email adress"
-										name="email"
-										value={email}
-										onChange={onChange}
-										error={findErrorInErrorsArr(errors, 'email')}
-									/>
-									<InputField
-										type="password"
-										labelText="Password"
-										placeholder="Please enter your password"
-										name="password"
-										value={password}
-										onChange={onChange}
-										error={findErrorInErrorsArr(errors, 'password')}
-									/>
-									<input type="submit" className="btn btn-info btn-block mt-4" />
-								</form>
-							)}
-						</Mutation>
-					</div>
-				</div>
+			<div className="col p-4">
+				<h6 className="text-left text-muted">Login to your account</h6>
+				<Mutation mutation={LOGIN_USER}>
+					{(login, e) => (
+						<form onSubmit={e => logIn(e, email, password, login)}>
+							<InputField
+								type="text"
+								labelText="Email"
+								placeholder="Please enter your email adress"
+								name="email"
+								value={email}
+								onChange={onChange}
+								error={findErrorInErrorsArr(errors, 'email')}
+							/>
+							<InputField
+								type="password"
+								labelText="Password"
+								placeholder="Please enter your password"
+								name="password"
+								value={password}
+								onChange={onChange}
+								error={findErrorInErrorsArr(errors, 'password')}
+							/>
+							<input type="submit" className="btn btn-blue btn-block my-4" />
+						</form>
+					)}
+				</Mutation>
 			</div>
 		</Fragment>
 	);

@@ -3,7 +3,6 @@ import React, { Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
 import { REGISTER_AND_LOGIN_USER } from '../graphql/user/Mutations';
-import UserNav from '../navs/userNav';
 import { findErrorInErrorsArr } from '../commons/ErrorsHandling';
 
 const Register = props => {
@@ -34,39 +33,33 @@ const Register = props => {
 
 	return (
 		<Fragment>
-			<UserNav />
-			<div className="container">
-				<div className="row">
-					<div className="col-md-6 mt-4 mx-auto">
-						<h1 className="display-4 text-center">Register</h1>
-						<p className="lead text-center">Create your eu-watcher account</p>
-						<Mutation mutation={REGISTER_AND_LOGIN_USER}>
-							{(registerAndLogin, e) => (
-								<form onSubmit={e => registerAndLoginUser(e, email, password, registerAndLogin)}>
-									<InputField
-										type="text"
-										labelText="Email"
-										placeholder="Your email address"
-										name="email"
-										value={email}
-										onChange={onChange}
-										error={findErrorInErrorsArr(errors, 'email')}
-									/>
-									<InputField
-										type="password"
-										labelText="Password"
-										placeholder="Between 5 and 25 characters"
-										name="password"
-										value={password}
-										onChange={onChange}
-										error={findErrorInErrorsArr(errors, 'password')}
-									/>
-									<input type="submit" className="btn btn-info btn-block mt-4" />
-								</form>
-							)}
-						</Mutation>
-					</div>
-				</div>
+			<div className="col p-4">
+				<h6 className="text-left text-muted">Create your MyEU account</h6>
+				<Mutation mutation={REGISTER_AND_LOGIN_USER}>
+					{(registerAndLogin, e) => (
+						<form onSubmit={e => registerAndLoginUser(e, email, password, registerAndLogin)}>
+							<InputField
+								type="text"
+								labelText="Email"
+								placeholder="Your email address"
+								name="email"
+								value={email}
+								onChange={onChange}
+								error={findErrorInErrorsArr(errors, 'email')}
+							/>
+							<InputField
+								type="password"
+								labelText="Password"
+								placeholder="Between 5 and 25 characters"
+								name="password"
+								value={password}
+								onChange={onChange}
+								error={findErrorInErrorsArr(errors, 'password')}
+							/>
+							<input type="submit" className="btn btn-blue btn-block my-4" />
+						</form>
+					)}
+				</Mutation>
 			</div>
 		</Fragment>
 	);
