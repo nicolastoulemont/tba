@@ -1,3 +1,7 @@
+:root {
+	--main-blue-color: #4f96d5;
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -36,13 +40,13 @@ a,
 }
 a:hover {
 	text-decoration: none;
-	color: #30446d;
+	color: var(--main-blue-color);
 }
 
 .link-menu:hover {
 	text-decoration: none;
 	color: #5a6268;
-	border-bottom: 3px solid #4f96d5;
+	border-bottom: 3px solid var(--main-blue-color);
 }
 
 .nav-link {
@@ -50,13 +54,13 @@ a:hover {
 }
 
 .nav-link:hover {
-	background-color: #4f96d5;
+	background-color: var(--main-blue-color);
 	color: white;
 	border: white;
 }
 
 .drop-link:hover {
-	background-color: #4f96d5;
+	background-color: var(--main-blue-color);
 	color: white;
 }
 
@@ -89,13 +93,13 @@ a:hover {
 }
 
 .actiontags:hover {
-	background-color: #4f96d5;
+	background-color: var(--main-blue-color);
 	color: white;
 	border: 1px solid white;
 }
 
 .bg-blue {
-	background-color: #4f96d5;
+	background-color: var(--main-blue-color);
 }
 
 .bg-darkblue {
@@ -103,7 +107,7 @@ a:hover {
 }
 
 .text-blue {
-	color: #4f96d5;
+	color: var(--main-blue-color);
 }
 
 .text-darkblue {
@@ -111,14 +115,14 @@ a:hover {
 }
 
 .btn-blue {
-	background-color: #4f96d5;
+	background-color: var(--main-blue-color);
 	color: white;
 }
 
 .btn-blue:hover {
 	background-color: white;
-	color: #4f96d5;
-	border: 1px solid #4f96d5;
+	color: var(--main-blue-color);
+	border: 1px solid var;
 }
 
 .btn-orange {
@@ -219,17 +223,17 @@ a:hover {
 
 .settings:hover .settings-child {
 	background-color: white !important;
-	color: #30446d;
+	color: var(--main-blue-color);
 }
 
 .link-icon:hover .icon-child {
-	color: #30446d;
+	color: var(--main-blue-color);
 }
 
 .Range
 	.DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
 	background-color: #f0f8ff !important;
-	color: #4f96d5;
+	color: var(--main-blue-color);
 }
 .Range .DayPicker-Day {
 	border-radius: 0 !important;
@@ -288,7 +292,7 @@ a:hover {
 	}
 
 	.nav-link:hover {
-		background-color: #4f96d5;
+		background-color: var(--main-blue-color);
 		color: white;
 		border: white;
 	}
