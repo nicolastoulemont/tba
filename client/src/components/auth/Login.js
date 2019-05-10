@@ -25,11 +25,12 @@ const Login = ({ history, client }) => {
 		if (!ok) {
 			setErrors(errors);
 		} else {
-			client.resetStore();
+			await client.resetStore();
 			localStorage.setItem('token', token);
 			setTimeout(() => history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 		}
 	};
+
 	return (
 		<Fragment>
 			<div className="col p-4">

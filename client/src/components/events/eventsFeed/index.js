@@ -75,7 +75,7 @@ const EventFeed = ({ match }) => {
 									return (
 										<Fragment>
 											{events.length === 0 ? (
-												<div className="mt-4 pl-4 font-italic ">No {displayDay()}</div>
+												<div className="mt-4 font-italic ">No {displayDay()}</div>
 											) : (
 												<Fragment>
 													{events.map(event => (

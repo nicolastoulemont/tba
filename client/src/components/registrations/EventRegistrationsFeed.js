@@ -59,8 +59,7 @@ const EventRegistrationFeed = () => {
 															</Link>
 														</div>
 														<div className="d-block">
-															{registration.creator[0].profile[0].position} at{' '}
-															{registration.creator[0].profile[0].organisation_ID}
+															{registration.creator[0].profile[0].position}
 														</div>
 													</div>
 												</div>
