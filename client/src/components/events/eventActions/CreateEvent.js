@@ -23,6 +23,7 @@ const CreateEvent = ({ history }) => {
 
 	const [name, setName] = useState('');
 	const [abstract, setAbstract] = useState('');
+	const [eventHost, setEventHost] = useState('');
 	const [banner, setBanner] = useState(null);
 	const [description, setDescription] = useState('');
 	const [isPublic, setIsPublic] = useState(true);
@@ -62,6 +63,7 @@ const CreateEvent = ({ history }) => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
 		if (e.target.name === 'name') setName(e.target.value);
 		if (e.target.name === 'abstract') setAbstract(e.target.value);
+		if (e.target.name === 'eventhost') setEventHost(e.target.value);
 		if (e.target.name === 'description') setDescription(e.target.value);
 		if (e.target.name === 'city') setCity(e.target.value);
 		if (e.target.name === 'address') setAddress(e.target.value);
@@ -72,6 +74,7 @@ const CreateEvent = ({ history }) => {
 		const err = frontEndEventInputValidation(
 			name,
 			abstract,
+			eventHost,
 			description,
 			city,
 			address,
@@ -104,6 +107,7 @@ const CreateEvent = ({ history }) => {
 				user_ID: user.id,
 				name,
 				abstract,
+				eventHost,
 				banner_URL: url,
 				description,
 				isPublic,
@@ -140,6 +144,7 @@ const CreateEvent = ({ history }) => {
 				user_ID: user.id,
 				name,
 				abstract,
+				eventHost,
 				description,
 				isPublic,
 				showComments,
@@ -190,6 +195,10 @@ const CreateEvent = ({ history }) => {
 												x={760}
 												y={380}
 												placeholder="event"
+												setErrors={setErrors}
+												errors={errors}
+												name="imgHandler"
+												error={findErrorInErrorsArr(errors, 'imgHandler')}
 											/>
 											<h4 className="text-left pt-4 px-4">Create an Event</h4>
 										</div>
@@ -204,6 +213,17 @@ const CreateEvent = ({ history }) => {
 												min={5}
 												max={140}
 												error={findErrorInErrorsArr(errors, 'name')}
+											/>
+											<InputField
+												type="text"
+												placeholder="The organisation hosting the event"
+												name="eventhost"
+												labelText="Event Host"
+												value={eventHost}
+												onChange={onChange}
+												min={1}
+												max={70}
+												error={findErrorInErrorsArr(errors, 'eventhost')}
 											/>
 											<TextAreaField
 												type="text"
@@ -381,7 +401,7 @@ const CreateEvent = ({ history }) => {
 												secondary="It will make it easier to find by users and increase participation"
 											/>
 
-											<input type="submit" className="btn btn-blue btn-block my-4" />
+											<input type="submit" className="btn bg-blue text-white btn-block my-4" />
 										</div>
 									</form>
 								</div>

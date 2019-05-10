@@ -14,6 +14,10 @@ const eventSchema = new Schema({
 		type: String,
 		required: true
 	},
+	eventHost: {
+		type: String,
+		required: true
+	},
 	banner_URL: String,
 	description: {
 		type: String,

@@ -8,6 +8,7 @@ const validateEventInput = async data => {
 
 	data.name = !isEmpty(data.name) ? data.name : '';
 	data.abstract = !isEmpty(data.abstract) ? data.abstract : '';
+	data.eventHost = !isEmpty(data.eventHost) ? data.eventHost : '';
 	data.description = !isEmpty(data.description) ? data.description : '';
 	data.city = !isEmpty(data.city) ? data.city : '';
 	data.address = !isEmpty(data.address) ? data.address : '';
@@ -22,6 +23,12 @@ const validateEventInput = async data => {
 		errors.push({
 			path: 'abstract',
 			message: 'The event abstract must be between 5 and 280 characters'
+		});
+
+	if (!Validator.isLength(data.eventHost, { min: 1, max: 70 }))
+		errors.push({
+			path: 'eventhost',
+			message: 'The event host must be between 1 and 70 characters'
 		});
 
 	if (!Validator.isLength(data.description, { min: 5, max: 2000 }))
@@ -56,6 +63,11 @@ const validateEventInput = async data => {
 	if (!data.abstract.match(ValidStringRegExp))
 		errors.push({
 			path: 'abstract',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.eventHost.match(ValidStringRegExp))
+		errors.push({
+			path: 'eventhost',
 			message: 'Only alphanumeric characters are accepted'
 		});
 	if (!data.description.match(ValidStringRegExp))
@@ -111,6 +123,7 @@ const validateUpdEventIntput = async data => {
 
 	data.name = !isEmpty(data.name) ? data.name : '';
 	data.abstract = !isEmpty(data.abstract) ? data.abstract : '';
+	data.eventHost = !isEmpty(data.eventHost) ? data.eventHost : '';
 	data.description = !isEmpty(data.description) ? data.description : '';
 	data.city = !isEmpty(data.city) ? data.city : '';
 	data.address = !isEmpty(data.address) ? data.address : '';
@@ -125,6 +138,12 @@ const validateUpdEventIntput = async data => {
 		errors.push({
 			path: 'abstract',
 			message: 'The event abstract must be between 5 and 280 characters'
+		});
+
+	if (!Validator.isLength(data.eventHost, { min: 1, max: 70 }))
+		errors.push({
+			path: 'eventhost',
+			message: 'The event host must be between 1 and 70 characters'
 		});
 
 	if (!Validator.isLength(data.description, { min: 5, max: 2000 }))
@@ -159,6 +178,12 @@ const validateUpdEventIntput = async data => {
 	if (!data.abstract.match(ValidStringRegExp))
 		errors.push({
 			path: 'abstract',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
+	if (!data.eventHost.match(ValidStringRegExp))
+		errors.push({
+			path: 'eventhost',
 			message: 'Only alphanumeric characters are accepted'
 		});
 	if (!data.description.match(ValidStringRegExp))

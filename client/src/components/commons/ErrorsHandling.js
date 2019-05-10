@@ -6,12 +6,13 @@ export const findErrorInErrorsArr = (errors, target) => {
 };
 
 export const ValidStringRegExp = new RegExp(
-	/^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!:;,€.\s-]*$/
+	/^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ'?!:;,€.\s-]*$/
 );
 
 export const frontEndEventInputValidation = (
 	name,
 	abstract,
+	eventHost,
 	description,
 	city,
 	address,
@@ -21,6 +22,10 @@ export const frontEndEventInputValidation = (
 	let err = [];
 	if (name.length > 140 || name.length < 5)
 		err.push({ path: 'name', message: 'The event name must between 5 and 140 characters' });
+
+	if (eventHost.length > 70 || eventHost.length < 1)
+		err.push({ path: 'eventhost', message: 'The event host must between 1 and 70 characters' });
+
 	if (abstract.length > 280 || abstract.length < 5)
 		err.push({
 			path: 'abstract',
@@ -44,6 +49,11 @@ export const frontEndEventInputValidation = (
 	if (!abstract.match(ValidStringRegExp))
 		err.push({
 			path: 'abstract',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!eventHost.match(ValidStringRegExp))
+		err.push({
+			path: 'eventhost',
 			message: 'Only alphanumeric characters are accepted'
 		});
 	if (!description.match(ValidStringRegExp))

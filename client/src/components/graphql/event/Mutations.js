@@ -5,6 +5,7 @@ export const CREATE_EVENT = gql`
 		$user_ID: String!
 		$name: String!
 		$abstract: String!
+		$eventHost: String!
 		$banner_URL: String
 		$description: String!
 		$isPublic: Boolean!
@@ -21,6 +22,7 @@ export const CREATE_EVENT = gql`
 			user_ID: $user_ID
 			name: $name
 			abstract: $abstract
+			eventHost: $eventHost
 			banner_URL: $banner_URL
 			description: $description
 			isPublic: $isPublic
@@ -51,6 +53,7 @@ export const UPDATE_EVENT = gql`
 		$_id: ID!
 		$name: String!
 		$abstract: String!
+		$eventHost: String!
 		$banner_URL: String
 		$description: String!
 		$isPublic: Boolean!
@@ -67,6 +70,7 @@ export const UPDATE_EVENT = gql`
 			_id: $_id
 			name: $name
 			abstract: $abstract
+			eventHost: $eventHost
 			banner_URL: $banner_URL
 			description: $description
 			isPublic: $isPublic

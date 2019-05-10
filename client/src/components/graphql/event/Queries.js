@@ -30,6 +30,7 @@ export const SEARCH_DAILY_EVENTS = gql`
 				user_ID
 				name
 				abstract
+				eventHost
 				isPublic
 				type
 				price
@@ -88,6 +89,7 @@ export const GET_EVENTS = gql`
 			user_ID
 			name
 			abstract
+			eventHost
 			isPublic
 			type
 			price
@@ -127,6 +129,7 @@ export const GET_EVENT = gql`
 				type
 				price
 				name
+				eventHost
 				abstract
 				banner_URL
 				description

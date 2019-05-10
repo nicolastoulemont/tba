@@ -38,7 +38,7 @@ const ScrapedItem = ({ event }) => {
 						<small className="font-italic">{dayjs(event.createdAt).fromNow()}</small>
 					)}
 				</h6>
-
+				<h6 className="text-left text-muted mb-0">Host: {event.eventHost}</h6>
 				<p className="text-left p-0 my-1">
 					{event.tags.map(tag => (
 						<span

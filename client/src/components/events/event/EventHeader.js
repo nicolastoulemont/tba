@@ -53,6 +53,7 @@ const EventHeader = () => {
 									</small>
 								)}
 							</div>
+							<h6 className="my-1">Host : {event.eventHost}</h6>
 							<p className="my-1">
 								{event.address}, {event.city}
 							</p>

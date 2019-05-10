@@ -51,7 +51,7 @@ const isEmpty = value =>
 	(typeof value === 'string' && value.trim().length === 0);
 
 const ValidStringRegExp = new RegExp(
-	/^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!:;,€.\s-]*$/
+	/^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ'?!:;,€.\s-]*$/
 );
 
 const validateSearchInput = data => {

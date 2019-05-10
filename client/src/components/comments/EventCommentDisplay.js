@@ -12,7 +12,7 @@ const EventCommentDisplay = ({ refetch }) => {
 	const comment = useContext(CommentContext);
 	const moderatedComment = () => {
 		return (
-			<div className="list-group-item border-0 py-1 px-2" key={comment.id}>
+			<div className="list-group-item border-0 py-0 px-2" key={comment.id}>
 				<div className="text-left mx-auto">
 					<small>
 						<small className="font-italic">{'[ deleted ]'}</small>

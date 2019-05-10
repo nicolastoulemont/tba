@@ -12,23 +12,23 @@ import { UserContext } from '../../contexts';
 import { UPDATE_PROFILE } from '../../graphql/profile/Mutations';
 import { SIGN_S3 } from '../../graphql/s3/Mutation';
 import { LOGGED_USER } from '../../graphql/user/Queries';
+import { GET_USER_FULL_PROFILE } from '../../graphql/profile/Queries';
 import { findErrorInErrorsArr, frontEndProfileInputValidation } from '../../commons/ErrorsHandling';
 
 const EditProfile = ({ match, history }) => {
 	const user = useContext(UserContext);
-
-	const [name, setName] = useState(user.profile.name);
-	const [position, setPosition] = useState(user.profile.position);
-	const [bio, setBio] = useState(user.profile.bio);
-	const [picture, setPicture] = useState(user.profile.picture_URL);
-	const [twitter_URL, setTwitter_URL] = useState(user.profile.twitter_URL || '');
-	const [linkedin_URL, setLinkedin_URL] = useState(user.profile.linkedin_URL || '');
-	const [website_URL, setWebsite_URL] = useState(user.profile.website_URL || '');
-	const [hideSocial, setHideSocial] = useState(user.profile.hideSocial);
-	const [privateProfile, setprivateProfile] = useState(user.profile.privateProfile);
-	const [userTopics, setUserTopics] = useState(user.profile.tags);
+	const [name, setName] = useState(user.profile[0].name);
+	const [position, setPosition] = useState(user.profile[0].position);
+	const [bio, setBio] = useState(user.profile[0].bio);
+	const [picture, setPicture] = useState(user.profile[0].picture_URL);
+	const [twitter_URL, setTwitter_URL] = useState(user.profile[0].twitter_URL || '');
+	const [linkedin_URL, setLinkedin_URL] = useState(user.profile[0].linkedin_URL || '');
+	const [website_URL, setWebsite_URL] = useState(user.profile[0].website_URL || '');
+	const [hideSocial, setHideSocial] = useState(user.profile[0].hideSocial);
+	const [privateProfile, setprivateProfile] = useState(user.profile[0].privateProfile);
+	const [userTopics, setUserTopics] = useState(user.profile[0].tags);
 	const [topicsPool, setTopicsPool] = useState(
-		tagsList.filter(tag => !user.profile.tags.includes(tag))
+		tagsList.filter(tag => !user.profile[0].tags.includes(tag))
 	);
 
 	const [errors, setErrors] = useState([]);
@@ -70,9 +70,9 @@ const EditProfile = ({ match, history }) => {
 			return null;
 		}
 
-		if (picture !== user.profile.picture_URL) {
+		if (picture !== user.profile[0].picture_URL) {
 			await updateProfileWithNewPicture(updateProfile, signS3);
-		} else if (picture === user.profile.picture_URL) {
+		} else if (picture === user.profile[0].picture_URL) {
 			await updateProfileWithOutNewPicture(updateProfile);
 		}
 	};
@@ -88,7 +88,7 @@ const EditProfile = ({ match, history }) => {
 		await uploadToS3(picture, signedRequest);
 		const res = await updateProfile({
 			variables: {
-				_id: user.profile.id,
+				_id: user.profile[0].id,
 				organisation_ID: 'aazeazea',
 				name,
 				position,
@@ -122,7 +122,7 @@ const EditProfile = ({ match, history }) => {
 	const updateProfileWithOutNewPicture = async updateProfile => {
 		const res = await updateProfile({
 			variables: {
-				_id: user.profile.id,
+				_id: user.profile[0].id,
 				organisation_ID: 'aazeazea',
 				name,
 				position,
@@ -130,7 +130,7 @@ const EditProfile = ({ match, history }) => {
 				twitter_URL,
 				linkedin_URL,
 				website_URL,
-				picture_URL: user.profile.picture_URL,
+				picture_URL: user.profile[0].picture_URL,
 				hideSocial,
 				privateProfile,
 				tags: userTopics
@@ -151,7 +151,10 @@ const EditProfile = ({ match, history }) => {
 					<Mutation
 						mutation={UPDATE_PROFILE}
 						refetchQueries={() => {
-							return [{ query: LOGGED_USER }];
+							return [
+								{ query: LOGGED_USER },
+								{ query: GET_USER_FULL_PROFILE, variables: { user_ID: user.id } }
+							];
 						}}
 					>
 						{(updateProfile, e) => (
@@ -285,7 +288,7 @@ const EditProfile = ({ match, history }) => {
 											secondary="Will allow you to quickly find the informations you are interested in"
 										/>
 
-										<input type="submit" className="btn btn-blue btn-block mt-4 mb-2" />
+										<input type="submit" className="btn bg-blue text-white btn-block mt-4 mb-2" />
 									</div>
 								</div>
 							</form>

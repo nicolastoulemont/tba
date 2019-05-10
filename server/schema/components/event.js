@@ -22,6 +22,7 @@ module.exports = {
 			user_ID: ID!
 			name: String!
 			abstract: String!
+			eventHost: String!
 			banner_URL: String
 			description: String!
 			isPublic: Boolean!
@@ -95,6 +96,7 @@ module.exports = {
 				user_ID: String!
 				name: String!
 				abstract: String!
+				eventHost: String!
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!
@@ -111,6 +113,7 @@ module.exports = {
 				_id: ID!
 				name: String!
 				abstract: String!
+				eventHost: String!
 				banner_URL: String
 				description: String!
 				isPublic: Boolean!

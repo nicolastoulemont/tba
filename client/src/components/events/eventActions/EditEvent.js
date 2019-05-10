@@ -26,6 +26,7 @@ const EditEvent = ({ match, history }) => {
 
 	const [name, setName] = useState(stateEvent.name);
 	const [abstract, setAbstract] = useState(stateEvent.abstract);
+	const [eventHost, setEventHost] = useState(stateEvent.eventHost);
 	const [banner, setBanner] = useState(stateEvent.banner_URL);
 	const [description, setDescription] = useState(stateEvent.description);
 	const [isPublic, setIsPublic] = useState(stateEvent.isPublic);
@@ -70,6 +71,7 @@ const EditEvent = ({ match, history }) => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
 		if (e.target.name === 'name') setName(e.target.value);
 		if (e.target.name === 'abstract') setAbstract(e.target.value);
+		if (e.target.name === 'eventhost') setEventHost(e.target.value);
 		if (e.target.name === 'description') setDescription(e.target.value);
 		if (e.target.name === 'city') setCity(e.target.value);
 		if (e.target.name === 'address') setAddress(e.target.value);
@@ -80,6 +82,7 @@ const EditEvent = ({ match, history }) => {
 		const err = frontEndEventInputValidation(
 			name,
 			abstract,
+			eventHost,
 			description,
 			city,
 			address,
@@ -112,6 +115,7 @@ const EditEvent = ({ match, history }) => {
 				_id: stateEvent.id,
 				name,
 				abstract,
+				eventHost,
 				banner_URL: url,
 				description,
 				isPublic,
@@ -149,6 +153,7 @@ const EditEvent = ({ match, history }) => {
 				_id: stateEvent.id,
 				name,
 				abstract,
+				eventHost,
 				banner_URL: banner,
 				description,
 				isPublic,
@@ -206,6 +211,17 @@ const EditEvent = ({ match, history }) => {
 									min={5}
 									max={140}
 									error={findErrorInErrorsArr(errors, 'name')}
+								/>
+								<InputField
+									type="text"
+									placeholder="The organisation hosting the event"
+									name="eventhost"
+									labelText="Event Host"
+									value={eventHost}
+									onChange={onChange}
+									min={1}
+									max={70}
+									error={findErrorInErrorsArr(errors, 'eventhost')}
 								/>
 								<TextAreaField
 									type="text"
@@ -374,7 +390,7 @@ const EditEvent = ({ match, history }) => {
 									main="Tag your event"
 									secondary="It will make it easier to find by users and increase participation"
 								/>
-								<input type="submit" className="btn btn-blue btn-block my-4" />
+								<input type="submit" className="btn bg-blue text-white btn-block my-4" />
 							</div>
 						</form>
 					)}

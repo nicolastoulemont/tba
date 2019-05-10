@@ -1,10 +1,8 @@
 const Validator = require('validator');
-const { isEmpty } = require('../general');
+const { isEmpty, ValidStringRegExp } = require('../general');
 
 const validateProfileInput = async data => {
 	let errors = [];
-	console.log(data.position);
-
 	data.name = !isEmpty(data.name) ? data.name : '';
 	data.position = !isEmpty(data.position) ? data.position : '';
 	data.bio = !isEmpty(data.bio) ? data.bio : '';
@@ -30,21 +28,18 @@ const validateProfileInput = async data => {
 			message: 'Your bio must be between 0 and 280 characters'
 		});
 
-	const ValidString = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ?!,€. ]*$/;
-	const stringRegExp = new RegExp(ValidString);
-
-	if (!data.name.match(stringRegExp))
-		err.push({
+	if (!data.name.match(ValidStringRegExp))
+		errors.push({
 			path: 'name',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.position.match(stringRegExp))
-		err.push({
+	if (!data.position.match(ValidStringRegExp))
+		errors.push({
 			path: 'position',
 			message: 'Only alphanumeric characters are accepted'
 		});
-	if (!data.bio.match(stringRegExp))
-		err.push({
+	if (!data.bio.match(ValidStringRegExp))
+		errors.push({
 			path: 'bio',
 			message: 'Only alphanumeric characters are accepted'
 		});

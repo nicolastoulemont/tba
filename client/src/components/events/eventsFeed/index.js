@@ -67,6 +67,7 @@ const EventFeed = ({ match }) => {
 								price,
 								tags
 							}}
+							pollInterval={300000}
 						>
 							{({ data }) => {
 								if (data.searchDailyEvents.ok) {
