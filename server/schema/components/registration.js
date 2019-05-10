@@ -24,8 +24,8 @@ module.exports = {
 			eventEnd: Date
 			createdAt: Date
 			updatedAt: Date
-			event: EventItem
-			creator: User
+			event: [EventItem]
+			creator: [User]
 		}
 
 		type RegistrationsResponse implements Response {
@@ -102,10 +102,10 @@ module.exports = {
 			}
 		},
 		Registration: {
-			creator: async (parent, args, { models: { User } }) =>
-				await User.findOne({ _id: parent.user_ID }),
-			event: async (parent, args, { models: { EventItem } }) =>
-				await EventItem.findOne({ _id: parent.event_ID })
+			creator: async (parent, args, { Loaders: { usersLoader } }) =>
+				await usersLoader.load(parent.user_ID),
+			event: async (parent, args, { Loaders: { registrationEventLoader } }) =>
+				await registrationEventLoader.load(parent.event_ID)
 		},
 		Mutation: {
 			addRegistration: async (parent, args, { user, models: { Registration } }) => {

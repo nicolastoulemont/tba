@@ -53,7 +53,7 @@ const ProfileLikesFeed = () => {
 													className="font-weight-bold"
 												>
 													{' '}
-													{like.comment.creator.profile.name}
+													{like.comment.creator[0].profile[0].name}
 												</Link>{' '}
 											</small>
 										</div>

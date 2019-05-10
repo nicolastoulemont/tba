@@ -22,7 +22,7 @@ module.exports = {
 			event: EventItem
 			comment: CommentItem
 			poll: [Poll]
-			creator: User
+			creator: [User]
 		}
 
 		type LikesResponse implements Response {
@@ -81,15 +81,14 @@ module.exports = {
 				return await findUserLikes(args, Like);
 			}
 		},
-
 		Like: {
 			event: async (parent, args, { models: { EventItem } }) =>
 				await EventItem.findOne({ _id: parent.event_ID }),
 			comment: async (parent, args, { models: { CommentItem } }) =>
 				await CommentItem.findOne({ _id: parent.comment_ID }),
 			poll: async (parent, args, { models: { Poll } }) => await Poll.find({ _id: parent.poll_ID }),
-			creator: async (parent, args, { models: { User } }) =>
-				await User.findOne({ _id: parent.user_ID })
+			creator: async (parent, args, { Loaders: { usersLoader } }) =>
+				await usersLoader.load(parent.user_ID)
 		},
 
 		Mutation: {

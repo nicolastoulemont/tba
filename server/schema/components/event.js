@@ -37,7 +37,7 @@ module.exports = {
 			likesCount: Int
 			scraped: Boolean
 			tags: [String]
-			creator: User
+			creator: [User]
 			comments: [CommentItem]
 			polls: [Poll]
 			likes: [Like]
@@ -178,16 +178,17 @@ module.exports = {
 		},
 
 		EventItem: {
-			creator: async (parent, args, { models: { User } }) =>
-				await User.findOne({ _id: parent.user_ID }),
-			comments: async (parent, args, { models: { CommentItem } }) =>
-				await CommentItem.find({ event_ID: parent.id }),
+			creator: async (parent, args, { Loaders: { usersLoader } }) =>
+				await usersLoader.load(parent.user_ID),
+			comments: async (parent, args, { Loaders: { eventCommentsLoader } }) =>
+				await eventCommentsLoader.load(parent.id),
 			polls: async (parent, args, { models: { Poll } }) => await Poll.find({ event_ID: parent.id }),
-			likes: async (parent, args, { models: { Like } }) => await Like.find({ event_ID: parent.id }),
-			reports: async (parent, args, { models: { Report } }) =>
-				await Report.find({ event_ID: parent.id }),
-			registrations: async (parent, args, { models: { Registration } }) =>
-				await Registration.find({ event_ID: parent.id })
+			likes: async (parent, args, { Loaders: { eventLikesLoader } }) =>
+				await eventLikesLoader.load(parent.id),
+			reports: async (parent, args, { Loaders: { eventReportsLoader } }) =>
+				await eventReportsLoader.load(parent.id),
+			registrations: async (parent, args, { Loaders: { eventRegistrationsLoader } }) =>
+				await eventRegistrationsLoader.load(parent.id)
 		},
 
 		Mutation: {

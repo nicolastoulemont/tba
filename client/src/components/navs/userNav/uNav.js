@@ -30,7 +30,7 @@ const UNav = () => {
 					title="Find out about all the EU affairs news"
 				>
 					<i className="d-inline fas fa-home" />
-					<h6 className="d-inline ml-2">Home</h6>
+					<h6 className="d-inline ml-2">News</h6>
 				</Link>
 			</li>
 			<li className="nav-item pr-4 mt-1">
@@ -45,7 +45,7 @@ const UNav = () => {
 					<h6 className="d-inline ml-2">Events</h6>
 				</Link>
 			</li>
-			{user && user.profile ? (
+			{user && user.profile[0] ? (
 				<li className="nav-item pr-4 mt-1">
 					<Link
 						className="nav-link"
@@ -73,10 +73,10 @@ const UNav = () => {
 					data-placement="bottom"
 					title="Menu"
 				>
-					{user.profile && user.profile.picture_URL ? (
+					{user.profile[0] && user.profile[0].picture_URL ? (
 						<img
 							className="rounded-circle ultra-small-avatar"
-							src={user.profile.picture_URL}
+							src={user.profile[0].picture_URL}
 							alt="User Avatar"
 						/>
 					) : (
@@ -87,16 +87,16 @@ const UNav = () => {
 						/>
 					)}
 					<p className="d-inline text-left font-weight-bold align-middle ml-2">
-						{user.profile && user.profile.name ? user.profile.name : <span>Menu</span>}
+						{user.profile[0] && user.profile[0].name ? user.profile[0].name : <span>Menu</span>}
 					</p>
 					<i className="fas fa-chevron-down align-middle ml-4" />
 				</Link>
 				<div className="dropdown-menu dropdown-menu-right text-right">
-					{user.profile && user.profile.picture_URL ? (
+					{user.profile[0] && user.profile[0].picture_URL ? (
 						<Link to={`/home/profile/${user.id}`} className="dropdown-item py-2 px-4 drop-link">
 							<img
 								className="rounded-circle ultra-small-avatar"
-								src={user.profile.picture_URL}
+								src={user.profile[0].picture_URL}
 								alt="User Avatar"
 							/>
 							<h6 className="d-inline align-middle ml-2">Your Profile</h6>
@@ -114,7 +114,7 @@ const UNav = () => {
 							<h6 className="d-inline align-middle ml-2">Create your Profile</h6>
 						</Link>
 					)}
-					{user.profile ? (
+					{user.profile[0] ? (
 						<Link
 							to={`/home/event/create/${user.id}`}
 							className="dropdown-item py-2 px-4 drop-link"

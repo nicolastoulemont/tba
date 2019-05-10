@@ -52,7 +52,7 @@ const ProfileCommentsFeed = () => {
 											<footer className="blockquote-footer">
 												<small>{profile.name} replied to a comment of </small>
 
-												<cite title={comment.comment.creator.profile.name}>
+												<cite title={comment.comment.creator[0].profile[0].name}>
 													{' '}
 													<Link
 														to={{
@@ -60,7 +60,7 @@ const ProfileCommentsFeed = () => {
 														}}
 													>
 														<small className="font-weight-bold">
-															{comment.comment.creator.profile.name}
+															{comment.comment.creator[0].profile[0].name}
 														</small>
 													</Link>
 												</cite>

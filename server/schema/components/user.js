@@ -24,7 +24,7 @@ module.exports = {
 			access: String!
 			createdAt: Date
 			updatedAt: Date
-			profile: Profile
+			profile: [Profile]
 			organisation: Organisation
 			events: [EventItem]
 			registrations: [Registration]
@@ -88,22 +88,23 @@ module.exports = {
 		},
 
 		User: {
-			profile: async (parent, args, { models: { Profile } }) =>
-				await Profile.findOne({ user_ID: parent.id }),
+			profile: async (parent, args, { Loaders: { userProfilesLoader } }) =>
+				await userProfilesLoader.load(parent.id),
 			organisation: async (parent, args, { models: { Organisation } }) =>
 				await Organisation.findOne({ user_ID: parent.id }),
-			events: async (parent, args, { models: { EventItem } }) =>
-				await EventItem.find({ user_ID: parent.id }),
+			events: async (parent, args, { Loaders: { userEventsLoader } }) =>
+				await userEventsLoader.load(parent.id),
 			registrations: async (parent, args, { models: { Registration } }) =>
 				await Registration.find({ user_ID: parent.id }),
 			memberships: async (parent, args, { models: { Membership } }) =>
 				await Membership.find({ user_ID: parent.id }),
-			comments: async (parent, args, { models: { CommentItem } }) =>
-				await CommentItem.find({ user_ID: parent.id }),
+			comments: async (parent, args, { Loaders: { userCommentsLoader } }) =>
+				await userCommentsLoader.load(parent.id),
 			polls: async (parent, args, { models: { Poll } }) => await Poll.find({ user_ID: parent.id }),
-			likes: async (parent, args, { models: { Like } }) => await Like.find({ user_ID: parent.id }),
-			reports: async (parent, args, { models: { Report } }) =>
-				await Report.find({ user_ID: parent.id }),
+			likes: async (parent, args, { Loaders: { userLikesLoader } }) =>
+				await userLikesLoader.load(parent.id),
+			reports: async (parent, args, { Loaders: { userReportsLoader } }) =>
+				await userReportsLoader.load(parent.id),
 			userLog: async (parent, args, { models: { UserLog } }) =>
 				await UserLog.findOne({ user_ID: parent.id })
 		},

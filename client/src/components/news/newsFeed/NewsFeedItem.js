@@ -12,9 +12,9 @@ const NewsFeedItem = ({ event }) => {
 	return (
 		<div className="media my-2  border-bottom">
 			<Link to={`/home/profile/${event.user_ID}`}>
-				{event.creator.profile.picture_URL ? (
+				{event.creator[0].profile[0].picture_URL ? (
 					<img
-						src={event.creator.profile.picture_URL}
+						src={event.creator[0].profile[0].picture_URL}
 						className="small-avatar rounded-circle mr-2"
 						alt="User Avatar"
 					/>
@@ -86,11 +86,11 @@ const NewsFeedItem = ({ event }) => {
 					<small>
 						by{' '}
 						<Link to={{ pathname: `/home/profile/${event.user_ID}` }} className="font-weight-bold">
-							{event.creator.profile.name}
+							{event.creator[0].profile[0].name}
 						</Link>
 					</small>
 				</p>
-				{user.profile ? (
+				{user.profile[0] ? (
 					<Link
 						to="#"
 						data-togggle="tooltip"

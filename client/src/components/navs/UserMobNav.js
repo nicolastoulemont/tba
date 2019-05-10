@@ -48,8 +48,8 @@ const UserMobNav = ({ history }) => {
 								<i className="d-inline far fa-calendar" />
 							</Link>
 						</div>
-						<div className="col px-0 text-center pr-2">
-							{user && user.profile ? (
+						{user && user.profile[0] ? (
+							<div className="col px-0 text-center pr-2">
 								<Link
 									className="nav-link"
 									to={`/home/activities/${user.id}`}
@@ -59,8 +59,8 @@ const UserMobNav = ({ history }) => {
 								>
 									<i className="d-inline fas fa-clipboard" />
 								</Link>
-							) : null}
-						</div>
+							</div>
+						) : null}
 						{path.includes('news') || path.includes('activities') || path.includes('events') ? (
 							<div className="col px-0 text-center pr-2">
 								<Link
@@ -93,14 +93,14 @@ const UserMobNav = ({ history }) => {
 									<i className="fas fa-bars" />
 								</Link>
 								<div className="dropdown-menu dropdown-menu-right text-right">
-									{user.profile && user.profile.picture_URL ? (
+									{user.profile[0] && user.profile[0].picture_URL ? (
 										<Link
 											to={`/home/profile/${user.id}`}
 											className="dropdown-item py-2 px-4 drop-link"
 										>
 											<img
 												className="rounded-circle ultra-small-avatar"
-												src={user.profile.picture_URL}
+												src={user.profile[0].picture_URL}
 												alt="User Avatar"
 											/>
 											<h6 className="d-inline align-middle ml-2">Your Profile</h6>
@@ -118,7 +118,7 @@ const UserMobNav = ({ history }) => {
 											<h6 className="d-inline align-middle ml-2">Create your Profile</h6>
 										</Link>
 									)}
-									{user.profile ? (
+									{user.profile[0] ? (
 										<Link
 											to={`/home/event/create/${user.id}`}
 											className="dropdown-item py-2 px-4 drop-link"

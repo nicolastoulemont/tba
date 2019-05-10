@@ -39,10 +39,10 @@ const EventCommentDisplay = ({ refetch }) => {
 							data-placement="bottom"
 							title="See this person profile"
 						>
-							{comment.creator.profile.picture_URL ? (
+							{comment.creator[0].profile[0].picture_URL ? (
 								<img
 									className="rounded-circle border-avatar small-avatar mx-auto"
-									src={comment.creator.profile.picture_URL}
+									src={comment.creator[0].profile[0].picture_URL}
 									alt="User Avatar"
 								/>
 							) : (
@@ -65,7 +65,7 @@ const EventCommentDisplay = ({ refetch }) => {
 								data-placement="bottom"
 								title="See this person profile"
 							>
-								{comment.creator.profile.name}
+								{comment.creator[0].profile[0].name}
 							</Link>
 							<span className="d-inline-block ml-2">{comment.text}</span>
 							{user.profile ? <EventCommentActions /> : null}

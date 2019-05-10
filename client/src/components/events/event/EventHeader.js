@@ -39,7 +39,7 @@ const EventHeader = () => {
 									to={{ pathname: `/home/profile/${event.user_ID}` }}
 									className="font-weight-bold d-inline"
 								>
-									{event.creator.profile.name}
+									{event.creator[0].profile[0].name}
 								</Link>
 								{event.createdAt !== event.updatedAt ? (
 									<small className="font-italic d-inline">

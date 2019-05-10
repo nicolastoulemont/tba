@@ -4,6 +4,7 @@ const schema = require('./schema/schema');
 const models = require('./models');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const Loaders = require('./utils/DataLoaders');
 
 const SECRET = process.env.SECRET;
 const DB_URI = `${process.env.DB_NAME}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${
@@ -16,19 +17,26 @@ mongoose
 	.then(() => console.log('DB connected'))
 	.catch(err => console.log(err));
 mongoose.set('useCreateIndex', true);
+mongoose.set('debug', true);
+
+const getUser = req => {
+	try {
+		const token = req.headers.authorization || '';
+		const user = jwt.verify(token, SECRET);
+		return user;
+	} catch {}
+	return;
+};
 
 // GRAPHQL integration
 const server = new ApolloServer({
 	schema,
-	context: ({ req }) => {
-		try {
-			const token = req.headers.authorization || '';
-			const user = jwt.verify(token, SECRET);
-			return { user, SECRET, models };
-		} catch (err) {
-			return { err, SECRET, models };
-		}
-	},
+	context: ({ req }) => ({
+		user: getUser(req),
+		models,
+		SECRET,
+		Loaders
+	}),
 	formatError: error => {
 		const err = {
 			path: error.path,
