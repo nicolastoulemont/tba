@@ -28,10 +28,10 @@ const EventRegistrationFeed = () => {
 														data-placement="bottom"
 														title="See this person profile"
 													>
-														{registration.creator.profile.picture_URL ? (
+														{registration.creator[0].profile[0].picture_URL ? (
 															<img
 																className="rounded-circle border-avatar small-avatar mx-auto"
-																src={registration.creator.profile.picture_URL}
+																src={registration.creator[0].profile[0].picture_URL}
 																alt="User Avatar"
 															/>
 														) : (
@@ -55,12 +55,12 @@ const EventRegistrationFeed = () => {
 																data-placement="bottom"
 																title="See this person profile"
 															>
-																{registration.creator.profile.name}
+																{registration.creator[0].profile[0].name}
 															</Link>
 														</div>
 														<div className="d-block">
-															{registration.creator.profile.position} at{' '}
-															{registration.creator.profile.organisation_ID}
+															{registration.creator[0].profile[0].position} at{' '}
+															{registration.creator[0].profile[0].organisation_ID}
 														</div>
 													</div>
 												</div>
