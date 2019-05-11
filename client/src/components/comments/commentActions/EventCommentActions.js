@@ -11,6 +11,7 @@ import CommentPin from './CommentPin';
 const EventCommentActions = () => {
 	const user = useContext(UserContext);
 	const event = useContext(EventContext);
+	const comment = useContext(CommentContext);
 
 	const { createdAt, updatedAt } = useContext(CommentContext);
 	const [editForm, setEditForm] = useState(false);
@@ -43,15 +44,18 @@ const EventCommentActions = () => {
 			<small className="d-block mt-1">
 				<LikesFeed />
 				{user.id === event.user_ID ? <CommentPin /> : null}
-				<Link
-					to="#"
-					onClick={e => showEdit(e)}
-					data-togggle="tooltip"
-					data-placement="bottom"
-					title="Edit your comment"
-				>
-					<i className="far fa-edit mx-1" />
-				</Link>
+				{user.id === comment.user_ID ? (
+					<Link
+						to="#"
+						onClick={e => showEdit(e)}
+						data-togggle="tooltip"
+						data-placement="bottom"
+						title="Edit your comment"
+					>
+						<i className="far fa-edit mx-1" />
+					</Link>
+				) : null}
+
 				<Link
 					to="#"
 					onClick={e => showReport(e)}

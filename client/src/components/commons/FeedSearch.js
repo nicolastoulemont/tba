@@ -22,7 +22,7 @@ const FeedSearch = ({
 }) => {
 	const [{ userSearchPref }, dispatch] = useStateValue();
 	const user = useContext(UserContext);
-
+	console.log(user.profile[0].tags);
 	const handleSearch = e => {
 		if (errors.length !== 0) setErrors([]);
 		if (e.keyCode === 13) setSearch(e.target.value);
@@ -93,7 +93,7 @@ const FeedSearch = ({
 					tags: user.profile.tags
 				}
 			});
-			setTags(user.profile.tags);
+			setTags(user.profile[0].tags);
 		}
 		if (tags.length !== 0) {
 			dispatch({
@@ -196,9 +196,9 @@ const FeedSearch = ({
 						</Link>
 					) : null}
 
-					{user.profile &&
-					user.profile.tags &&
-					user.profile.tags.length !== 0 &&
+					{user.profile[0] &&
+					user.profile[0].tags &&
+					user.profile[0].tags.length !== 0 &&
 					!path.includes('activities') ? (
 						<Link
 							to="#"

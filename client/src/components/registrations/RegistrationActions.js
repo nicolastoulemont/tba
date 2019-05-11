@@ -50,7 +50,7 @@ export const RegisterEvent = () => {
 			data-placement="bottom"
 			title="Register to this event"
 			onClick={e => createRegistration(e)}
-			className="btn btn-blue"
+			className="btn bg-blue text-white"
 		>
 			<h6 className="d-inline font-weight-bold text-uppercase ">Register</h6>
 		</Link>
