@@ -22,7 +22,6 @@ const FeedSearch = ({
 }) => {
 	const [{ userSearchPref }, dispatch] = useStateValue();
 	const user = useContext(UserContext);
-	console.log(user.profile[0].tags);
 	const handleSearch = e => {
 		if (errors.length !== 0) setErrors([]);
 		if (e.keyCode === 13) setSearch(e.target.value);

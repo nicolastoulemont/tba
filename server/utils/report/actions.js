@@ -5,7 +5,6 @@ const buildReport = async (args, Report) => {
 			event_ID: args.event_ID,
 			poll_ID: args.poll_ID,
 			comment_ID: args.comment_ID,
-			organisation_ID: args.organisation_ID,
 			profile_ID: args.profile_ID,
 			text: args.text
 		}).save();

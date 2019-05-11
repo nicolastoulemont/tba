@@ -55,7 +55,6 @@ const EventCommentActions = () => {
 						<i className="far fa-edit mx-1" />
 					</Link>
 				) : null}
-
 				<Link
 					to="#"
 					onClick={e => showReport(e)}

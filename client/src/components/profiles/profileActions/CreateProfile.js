@@ -23,6 +23,7 @@ const CreateProfile = ({
 	const user = useContext(UserContext);
 	const [name, setName] = useState('');
 	const [position, setPosition] = useState('');
+	const [organisation, setOrganisation] = useState('');
 	const [bio, setBio] = useState('');
 	const [picture, setPicture] = useState(null);
 	const [twitter_URL, setTwitter_URL] = useState('');
@@ -51,6 +52,7 @@ const CreateProfile = ({
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
 		if (e.target.name === 'name') setName(e.target.value);
 		if (e.target.name === 'position') setPosition(e.target.value);
+		if (e.target.name === 'organisation') setOrganisation(e.target.value);
 		if (e.target.name === 'bio') setBio(e.target.value);
 		if (e.target.name === 'twitter_URL') setTwitter_URL(e.target.value);
 		if (e.target.name === 'linkedin_URL') setLinkedin_URL(e.target.value);
@@ -62,6 +64,7 @@ const CreateProfile = ({
 		const err = frontEndProfileInputValidation(
 			name,
 			position,
+			organisation,
 			bio,
 			twitter_URL,
 			linkedin_URL,
@@ -90,9 +93,9 @@ const CreateProfile = ({
 		const res = await addProfile({
 			variables: {
 				user_ID: id,
-				organisation_ID: 'aazeazea',
 				name,
 				position,
+				organisation,
 				bio,
 				twitter_URL,
 				linkedin_URL,
@@ -125,9 +128,9 @@ const CreateProfile = ({
 		const res = await addProfile({
 			variables: {
 				user_ID: id,
-				organisation_ID: 'aazeazea',
 				name,
 				position,
+				organisation,
 				bio,
 				twitter_URL,
 				linkedin_URL,
@@ -195,6 +198,17 @@ const CreateProfile = ({
 										value={position}
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'position')}
+										max={70}
+									/>
+									<InputField
+										type="text"
+										name="organisation"
+										placeholder="Your employer"
+										labelText="Organisation"
+										value={organisation}
+										onChange={onChange}
+										optional={true}
+										error={findErrorInErrorsArr(errors, 'organisation')}
 										max={70}
 									/>
 									<TextAreaField

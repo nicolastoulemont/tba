@@ -7,9 +7,9 @@ export const LOGGED_USER = gql`
 			email
 			profile {
 				id
-				organisation_ID
 				name
 				position
+				organisation
 				hideSocial
 				privateProfile
 				bio

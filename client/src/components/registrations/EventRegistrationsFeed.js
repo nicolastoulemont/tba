@@ -11,6 +11,7 @@ const EventRegistrationFeed = () => {
 		<Fragment>
 			<CQuery query={GET_EVENT_REGISTRATIONS} variables={{ event_ID: event.id }}>
 				{({ data }) => {
+					console.log(data);
 					if (data.eventRegistrations) {
 						const registrations = data.eventRegistrations.body;
 						if (typeof registrations !== 'undefined' && registrations.length === 0)
@@ -59,7 +60,10 @@ const EventRegistrationFeed = () => {
 															</Link>
 														</div>
 														<div className="d-block">
-															{registration.creator[0].profile[0].position}
+															{registration.creator[0].profile[0].position}{' '}
+															{registration.creator[0].profile[0].organisation
+																? `- ${registration.creator[0].profile[0].organisation}`
+																: null}
 														</div>
 													</div>
 												</div>

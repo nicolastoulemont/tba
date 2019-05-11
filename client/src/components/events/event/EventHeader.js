@@ -41,6 +41,9 @@ const EventHeader = () => {
 								>
 									{event.creator[0].profile[0].name}
 								</Link>
+								{event.creator[0].profile[0].organisation
+									? ` - ${event.creator[0].profile[0].organisation}`
+									: null}
 								{event.createdAt !== event.updatedAt ? (
 									<small className="font-italic d-inline">
 										{' '}

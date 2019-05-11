@@ -5,6 +5,7 @@ const validateProfileInput = async data => {
 	let errors = [];
 	data.name = !isEmpty(data.name) ? data.name : '';
 	data.position = !isEmpty(data.position) ? data.position : '';
+	data.organisation = !isEmpty(data.organisation) ? data.organisation : '';
 	data.bio = !isEmpty(data.bio) ? data.bio : '';
 	data.twitter_URL = !isEmpty(data.twitter_URL) ? data.twitter_URL : '';
 	data.linkedin_URL = !isEmpty(data.linkedin_URL) ? data.linkedin_URL : '';
@@ -22,6 +23,12 @@ const validateProfileInput = async data => {
 			message: 'Your position must be between 1 and 70 characters'
 		});
 
+	if (!Validator.isLength(data.organisation, { min: 0, max: 70 }))
+		errors.push({
+			path: 'organisation',
+			message: 'Your organisation name must be between 0 and 70 characters'
+		});
+
 	if (!Validator.isLength(data.bio, { min: 0, max: 280 }))
 		errors.push({
 			path: 'bio',
@@ -36,6 +43,11 @@ const validateProfileInput = async data => {
 	if (!data.position.match(ValidStringRegExp))
 		errors.push({
 			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.organisation.match(ValidStringRegExp))
+		errors.push({
+			path: 'organisation',
 			message: 'Only alphanumeric characters are accepted'
 		});
 	if (!data.bio.match(ValidStringRegExp))

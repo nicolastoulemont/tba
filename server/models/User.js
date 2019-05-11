@@ -15,7 +15,7 @@ const userSchema = new Schema({
 	},
 	access: {
 		type: String,
-		default: 'citizen',
+		default: 'basic',
 		required: true
 	},
 	createdAt: {

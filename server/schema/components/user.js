@@ -25,7 +25,6 @@ module.exports = {
 			createdAt: Date
 			updatedAt: Date
 			profile: [Profile]
-			organisation: Organisation
 			events: [EventItem]
 			registrations: [Registration]
 			memberships: [Membership]
@@ -72,7 +71,7 @@ module.exports = {
 			currentUser: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				try {
-					return await User.findOne({ _id: user.user.id });
+					return await User.findOne({ _id: user.id });
 				} catch (err) {
 					throw new Error('Bad request');
 				}
@@ -90,8 +89,6 @@ module.exports = {
 		User: {
 			profile: async (parent, args, { Loaders: { userProfilesLoader } }) =>
 				await userProfilesLoader.load(parent.id),
-			organisation: async (parent, args, { models: { Organisation } }) =>
-				await Organisation.findOne({ user_ID: parent.id }),
 			events: async (parent, args, { Loaders: { userEventsLoader } }) =>
 				await userEventsLoader.load(parent.id),
 			registrations: async (parent, args, { models: { Registration } }) =>
@@ -122,18 +119,24 @@ module.exports = {
 			},
 			changeEmail: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				if (user.id !== args.user_ID)
+					throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid, targetUser } = await validateChangeEmailInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await changeEmail(args, targetUser, User);
 			},
 			changePassword: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				if (user.id !== args.user_ID)
+					throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid, targetUser } = await validateChangePasswordInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await changePassword(args, targetUser, User);
 			},
 			deleteAccount: async (parent, args, { user, models }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				if (user.id !== args.user_ID)
+					throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid, targetUser } = await validateDeleteAccountInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await deleteAccount(targetUser, models);

@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 export const CREATE_PROFILE = gql`
 	mutation AddProfile(
 		$user_ID: String!
-		$organisation_ID: String
 		$name: String!
 		$position: String!
+		$organisation: String
 		$hideSocial: Boolean
 		$privateProfile: Boolean
 		$bio: String
@@ -17,9 +17,9 @@ export const CREATE_PROFILE = gql`
 	) {
 		addProfile(
 			user_ID: $user_ID
-			organisation_ID: $organisation_ID
 			name: $name
 			position: $position
+			organisation: $organisation
 			hideSocial: $hideSocial
 			privateProfile: $privateProfile
 			bio: $bio
@@ -45,9 +45,10 @@ export const CREATE_PROFILE = gql`
 export const UPDATE_PROFILE = gql`
 	mutation UpdateProfile(
 		$_id: ID!
-		$organisation_ID: String
+		$user_ID: ID!
 		$name: String
 		$position: String
+		$organisation: String
 		$hideSocial: Boolean
 		$privateProfile: Boolean
 		$bio: String
@@ -59,9 +60,10 @@ export const UPDATE_PROFILE = gql`
 	) {
 		updateProfile(
 			_id: $_id
-			organisation_ID: $organisation_ID
+			user_ID: $user_ID
 			name: $name
 			position: $position
+			organisation: $organisation
 			hideSocial: $hideSocial
 			privateProfile: $privateProfile
 			bio: $bio

@@ -6,7 +6,6 @@ export const ADD_REPORT = gql`
 		$event_ID: String
 		$poll_ID: String
 		$comment_ID: String
-		$organisation_ID: String
 		$text: String!
 	) {
 		addReport(
@@ -14,7 +13,6 @@ export const ADD_REPORT = gql`
 			event_ID: $event_ID
 			poll_ID: $poll_ID
 			comment_ID: $comment_ID
-			organisation_ID: $organisation_ID
 			text: $text
 		) {
 			statusCode

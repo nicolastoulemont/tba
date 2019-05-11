@@ -19,8 +19,9 @@ const EditProfile = ({ match, history }) => {
 	const user = useContext(UserContext);
 	const [name, setName] = useState(user.profile[0].name);
 	const [position, setPosition] = useState(user.profile[0].position);
-	const [bio, setBio] = useState(user.profile[0].bio);
-	const [picture, setPicture] = useState(user.profile[0].picture_URL);
+	const [organisation, setOrganisation] = useState(user.profile[0].organisation || '');
+	const [bio, setBio] = useState(user.profile[0].bio || '');
+	const [picture, setPicture] = useState(user.profile[0].picture_URL || '');
 	const [twitter_URL, setTwitter_URL] = useState(user.profile[0].twitter_URL || '');
 	const [linkedin_URL, setLinkedin_URL] = useState(user.profile[0].linkedin_URL || '');
 	const [website_URL, setWebsite_URL] = useState(user.profile[0].website_URL || '');
@@ -49,6 +50,7 @@ const EditProfile = ({ match, history }) => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
 		if (e.target.name === 'name') setName(e.target.value);
 		if (e.target.name === 'position') setPosition(e.target.value);
+		if (e.target.name === 'organisation') setOrganisation(e.target.value);
 		if (e.target.name === 'bio') setBio(e.target.value);
 		if (e.target.name === 'twitter_URL') setTwitter_URL(e.target.value);
 		if (e.target.name === 'linkedin_URL') setLinkedin_URL(e.target.value);
@@ -60,6 +62,7 @@ const EditProfile = ({ match, history }) => {
 		const err = frontEndProfileInputValidation(
 			name,
 			position,
+			organisation,
 			bio,
 			twitter_URL,
 			linkedin_URL,
@@ -89,9 +92,10 @@ const EditProfile = ({ match, history }) => {
 		const res = await updateProfile({
 			variables: {
 				_id: user.profile[0].id,
-				organisation_ID: 'aazeazea',
+				user_ID: user.id,
 				name,
 				position,
+				organisation,
 				bio,
 				twitter_URL,
 				linkedin_URL,
@@ -123,9 +127,10 @@ const EditProfile = ({ match, history }) => {
 		const res = await updateProfile({
 			variables: {
 				_id: user.profile[0].id,
-				organisation_ID: 'aazeazea',
+				user_ID: user.id,
 				name,
 				position,
+				organisation,
 				bio,
 				twitter_URL,
 				linkedin_URL,
@@ -196,6 +201,17 @@ const EditProfile = ({ match, history }) => {
 										value={position}
 										onChange={onChange}
 										error={findErrorInErrorsArr(errors, 'position')}
+										max={70}
+									/>
+									<InputField
+										type="text"
+										name="organisation"
+										placeholder="Your employer"
+										labelText="Organisation"
+										value={organisation}
+										onChange={onChange}
+										optional={true}
+										error={findErrorInErrorsArr(errors, 'organisation')}
 										max={70}
 									/>
 									<TextAreaField

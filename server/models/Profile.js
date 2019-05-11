@@ -6,7 +6,6 @@ const profileSchema = new Schema({
 		type: String,
 		required: true
 	},
-	organisation_ID: String,
 	name: {
 		type: String,
 		required: true
@@ -14,6 +13,9 @@ const profileSchema = new Schema({
 	position: {
 		type: String,
 		required: true
+	},
+	organisation: {
+		type: String
 	},
 	hideSocial: Boolean,
 	privateProfile: Boolean,

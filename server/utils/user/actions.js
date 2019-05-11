@@ -33,9 +33,8 @@ const registerAndLogin = async (args, User) => {
 
 		const token = await jwt.sign(
 			{
-				user: {
-					id: user._id
-				}
+				id: user._id,
+				access: user.access
 			},
 			SECRET,
 			{ expiresIn: '1y' }
@@ -54,9 +53,8 @@ const loginUser = async user => {
 	try {
 		const token = await jwt.sign(
 			{
-				user: {
-					id: user._id
-				}
+				id: user._id,
+				access: user.access
 			},
 			SECRET,
 			{ expiresIn: '1y' }

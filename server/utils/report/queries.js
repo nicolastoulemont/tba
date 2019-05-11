@@ -98,26 +98,6 @@ const findPollReports = async (args, Report) => {
 	}
 };
 
-const findOrganisationReports = async (args, Report) => {
-	try {
-		const reports = await Report.find({ organisation_ID: args.organisation_ID });
-		return {
-			statusCode: 200,
-			ok: true,
-			body: reports
-		};
-	} catch (err) {
-		return {
-			statusCode: 404,
-			ok: false,
-			errors: {
-				path: 'Not Found',
-				message: 'The server cannot find the requested ressource'
-			}
-		};
-	}
-};
-
 const findProfileReports = async (args, Report) => {
 	try {
 		const reports = await Report.find({ profile_ID: args.profile_ID });
@@ -143,7 +123,6 @@ module.exports = {
 	findReports,
 	findEventReports,
 	findCommentReports,
-	findOrganisationReports,
 	findPollReports,
 	findProfileReports
 };

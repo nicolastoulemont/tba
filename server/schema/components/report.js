@@ -6,7 +6,6 @@ const {
 	findReports,
 	findEventReports,
 	findCommentReports,
-	findOrganisationReports,
 	findPollReports,
 	findProfileReports
 } = require('../../utils/report/queries');
@@ -19,7 +18,6 @@ module.exports = {
 			event_ID: String
 			poll_ID: String
 			comment_ID: String
-			organisation_ID: String
 			profile_ID: String
 			text: String!
 			createdAt: Date
@@ -27,7 +25,6 @@ module.exports = {
 			event: EventItem
 			comment: CommentItem
 			poll: Poll
-			organisation: Organisation
 			profile: Profile
 			creator: User
 		}
@@ -52,7 +49,6 @@ module.exports = {
 			findEventReports(event_ID: ID!): ReportsResponse!
 			findCommentReports(comment_ID: ID!): ReportsResponse!
 			findPollReports(poll_ID: ID!): ReportsResponse!
-			findOrganisationReports(organisation_ID: ID!): ReportsResponse!
 			findProfileReports(profile_ID: ID!): ReportsResponse!
 		}
 
@@ -62,7 +58,6 @@ module.exports = {
 				event_ID: String
 				poll_ID: String
 				comment_ID: String
-				organisation_ID: String
 				profile_ID: String
 				text: String!
 			): ReportResponse!
@@ -92,10 +87,6 @@ module.exports = {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findPollReports(args, Report);
 			},
-			findOrganisationReports: async (parent, args, { user, models: { Report } }) => {
-				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				return await findOrganisationReports(args, Report);
-			},
 			findProfileReports: async (parent, args, { user, models: { Report } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findProfileReports(args, Report);
@@ -111,8 +102,6 @@ module.exports = {
 				await Poll.findOne({ _id: parent.poll_ID }),
 			comment: async (parent, args, { models: { CommentItem } }) =>
 				await CommentItem.findOne({ _id: parent.comment_ID }),
-			organisation: async (parent, args, { models: { Organisation } }) =>
-				await Organisation.findOne({ _id: parent.organisation_ID }),
 			profile: async (parent, args, { models: { Profile } }) =>
 				await Profile.findOne({ _id: parent.profile_ID })
 		},

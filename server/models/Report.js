@@ -9,7 +9,6 @@ const reportSchema = new Schema({
 	event_ID: String,
 	poll_ID: String,
 	comment_ID: String,
-	organisation_ID: String,
 	profile_ID: String,
 	text: {
 		type: String,

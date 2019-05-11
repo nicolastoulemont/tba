@@ -83,6 +83,7 @@ export const frontEndEventInputValidation = (
 export const frontEndProfileInputValidation = (
 	name,
 	position,
+	organisation,
 	bio,
 	twitter_URL,
 	linkedin_URL,
@@ -102,6 +103,11 @@ export const frontEndProfileInputValidation = (
 			message: 'Your position must be between 1 and 70 characters'
 		});
 
+	if (organisation.length > 70)
+		err.push({
+			path: 'organisation',
+			message: 'Your organisation name must be between 0 and 70 characters'
+		});
 	if (bio.length > 280)
 		err.push({
 			path: 'bio',
@@ -116,6 +122,11 @@ export const frontEndProfileInputValidation = (
 	if (!position.match(ValidStringRegExp))
 		err.push({
 			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!organisation.match(ValidStringRegExp))
+		err.push({
+			path: 'organisation',
 			message: 'Only alphanumeric characters are accepted'
 		});
 	if (!bio.match(ValidStringRegExp))

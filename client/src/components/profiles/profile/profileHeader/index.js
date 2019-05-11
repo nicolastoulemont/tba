@@ -37,11 +37,15 @@ const ProfileHeader = () => {
 							<div className="text-left mt-2">
 								<div className="d-none d-md-block">
 									<h4 className="d-inline font-weight-bold text-uppercase">{profile.name}</h4>
-									<h5 className="text-muted">{profile.position}</h5>
+									<h5 className="text-muted">
+										{profile.position} {profile.organisation ? `- ${profile.organisation}` : null}
+									</h5>
 								</div>
 								<div className="d-block d-md-none">
 									<h6 className="d-inline font-weight-bold text-uppercase">{profile.name}</h6>
-									<p className="text-muted">{profile.position}</p>
+									<p className="text-muted">
+										{profile.position} {profile.organisation ? `- ${profile.organisation}` : null}
+									</p>
 								</div>
 							</div>
 						</div>

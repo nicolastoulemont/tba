@@ -104,7 +104,7 @@ export const GET_EVENTS = gql`
 				profile {
 					name
 					position
-					organisation_ID
+					organisation
 					picture_URL
 				}
 			}
@@ -144,7 +144,7 @@ export const GET_EVENT = gql`
 					profile {
 						name
 						position
-						organisation_ID
+						organisation
 						picture_URL
 					}
 				}

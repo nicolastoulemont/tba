@@ -16,7 +16,7 @@ export const GET_EVENT_REGISTRATIONS = gql`
 					profile {
 						name
 						position
-						organisation_ID
+						organisation
 						picture_URL
 					}
 				}

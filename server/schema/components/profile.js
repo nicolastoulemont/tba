@@ -13,9 +13,9 @@ module.exports = {
 		type Profile {
 			id: ID!
 			user_ID: ID!
-			organisation_ID: String
 			name: String!
 			position: String!
+			organisation: String
 			hideSocial: Boolean
 			privateProfile: Boolean
 			bio: String
@@ -53,9 +53,9 @@ module.exports = {
 		extend type Mutation {
 			addProfile(
 				user_ID: String!
-				organisation_ID: String
 				name: String!
 				position: String!
+				organisation: String
 				hideSocial: Boolean
 				privateProfile: Boolean
 				bio: String
@@ -67,9 +67,10 @@ module.exports = {
 			): ProfileResponse!
 			updateProfile(
 				_id: ID!
-				organisation_ID: String
+				user_ID: ID!
 				name: String
 				position: String
+				organisation: String
 				hideSocial: Boolean
 				privateProfile: Boolean
 				bio: String
@@ -116,12 +117,16 @@ module.exports = {
 			},
 			updateProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				if (user.id !== args.user_ID)
+					throw new AuthenticationError('Please login to get the requested response');
 				const { errors, isValid } = await validateProfileInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await updateProfile(args, Profile);
 			},
 			deleteProfile: async (parent, args, { user, models: { Profile } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				if (user.id !== args.user_ID)
+					throw new AuthenticationError('Please login to get the requested response');
 				return await deleteProfile(args, Profile);
 			}
 		}
