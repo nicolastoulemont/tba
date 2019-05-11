@@ -1,11 +1,15 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const { validateCommentInput } = require('../../utils/comment/validation');
-const { buildComment, updateComment, moderateComment } = require('../../utils/comment/actions');
+const {
+	buildComment,
+	updateComment,
+	pinComment,
+	moderateComment
+} = require('../../utils/comment/actions');
 const {
 	findComment,
 	findComments,
 	findEventComments,
-	findCommentComments,
 	findUserComments
 } = require('../../utils/comment/queries');
 
@@ -61,6 +65,7 @@ module.exports = {
 				text: String!
 			): CommentResponse!
 			updateComment(_id: ID!, text: String): CommentResponse!
+			pinComment(_id: ID!, user_ID: ID!, event_ID: ID!, pinned: Boolean!): CommentResponse!
 			moderateComment(_id: ID!, user_ID: String!, event_ID: String!): CommentResponse!
 		}
 	`,
@@ -109,6 +114,10 @@ module.exports = {
 				const { errors, isValid } = await validateCommentInput(args);
 				if (!isValid) return { statusCode: 404, ok: false, errors };
 				return await updateComment(args, user, CommentItem);
+			},
+			pinComment: async (parent, args, { user, models: { CommentItem, EventItem } }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await pinComment(args, CommentItem, EventItem);
 			},
 			moderateComment: async (parent, args, { user, models: { CommentItem, EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');

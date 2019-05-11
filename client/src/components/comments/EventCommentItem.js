@@ -67,6 +67,9 @@ const EventCommentItem = ({ refetch }) => {
 							>
 								{comment.creator[0].profile[0].name}
 							</Link>
+							{comment.pinned ? (
+								<i className="d-inline-block ml-2 fas fa-thumbtack text-blue" />
+							) : null}
 							<span className="d-inline-block ml-2">{comment.text}</span>
 							{user.profile[0] ? <EventCommentActions /> : null}
 						</div>

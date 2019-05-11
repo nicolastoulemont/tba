@@ -13,6 +13,7 @@ export const GET_EVENT_COMMENTS = gql`
 				id
 				user_ID
 				text
+				pinned
 				moderated
 				moderationMsg
 				createdAt

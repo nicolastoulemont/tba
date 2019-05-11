@@ -32,6 +32,22 @@ export const EDIT_COMMENT = gql`
 	}
 `;
 
+export const PIN_COMMENT = gql`
+	mutation PinComment($_id: ID!, $user_ID: ID!, $event_ID: ID!, $pinned: Boolean!) {
+		pinComment(_id: $_id, user_ID: $user_ID, event_ID: $event_ID, pinned: $pinned) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+			}
+		}
+	}
+`;
+
 export const MODERATE_COMMENT = gql`
 	mutation ModerateComment($_id: ID!, $user_ID: String!, $event_ID: String!) {
 		moderateComment(_id: $_id, user_ID: $user_ID, event_ID: $event_ID) {

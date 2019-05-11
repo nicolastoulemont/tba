@@ -54,6 +54,52 @@ const updateComment = async (args, user, CommentItem) => {
 	}
 };
 
+const pinComment = async (args, CommentItem, EventItem) => {
+	try {
+		const event = await EventItem.findById(args.event_ID);
+		if (event.user_ID === args.user_ID) {
+			if (!args.pinned) {
+				const comment = await CommentItem.findByIdAndUpdate(
+					args._id,
+					{ pinned: true },
+					{
+						new: true
+					}
+				);
+				return {
+					statusCode: 201,
+					ok: true,
+					errors: null,
+					body: comment
+				};
+			} else if (args.pinned) {
+				const comment = await CommentItem.findByIdAndUpdate(
+					args._id,
+					{ pinned: false },
+					{
+						new: true
+					}
+				);
+				return {
+					statusCode: 201,
+					ok: true,
+					errors: null,
+					body: comment
+				};
+			}
+		}
+	} catch (err) {
+		return {
+			statusCode: 403,
+			ok: false,
+			errors: {
+				path: 'Forbidden',
+				message: 'You cannot perform this action'
+			}
+		};
+	}
+};
+
 const moderateComment = async (args, CommentItem, EventItem) => {
 	let deletedComment = {
 		moderated: true,
@@ -102,4 +148,4 @@ const moderateComment = async (args, CommentItem, EventItem) => {
 	}
 };
 
-module.exports = { buildComment, updateComment, moderateComment };
+module.exports = { buildComment, updateComment, pinComment, moderateComment };
