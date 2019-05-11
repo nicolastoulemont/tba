@@ -20,7 +20,7 @@ const ProfileCommentsFeed = () => {
 				return (
 					<Fragment>
 						{comments.map(comment => {
-							if (comment.event && !comment.moderated) {
+							if (!comment.moderated) {
 								return (
 									<div className="text-left px-3 py-1 border-top" key={comment.id}>
 										<blockquote className="blockquote mb-1">
@@ -39,38 +39,6 @@ const ProfileCommentsFeed = () => {
 												</cite>
 											</footer>
 											<small className="py-0 my-0">
-												<small>{comment.text.substring(0, 100)}</small>
-											</small>
-										</blockquote>
-									</div>
-								);
-							}
-							if (comment.comment && !comment.moderated) {
-								return (
-									<div className="text-left px-3 py-1 border-top" key={comment.id}>
-										<blockquote className="blockquote mb-1">
-											<footer className="blockquote-footer">
-												<small>{profile.name} replied to a comment of </small>
-
-												<cite title={comment.comment.creator[0].profile[0].name}>
-													{' '}
-													<Link
-														to={{
-															pathname: `/home/profile/${comment.comment.user_ID}`
-														}}
-													>
-														<small className="font-weight-bold">
-															{comment.comment.creator[0].profile[0].name}
-														</small>
-													</Link>
-												</cite>
-											</footer>
-											<small className="d-block py-0 my-0">
-												<small className="font-italic">
-													"{comment.comment.text.substring(0, 150) + '...'}"
-												</small>
-											</small>
-											<small className="d-block py-0 my-0">
 												<small>{comment.text.substring(0, 100)}</small>
 											</small>
 										</blockquote>

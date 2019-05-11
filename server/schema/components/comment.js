@@ -16,8 +16,8 @@ module.exports = {
 			user_ID: ID!
 			event_ID: String
 			poll_ID: String
-			comment_ID: String
 			text: String!
+			pinned: Boolean
 			moderated: Boolean
 			moderationMsg: String
 			createdAt: Date
@@ -49,7 +49,6 @@ module.exports = {
 			comment(id: ID!): CommentResponse!
 			comments: CommentsResponse!
 			eventComments(event_ID: ID!): CommentsResponse!
-			commentComments(comment_ID: ID!): CommentsResponse!
 			userComments(user_ID: ID!): CommentsResponse!
 		}
 
@@ -80,10 +79,6 @@ module.exports = {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findEventComments(args, CommentItem);
 			},
-			commentComments: async (parent, args, { user, models: { CommentItem } }) => {
-				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				return await findCommentComments(args, CommentItem);
-			},
 			userComments: async (parent, args, { user, models: { CommentItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findUserComments(args, CommentItem);
@@ -94,10 +89,6 @@ module.exports = {
 				await usersLoader.load(parent.user_ID),
 			event: async (parent, args, { models: { EventItem } }) =>
 				await EventItem.findOne({ _id: parent.event_ID }),
-			comment: async (parent, args, { models: { CommentItem } }) =>
-				await CommentItem.findOne({ _id: parent.comment_ID }),
-			comments: async (parent, args, { Loaders: { commentCommentsLoader } }) =>
-				await commentCommentsLoader.load(parent.id),
 			poll: async (parent, args, { models: { Poll } }) =>
 				await Poll.findOne({ _id: parent.poll_ID }),
 			likes: async (parent, args, { models: { Like } }) =>

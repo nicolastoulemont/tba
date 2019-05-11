@@ -3,7 +3,6 @@ const buildComment = async (args, CommentItem) => {
 		const comment = await new CommentItem({
 			user_ID: args.user_ID,
 			event_ID: args.event_ID,
-			comment_ID: args.comment_ID,
 			poll_ID: args.poll_ID,
 			text: args.text,
 			createdAt: new Date(),

@@ -7,11 +7,14 @@ const commentSchema = new Schema({
 		required: true
 	},
 	event_ID: String,
-	comment_ID: String,
 	poll_ID: String,
 	text: {
 		type: String,
 		required: true
+	},
+	pinned: {
+		type: Boolean,
+		default: false
 	},
 	moderated: {
 		type: Boolean,

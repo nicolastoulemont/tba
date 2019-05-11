@@ -16,7 +16,6 @@ const {
 } = require('./BatchFunctions/event');
 
 const { batchRegistrationsEvent } = require('./BatchFunctions/registration');
-const { batchCommentComments } = require('./BatchFunctions/comments');
 
 // GENERAL
 const usersLoader = new Dataloader(ids => batchUsers(ids, models));
@@ -37,9 +36,6 @@ const eventRegistrationsLoader = new Dataloader(ids => batchEventRegistrations(i
 // REGISTRATION LOADERS
 const registrationEventLoader = new Dataloader(ids => batchRegistrationsEvent(ids, models));
 
-// COMMENTS LOADERS
-const commentCommentsLoader = new Dataloader(ids => batchCommentComments(ids, models));
-
 module.exports = {
 	usersLoader,
 	userProfilesLoader,
@@ -51,6 +47,5 @@ module.exports = {
 	eventLikesLoader,
 	eventReportsLoader,
 	eventRegistrationsLoader,
-	registrationEventLoader,
-	commentCommentsLoader
+	registrationEventLoader
 };

@@ -44,6 +44,7 @@ const EventCommentActions = () => {
 					data-togggle="tooltip"
 					data-placement="bottom"
 					title="Edit your comment"
+					className="ml-2"
 				>
 					<i className="far fa-edit mx-1" />
 				</Link>
