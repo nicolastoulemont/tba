@@ -39,7 +39,7 @@ const Landing = props => {
 												Never miss EU related events happening in the EU Affairs district
 											</h6>
 											<h6 className="text-left text-muted py-2">
-												Hosted EU related events on the plateform to gain more visibility
+												Host EU related events on the plateform to gain more visibility
 											</h6>
 										</div>
 									</div>
