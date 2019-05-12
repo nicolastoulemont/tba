@@ -26,7 +26,7 @@ const EventSocialSelector = () => {
 		<Fragment>
 			<div className="py-2 border-top border-bottom">
 				<div className="row">
-					{user.profile ? (
+					{user.profile[0] ? (
 						<CQuery query={GET_EVENT_LIKES_COUNT} variables={{ id: event.id }}>
 							{({ data }) => {
 								const likesCount = data.event.body.likesCount;

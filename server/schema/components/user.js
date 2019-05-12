@@ -22,6 +22,8 @@ module.exports = {
 			id: ID!
 			email: String!
 			access: String!
+			verified: Boolean
+			acceptedTerms: Boolean
 			createdAt: Date
 			updatedAt: Date
 			profile: [Profile]

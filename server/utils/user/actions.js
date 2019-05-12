@@ -9,7 +9,6 @@ const registerUser = async (args, User) => {
 		let user = new User({
 			email: args.email,
 			password: hashedPwd,
-			access: 'citizen',
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();
@@ -26,7 +25,6 @@ const registerAndLogin = async (args, User) => {
 		const user = await new User({
 			email: args.email,
 			password: hashedPwd,
-			access: 'citizen',
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();

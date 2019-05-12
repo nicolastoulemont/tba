@@ -37,7 +37,7 @@ const EventSocial = () => {
 						) : null}
 					</div>
 
-					<div className="col-6">{user.profile ? <RegistrationFeed /> : null}</div>
+					<div className="col-6">{user.profile[0] ? <RegistrationFeed /> : null}</div>
 				</div>
 				<EventSocialSelector />
 			</div>
