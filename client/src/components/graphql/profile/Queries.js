@@ -17,7 +17,6 @@ export const GET_USER_FULL_PROFILE = gql`
 				organisation
 				bio
 				hideSocial
-				privateProfile
 				twitter_URL
 				linkedin_URL
 				website_URL

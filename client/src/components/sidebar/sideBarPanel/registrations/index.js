@@ -16,7 +16,7 @@ export default function RegistrationPanel({ user }) {
 						title="Upcoming events"
 						onClick={e => setTarget('future')}
 					>
-						<i className="d-inline far fa-calendar-plus" />
+						<small className="d-inline font-weight-bold text-muted">Next 5</small>
 					</Link>
 					<Link
 						to="#"
@@ -26,7 +26,7 @@ export default function RegistrationPanel({ user }) {
 						title="Past events"
 						onClick={e => setTarget('past')}
 					>
-						<i className="d-inline far fa-calendar-check" />
+						<small className="d-inline font-weight-bold text-muted">Last 5</small>
 					</Link>
 				</div>
 				<div className="col-6 p-0 py-0" />

@@ -64,7 +64,9 @@ const PanelItem = ({ registration, event }) => {
 												<small>
 													<i className="fa fa-thumbs-up mr-1" />
 												</small>
-												<small className="ml-1">{event.likesCount}</small>
+												<small className="ml-1 font-weight-bold text-muted">
+													{event.likesCount}
+												</small>
 											</span>
 										</div>
 									</div>

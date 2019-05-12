@@ -26,7 +26,6 @@ const EditProfile = ({ match, history }) => {
 	const [linkedin_URL, setLinkedin_URL] = useState(user.profile[0].linkedin_URL || '');
 	const [website_URL, setWebsite_URL] = useState(user.profile[0].website_URL || '');
 	const [hideSocial, setHideSocial] = useState(user.profile[0].hideSocial);
-	const [privateProfile, setprivateProfile] = useState(user.profile[0].privateProfile);
 	const [userTopics, setUserTopics] = useState(user.profile[0].tags);
 	const [topicsPool, setTopicsPool] = useState(
 		tagsList.filter(tag => !user.profile[0].tags.includes(tag))
@@ -102,7 +101,6 @@ const EditProfile = ({ match, history }) => {
 				website_URL,
 				picture_URL: url,
 				hideSocial,
-				privateProfile,
 				tags: userTopics
 			}
 		});
@@ -137,7 +135,6 @@ const EditProfile = ({ match, history }) => {
 				website_URL,
 				picture_URL: user.profile[0].picture_URL,
 				hideSocial,
-				privateProfile,
 				tags: userTopics
 			}
 		});
@@ -272,24 +269,8 @@ const EditProfile = ({ match, history }) => {
 
 										<label className="form-check-label" htmlFor="hideSocialcheckBox">
 											<small className="font-italic text-muted">
-												Hide your social activities &#40; registrations, comments, likes &#41; from
-												your profile page
-											</small>
-										</label>
-									</div>
-									<div className="form-check text-left">
-										<input
-											className="form-check-input"
-											type="checkbox"
-											id="privateProfilecheckBox"
-											value={privateProfile}
-											name="privateProfile"
-											checked={privateProfile}
-											onChange={e => setprivateProfile(!privateProfile)}
-										/>
-										<label className="form-check-label" htmlFor="privateProfilecheckBox">
-											<small className="font-italic text-muted">
-												Hide your profile from the profiles search feed{' '}
+												Hide your activities &#40; events, comments, likes &#41; from your profile
+												page
 											</small>
 										</label>
 									</div>

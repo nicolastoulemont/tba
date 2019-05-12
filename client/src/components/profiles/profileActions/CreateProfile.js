@@ -30,7 +30,6 @@ const CreateProfile = ({
 	const [linkedin_URL, setLinkedin_URL] = useState('');
 	const [website_URL, setWebsite_URL] = useState('');
 	const [hideSocial, setHideSocial] = useState(false);
-	const [privateProfile, setprivateProfile] = useState(false);
 	const [userTopics, setUserTopics] = useState([]);
 	const [topicsPool, setTopicsPool] = useState(tagsList);
 
@@ -102,7 +101,6 @@ const CreateProfile = ({
 				website_URL,
 				picture_URL: url,
 				hideSocial,
-				privateProfile,
 				tags: userTopics
 			}
 		});
@@ -136,7 +134,6 @@ const CreateProfile = ({
 				linkedin_URL,
 				website_URL,
 				hideSocial,
-				privateProfile,
 				tags: userTopics
 			}
 		});
@@ -270,24 +267,8 @@ const CreateProfile = ({
 
 										<label className="form-check-label" htmlFor="hideSocialcheckBox">
 											<small className="font-italic text-muted">
-												Hide your social activities &#40; registrations, comments, likes &#41; from
-												your profile page
-											</small>
-										</label>
-									</div>
-									<div className="form-check text-left">
-										<input
-											className="form-check-input"
-											type="checkbox"
-											id="privateProfilecheckBox"
-											value={privateProfile}
-											name="privateProfile"
-											checked={privateProfile}
-											onChange={e => setprivateProfile(!privateProfile)}
-										/>
-										<label className="form-check-label" htmlFor="privateProfilecheckBox">
-											<small className="font-italic text-muted">
-												Hide your profile from the profiles search feed{' '}
+												Hide your activities &#40; events, comments, likes &#41; from your profile
+												page
 											</small>
 										</label>
 									</div>

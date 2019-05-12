@@ -17,8 +17,14 @@ const profileSchema = new Schema({
 	organisation: {
 		type: String
 	},
-	hideSocial: Boolean,
-	privateProfile: Boolean,
+	hideSocial: {
+		type: Boolean,
+		default: false
+	},
+	privateProfile: {
+		type: Boolean,
+		default: false
+	},
 	bio: String,
 	twitter_URL: String,
 	linkedin_URL: String,

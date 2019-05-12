@@ -126,7 +126,7 @@ const SBSuggestions = () => {
 						data-placement="bottom"
 						title="Today's most popular events"
 					>
-						<small className="d-inline">Today's</small>
+						<small className="d-inline font-weight-bold text-muted">Today's</small>
 					</Link>
 				</div>
 				<div className="col border-right p-0">
@@ -138,7 +138,7 @@ const SBSuggestions = () => {
 						data-placement="bottom"
 						title="The most popular events in the next 3 days"
 					>
-						<small className="d-inline">Next Three days</small>
+						<small className="d-inline font-weight-bold text-muted">Next Three days</small>
 					</Link>
 				</div>
 				<div className="col p-0">
@@ -150,7 +150,7 @@ const SBSuggestions = () => {
 						data-placement="bottom"
 						title="The most popular events in the next 7 days"
 					>
-						<small className="d-inline">Next 7 days</small>
+						<small className="d-inline font-weight-bold text-muted">Next 7 days</small>
 					</Link>
 				</div>
 			</div>

@@ -57,7 +57,6 @@ module.exports = {
 				position: String!
 				organisation: String
 				hideSocial: Boolean
-				privateProfile: Boolean
 				bio: String
 				twitter_URL: String
 				linkedin_URL: String
@@ -72,7 +71,6 @@ module.exports = {
 				position: String
 				organisation: String
 				hideSocial: Boolean
-				privateProfile: Boolean
 				bio: String
 				twitter_URL: String
 				linkedin_URL: String

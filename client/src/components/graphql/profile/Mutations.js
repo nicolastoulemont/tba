@@ -7,7 +7,6 @@ export const CREATE_PROFILE = gql`
 		$position: String!
 		$organisation: String
 		$hideSocial: Boolean
-		$privateProfile: Boolean
 		$bio: String
 		$twitter_URL: String
 		$linkedin_URL: String
@@ -21,7 +20,6 @@ export const CREATE_PROFILE = gql`
 			position: $position
 			organisation: $organisation
 			hideSocial: $hideSocial
-			privateProfile: $privateProfile
 			bio: $bio
 			twitter_URL: $twitter_URL
 			linkedin_URL: $linkedin_URL
@@ -50,7 +48,6 @@ export const UPDATE_PROFILE = gql`
 		$position: String
 		$organisation: String
 		$hideSocial: Boolean
-		$privateProfile: Boolean
 		$bio: String
 		$twitter_URL: String
 		$linkedin_URL: String
@@ -65,7 +62,6 @@ export const UPDATE_PROFILE = gql`
 			position: $position
 			organisation: $organisation
 			hideSocial: $hideSocial
-			privateProfile: $privateProfile
 			bio: $bio
 			twitter_URL: $twitter_URL
 			linkedin_URL: $linkedin_URL
