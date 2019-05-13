@@ -2,12 +2,11 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import DefaultAvatar from '../../../img/default_avatar.svg';
-import { UserContext } from '../../contexts';
+import DefaultAvatar from '../../../../img/default_avatar.svg';
+import { UserContext } from '../../../contexts';
 
-const NewsFeedItem = ({ event }) => {
+const HostedItem = ({ event }) => {
 	const user = useContext(UserContext);
-
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2  border-bottom">
@@ -39,8 +38,7 @@ const NewsFeedItem = ({ event }) => {
 						<small className="font-italic">{dayjs(event.createdAt).fromNow()}</small>
 					)}
 				</h6>
-				<h6 className="text-left text-muted mb-0">Host: {event.eventHost}</h6>
-				<p className="text-left p-0 my-1">
+				<p className="text-left p-0 my-2">
 					{event.tags.map(tag => (
 						<span
 							className="badge tag"
@@ -53,35 +51,6 @@ const NewsFeedItem = ({ event }) => {
 					))}
 				</p>
 				<p className="text-left">{event.abstract}</p>
-				<p className="text-left mb-0">
-					{' '}
-					<small>
-						{event.address}, {event.city}
-					</small>
-				</p>
-				<p className="text-left mb-0">
-					{new Date(event.start).getDate() === new Date(event.end).getDate() ? (
-						<small>
-							{dayjs(event.start).format('dddd DD')} from {dayjs(event.start).format('HH:mm')} to{' '}
-							{dayjs(event.end).format('HH:mm')}
-						</small>
-					) : (
-						<small>
-							From {dayjs(event.start).format('dddd DD HH:mm')} to{' '}
-							{dayjs(event.end).format('dddd DD HH:mm')}
-						</small>
-					)}
-				</p>
-				<p className="text-left mb-0">
-					<small>
-						{event.isPublic ? <span className="mb-0 font-italic">Public event</span> : null}{' '}
-						{event.price === 0 ? (
-							<span className="font-italic"> - Free Event</span>
-						) : (
-							<span className="font-italic"> - Entrance Fee : {event.price} €</span>
-						)}
-					</small>
-				</p>
 				<p className="float-left">
 					<small>
 						by{' '}
@@ -109,4 +78,4 @@ const NewsFeedItem = ({ event }) => {
 	);
 };
 
-export default NewsFeedItem;
+export default HostedItem;

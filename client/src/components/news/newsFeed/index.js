@@ -7,7 +7,7 @@ import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
 import { useStateValue } from '../../contexts/InitialState';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
-import NewsFeedItem from './NewsFeedItem';
+import NewsFeedItem from './feedItems';
 
 const NewsFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
@@ -17,7 +17,6 @@ const NewsFeed = ({ match }) => {
 	const [price, setPrice] = useState(userSearchPref.price);
 	const [tags, setTags] = useState(userSearchPref.tags);
 	const [errors, setErrors] = useState([]);
-
 
 	const day = match.params.day;
 
