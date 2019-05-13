@@ -14,8 +14,8 @@ const UNav = () => {
 	] = useStateValue();
 
 	const logOut = async e => {
-		localStorage.removeItem('token');
-		localStorage.removeItem('uuid');
+		localStorage.removeItem('access-token');
+		localStorage.removeItem('refresh-token');
 	};
 
 	return (

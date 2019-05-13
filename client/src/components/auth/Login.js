@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import React, { Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { InputField } from '../commons/InputComponents';
-import { LOGIN_USER } from '../graphql/user/Mutations';
+import { NEWLOGIN_USER, LOGIN_USER } from '../graphql/user/Mutations';
 import { findErrorInErrorsArr } from '../commons/ErrorsHandling';
 
 const Login = ({ history, client }) => {
@@ -16,17 +16,18 @@ const Login = ({ history, client }) => {
 		if (e.target.name === 'email') setEmail(e.target.value.toLowerCase());
 	};
 
-	const logIn = async (e, email, password, login) => {
+	const logIn = async (e, email, password, newLogin) => {
 		e.preventDefault();
-		const response = await login({
+		const response = await newLogin({
 			variables: { email, password }
 		});
-		const { ok, token, errors } = response.data.login;
+		const { ok, errors, accessToken, refreshToken } = response.data.newLogin;
 		if (!ok) {
 			setErrors(errors);
 		} else {
 			await client.resetStore();
-			localStorage.setItem('token', token);
+			localStorage.setItem('access-token', accessToken);
+			localStorage.setItem('refresh-token', refreshToken);
 			setTimeout(() => history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 		}
 	};
@@ -35,9 +36,9 @@ const Login = ({ history, client }) => {
 		<Fragment>
 			<div className="col p-4">
 				<h6 className="text-left text-muted">Login to your account</h6>
-				<Mutation mutation={LOGIN_USER}>
-					{(login, e) => (
-						<form onSubmit={e => logIn(e, email, password, login)}>
+				<Mutation mutation={NEWLOGIN_USER}>
+					{(newLogin, e) => (
+						<form onSubmit={e => logIn(e, email, password, newLogin)}>
 							<InputField
 								type="text"
 								labelText="Email"

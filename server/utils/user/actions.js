@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const SECRET = process.env.SECRET;
+const { createTokens } = require('./auth');
 
 const registerUser = async (args, User) => {
 	try {
@@ -34,7 +33,7 @@ const registerAndLogin = async (args, User) => {
 				id: user._id,
 				access: user.access
 			},
-			SECRET,
+			process.env.SECRET,
 			{ expiresIn: '1y' }
 		);
 		return {
@@ -54,10 +53,19 @@ const loginUser = async user => {
 				id: user._id,
 				access: user.access
 			},
-			SECRET,
+			process.env.SECRET,
 			{ expiresIn: '1y' }
 		);
 		return { statusCode: 200, ok: true, token };
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+};
+
+const newLogin = async user => {
+	try {
+		const { accessToken, refreshToken } = createTokens(user);
+		return { statusCode: 200, ok: true, accessToken, refreshToken };
 	} catch (err) {
 		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
@@ -176,6 +184,7 @@ module.exports = {
 	registerUser,
 	registerAndLogin,
 	loginUser,
+	newLogin,
 	changeEmail,
 	changePassword,
 	deleteAccount

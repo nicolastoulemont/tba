@@ -16,13 +16,23 @@ const Home = props => {
 		return <Redirect to={`/home/news/${dayjs().format('YYYY-MM-DD')}`} />;
 	if (path === '/home/events' || path === '/home/events/')
 		return <Redirect to={`/home/events/${dayjs().format('YYYY-MM-DD')}`} />;
+
+	const handleNewTokens = data => {
+		if (data.currentUser.accessToken)
+			localStorage.setItem('access-token', data.currentUser.accessToken);
+		if (data.currentUser.refreshToken)
+			localStorage.setItem('refresh-token', data.currentUser.refreshToken);
+		return;
+	};
+
 	return (
 		<Fragment>
 			<StateProvider initialState={InitialState} reducer={Reducer}>
 				<CQuery query={LOGGED_USER}>
 					{({ data }) => {
+						handleNewTokens(data);
 						return (
-							<UserContext.Provider value={data.currentUser}>
+							<UserContext.Provider value={data.currentUser.body}>
 								<UserNav />
 								<div className="container">
 									<div className="mt-2 text-center">

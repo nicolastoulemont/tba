@@ -3,6 +3,7 @@ const {
 	registerUser,
 	registerAndLogin,
 	loginUser,
+	newLogin,
 	changeEmail,
 	changePassword,
 	deleteAccount
@@ -15,6 +16,7 @@ const {
 	validateChangePasswordInput,
 	validateDeleteAccountInput
 } = require('../../utils/user/validation');
+const { findCurrentUser } = require('../../utils/user/queries');
 
 module.exports = {
 	UserType: gql`
@@ -45,15 +47,25 @@ module.exports = {
 			body: User
 		}
 
+		type AuthResponse implements Response {
+			statusCode: Int!
+			ok: Boolean!
+			errors: [Error]
+			accessToken: String
+			refreshToken: String
+			body: User
+		}
+
 		extend type Query {
 			user(id: ID!): User
-			currentUser: User
+			currentUser: AuthResponse!
 			users: [User!]!
 		}
 
 		extend type Mutation {
 			registerAndLogin(email: String!, password: String!): UserResponse!
 			login(email: String!, password: String!): UserResponse!
+			newLogin(email: String!, password: String!): AuthResponse!
 			changeEmail(user_ID: ID!, email: String!, password: String!): UserResponse!
 			changePassword(user_ID: ID!, currentPassword: String!, newPassword: String!): UserResponse!
 			deleteAccount(user_ID: ID!, email: String!, password: String!): UserResponse!
@@ -72,11 +84,7 @@ module.exports = {
 			},
 			currentUser: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
-				try {
-					return await User.findOne({ _id: user.id });
-				} catch (err) {
-					throw new Error('Bad request');
-				}
+				return await findCurrentUser(user, User);
 			},
 			users: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
@@ -118,6 +126,11 @@ module.exports = {
 				const { errors, isValid, user } = await validateLoginInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await loginUser(user);
+			},
+			newLogin: async (parent, args) => {
+				const { errors, isValid, user } = await validateLoginInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
+				return await newLogin(user);
 			},
 			changeEmail: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');

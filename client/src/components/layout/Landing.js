@@ -11,6 +11,7 @@ import classNames from 'classnames';
 const Landing = props => {
 	const Auth = useContext(AuthContext);
 	const [showLogIn, setShowLogIn] = useState(false);
+
 	const notAuth = () => {
 		return (
 			<Fragment>
@@ -67,7 +68,11 @@ const Landing = props => {
 										</div>
 									</div>
 									<div className="row">
-										{showLogIn ? <Login history={props.history} /> : <Register />}
+										{showLogIn ? (
+											<Login history={props.history} />
+										) : (
+											<Register history={props.history} />
+										)}
 									</div>
 								</div>
 							</div>

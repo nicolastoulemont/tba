@@ -14,6 +14,21 @@ export const LOGIN_USER = gql`
 	}
 `;
 
+export const NEWLOGIN_USER = gql`
+	mutation NewLogin($email: String!, $password: String!) {
+		newLogin(email: $email, password: $password) {
+			statusCode
+			ok
+			accessToken
+			refreshToken
+			errors {
+				path
+				message
+			}
+		}
+	}
+`;
+
 export const REGISTER_AND_LOGIN_USER = gql`
 	mutation RegisterAndLogin($email: String!, $password: String!) {
 		registerAndLogin(email: $email, password: $password) {

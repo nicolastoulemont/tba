@@ -14,11 +14,13 @@ import { uri } from './config/config';
 const client = new ApolloClient({
 	uri,
 	request: operation => {
-		const token = localStorage.getItem('token');
-		if (token) {
+		const accessToken = localStorage.getItem('access-token');
+		const refreshToken = localStorage.getItem('refresh-token');
+		if (accessToken || refreshToken) {
 			operation.setContext({
 				headers: {
-					authorization: token
+					accesstoken: accessToken,
+					refreshtoken: refreshToken
 				}
 			});
 		}

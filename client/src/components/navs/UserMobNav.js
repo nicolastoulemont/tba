@@ -17,8 +17,8 @@ const UserMobNav = ({ history }) => {
 	const [showDatePicker, setShowDatePicker] = useState(false);
 
 	const logOut = e => {
-		localStorage.removeItem('token');
-		localStorage.removeItem('uuid');
+		localStorage.removeItem('access-token');
+		localStorage.removeItem('refresh-token');
 	};
 	const path = window.location.pathname;
 	return (

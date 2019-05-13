@@ -6,52 +6,59 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Loaders = require('./utils/DataLoaders');
 
-const SECRET = process.env.SECRET;
 const DB_URI = `${process.env.DB_NAME}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${
 	process.env.DB_HOST
 }:${process.env.DB_DEPLOYMENT}`;
 
-// DB CONNECTION
 mongoose
 	.connect(DB_URI, { useNewUrlParser: true, useFindAndModify: false })
 	.then(() => console.log('DB connected'))
 	.catch(err => console.log(err));
 mongoose.set('useCreateIndex', true);
-mongoose.set('debug', true);
 
-const getUser = req => {
+const AuthUser = req => {
+	const accessToken = req.headers.accesstoken || '';
+	const refreshToken = req.headers.refreshtoken || '';
+
+	if (!accessToken && !refreshToken) return;
+
+	if (accessToken) {
+		try {
+			const user = jwt.verify(accessToken, process.env.SECRET);
+			return user;
+		} catch {}
+	}
+
+	if (!refreshToken) return;
+
+	let data;
 	try {
-		const token = req.headers.authorization || '';
-		const user = jwt.verify(token, SECRET);
-		return user;
-	} catch {}
-	return;
+		data = jwt.verify(refreshToken, process.env.SECRET2);
+		return {
+			needTokens: true,
+			...data
+		};
+	} catch {
+		return;
+	}
 };
 
-// GRAPHQL integration
 const server = new ApolloServer({
 	schema,
 	context: ({ req }) => ({
-		user: getUser(req),
+		user: AuthUser(req),
 		models,
-		SECRET,
+		SECRET: process.env.SECRET,
 		Loaders
 	}),
-	formatError: error => {
-		const err = {
-			path: error.path,
-			message: error.message,
-			code: error.extensions.code
-		};
-		return err;
-	},
+	formatError: error => ({
+		path: error.path,
+		message: error.message,
+		code: error.extensions.code
+	}),
 	playground: true
 });
 
-server.listen(process.env.PORT, () =>
-	console.log(
-		`Server running on http://localhost:${
-			process.env.PORT
-		} - Playground available on http://localhost:${process.env.PORT}/graphql?`
-	)
+server.listen({ port: process.env.PORT }, () =>
+	console.log(`Server running on http://localhost:${process.env.PORT}/graphql?`)
 );

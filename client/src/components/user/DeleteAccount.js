@@ -27,7 +27,8 @@ const DeleteAccount = ({ user, history }) => {
 		const { ok, errors } = res.data.deleteAccount;
 		if (!ok) setErrors(errors);
 		if (ok) {
-			localStorage.removeItem('token');
+			localStorage.removeItem('access-token');
+			localStorage.removeItem('refresh-token');
 			history.push('/');
 		}
 	};

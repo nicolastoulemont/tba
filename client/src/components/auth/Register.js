@@ -7,7 +7,7 @@ import { REGISTER_AND_LOGIN_USER } from '../graphql/user/Mutations';
 import { findErrorInErrorsArr } from '../commons/ErrorsHandling';
 import TermsModal from './TermsModal';
 
-const Register = props => {
+const Register = ({ history, client }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [password2, setPassword2] = useState('');
@@ -47,9 +47,9 @@ const Register = props => {
 			if (!ok) {
 				setErrors(errors);
 			} else {
-				props.client.resetStore();
+				client.resetStore();
 				await localStorage.setItem('token', token);
-				setTimeout(() => props.history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
+				setTimeout(() => history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 			}
 		}
 	};
