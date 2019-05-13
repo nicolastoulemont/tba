@@ -26,20 +26,20 @@ const AuthUser = req => {
 		try {
 			const user = jwt.verify(accessToken, process.env.SECRET);
 			return user;
-		} catch {}
-	}
+		} catch {
+			if (!refreshToken) return;
 
-	if (!refreshToken) return;
-
-	let data;
-	try {
-		data = jwt.verify(refreshToken, process.env.SECRET2);
-		return {
-			needTokens: true,
-			...data
-		};
-	} catch {
-		return;
+			let data;
+			try {
+				data = jwt.verify(refreshToken, process.env.SECRET2);
+				return {
+					needTokens: true,
+					...data
+				};
+			} catch {
+				return;
+			}
+		}
 	}
 };
 

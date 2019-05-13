@@ -24,15 +24,15 @@ const ManageActivities = ({ match }) => {
 
 	const displayDay = () => {
 		if (!day.includes('+')) {
-			const date = `${displayRegistrations ? `Registrations` : `Events`} on ${dayjs(day).format(
-				'dddd'
-			)} `;
+			const date = `${displayRegistrations ? `Your Registrations` : `Your Events`} on ${dayjs(
+				day
+			).format('dddd')} `;
 			return date;
 		}
 		if (day.includes('+')) {
 			const firstDay = day.split('+')[0];
 			const lastDay = day.split('+')[1];
-			const days = `${displayRegistrations ? `Registrations` : `Events`} from ${dayjs(
+			const days = `${displayRegistrations ? `Your Registrations` : `Your Events`} from ${dayjs(
 				firstDay
 			).format('dddd')}, ${dayjs(firstDay).format('DD')} to ${dayjs(lastDay).format(
 				'dddd'
