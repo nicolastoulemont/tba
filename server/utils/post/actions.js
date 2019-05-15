@@ -7,6 +7,7 @@ const buildPost = async (args, Post) => {
 			description: args.description,
 			authorName: args.authorName,
 			author_URL: args.author_URL,
+			authorPicture_URL: args.authorPicture_URL,
 			postOrigin_URL: args.postOrigin_URL,
 			type: args.type,
 			scraped: args.scraped,
@@ -41,6 +42,7 @@ const updatePost = async (args, Post) => {
 		if (args.description) updatePost.description = args.description;
 		if (args.authorName) updatePost.authorName = args.authorName;
 		if (args.author_URL) updatePost.author_URL = args.author_URL;
+		if (args.authorPicture_URL) updatePost.authorPicture_URL = args.authorPicture_URL;
 		if (args.postOrigin_URL) updatePost.postOrigin_URL = args.postOrigin_URL;
 		if (args.type) updatePost.type = args.type;
 		if (typeof args.scraped !== null) updatePost.scraped = args.scraped;

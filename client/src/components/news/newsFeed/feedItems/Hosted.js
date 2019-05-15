@@ -36,7 +36,14 @@ const HostedItem = ({ post }) => {
 						<small className="font-italic">{dayjs(post.createdAt).fromNow()}</small>
 					)}
 				</h6>
-				<p className="text-left p-0 my-2">
+				<p className="text-left text-muted mb-0">
+					<small>
+						<Link to={{ pathname: `/home/profile/${post.user_ID}` }} className="font-weight-bold">
+							{post.creator[0].profile[0].name}
+						</Link>
+					</small>
+				</p>
+				<p className="text-left p-0 mt-0 mb-1">
 					{post.tags.map(tag => (
 						<span
 							className="badge tag"
@@ -49,14 +56,6 @@ const HostedItem = ({ post }) => {
 					))}
 				</p>
 				<p className="text-left">{post.abstract}</p>
-				<p className="float-left">
-					<small>
-						by{' '}
-						<Link to={{ pathname: `/home/profile/${post.user_ID}` }} className="font-weight-bold">
-							{post.creator[0].profile[0].name}
-						</Link>
-					</small>
-				</p>
 			</div>
 		</div>
 	);

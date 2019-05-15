@@ -30,6 +30,7 @@ export const SEARCH_DAILY_POSTS = gql`
 				abstract
 				authorName
 				author_URL
+				authorPicture_URL
 				postOrigin_URL
 				type
 				createdAt

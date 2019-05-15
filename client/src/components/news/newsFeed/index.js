@@ -66,9 +66,9 @@ const NewsFeed = ({ match }) => {
 							}}
 						>
 							{({ data }) => {
+								console.log(data);
 								if (data.searchDailyPosts.ok) {
 									const posts = data.searchDailyPosts.body;
-
 									return (
 										<Fragment>
 											{posts.length === 0 ? (

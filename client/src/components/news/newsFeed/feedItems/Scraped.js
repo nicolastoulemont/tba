@@ -1,28 +1,22 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import DefaultAvatar from '../../../../img/default_avatar.svg';
 
 const ScrapedItem = ({ post }) => {
 	dayjs.extend(relativeTime);
 	return (
-		<div className="media my-2  border-bottom">
-			<Link to={`/home/profile/${post.user_ID}`}>
-				{post.creator[0].profile[0].picture_URL ? (
-					<img
-						src={post.creator[0].profile[0].picture_URL}
-						className="small-avatar rounded-circle mr-2"
-						alt="User Avatar"
-					/>
-				) : (
-					<img src={DefaultAvatar} className="small-avatar rounded-circle mr-2" alt="User Avatar" />
-				)}
-			</Link>
+		<div className="media my-2 border-bottom">
+			<a href={post.author_URL}>
+				<img
+					src={post.authorPicture_URL}
+					className="small-avatar rounded-circle mr-2"
+					alt="Author Logo"
+				/>
+			</a>
 			<div className="media-body">
 				<h6 className="text-left mb-0">
 					<a href={post.postOrigin_URL} target="#">
-						{post.name}
+						{post.name} -
 					</a>
 
 					{post.type === 'institutional' ? (
@@ -39,8 +33,14 @@ const ScrapedItem = ({ post }) => {
 						<small className="font-italic">{dayjs(post.createdAt).fromNow()}</small>
 					)}
 				</h6>
-				<h6 className="text-left text-muted mb-0">Author: {post.authorName}</h6>
-				<p className="text-left p-0 my-1">
+				<p className="text-left text-muted mb-0">
+					<small>
+						<a className="font-weight-bold" href={post.author_URL} target="#">
+							{post.authorName}
+						</a>
+					</small>
+				</p>
+				<p className="text-left p-0 mt-0 mb-1">
 					{post.tags.map(tag => (
 						<span
 							className="badge tag"
@@ -53,14 +53,6 @@ const ScrapedItem = ({ post }) => {
 					))}
 				</p>
 				<p className="text-left">{post.abstract}</p>
-				<p className="float-left">
-					<small>
-						by{' '}
-						<a className="font-weight-bold" href={post.author_URL} target="#">
-							{post.authorName}
-						</a>
-					</small>
-				</p>
 			</div>
 		</div>
 	);

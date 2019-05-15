@@ -19,9 +19,10 @@ module.exports = {
 			name: String!
 			abstract: String!
 			description: String!
-			authorName: String!
-			author_URL: String!
-			postOrigin_URL: String!
+			authorName: String
+			author_URL: String
+			authorPicture_URL: String
+			postOrigin_URL: String
 			type: String
 			createdAt: Date
 			updatedAt: Date
@@ -72,9 +73,10 @@ module.exports = {
 				name: String!
 				abstract: String!
 				description: String!
-				authorName: String!
-				author_URL: String!
-				postOrigin_URL: String!
+				authorName: String
+				author_URL: String
+				authorPicture_URL: String
+				postOrigin_URL: String
 				type: String
 				scraped: Boolean!
 				tags: [String]
@@ -84,9 +86,10 @@ module.exports = {
 				name: String!
 				abstract: String!
 				description: String!
-				authorName: String!
-				author_URL: String!
-				postOrigin_URL: String!
+				authorName: String
+				author_URL: String
+				authorPicture_URL: String
+				postOrigin_URL: String
 				type: String
 				scraped: Boolean!
 				tags: [String]

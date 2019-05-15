@@ -26,6 +26,10 @@ const postSchema = new Schema({
 		type: String,
 		required: true
 	},
+	authorPicture_URL: {
+		type: String,
+		required: true
+	},
 	postOrigin_URL: {
 		type: String,
 		required: true
