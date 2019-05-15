@@ -6,7 +6,7 @@ import { DateUrlValidation } from '../../commons/DateUrlValidation';
 import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
 import { useStateValue } from '../../contexts/InitialState';
-import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
+import { SEARCH_DAILY_POSTS } from '../../graphql/post/Queries';
 import NewsFeedItem from './feedItems';
 
 const NewsFeed = ({ match }) => {
@@ -14,7 +14,6 @@ const NewsFeed = ({ match }) => {
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState(userSearchPref.sort);
 	const [type, setType] = useState(userSearchPref.type);
-	const [price, setPrice] = useState(userSearchPref.price);
 	const [tags, setTags] = useState(userSearchPref.tags);
 	const [errors, setErrors] = useState([]);
 
@@ -49,8 +48,6 @@ const NewsFeed = ({ match }) => {
 						setSort={setSort}
 						type={type}
 						setType={setType}
-						price={price}
-						setPrice={setPrice}
 						tags={tags}
 						setTags={setTags}
 						errors={errors}
@@ -58,31 +55,31 @@ const NewsFeed = ({ match }) => {
 					/>
 					<div className="border-top">
 						<CQuery
-							query={SEARCH_DAILY_EVENTS}
+							query={SEARCH_DAILY_POSTS}
 							variables={{
 								date: day,
 								search,
 								limit: 10,
 								sort,
 								type,
-								price,
 								tags
 							}}
 						>
 							{({ data }) => {
-								if (data.searchDailyEvents.ok) {
-									const events = data.searchDailyEvents.body;
+								if (data.searchDailyPosts.ok) {
+									const posts = data.searchDailyPosts.body;
+
 									return (
 										<Fragment>
-											{events.length === 0 ? (
+											{posts.length === 0 ? (
 												<div className="mt-4 pl-4 font-italic ">No {displayDay()}</div>
 											) : (
 												<Fragment>
-													{events.map(event => (
-														<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
+													{posts.map(post => (
+														<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={post.id}>
 															{props => (
 																<div style={props}>
-																	<NewsFeedItem key={event.id} event={event} />
+																	<NewsFeedItem key={post.id} post={post} />
 																</div>
 															)}
 														</Spring>
@@ -91,8 +88,8 @@ const NewsFeed = ({ match }) => {
 											)}
 										</Fragment>
 									);
-								} else if (!data.searchDailyEvents.ok) {
-									setErrors(data.searchDailyEvents.errors);
+								} else if (!data.searchDailyPosts.ok) {
+									setErrors(data.searchDailyPosts.errors);
 									return null;
 								}
 							}}

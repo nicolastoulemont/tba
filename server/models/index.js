@@ -2,6 +2,7 @@ const User = require('./User');
 const Profile = require('./Profile');
 const CommentItem = require('./Comment');
 const EventItem = require('./Eventitem');
+const Post = require('./Post');
 const Like = require('./Like');
 const Report = require('./Report');
 const Registration = require('./Registration');
@@ -15,6 +16,7 @@ module.exports = {
 	Profile,
 	CommentItem,
 	EventItem,
+	Post,
 	Like,
 	Report,
 	Registration,

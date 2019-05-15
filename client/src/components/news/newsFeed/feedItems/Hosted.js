@@ -1,19 +1,17 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import DefaultAvatar from '../../../../img/default_avatar.svg';
-import { UserContext } from '../../../contexts';
 
-const HostedItem = ({ event }) => {
-	const user = useContext(UserContext);
+const HostedItem = ({ post }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2  border-bottom">
-			<Link to={`/home/profile/${event.user_ID}`}>
-				{event.creator[0].profile[0].picture_URL ? (
+			<Link to={`/home/profile/${post.user_ID}`}>
+				{post.creator[0].profile[0].picture_URL ? (
 					<img
-						src={event.creator[0].profile[0].picture_URL}
+						src={post.creator[0].profile[0].picture_URL}
 						className="small-avatar rounded-circle mr-2"
 						alt="User Avatar"
 					/>
@@ -23,8 +21,8 @@ const HostedItem = ({ event }) => {
 			</Link>
 			<div className="media-body">
 				<h6 className="text-left mb-0">
-					<Link to={`/home/event/${event.id}`}> {event.name} </Link> -{' '}
-					{event.type === 'institutional' ? (
+					<Link to={`/home/post/${post.id}`}> {post.name} </Link> -{' '}
+					{post.type === 'institutional' ? (
 						<i
 							data-togggle="tooltip"
 							data-placement="bottom"
@@ -32,14 +30,14 @@ const HostedItem = ({ event }) => {
 							className="fas fa-university mx-2"
 						/>
 					) : null}
-					{event.createdAt !== event.updatedAt ? (
-						<small className="font-italic">edited {dayjs(event.updatedAt).fromNow()}</small>
+					{post.createdAt !== post.updatedAt ? (
+						<small className="font-italic">edited {dayjs(post.updatedAt).fromNow()}</small>
 					) : (
-						<small className="font-italic">{dayjs(event.createdAt).fromNow()}</small>
+						<small className="font-italic">{dayjs(post.createdAt).fromNow()}</small>
 					)}
 				</h6>
 				<p className="text-left p-0 my-2">
-					{event.tags.map(tag => (
+					{post.tags.map(tag => (
 						<span
 							className="badge tag"
 							key={Math.random()
@@ -50,29 +48,15 @@ const HostedItem = ({ event }) => {
 						</span>
 					))}
 				</p>
-				<p className="text-left">{event.abstract}</p>
+				<p className="text-left">{post.abstract}</p>
 				<p className="float-left">
 					<small>
 						by{' '}
-						<Link to={{ pathname: `/home/profile/${event.user_ID}` }} className="font-weight-bold">
-							{event.creator[0].profile[0].name}
+						<Link to={{ pathname: `/home/profile/${post.user_ID}` }} className="font-weight-bold">
+							{post.creator[0].profile[0].name}
 						</Link>
 					</small>
 				</p>
-				{user.profile[0] ? (
-					<Link
-						to="#"
-						data-togggle="tooltip"
-						data-placement="bottom"
-						title="Report this event"
-						className="float-right"
-					>
-						<small>
-							{' '}
-							<i className="far fa-flag mx-2" />
-						</small>
-					</Link>
-				) : null}
 			</div>
 		</div>
 	);

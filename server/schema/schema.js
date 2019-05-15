@@ -6,6 +6,7 @@ const { UserType, UserRes } = require('./components/user');
 const { OrganisationType, OrganisationRes } = require('./components/organisation');
 const { MembershipType, MembershipRes } = require('./components/membership');
 const { EventType, EventRes } = require('./components/event');
+const { PostType, PostRes } = require('./components/post');
 const { ProfileType, ProfileRes } = require('./components/profile');
 const { CommentType, CommentRes } = require('./components/comment');
 const { PollType, PollRes } = require('./components/poll');
@@ -28,6 +29,7 @@ module.exports = schema = makeExecutableSchema({
 		UserType,
 		OrganisationType,
 		EventType,
+		PostType,
 		ProfileType,
 		CommentType,
 		PollType,
@@ -43,6 +45,7 @@ module.exports = schema = makeExecutableSchema({
 		UserRes,
 		OrganisationRes,
 		EventRes,
+		PostRes,
 		ProfileRes,
 		CommentRes,
 		PollRes,

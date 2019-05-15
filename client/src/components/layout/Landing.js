@@ -29,7 +29,7 @@ const Landing = props => {
 									<div className="row">
 										<div className="col p-4">
 											<h6 className="text-left text-muted pb-2">
-												MyEU is a plateform that aggregate news and events related to the EU Public
+												MyEU is a plateform that aggregates news and events related to the EU Public
 												Affairs :
 											</h6>
 											<h6 className="text-left text-muted py-2">
@@ -40,7 +40,7 @@ const Landing = props => {
 												Never miss EU related events happening in the EU Affairs district
 											</h6>
 											<h6 className="text-left text-muted py-2">
-												Host EU related events on the plateform to gain more visibility
+												Publish EU related events on the plateform to gain more visibility
 											</h6>
 										</div>
 									</div>

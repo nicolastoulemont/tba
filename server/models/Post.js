@@ -14,19 +14,20 @@ const postSchema = new Schema({
 		type: String,
 		required: true
 	},
-	banner_URL: String,
 	description: {
 		type: String,
 		required: true
 	},
-	isPublic: {
-		type: Boolean,
-		default: true,
+	authorName: {
+		type: String,
 		required: true
 	},
-	showComments: {
-		type: Boolean,
-		default: true,
+	author_URL: {
+		type: String,
+		required: true
+	},
+	postOrigin_URL: {
+		type: String,
 		required: true
 	},
 	type: {
@@ -39,6 +40,11 @@ const postSchema = new Schema({
 	updatedAt: {
 		type: Date,
 		default: Date.now()
+	},
+	scraped: {
+		type: Boolean,
+		default: false,
+		required: true
 	},
 	tags: {
 		type: [String]

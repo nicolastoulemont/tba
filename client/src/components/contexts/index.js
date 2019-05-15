@@ -3,6 +3,7 @@ import { createContext } from 'react';
 
 const UserContext = createContext();
 const EventContext = createContext();
+const PostContext = createContext();
 const CommentContext = createContext();
 const ProfileContext = createContext();
 const AuthContext = createContext();
@@ -23,4 +24,12 @@ const AuthContextValue = () => {
 	return true;
 };
 
-export { AuthContext, AuthContextValue, UserContext, EventContext, CommentContext, ProfileContext };
+export {
+	AuthContext,
+	AuthContextValue,
+	UserContext,
+	EventContext,
+	PostContext,
+	CommentContext,
+	ProfileContext
+};
