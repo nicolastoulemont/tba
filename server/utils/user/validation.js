@@ -48,6 +48,10 @@ const validateLoginInput = async data => {
 	} else if (user) {
 		const validPwd = await bcrypt.compare(data.password, user.password);
 		if (!validPwd) errors.push({ path: 'password', message: 'Invalid Password' });
+
+		// if (!user.verified) {
+		// 	errors.push({ path: 'email', message: "Your email hasn't been verified" });
+		// }
 	}
 
 	return {

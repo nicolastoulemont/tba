@@ -6,7 +6,7 @@ const ScrapedItem = ({ event }) => {
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2  border-bottom">
-			<a href={event.author_URL}>
+			<a href={event.author_URL} target="#">
 				<img
 					src={event.authorPicture_URL}
 					className="small-avatar rounded-circle mr-2"
