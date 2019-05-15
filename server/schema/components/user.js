@@ -1,6 +1,8 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const {
 	registerUser,
+	verifyUser,
+	sendVerifyEmail,
 	registerAndLogin,
 	userLogin,
 	changeEmail,
@@ -62,6 +64,9 @@ module.exports = {
 		}
 
 		extend type Mutation {
+			register(email: String!, password: String!): UserResponse!
+			verifyEmail(_id: ID!): UserResponse!
+			sendVerifyEmail(_id: ID!, email: String!): UserResponse!
 			registerAndLogin(email: String!, password: String!): UserResponse!
 			login(email: String!, password: String!): AuthResponse!
 			changeEmail(user_ID: ID!, email: String!, password: String!): UserResponse!
@@ -115,6 +120,17 @@ module.exports = {
 		},
 
 		Mutation: {
+			register: async (parent, args, { models: { User } }) => {
+				const { errors, isValid } = await validateRegInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
+				return await registerUser(args, User);
+			},
+			verifyEmail: async (parent, args, { models: { User } }) => {
+				return await verifyUser(args, User);
+			},
+			sendVerifyEmail: async (parent, args) => {
+				return await sendVerifyEmail(args);
+			},
 			registerAndLogin: async (parent, args, { models: { User } }) => {
 				const { errors, isValid } = await validateRegInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
@@ -122,7 +138,7 @@ module.exports = {
 			},
 			login: async (parent, args) => {
 				const { errors, isValid, user } = await validateLoginInput(args);
-				if (!isValid) return { statusCode: 400, ok: false, errors };
+				if (!isValid) return { statusCode: 400, ok: false, errors, body: user };
 				return await userLogin(user);
 			},
 			changeEmail: async (parent, args, { user, models: { User } }) => {

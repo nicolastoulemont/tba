@@ -9,6 +9,7 @@ import Error404 from './components/commons/IncorrectRoute';
 import { AuthContext, AuthContextValue } from './components/contexts';
 import Home from './components/home';
 import Landing from './components/layout/Landing';
+import ConfirmEmail from './components/auth/ConfirmEmail';
 import { uri } from './config/config';
 
 const client = new ApolloClient({
@@ -36,6 +37,7 @@ const App = () => (
 						<Switch>
 							<Route exact path="/" component={Landing} />
 							<PrivateRoute path="/home" component={Home} />
+							<Route path="/confirmation/:emailToken" component={ConfirmEmail} />
 							<Route component={Error404} />
 							<Route path="/error" component={Error404} />
 						</Switch>

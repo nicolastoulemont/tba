@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from '../contexts';
 import UserNav from '../navs/userNav';
@@ -11,6 +11,12 @@ import classNames from 'classnames';
 const Landing = props => {
 	const Auth = useContext(AuthContext);
 	const [showLogIn, setShowLogIn] = useState(false);
+
+	useEffect(() => {
+		if (props.location.state && props.location.state.verified) {
+			setShowLogIn(true);
+		}
+	});
 
 	const notAuth = () => {
 		return (

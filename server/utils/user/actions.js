@@ -1,20 +1,52 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { createTokens } = require('./auth');
+const { createTokens, sendVerificationEmail } = require('./auth');
 
 const registerUser = async (args, User) => {
 	try {
 		const hashedPwd = await bcrypt.hash(args.password, 12);
-		let user = new User({
+		const user = await new User({
 			email: args.email,
 			password: hashedPwd,
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}).save();
-		return { success: true, user };
+
+		sendVerificationEmail(user);
+
+		return { statusCode: 201, ok: true, body: user };
 	} catch (err) {
-		console.log(err);
-		return { success: false, error };
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+};
+
+const verifyUser = async (args, User) => {
+	try {
+		await User.findByIdAndUpdate(
+			args._id,
+			{ verified: true },
+			{
+				new: true
+			}
+		);
+
+		return { statusCode: 201, ok: true };
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+};
+
+const sendVerifyEmail = async args => {
+	try {
+		const user = {
+			id: args._id,
+			email: args.email
+		};
+		sendVerificationEmail(user);
+
+		return { statusCode: 201, ok: true };
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
 };
 
@@ -166,6 +198,8 @@ const deleteAccount = async (
 
 module.exports = {
 	registerUser,
+	verifyUser,
+	sendVerifyEmail,
 	registerAndLogin,
 	userLogin,
 	changeEmail,

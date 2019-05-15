@@ -1,18 +1,18 @@
-import dayjs from 'dayjs';
 import React, { Fragment, useState } from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import { InputField } from '../commons/InputComponents';
-import { REGISTER_AND_LOGIN_USER } from '../graphql/user/Mutations';
+import { REGISTER_USER } from '../graphql/user/Mutations';
 import { findErrorInErrorsArr } from '../commons/ErrorsHandling';
 import TermsModal from './TermsModal';
 
-const Register = ({ history, client }) => {
+const Register = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [password2, setPassword2] = useState('');
 	const [acceptTerms, setAcceptTerms] = useState(false);
 	const [errors, setErrors] = useState([]);
+	const [showSuccess, setShowSuccess] = useState(false);
 
 	const onChange = e => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
@@ -22,7 +22,7 @@ const Register = ({ history, client }) => {
 		if (e.target.name === 'email') setEmail(e.target.value.toLowerCase());
 	};
 
-	const registerAndLoginUser = async (e, email, password, registerAndLogin) => {
+	const registerUser = async (e, email, password, register) => {
 		e.preventDefault();
 		if (password !== password2) {
 			setErrors([
@@ -40,16 +40,14 @@ const Register = ({ history, client }) => {
 				}
 			]);
 		} else {
-			const response = await registerAndLogin({
+			const response = await register({
 				variables: { email, password }
 			});
-			const { ok, token, errors } = response.data.registerAndLogin;
+			const { ok, errors } = response.data.register;
 			if (!ok) {
 				setErrors(errors);
 			} else {
-				client.resetStore();
-				await localStorage.setItem('token', token);
-				setTimeout(() => history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
+				setShowSuccess(true);
 			}
 		}
 	};
@@ -57,9 +55,9 @@ const Register = ({ history, client }) => {
 		<Fragment>
 			<div className="col p-4">
 				<h6 className="text-left text-muted">Create your MyEU account</h6>
-				<Mutation mutation={REGISTER_AND_LOGIN_USER}>
-					{(registerAndLogin, e) => (
-						<form onSubmit={e => registerAndLoginUser(e, email, password, registerAndLogin)}>
+				<Mutation mutation={REGISTER_USER}>
+					{(register, e) => (
+						<form onSubmit={e => registerUser(e, email, password, register)}>
 							<InputField
 								type="text"
 								labelText="Email"
@@ -122,6 +120,12 @@ const Register = ({ history, client }) => {
 								{findErrorInErrorsArr(errors, 'acceptTerms') ? (
 									<small className="d-block text-danger text-left">
 										{findErrorInErrorsArr(errors, 'acceptTerms').message}
+									</small>
+								) : null}
+								{showSuccess ? (
+									<small className="d-block text-success text-left">
+										You have successfully registered, a verification email has been sent to your
+										email address
 									</small>
 								) : null}
 							</div>

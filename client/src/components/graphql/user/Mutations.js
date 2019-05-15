@@ -11,6 +11,36 @@ export const LOGIN_USER = gql`
 				path
 				message
 			}
+			body {
+				id
+				email
+			}
+		}
+	}
+`;
+
+export const VERIFY_EMAIL = gql`
+	mutation VerifyEmail($_id: ID!) {
+		verifyEmail(_id: $_id) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+		}
+	}
+`;
+
+export const SEND_VERIFY_EMAIL = gql`
+	mutation SendVerifyEmail($_id: ID!, $email: String!) {
+		sendVerifyEmail(_id: $_id, email: $email) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
 		}
 	}
 `;
@@ -18,6 +48,20 @@ export const LOGIN_USER = gql`
 export const REGISTER_AND_LOGIN_USER = gql`
 	mutation RegisterAndLogin($email: String!, $password: String!) {
 		registerAndLogin(email: $email, password: $password) {
+			statusCode
+			ok
+			token
+			errors {
+				path
+				message
+			}
+		}
+	}
+`;
+
+export const REGISTER_USER = gql`
+	mutation Register($email: String!, $password: String!) {
+		register(email: $email, password: $password) {
 			statusCode
 			ok
 			token

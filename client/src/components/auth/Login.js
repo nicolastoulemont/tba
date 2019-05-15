@@ -1,14 +1,18 @@
 import dayjs from 'dayjs';
 import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Mutation, withApollo } from 'react-apollo';
+import { useMutation } from 'react-apollo-hooks';
 import { InputField } from '../commons/InputComponents';
-import { LOGIN_USER } from '../graphql/user/Mutations';
+import { LOGIN_USER, SEND_VERIFY_EMAIL } from '../graphql/user/Mutations';
 import { findErrorInErrorsArr } from '../commons/ErrorsHandling';
 
 const Login = ({ history, client }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [errors, setErrors] = useState([]);
+	const [showVerifyEmail, setShowVerifyEmail] = useState(false);
+	const [tryUser, setTryUser] = useState({ id: '', email: '' });
 
 	const onChange = e => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
@@ -21,9 +25,13 @@ const Login = ({ history, client }) => {
 		const response = await login({
 			variables: { email, password }
 		});
-		const { ok, errors, accessToken, refreshToken } = response.data.login;
+		const { ok, errors, body, accessToken, refreshToken } = response.data.login;
 		if (!ok) {
 			setErrors(errors);
+			if (body && findErrorInErrorsArr(errors, 'verified')) {
+				setTryUser(body);
+				setShowVerifyEmail(true);
+			}
 		} else {
 			await client.resetStore();
 			localStorage.setItem('access-token', accessToken);
@@ -31,6 +39,10 @@ const Login = ({ history, client }) => {
 			setTimeout(() => history.push(`/home/news/${dayjs().format('YYYY-MM-DD')}`), 50);
 		}
 	};
+
+	const sendVerificationEmail = useMutation(SEND_VERIFY_EMAIL, {
+		variables: { _id: tryUser.id, email: tryUser.email }
+	});
 
 	return (
 		<Fragment>
@@ -57,6 +69,15 @@ const Login = ({ history, client }) => {
 								onChange={onChange}
 								error={findErrorInErrorsArr(errors, 'password')}
 							/>
+							{showVerifyEmail ? (
+								<small className="text-danger">
+									Your email address is not verified. Please click{' '}
+									<Link to="#" onClick={sendVerificationEmail}>
+										here
+									</Link>{' '}
+									to request a new verification email.
+								</small>
+							) : null}
 							<input type="submit" className="btn bg-blue text-white btn-block my-4" />
 						</form>
 					)}
