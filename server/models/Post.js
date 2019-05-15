@@ -18,22 +18,6 @@ const postSchema = new Schema({
 		type: String,
 		required: true
 	},
-	authorName: {
-		type: String,
-		required: true
-	},
-	author_URL: {
-		type: String,
-		required: true
-	},
-	authorPicture_URL: {
-		type: String,
-		required: true
-	},
-	postOrigin_URL: {
-		type: String,
-		required: true
-	},
 	type: {
 		type: String
 	},
@@ -48,6 +32,22 @@ const postSchema = new Schema({
 	scraped: {
 		type: Boolean,
 		default: false,
+		required: true
+	},
+	authorName: {
+		type: String,
+		required: true
+	},
+	author_URL: {
+		type: String,
+		required: true
+	},
+	authorPicture_URL: {
+		type: String,
+		required: true
+	},
+	postOrigin_URL: {
+		type: String,
 		required: true
 	},
 	tags: {

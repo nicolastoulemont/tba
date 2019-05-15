@@ -134,8 +134,8 @@ module.exports = {
 		PostItem: {
 			creator: async (parent, args, { Loaders: { usersLoader } }) =>
 				await usersLoader.load(parent.user_ID),
-			reports: async (parent, args, { Loaders: { eventReportsLoader } }) =>
-				await eventReportsLoader.load(parent.id)
+			reports: async (parent, args, { Loaders: { postReportsLoader } }) =>
+				await postReportsLoader.load(parent.id)
 		},
 
 		Mutation: {

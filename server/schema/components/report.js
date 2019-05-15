@@ -19,10 +19,12 @@ module.exports = {
 			poll_ID: String
 			comment_ID: String
 			profile_ID: String
+			post_ID: String
 			text: String!
 			createdAt: Date
 			updatedAt: Date
 			event: EventItem
+			post: PostItem
 			comment: CommentItem
 			poll: Poll
 			profile: Profile
@@ -98,6 +100,8 @@ module.exports = {
 				await User.findOne({ _id: parent.user_ID }),
 			event: async (parent, args, { models: { EventItem } }) =>
 				await EventItem.findOne({ _id: parent.event_ID }),
+			post: async (parent, args, { models: { Post } }) =>
+				await Post.findOne({ _id: parent.post_ID }),
 			poll: async (parent, args, { models: { Poll } }) =>
 				await Poll.findOne({ _id: parent.poll_ID }),
 			comment: async (parent, args, { models: { CommentItem } }) =>

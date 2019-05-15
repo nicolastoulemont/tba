@@ -10,6 +10,7 @@ const reportSchema = new Schema({
 	poll_ID: String,
 	comment_ID: String,
 	profile_ID: String,
+	post_ID: String,
 	text: {
 		type: String,
 		required: true

@@ -74,6 +74,22 @@ const eventSchema = new Schema({
 		default: false,
 		required: true
 	},
+	authorName: {
+		type: String,
+		required: true
+	},
+	author_URL: {
+		type: String,
+		required: true
+	},
+	authorPicture_URL: {
+		type: String,
+		required: true
+	},
+	postOrigin_URL: {
+		type: String,
+		required: true
+	},
 	tags: {
 		type: [String]
 	}

@@ -37,6 +37,10 @@ module.exports = {
 			updatedAt: Date
 			likesCount: Int
 			scraped: Boolean
+			authorName: String
+			author_URL: String
+			authorPicture_URL: String
+			eventOrigin_URL: String
 			tags: [String]
 			creator: [User]
 			comments: [CommentItem]
