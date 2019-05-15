@@ -46,23 +46,7 @@ const registerAndLogin = async (args, User) => {
 	}
 };
 
-const loginUser = async user => {
-	try {
-		const token = await jwt.sign(
-			{
-				id: user._id,
-				access: user.access
-			},
-			process.env.SECRET,
-			{ expiresIn: '1y' }
-		);
-		return { statusCode: 200, ok: true, token };
-	} catch (err) {
-		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
-	}
-};
-
-const newLogin = async user => {
+const userLogin = async user => {
 	try {
 		const { accessToken, refreshToken } = createTokens(user);
 		return { statusCode: 200, ok: true, accessToken, refreshToken };
@@ -183,8 +167,7 @@ const deleteAccount = async (
 module.exports = {
 	registerUser,
 	registerAndLogin,
-	loginUser,
-	newLogin,
+	userLogin,
 	changeEmail,
 	changePassword,
 	deleteAccount

@@ -2,8 +2,7 @@ const { gql, AuthenticationError } = require('apollo-server');
 const {
 	registerUser,
 	registerAndLogin,
-	loginUser,
-	newLogin,
+	userLogin,
 	changeEmail,
 	changePassword,
 	deleteAccount
@@ -64,8 +63,7 @@ module.exports = {
 
 		extend type Mutation {
 			registerAndLogin(email: String!, password: String!): UserResponse!
-			login(email: String!, password: String!): UserResponse!
-			newLogin(email: String!, password: String!): AuthResponse!
+			login(email: String!, password: String!): AuthResponse!
 			changeEmail(user_ID: ID!, email: String!, password: String!): UserResponse!
 			changePassword(user_ID: ID!, currentPassword: String!, newPassword: String!): UserResponse!
 			deleteAccount(user_ID: ID!, email: String!, password: String!): UserResponse!
@@ -122,15 +120,10 @@ module.exports = {
 				if (!isValid) return { statusCode: 400, ok: false, errors };
 				return await registerAndLogin(args, User);
 			},
-			login: async (parent, args, { models: { User } }) => {
+			login: async (parent, args) => {
 				const { errors, isValid, user } = await validateLoginInput(args);
 				if (!isValid) return { statusCode: 400, ok: false, errors };
-				return await loginUser(user);
-			},
-			newLogin: async (parent, args) => {
-				const { errors, isValid, user } = await validateLoginInput(args);
-				if (!isValid) return { statusCode: 400, ok: false, errors };
-				return await newLogin(user);
+				return await userLogin(user);
 			},
 			changeEmail: async (parent, args, { user, models: { User } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');

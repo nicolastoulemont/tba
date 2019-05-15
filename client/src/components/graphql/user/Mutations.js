@@ -5,20 +5,6 @@ export const LOGIN_USER = gql`
 		login(email: $email, password: $password) {
 			statusCode
 			ok
-			token
-			errors {
-				path
-				message
-			}
-		}
-	}
-`;
-
-export const NEWLOGIN_USER = gql`
-	mutation NewLogin($email: String!, $password: String!) {
-		newLogin(email: $email, password: $password) {
-			statusCode
-			ok
 			accessToken
 			refreshToken
 			errors {
