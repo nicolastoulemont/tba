@@ -25,21 +25,18 @@ const eventSchema = new Schema({
 	},
 	isPublic: {
 		type: Boolean,
-		default: true,
-		required: true
+		default: true
 	},
 	showComments: {
 		type: Boolean,
-		default: true,
-		required: true
+		default: true
 	},
 	type: {
 		type: String
 	},
 	price: {
 		type: Number,
-		default: 0,
-		required: true
+		default: 0
 	},
 	city: {
 		type: String,

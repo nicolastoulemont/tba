@@ -41,6 +41,10 @@ export const SEARCH_DAILY_EVENTS = gql`
 				createdAt
 				updatedAt
 				scraped
+				authorName
+				author_URL
+				authorPicture_URL
+				eventOrigin_URL
 				tags
 				creator {
 					profile {
