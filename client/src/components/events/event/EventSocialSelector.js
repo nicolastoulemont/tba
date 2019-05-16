@@ -12,6 +12,7 @@ const EventSocialSelector = () => {
 	const event = useContext(EventContext);
 	const [commentDisplay, setCommentDisplay] = useState(event.showComments);
 	const [registreeDisplay, setRegistreeDisplay] = useState(false);
+	const [numberOfParticipant, setNumberOfParticipant] = useState(0);
 
 	const displayComments = e => {
 		setCommentDisplay(true);
@@ -65,7 +66,7 @@ const EventSocialSelector = () => {
 						>
 							<i className="d-inline fas fa-users" />
 							<h6 className="d-none d-md-inline font-weight-bold text-uppercase ml-2">
-								PARTICIPANTS
+								PARTICIPANTS {numberOfParticipant !== 0 ? `(${numberOfParticipant})` : null}
 							</h6>
 						</Link>
 					</div>
@@ -75,7 +76,9 @@ const EventSocialSelector = () => {
 				<div className="row">
 					<div className="col pb-5">
 						{commentDisplay ? <EventCommentsFeed /> : null}
-						{registreeDisplay ? <EventRegistrationsFeed /> : null}
+						{registreeDisplay ? (
+							<EventRegistrationsFeed setNumberOfParticipant={setNumberOfParticipant} />
+						) : null}
 					</div>
 				</div>
 			</div>

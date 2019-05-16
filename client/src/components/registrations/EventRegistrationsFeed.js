@@ -5,15 +5,15 @@ import CQuery from '../commons/CustomQueryComponent';
 import { EventContext } from '../contexts';
 import { GET_EVENT_REGISTRATIONS } from '../graphql/registration/Queries';
 
-const EventRegistrationFeed = () => {
+const EventRegistrationFeed = ({ setNumberOfParticipant }) => {
 	const event = useContext(EventContext);
 	return (
 		<Fragment>
 			<CQuery query={GET_EVENT_REGISTRATIONS} variables={{ event_ID: event.id }}>
 				{({ data }) => {
-					console.log(data);
 					if (data.eventRegistrations) {
 						const registrations = data.eventRegistrations.body;
+						setNumberOfParticipant(registrations.length);
 						if (typeof registrations !== 'undefined' && registrations.length === 0)
 							return <div className="font-italic">No participant yet</div>;
 						if (typeof registrations !== 'undefined' && registrations.length !== 0)
