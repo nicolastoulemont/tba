@@ -5,6 +5,7 @@ export const SEARCH_DAILY_EVENTS = gql`
 		$date: String!
 		$search: String
 		$limit: Int!
+		$offset: Int!
 		$sort: String!
 		$type: String
 		$price: Float
@@ -14,6 +15,7 @@ export const SEARCH_DAILY_EVENTS = gql`
 			date: $date
 			search: $search
 			limit: $limit
+			offset: $offset
 			sort: $sort
 			type: $type
 			price: $price

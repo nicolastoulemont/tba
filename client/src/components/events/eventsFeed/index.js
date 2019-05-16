@@ -2,12 +2,14 @@ import dayjs from 'dayjs';
 import React, { Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Spring } from 'react-spring/renderprops';
+import { Waypoint } from 'react-waypoint';
 import { DateUrlValidation } from '../../commons/DateUrlValidation';
 import CQuery from '../../commons/CustomQueryComponent';
 import FeedSearch from '../../commons/FeedSearch';
 import { useStateValue } from '../../contexts/InitialState';
 import { SEARCH_DAILY_EVENTS } from '../../graphql/event/Queries';
 import EventFeedItem from './feedItems';
+import Spinner from '../../commons/Spinner';
 
 const EventFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
@@ -61,15 +63,15 @@ const EventFeed = ({ match }) => {
 							variables={{
 								date: day,
 								search,
+								offset: 0,
 								limit: 10,
 								sort,
 								type,
 								price,
 								tags
 							}}
-							pollInterval={300000}
 						>
-							{({ data }) => {
+							{({ data, fetchMore, networkStatus }) => {
 								if (data.searchDailyEvents.ok) {
 									const events = data.searchDailyEvents.body;
 									return (
@@ -78,15 +80,49 @@ const EventFeed = ({ match }) => {
 												<div className="mt-4 font-italic ">No {displayDay()}</div>
 											) : (
 												<Fragment>
-													{events.map(event => (
+													{events.map((event, i) => (
 														<Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={event.id}>
 															{props => (
 																<div style={props}>
 																	<EventFeedItem key={event.id} event={event} />
+																	{i === data.searchDailyEvents.body.length - 2 && (
+																		<Waypoint
+																			onEnter={() =>
+																				fetchMore({
+																					variables: {
+																						date: day,
+																						search,
+																						offset: data.searchDailyEvents.body.length,
+																						limit: 10,
+																						sort,
+																						type,
+																						tags
+																					},
+																					updateQuery: (prev, { fetchMoreResult }) => {
+																						if (!fetchMoreResult) return prev;
+																						return {
+																							searchDailyEvents: {
+																								__typename: 'EventsResponse',
+																								statusCode:
+																									fetchMoreResult.searchDailyEvents.statusCode,
+																								ok: fetchMoreResult.searchDailyEvents.ok,
+																								errors: fetchMoreResult.searchDailyEvents.errors,
+																								body: [
+																									...prev.searchDailyEvents.body,
+																									...fetchMoreResult.searchDailyEvents.body
+																								]
+																							}
+																						};
+																					}
+																				})
+																			}
+																		/>
+																	)}
 																</div>
 															)}
 														</Spring>
 													))}
+													{networkStatus === 3 && <Spinner />}
 												</Fragment>
 											)}
 										</Fragment>

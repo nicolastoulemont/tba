@@ -115,6 +115,7 @@ const dailyEventsWithTags = async (date, dayafter, args, EventItem) => {
 			]
 		})
 			.sort({ start: args.sort })
+			.skip(args.offset)
 			.limit(args.limit);
 		return {
 			statusCode: 200,
@@ -147,6 +148,7 @@ const dailyEventsWithOutTags = async (date, dayafter, args, EventItem) => {
 			]
 		})
 			.sort({ start: args.sort })
+			.skip(args.offset)
 			.limit(args.limit);
 		return {
 			statusCode: 200,

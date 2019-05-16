@@ -14,7 +14,7 @@ import Spinner from '../../commons/Spinner';
 const NewsFeed = ({ match }) => {
 	const [{ userSearchPref }] = useStateValue();
 	const [search, setSearch] = useState('');
-	const [sort, setSort] = useState(userSearchPref.sort);
+	const [sort, setSort] = useState('descending');
 	const [type, setType] = useState(userSearchPref.type);
 	const [tags, setTags] = useState(userSearchPref.tags);
 	const [errors, setErrors] = useState([]);
@@ -82,7 +82,6 @@ const NewsFeed = ({ match }) => {
 															{props => (
 																<div style={props}>
 																	<NewsFeedItem key={post.id} post={post} />
-																	{}
 																	{i === data.searchDailyPosts.body.length - 2 && (
 																		<Waypoint
 																			onEnter={() =>
