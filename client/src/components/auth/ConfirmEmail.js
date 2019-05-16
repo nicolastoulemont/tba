@@ -20,9 +20,12 @@ const ConfirmEmail = ({ match }) => {
 			} catch {}
 		};
 		const user = getUser(token);
+		console.log(user);
 		if (user && user.id) {
+			console.log(user);
 			setUserId(user.id);
 		}
+		return;
 	}, []);
 
 	if (userId) {

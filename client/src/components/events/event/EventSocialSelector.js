@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import EventCommentsFeed from '../../comments/EventCommentsFeed';
 import LikesFeed from '../../likes/eventLikes/LikesFeed';
 import EventRegistrationsFeed from '../../registrations/EventRegistrationsFeed';
+import EventCommentsReportFeed from '../../reports/EventCommentReports';
 import CQuery from '../../commons/CustomQueryComponent';
 import { GET_EVENT_LIKES_COUNT } from '../../graphql/event/Queries';
 import { UserContext, EventContext } from '../../contexts';
@@ -12,16 +13,25 @@ const EventSocialSelector = () => {
 	const event = useContext(EventContext);
 	const [commentDisplay, setCommentDisplay] = useState(event.showComments);
 	const [registreeDisplay, setRegistreeDisplay] = useState(false);
+	const [reportsDisplay, setReportsDisplay] = useState(false);
 	const [numberOfParticipant, setNumberOfParticipant] = useState(0);
 
 	const displayComments = e => {
 		setCommentDisplay(true);
 		setRegistreeDisplay(false);
+		setReportsDisplay(false);
 	};
 
 	const displayParticipants = e => {
 		setCommentDisplay(false);
 		setRegistreeDisplay(true);
+		setReportsDisplay(false);
+	};
+
+	const displayReports = e => {
+		setCommentDisplay(false);
+		setRegistreeDisplay(false);
+		setReportsDisplay(true);
 	};
 	return (
 		<Fragment>
@@ -70,6 +80,22 @@ const EventSocialSelector = () => {
 							</h6>
 						</Link>
 					</div>
+					{user.id === event.user_ID ? (
+						<div className="col px-0">
+							<Link
+								to="#"
+								onClick={displayReports}
+								data-togggle="tooltip"
+								data-placement="bottom"
+								title="See this event reported comments"
+							>
+								<i className="d-inline far fa-flag" />
+								<h6 className="d-none d-md-inline font-weight-bold text-uppercase ml-2">
+									REP. COM.
+								</h6>
+							</Link>
+						</div>
+					) : null}
 				</div>
 			</div>
 			<div className="py-2">
@@ -79,6 +105,7 @@ const EventSocialSelector = () => {
 						{registreeDisplay ? (
 							<EventRegistrationsFeed setNumberOfParticipant={setNumberOfParticipant} />
 						) : null}
+						{reportsDisplay ? <EventCommentsReportFeed /> : null}
 					</div>
 				</div>
 			</div>

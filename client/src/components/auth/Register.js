@@ -118,15 +118,19 @@ const Register = () => {
 									</small>
 								</label>
 								{findErrorInErrorsArr(errors, 'acceptTerms') ? (
-									<small className="d-block text-danger text-left">
-										{findErrorInErrorsArr(errors, 'acceptTerms').message}
-									</small>
+									<div className="text-left">
+										<small className="d-block text-danger">
+											{findErrorInErrorsArr(errors, 'acceptTerms').message}
+										</small>
+									</div>
 								) : null}
 								{showSuccess ? (
-									<small className="d-block text-success text-left">
-										You have successfully registered, a verification email has been sent to your
-										email address
-									</small>
+									<div className="text-left">
+										<small className="d-block text-success">
+											You have successfully registered, a verification email has been sent to your
+											email address
+										</small>
+									</div>
 								) : null}
 							</div>
 							<input type="submit" className="btn bg-blue text-white btn-block my-4" />

@@ -5,6 +5,7 @@ const {
 	findReport,
 	findReports,
 	findEventReports,
+	findEventCommentsReports,
 	findCommentReports,
 	findPollReports,
 	findProfileReports
@@ -49,6 +50,7 @@ module.exports = {
 			report(id: ID!): ReportResponse!
 			reports: ReportsResponse!
 			findEventReports(event_ID: ID!): ReportsResponse!
+			findEventCommentsReports(event_ID: ID!): ReportsResponse!
 			findCommentReports(comment_ID: ID!): ReportsResponse!
 			findPollReports(poll_ID: ID!): ReportsResponse!
 			findProfileReports(profile_ID: ID!): ReportsResponse!
@@ -80,6 +82,10 @@ module.exports = {
 			findEventReports: async (parent, args, { user, models: { Report } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findEventReports(args, Report);
+			},
+			findEventCommentsReports: async (parent, args, { user, models }) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await findEventCommentsReports(args, models);
 			},
 			findCommentReports: async (parent, args, { user, models: { Report } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');

@@ -33,7 +33,7 @@ const sendVerificationEmail = user => {
 		}
 	});
 
-	const emailToken = jwt.sign({ id: user._id }, process.env.EMAIL_SECRET, { expiresIn: '1d' });
+	const emailToken = jwt.sign({ id: user.id }, process.env.EMAIL_SECRET, { expiresIn: '1d' });
 
 	const emailVerificationUrl = `http://localhost:3000/confirmation/${emailToken}`;
 
@@ -86,14 +86,11 @@ const sendVerificationEmail = user => {
 	
 	`;
 
-	transporter.sendMail(
-		{
-			to: user.email,
-			subject: 'Email verification',
-			html: emailHtml
-		},
-		err => console.log(err)
-	);
+	transporter.sendMail({
+		to: user.email,
+		subject: 'Email verification',
+		html: emailHtml
+	});
 };
 
 module.exports = { createTokens, sendVerificationEmail };
