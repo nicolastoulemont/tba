@@ -106,7 +106,7 @@ const Register = () => {
 										Creating an account means you agree with our
 										<Link
 											to="#"
-											className="ml-1 text-blue"
+											className="ml-1 font-weight-bold text-blue"
 											data-toggle="modal"
 											data-target="#TermsOfServiceModal"
 											data-togggle="tooltip"
