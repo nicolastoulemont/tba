@@ -53,6 +53,7 @@ module.exports = {
 				date: String!
 				search: String
 				limit: Int!
+				offset: Int!
 				sort: String!
 				type: String
 				tags: [String]

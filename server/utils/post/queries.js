@@ -55,6 +55,7 @@ const dailyPostsWithTags = async (date, dayafter, args, Post) => {
 			]
 		})
 			.sort({ createdAt: args.sort })
+			.skip(args.offset)
 			.limit(args.limit);
 
 		return {
@@ -86,6 +87,7 @@ const dailyPostsWithOutTags = async (date, dayafter, args, Post) => {
 			]
 		})
 			.sort({ createdAt: args.sort })
+			.skip(args.offset)
 			.limit(args.limit);
 		return {
 			statusCode: 200,

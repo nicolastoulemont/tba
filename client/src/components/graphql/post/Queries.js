@@ -5,6 +5,7 @@ export const SEARCH_DAILY_POSTS = gql`
 		$date: String!
 		$search: String
 		$limit: Int!
+		$offset: Int!
 		$sort: String!
 		$type: String
 		$tags: [String]
@@ -13,6 +14,7 @@ export const SEARCH_DAILY_POSTS = gql`
 			date: $date
 			search: $search
 			limit: $limit
+			offset: $offset
 			sort: $sort
 			type: $type
 			tags: $tags
