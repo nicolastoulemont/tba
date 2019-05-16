@@ -70,13 +70,22 @@ const Login = ({ history, client }) => {
 								error={findErrorInErrorsArr(errors, 'password')}
 							/>
 							{showVerifyEmail ? (
-								<small className="text-danger">
-									Your email address is not verified. Please click{' '}
-									<Link to="#" onClick={sendVerificationEmail}>
-										here
-									</Link>{' '}
-									to request a new verification email.
-								</small>
+								<div className="text-left">
+									<small>
+										<span className="d-block text-danger">Your email address is not verified.</span>
+										<span className="d-block">
+											To request a new verification email, click
+											<Link
+												to="#"
+												onClick={sendVerificationEmail}
+												className="font-weight-bold text-blue"
+											>
+												{' '}
+												here
+											</Link>
+										</span>
+									</small>
+								</div>
 							) : null}
 							<input type="submit" className="btn bg-blue text-white btn-block my-4" />
 						</form>
