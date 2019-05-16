@@ -57,7 +57,7 @@ const EventFeed = ({ match }) => {
 						errors={errors}
 						setErrors={setErrors}
 					/>
-					<div className="border-top">
+					<div>
 						<CQuery
 							query={SEARCH_DAILY_EVENTS}
 							variables={{

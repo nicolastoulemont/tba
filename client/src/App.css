@@ -31,9 +31,10 @@ body {
 	padding-right: 100px;
 }
 
-.sidebar {
+.sticky {
 	position: sticky !important;
 	top: 0 !important;
+	z-index: 2;
 }
 
 img {

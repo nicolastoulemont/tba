@@ -7,7 +7,7 @@ import DefaultAvatar from '../../../../img/default_avatar.svg';
 const HostedItem = ({ post }) => {
 	dayjs.extend(relativeTime);
 	return (
-		<div className="media my-2  border-bottom">
+		<div className="media my-2 border-bottom">
 			<Link to={`/home/profile/${post.user_ID}`}>
 				{post.creator[0].profile[0].picture_URL ? (
 					<img

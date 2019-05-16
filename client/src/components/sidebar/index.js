@@ -11,7 +11,7 @@ const SideBar = ({ history }) => {
 	const path = window.location.pathname;
 	return (
 		<div className="d-none d-lg-block col-lg-4 text-center">
-			<div className="sidebar">
+			<div className="sticky">
 				{path.includes('events') || path.includes('news') || path.includes('activities') ? (
 					<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
 						{props => (

@@ -55,7 +55,7 @@ const NewsFeed = ({ match }) => {
 						errors={errors}
 						setErrors={setErrors}
 					/>
-					<div className="border-top">
+					<div>
 						<CQuery
 							query={SEARCH_DAILY_POSTS}
 							variables={{

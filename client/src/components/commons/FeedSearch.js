@@ -138,7 +138,7 @@ const FeedSearch = ({
 	const path = window.location.pathname;
 
 	return (
-		<div className="mx-auto py-0 px-2">
+		<div className="mx-auto py-0 px-2 sticky bg-white border-bottom">
 			<h6 className="text-left"> {date}</h6>
 			<div className="input-group input-group-sm mb-3">
 				<input
