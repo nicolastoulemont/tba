@@ -28,7 +28,12 @@ const EventCommentFeedInput = () => {
 			<Mutation
 				mutation={ADD_COMMENT}
 				refetchQueries={() => {
-					return [{ query: GET_EVENT_COMMENTS, variables: { event_ID: event.id } }];
+					return [
+						{
+							query: GET_EVENT_COMMENTS,
+							variables: { event_ID: event.id }
+						}
+					];
 				}}
 			>
 				{(addComment, e) => (

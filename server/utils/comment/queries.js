@@ -43,6 +43,7 @@ const findComments = async (args, CommentItem) => {
 const findEventComments = async (args, CommentItem) => {
 	try {
 		const comments = await CommentItem.find({ event_ID: args.event_ID });
+
 		return {
 			statusCode: 200,
 			ok: true,
