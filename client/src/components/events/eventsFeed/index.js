@@ -70,6 +70,7 @@ const EventFeed = ({ match }) => {
 								price,
 								tags
 							}}
+							pollInterval={300000}
 						>
 							{({ data, fetchMore, networkStatus }) => {
 								if (data.searchDailyEvents.ok) {

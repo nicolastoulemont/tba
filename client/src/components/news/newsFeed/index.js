@@ -67,6 +67,7 @@ const NewsFeed = ({ match }) => {
 								type,
 								tags
 							}}
+							pollInterval={300000}
 						>
 							{({ data, fetchMore, networkStatus }) => {
 								if (data.searchDailyPosts.ok) {
