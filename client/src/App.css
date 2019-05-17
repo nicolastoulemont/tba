@@ -266,6 +266,13 @@ a:hover {
 	border-left: 1px solid #e0e0e0;
 }
 
+.error-icon {
+	display: block;
+	margin: auto;
+	height: 200px;
+	width: 150px;
+}
+
 @media only screen and (max-width: 990px) {
 	.nav-link {
 		border-radius: 50px;

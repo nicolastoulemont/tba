@@ -10,15 +10,12 @@ const About = () => {
 				<div className="row">
 					<div className="col">
 						<div className="row mt-2 bg-white">
-							<div className="col">
-								<h3 className="text-muted brand">About MyEU</h3>
-							</div>
+							<h3 className="text-muted text-left brand">About MyEU</h3>
+						</div>
+						<div className="row bg-white">
+							<div className="col" />
 							<div className="col" />
 						</div>
-            <div className="row">
-            <div className="col"></div>
-            <div className="col"></div>
-            </div>
 					</div>
 				</div>
 			</div>
