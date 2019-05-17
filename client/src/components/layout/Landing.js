@@ -36,17 +36,17 @@ const Landing = props => {
 										<div className="col p-4">
 											<h6 className="text-left text-muted pb-2">
 												MyEU is a plateform that aggregates news and events related to the EU Public
-												Affairs :
+												Affairs, allowing you to :
 											</h6>
 											<h6 className="text-left text-muted py-2">
-												Monitor the news from all the EU institutions and EU Public Affairs actors
+												- Monitor the news from all the EU institutions and EU Public Affairs actors
 												at a glance
 											</h6>
 											<h6 className="text-left text-muted py-2">
-												Never miss EU related events happening in the EU Affairs district
+												- Never miss EU related events happening in the EU Affairs district
 											</h6>
 											<h6 className="text-left text-muted py-2">
-												Publish EU related events on the plateform to gain more visibility
+												- Publish EU related events on the plateform to gain more visibility
 											</h6>
 										</div>
 									</div>
