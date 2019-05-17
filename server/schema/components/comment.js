@@ -4,7 +4,8 @@ const {
 	buildComment,
 	updateComment,
 	pinComment,
-	moderateComment
+	moderateComment,
+	moderateAndDelete
 } = require('../../utils/comment/actions');
 const {
 	findComment,
@@ -66,7 +67,13 @@ module.exports = {
 			): CommentResponse!
 			updateComment(_id: ID!, text: String): CommentResponse!
 			pinComment(_id: ID!, user_ID: ID!, event_ID: ID!, pinned: Boolean!): CommentResponse!
-			moderateComment(_id: ID!, user_ID: String!, event_ID: String!): CommentResponse!
+			moderateComment(_id: ID!, user_ID: ID!, event_ID: ID!): CommentResponse!
+			moderateCommentAndDeleteReport(
+				_id: ID!
+				user_ID: ID!
+				event_ID: ID!
+				report_ID: ID!
+			): CommentResponse!
 		}
 	`,
 	// Resolvers
@@ -122,6 +129,14 @@ module.exports = {
 			moderateComment: async (parent, args, { user, models: { CommentItem, EventItem } }) => {
 				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await moderateComment(args, CommentItem, EventItem);
+			},
+			moderateCommentAndDeleteReport: async (
+				parent,
+				args,
+				{ user, models: { CommentItem, EventItem, Report } }
+			) => {
+				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				return await moderateAndDelete(args, CommentItem, EventItem, Report);
 			}
 		}
 	}

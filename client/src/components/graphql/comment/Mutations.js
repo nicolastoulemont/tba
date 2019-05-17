@@ -49,8 +49,34 @@ export const PIN_COMMENT = gql`
 `;
 
 export const MODERATE_COMMENT = gql`
-	mutation ModerateComment($_id: ID!, $user_ID: String!, $event_ID: String!) {
+	mutation ModerateComment($_id: ID!, $user_ID: ID!, $event_ID: ID!) {
 		moderateComment(_id: $_id, user_ID: $user_ID, event_ID: $event_ID) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+			}
+		}
+	}
+`;
+
+export const MODERATE_COMMENT_AND_DELETE_REPORT = gql`
+	mutation ModerateCommentAndDeleteReport(
+		$_id: ID!
+		$user_ID: ID!
+		$event_ID: ID!
+		$report_ID: ID!
+	) {
+		moderateCommentAndDeleteReport(
+			_id: $_id
+			user_ID: $user_ID
+			event_ID: $event_ID
+			report_ID: $report_ID
+		) {
 			statusCode
 			ok
 			errors {

@@ -27,3 +27,16 @@ export const ADD_REPORT = gql`
 		}
 	}
 `;
+
+export const DELETE_REPORT = gql`
+	mutation DeleteReport($_id: ID!) {
+		deleteReport(_id: $_id) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+		}
+	}
+`;

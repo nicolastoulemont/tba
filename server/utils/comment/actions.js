@@ -101,22 +101,21 @@ const pinComment = async (args, CommentItem, EventItem) => {
 };
 
 const moderateComment = async (args, CommentItem, EventItem) => {
-	let deletedComment = {
-		moderated: true,
-		moderationMsg: 'Comment deleted'
-	};
-	let moderatedComment = {
-		moderated: true,
-		moderationMsg: 'Comment moderated'
-	};
 	try {
 		const comment = await CommentItem.findById(args._id);
 		const event = await EventItem.findById(args.event_ID);
 
 		if (comment.user_ID === args.user_ID) {
-			const newComment = await CommentItem.findByIdAndUpdate(args._id, deletedComment, {
-				new: true
-			});
+			const newComment = await CommentItem.findByIdAndUpdate(
+				args._id,
+				{
+					moderated: true,
+					moderationMsg: 'Comment deleted'
+				},
+				{
+					new: true
+				}
+			);
 			return {
 				statusCode: 201,
 				ok: true,
@@ -126,9 +125,16 @@ const moderateComment = async (args, CommentItem, EventItem) => {
 		}
 
 		if (event.user_ID === args.user_ID && comment.user_ID !== args.user_ID) {
-			const newComment = await CommentItem.findByIdAndUpdate(args._id, moderatedComment, {
-				new: true
-			});
+			const newComment = await CommentItem.findByIdAndUpdate(
+				args._id,
+				{
+					moderated: true,
+					moderationMsg: 'Comment moderated'
+				},
+				{
+					new: true
+				}
+			);
 			return {
 				statusCode: 201,
 				ok: true,
@@ -148,4 +154,62 @@ const moderateComment = async (args, CommentItem, EventItem) => {
 	}
 };
 
-module.exports = { buildComment, updateComment, pinComment, moderateComment };
+const moderateAndDelete = async (args, CommentItem, EventItem, Report) => {
+	try {
+		const comment = await CommentItem.findById(args._id);
+		const event = await EventItem.findById(args.event_ID);
+
+		if (comment.user_ID === args.user_ID) {
+			const newComment = await CommentItem.findByIdAndUpdate(
+				args._id,
+				{
+					moderated: true,
+					moderationMsg: 'Comment deleted'
+				},
+				{
+					new: true
+				}
+			);
+
+			await Report.findByIdAndDelete(args.report_ID);
+			return {
+				statusCode: 201,
+				ok: true,
+				errors: null,
+				body: newComment
+			};
+		}
+
+		if (event.user_ID === args.user_ID && comment.user_ID !== args.user_ID) {
+			const newComment = await CommentItem.findByIdAndUpdate(
+				args._id,
+				{
+					moderated: true,
+					moderationMsg: 'Comment moderated'
+				},
+				{
+					new: true
+				}
+			);
+
+			await Report.findByIdAndDelete(args.report_ID);
+			return {
+				statusCode: 201,
+				ok: true,
+				errors: null,
+				body: newComment
+			};
+		}
+	} catch (err) {
+		return {
+			statusCode: 403,
+			ok: false,
+			errors: {
+				path: 'Forbidden',
+				message: 'You cannot perform this action'
+			}
+		};
+	}
+};
+
+module.exports = { buildComment, updateComment, pinComment, moderateComment, moderateAndDelete };
