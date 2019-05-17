@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import UserNav from '../navs/userNav';
+import DefaultNav from '../navs/userNav/defNav';
 import Footer from './Footer';
 import ErrorIcon from '../../img/errorIcon.svg';
 
@@ -11,7 +11,24 @@ const RouteError = props => {
 
 	return (
 		<Fragment>
-			<UserNav />
+			<div className="d-none d-lg-block">
+				<nav className="navbar sticky-top navbar-expand-sm bg-white py-1">
+					<div className="container px-0">
+						<Link className="navbar-brand font-bold align-middle" to="/">
+							<h4 className="text-muted">MyEU</h4>
+						</Link>
+						<button
+							className="navbar-toggler"
+							type="button"
+							data-toggle="collapse"
+							data-target="#mobile-nav"
+						>
+							<span className="navbar-toggler-icon" />
+						</button>
+						<DefaultNav />
+					</div>
+				</nav>
+			</div>
 			<div className="container">
 				<div className="row">
 					<div className="col">

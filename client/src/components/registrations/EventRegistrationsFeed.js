@@ -2,11 +2,13 @@ import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import DefaultAvatar from '../../img/default_avatar.svg';
 import CQuery from '../commons/CustomQueryComponent';
-import { EventContext } from '../contexts';
+import { EventContext, UserContext } from '../contexts';
+import RegistrationsModal from './RegistrationsList/RegistrationsModal';
 import { GET_EVENT_REGISTRATIONS } from '../graphql/registration/Queries';
 
 const EventRegistrationFeed = ({ setNumberOfParticipant }) => {
 	const event = useContext(EventContext);
+	const user = useContext(UserContext);
 	return (
 		<Fragment>
 			<CQuery query={GET_EVENT_REGISTRATIONS} variables={{ event_ID: event.id }}>
@@ -19,6 +21,22 @@ const EventRegistrationFeed = ({ setNumberOfParticipant }) => {
 						if (typeof registrations !== 'undefined' && registrations.length !== 0)
 							return (
 								<Fragment>
+									{user.id === event.user_ID ? (
+										<div className="py-2 px-2 text-left">
+											<Link
+												to="#"
+												className="badge tag actiontags p-2"
+												data-toggle="modal"
+												data-target="#RegistrationsModal"
+												data-togggle="tooltip"
+												data-placement="bottom"
+												title="Download the full list of participants"
+											>
+												Download full list <i className="fas fa-file-download ml-1" />
+											</Link>
+											<RegistrationsModal event={event} registrations={registrations} />
+										</div>
+									) : null}
 									{registrations.map(registration => (
 										<div className="list-group-item border-0 py-1 px-4" key={registration.id}>
 											<div className="row">

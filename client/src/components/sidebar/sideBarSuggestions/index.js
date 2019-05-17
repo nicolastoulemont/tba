@@ -64,7 +64,7 @@ const SBSuggestions = () => {
 		<Fragment>
 			<div className="row m-0 p-0">
 				<div className="col">
-					<h6 className="px-2 pt-2 text-left">Suggestions</h6>
+					<h6 className="px-2 text-left">Suggestions</h6>
 				</div>
 				<div className="col">
 					<div className="text-right">

@@ -24,7 +24,7 @@ const SideBar = ({ history }) => {
 					</Spring>
 				) : null}
 				<div className="row ml-2 mb-4">
-					<div className="col mx-auto bg-white px-2">
+					<div className="col mx-auto bg-white px-2 py-2">
 						<SBSuggestions />
 					</div>
 				</div>
