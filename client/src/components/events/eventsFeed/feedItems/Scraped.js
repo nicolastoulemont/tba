@@ -3,7 +3,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
 
 const ScrapedItem = ({ event }) => {
-	console.log(event);
 	dayjs.extend(relativeTime);
 	return (
 		<div className="media my-2 border-bottom">

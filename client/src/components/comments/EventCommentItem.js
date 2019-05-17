@@ -29,7 +29,7 @@ const EventCommentItem = () => {
 
 	const regularComment = () => {
 		return (
-			<div className="list-group-item border-0  mob-comment" key={comment.id}>
+			<div className="list-group-item border-0 mob-comment" key={comment.id}>
 				<div className="row">
 					<div className="d-none d-md-block col-md-1">
 						<Link

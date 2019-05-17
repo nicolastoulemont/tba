@@ -10,23 +10,24 @@ const EventCommentReports = () => {
 		<Fragment>
 			<CQuery query={EVENT_REPORTS} variables={{ event_ID: event.id }}>
 				{({ data }) => {
-					console.log(data);
-					const reports = data.findEventCommentsReports.body;
-					if (reports.length === 0) {
-						return (
-							<Fragment>
-								<p>No reports</p>
-							</Fragment>
-						);
-					} else if (reports.length > 0) {
-						return (
-							<Fragment>
-								{reports.map(report => (
-									<Report report={report} key={report.id} />
-								))}
-							</Fragment>
-						);
-					}
+					if (data.findEventCommentsReports.ok) {
+						const reports = data.findEventCommentsReports.body;
+						if (reports.length === 0) {
+							return (
+								<Fragment>
+									<p>No reports</p>
+								</Fragment>
+							);
+						} else if (reports.length > 0) {
+							return (
+								<Fragment>
+									{reports.map(report => (
+										<Report report={report} key={report.id} />
+									))}
+								</Fragment>
+							);
+						}
+					} else return null;
 				}}
 			</CQuery>
 		</Fragment>
