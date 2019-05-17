@@ -17,7 +17,7 @@ const EventSocial = () => {
 			<div className="mb-4 pb-4">
 				<div className="row pl-2 pr-4 pb-2">
 					<div className="col-6">
-						{user.profile ? (
+						{user.profile[0] ? (
 							<Fragment>
 								<Link
 									className="d-inline"

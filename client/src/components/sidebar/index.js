@@ -29,7 +29,7 @@ const SideBar = ({ history }) => {
 					</div>
 				</div>
 				<div className="row">
-					{user.profile && !path.includes('activities') ? (
+					{user.profile[0] && !path.includes('activities') ? (
 						<SBPanel />
 					) : path.includes('activities') ? null : (
 						<SBNoProfile />
