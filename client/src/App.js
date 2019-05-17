@@ -9,6 +9,7 @@ import Error404 from './components/commons/IncorrectRoute';
 import { AuthContext, AuthContextValue } from './components/contexts';
 import Home from './components/home';
 import Landing from './components/layout/Landing';
+import About from './components/layout/About';
 import ConfirmEmail from './components/auth/ConfirmEmail';
 import { uri } from './config/config';
 
@@ -36,6 +37,7 @@ const App = () => (
 					<Router>
 						<Switch>
 							<Route exact path="/" component={Landing} />
+							<Route exact path="/about" component={About} />
 							<PrivateRoute path="/home" component={Home} />
 							<Route path="/confirmation/:emailToken" component={ConfirmEmail} />
 							<Route component={Error404} />

@@ -10,12 +10,12 @@ const DefaultNav = () => {
 					to="/about"
 					data-togggle="tooltip"
 					data-placement="bottom"
-					title="Learn what service MyEU provides and why"
+					title="Learn what services MyEU provides and why"
 				>
 					<h6 className="d-inline">About</h6>
 				</Link>
 			</li>
-			<li className="nav-item pr-4 mt-1">
+			<li className="nav-item mt-1">
 				<Link
 					className="nav-link"
 					to="/contact"
