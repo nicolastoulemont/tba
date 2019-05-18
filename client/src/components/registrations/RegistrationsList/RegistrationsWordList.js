@@ -1,8 +1,8 @@
 import React from 'react';
 
-const RegistrationsList = ({ registrations }) => {
+const RegistrationsWordList = ({ registrations }) => {
 	return (
-		<div>
+		<div id="download-word-list">
 			{registrations.map(registration => (
 				<div className="border-0 text-left px-4 " key={registration.id}>
 					<p>
@@ -18,4 +18,4 @@ const RegistrationsList = ({ registrations }) => {
 	);
 };
 
-export default RegistrationsList;
+export default RegistrationsWordList;

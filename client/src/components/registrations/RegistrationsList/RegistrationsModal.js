@@ -1,24 +1,57 @@
-import React from 'react';
-
-import RegistrationList from './RegistrationsList';
+import React, { useState } from 'react';
+import XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import RegistrationsWordList from './RegistrationsWordList';
+import RegistrationsExcelTable from './RegistrationsExcelTable';
 
 const RegistrationsModal = ({ event, registrations }) => {
-	const exportHTML = () => {
-		var header =
+	const [showWord, setShowWord] = useState(true);
+	const [showExcel, setShowExcel] = useState(false);
+
+	const displayExcel = () => {
+		setShowExcel(true);
+		setShowWord(false);
+	};
+	const displayWord = () => {
+		setShowExcel(false);
+		setShowWord(true);
+	};
+
+	const HTMLtoWord = () => {
+		const header =
 			"<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
 			"xmlns:w='urn:schemas-microsoft-com:office:word' " +
 			"xmlns='http://www.w3.org/TR/REC-html40'>" +
-			"<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
-		var footer = '</body></html>';
-		var sourceHTML = header + document.getElementById('download-list').innerHTML + footer;
+			"<head><meta charset='utf-8'><title>Event full participants list</title></head><body>";
+		const footer = '</body></html>';
+		const sourceHTML = header + document.getElementById('download-word-list').innerHTML + footer;
 
-		var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
-		var fileDownload = document.createElement('a');
+		const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+		const fileDownload = document.createElement('a');
 		document.body.appendChild(fileDownload);
 		fileDownload.href = source;
 		fileDownload.download = `${event.name}-fullparticipantslist.doc`;
 		fileDownload.click();
 		document.body.removeChild(fileDownload);
+	};
+
+	const HTMLtoExcel = () => {
+		const wb = XLSX.utils.table_to_book(document.getElementById('download-excel-list'), {
+			sheet: 'Event-Participants-List'
+		});
+		const wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);
+			var view = new Uint8Array(buf);
+			for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+			return buf;
+		}
+
+		saveAs(
+			new Blob([s2ab(wbout)], { type: 'application/octet-stream' }),
+			'Event-participants-list.xlsx'
+		);
 	};
 	return (
 		<div
@@ -40,17 +73,53 @@ const RegistrationsModal = ({ event, registrations }) => {
 						</h6>
 						<div className="d-block">
 							<small>
-								<button type="button" className="btn bg-blue text-white mr-2" onClick={exportHTML}>
-									Download List
-								</button>
+								{showExcel ? (
+									<button
+										type="button"
+										className="btn bg-blue text-white mr-2"
+										onClick={displayWord}
+									>
+										Show <i className="far fa-file-word" />
+									</button>
+								) : null}
+								{showWord ? (
+									<button
+										type="button"
+										className="btn bg-excel-green text-white mr-2"
+										onClick={displayExcel}
+									>
+										Show <i className="far fa-file-excel" />
+									</button>
+								) : null}
+								{showWord ? (
+									<button
+										type="button"
+										className="btn bg-blue text-white mr-2"
+										onClick={HTMLtoWord}
+									>
+										Download <i className="far fa-file-word" />
+									</button>
+								) : null}
+								{showExcel ? (
+									<button
+										type="button"
+										className="btn bg-excel-green text-white mr-2"
+										id="excel-dl"
+										onClick={HTMLtoExcel}
+									>
+										Download <i className="far fa-file-excel" />
+									</button>
+								) : null}
 								<button type="button" className="btn btn-secondary" data-dismiss="modal">
 									Close
 								</button>
 							</small>
 						</div>
 					</div>
-					<div className="modal-body" id="download-list">
-						<RegistrationList registrations={registrations} />
+					<div className="modal-title" />
+					<div className="modal-body">
+						{showWord && <RegistrationsWordList registrations={registrations} />}
+						{showExcel && <RegistrationsExcelTable registrations={registrations} />}
 					</div>
 				</div>
 			</div>
