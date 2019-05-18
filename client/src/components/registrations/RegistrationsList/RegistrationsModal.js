@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { Link } from 'react-router-dom';
 import RegistrationsWordList from './RegistrationsWordList';
 import RegistrationsExcelTable from './RegistrationsExcelTable';
 
@@ -41,12 +42,12 @@ const RegistrationsModal = ({ event, registrations }) => {
 		});
 		const wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
 
-		function s2ab(s) {
-			var buf = new ArrayBuffer(s.length);
-			var view = new Uint8Array(buf);
-			for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+		const s2ab = s => {
+			const buf = new ArrayBuffer(s.length);
+			const view = new Uint8Array(buf);
+			for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
 			return buf;
-		}
+		};
 
 		saveAs(
 			new Blob([s2ab(wbout)], { type: 'application/octet-stream' }),
@@ -72,48 +73,39 @@ const RegistrationsModal = ({ event, registrations }) => {
 							</span>
 						</h6>
 						<div className="d-block">
-							<small>
-								{showExcel ? (
-									<button
-										type="button"
-										className="btn bg-blue text-white mr-2"
-										onClick={displayWord}
-									>
-										Show <i className="far fa-file-word" />
-									</button>
-								) : null}
-								{showWord ? (
-									<button
-										type="button"
-										className="btn bg-excel-green text-white mr-2"
-										onClick={displayExcel}
-									>
-										Show <i className="far fa-file-excel" />
-									</button>
-								) : null}
-								{showWord ? (
-									<button
-										type="button"
-										className="btn bg-blue text-white mr-2"
-										onClick={HTMLtoWord}
-									>
-										Download <i className="far fa-file-word" />
-									</button>
-								) : null}
-								{showExcel ? (
-									<button
-										type="button"
-										className="btn bg-excel-green text-white mr-2"
-										id="excel-dl"
-										onClick={HTMLtoExcel}
-									>
-										Download <i className="far fa-file-excel" />
-									</button>
-								) : null}
-								<button type="button" className="btn btn-secondary" data-dismiss="modal">
-									Close
-								</button>
-							</small>
+							{showExcel ? (
+								<Link to="#" className="badge bg-blue text-white p-2 mr-2" onClick={displayWord}>
+									Show <i className="far fa-file-word" />
+								</Link>
+							) : null}
+							{showWord ? (
+								<Link
+									to="#"
+									className="badge bg-excel-green text-white p-2 mr-2"
+									onClick={displayExcel}
+								>
+									Show <i className="far fa-file-excel" />
+								</Link>
+							) : null}
+							{showWord ? (
+								<Link to="#" className="badge bg-blue text-white p-2 mr-2" onClick={HTMLtoWord}>
+									Download <i className="far fa-file-word" />
+								</Link>
+							) : null}
+							{showExcel ? (
+								<Link
+									to="#"
+									className="badge bg-excel-green text-white p-2 mr-2"
+									id="excel-dl"
+									onClick={HTMLtoExcel}
+								>
+									Download <i className="far fa-file-excel" />
+								</Link>
+							) : null}
+
+							<Link to="#" data-dismiss="modal">
+								<i className="fas fa-times ml-2" />
+							</Link>
 						</div>
 					</div>
 					<div className="modal-title" />
