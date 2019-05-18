@@ -40,7 +40,9 @@ const Home = props => {
 											<main className="col-12 col-lg-8 bg-white px-0">
 												<HomeRouter />
 											</main>
-											<SideBar history={props.history} />
+											<div className="d-none d-lg-block col-lg-4 text-center">
+												<SideBar history={props.history} />
+											</div>
 										</div>
 									</div>
 								</div>

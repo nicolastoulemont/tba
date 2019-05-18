@@ -12,6 +12,7 @@ import Landing from './components/layout/Landing';
 import About from './components/layout/About';
 import Contact from './components/layout/Contact';
 import ConfirmEmail from './components/auth/ConfirmEmail';
+import PublicEvent from './components/events/publicEvent';
 import { uri } from './config/config';
 
 const client = new ApolloClient({
@@ -42,6 +43,7 @@ const App = () => (
 							<Route exact path="/contact" component={Contact} />
 							<PrivateRoute path="/home" component={Home} />
 							<Route path="/confirmation/:emailToken" component={ConfirmEmail} />
+							<Route path="/event-public-link/:id" component={PublicEvent} />
 							<Route component={RouteError} />
 							<Route path="/error" component={RouteError} />
 						</Switch>

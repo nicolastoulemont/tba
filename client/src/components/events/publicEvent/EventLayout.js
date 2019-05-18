@@ -1,13 +1,10 @@
+import React, { Fragment, useContext } from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React, { Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import PlaceholderBanner from '../../../img/placeholder_event_banner.svg';
-import { EventContext, UserContext } from '../../contexts';
-import EventMenu from './EventMenu';
+import { EventContext } from '../../contexts';
 
-const EventHeader = () => {
-	const { id } = useContext(UserContext);
+const EventLayout = () => {
 	const event = useContext(EventContext);
 	dayjs.extend(relativeTime);
 	return (
@@ -21,7 +18,7 @@ const EventHeader = () => {
 					)}
 				</div>
 				<div className="row p-1">
-					<div className="col-md-10">
+					<div className="col">
 						<div className="text-center text-md-left my-2">
 							<div className="title">
 								<h4 className="font-weight-bold text-uppercase">
@@ -36,12 +33,9 @@ const EventHeader = () => {
 										/>
 									) : null}
 								</h4>
-								<Link
-									to={{ pathname: `/home/profile/${event.user_ID}` }}
-									className="font-weight-bold d-inline"
-								>
+								<span className="font-weight-bold d-inline">
 									{event.creator[0].profile[0].name}
-								</Link>
+								</span>
 								{event.creator[0].profile[0].organisation
 									? ` - ${event.creator[0].profile[0].organisation}`
 									: null}
@@ -77,22 +71,19 @@ const EventHeader = () => {
 							) : (
 								<small className="font-italic">Entrance Fee : {event.price} €</small>
 							)}
-							<div className="d-none d-md-block my-1">
-								<div className="text-left mr-4">
-									<div className="d-inline" />
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="d-none d-md-block col-md-2">
-						<div className="d-inline align-bottom">
-							{id === event.user_ID ? <EventMenu /> : null}
 						</div>
 					</div>
 				</div>
+			</div>
+			<div className="px-4 py-2">
+				<h5 className="text-left">About</h5>
+				<div className="d-flex flex-wrap text-justify align-items-center">
+					<p> {event.description}</p>
+				</div>
+				<br />
 			</div>
 		</Fragment>
 	);
 };
 
-export default React.memo(EventHeader);
+export default EventLayout;

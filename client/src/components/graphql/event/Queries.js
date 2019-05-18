@@ -136,7 +136,6 @@ export const GET_EVENT = gql`
 				price
 				name
 				eventHost
-				abstract
 				banner_URL
 				description
 				city
@@ -151,7 +150,43 @@ export const GET_EVENT = gql`
 						name
 						position
 						organisation
-						picture_URL
+					}
+				}
+			}
+		}
+	}
+`;
+
+export const GET_PUBLIC_EVENT = gql`
+	query Event($id: ID!) {
+		event(id: $id) {
+			statusCode
+			ok
+			errors {
+				path
+				message
+			}
+			body {
+				id
+				user_ID
+				type
+				price
+				name
+				eventHost
+				banner_URL
+				description
+				city
+				address
+				tags
+				start
+				end
+				createdAt
+				updatedAt
+				creator {
+					profile {
+						name
+						position
+						organisation
 					}
 				}
 			}

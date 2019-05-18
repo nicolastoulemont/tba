@@ -6,8 +6,8 @@ import RegistrationsWordList from './RegistrationsWordList';
 import RegistrationsExcelTable from './RegistrationsExcelTable';
 
 const RegistrationsModal = ({ event, registrations }) => {
-	const [showWord, setShowWord] = useState(true);
-	const [showExcel, setShowExcel] = useState(false);
+	const [showWord, setShowWord] = useState(false);
+	const [showExcel, setShowExcel] = useState(true);
 
 	const displayExcel = () => {
 		setShowExcel(true);
@@ -74,7 +74,11 @@ const RegistrationsModal = ({ event, registrations }) => {
 						</h6>
 						<div className="d-block">
 							{showExcel ? (
-								<Link to="#" className="badge bg-blue text-white p-2 mr-2" onClick={displayWord}>
+								<Link
+									to="#"
+									className="badge bg-word-blue text-white p-2 mr-2"
+									onClick={displayWord}
+								>
 									Show <i className="far fa-file-word" />
 								</Link>
 							) : null}
@@ -88,7 +92,11 @@ const RegistrationsModal = ({ event, registrations }) => {
 								</Link>
 							) : null}
 							{showWord ? (
-								<Link to="#" className="badge bg-blue text-white p-2 mr-2" onClick={HTMLtoWord}>
+								<Link
+									to="#"
+									className="badge bg-word-blue text-white p-2 mr-2"
+									onClick={HTMLtoWord}
+								>
 									Download <i className="far fa-file-word" />
 								</Link>
 							) : null}
