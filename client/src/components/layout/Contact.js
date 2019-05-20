@@ -1,11 +1,11 @@
 import React from 'react';
-import UserNav from '../navs/userNav';
+import DefaultNav from '../navs/DefaultNav';
 import Footer from './Footer';
 
 const Contact = () => {
 	return (
 		<div>
-			<UserNav />
+			<DefaultNav />
 			<div className="container">
 				<div className="row">
 					<div className="col">

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Mutation } from 'react-apollo';
-import DefaultNav from '../navs/userNav/defNav';
+import DefaultNav from '../navs/DefaultNav';
 import Footer from '../layout/Footer';
 import decode from 'jwt-decode';
 import { VERIFY_EMAIL } from '../graphql/user/Mutations';

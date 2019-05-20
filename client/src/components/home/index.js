@@ -6,7 +6,7 @@ import { UserContext } from '../contexts';
 import { InitialState, Reducer, StateProvider } from '../contexts/InitialState';
 import { LOGGED_USER } from '../graphql/user/Queries';
 import UserMobNav from '../navs/UserMobNav';
-import UserNav from '../navs/userNav/index';
+import UserNav from '../navs/UserNavigation';
 import SideBar from '../sidebar/';
 import HomeRouter from './router.js';
 

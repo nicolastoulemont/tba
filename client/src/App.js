@@ -13,10 +13,9 @@ import About from './components/layout/About';
 import Contact from './components/layout/Contact';
 import ConfirmEmail from './components/auth/ConfirmEmail';
 import PublicEvent from './components/events/publicEvent';
-import { uri } from './config/config';
 
 const client = new ApolloClient({
-	uri,
+	uri: '/graphql',
 	request: operation => {
 		const accessToken = localStorage.getItem('access-token');
 		const refreshToken = localStorage.getItem('refresh-token');

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import DefaultNav from '../../navs/userNav/defNav';
+import DefaultNav from '../../navs/DefaultNav';
 import PublicSideBar from '../../sidebar/publicSideBar';
 import { Spring } from 'react-spring/renderprops';
 import { EventContext } from '../../contexts';

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import DefaultNav from '../navs/userNav/defNav';
+import DefaultNav from '../navs/DefaultNav';
 import Footer from './Footer';
 import ErrorIcon from '../../img/errorIcon.svg';
 

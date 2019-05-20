@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import DefaultAvatar from '../../../img/avatar_default.svg';
-import { UserContext } from '../../contexts/index';
-import { useStateValue } from '../../contexts/InitialState';
+import DefaultAvatar from '../../img/avatar_default.svg';
+import { UserContext } from '../contexts/index';
+import { useStateValue } from '../contexts/InitialState';
 
-const UNav = () => {
+const UserNav = () => {
 	const user = useContext(UserContext);
 	const [
 		{
@@ -168,4 +168,4 @@ const UNav = () => {
 	);
 };
 
-export default UNav;
+export default UserNav;

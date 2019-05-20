@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import React, { Fragment, useContext, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from '../contexts';
-import UserNav from '../navs/userNav';
+import DefaultNav from '../navs/DefaultNav';
 import Footer from './Footer';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
@@ -15,7 +15,7 @@ const Landing = props => {
 	const notAuth = () => {
 		return (
 			<Fragment>
-				<UserNav />
+				<DefaultNav />
 				<div className="container px-4">
 					<div className="row">
 						<div className="col landing-call">
