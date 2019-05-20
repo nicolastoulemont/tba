@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useMutation } from 'react-apollo-hooks';
-import UserNav from '../navs/userNav';
+import DefaultNav from '../navs/userNav/defNav';
 import Footer from '../layout/Footer';
 import decode from 'jwt-decode';
 import { VERIFY_EMAIL } from '../graphql/user/Mutations';
 import Spinner from '../commons/Spinner';
 
 const ConfirmEmail = ({ match }) => {
+	const [event_ID, setEvent_ID] = useState(null);
 	const [userId, setUserId] = useState(null);
 
 	const verifyEmail = useMutation(VERIFY_EMAIL, { variables: { _id: userId } });
@@ -20,13 +21,19 @@ const ConfirmEmail = ({ match }) => {
 			} catch {}
 		};
 		const user = getUser(token);
-		console.log(user);
+		if (user && user.event_ID) {
+			setEvent_ID(user.event_ID);
+		}
 		if (user && user.id) {
-			console.log(user);
 			setUserId(user.id);
 		}
 		return;
 	}, []);
+
+	if (event_ID) {
+		verifyEmail();
+		return <Redirect to={{ pathname: `/home/event/${event_ID}` }} />;
+	}
 
 	if (userId) {
 		verifyEmail();
@@ -35,7 +42,7 @@ const ConfirmEmail = ({ match }) => {
 
 	return (
 		<Fragment>
-			<UserNav />
+			<DefaultNav />
 			<Spinner />
 			<Footer />
 		</Fragment>

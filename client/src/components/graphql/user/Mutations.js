@@ -1,5 +1,19 @@
 import gql from 'graphql-tag';
 
+export const REGISTER_USER = gql`
+	mutation Register($email: String!, $password: String!) {
+		register(email: $email, password: $password) {
+			statusCode
+			ok
+			token
+			errors {
+				path
+				message
+			}
+		}
+	}
+`;
+
 export const LOGIN_USER = gql`
 	mutation Login($email: String!, $password: String!) {
 		login(email: $email, password: $password) {
@@ -19,19 +33,6 @@ export const LOGIN_USER = gql`
 	}
 `;
 
-export const VERIFY_EMAIL = gql`
-	mutation VerifyEmail($_id: ID!) {
-		verifyEmail(_id: $_id) {
-			statusCode
-			ok
-			errors {
-				path
-				message
-			}
-		}
-	}
-`;
-
 export const SEND_VERIFY_EMAIL = gql`
 	mutation SendVerifyEmail($_id: ID!, $email: String!) {
 		sendVerifyEmail(_id: $_id, email: $email) {
@@ -45,12 +46,11 @@ export const SEND_VERIFY_EMAIL = gql`
 	}
 `;
 
-export const REGISTER_AND_LOGIN_USER = gql`
-	mutation RegisterAndLogin($email: String!, $password: String!) {
-		registerAndLogin(email: $email, password: $password) {
+export const VERIFY_EMAIL = gql`
+	mutation VerifyEmail($_id: ID!) {
+		verifyEmail(_id: $_id) {
 			statusCode
 			ok
-			token
 			errors {
 				path
 				message
@@ -59,12 +59,37 @@ export const REGISTER_AND_LOGIN_USER = gql`
 	}
 `;
 
-export const REGISTER_USER = gql`
-	mutation Register($email: String!, $password: String!) {
-		register(email: $email, password: $password) {
+export const PUBLIC_EVENT_REGISTRATION = gql`
+	mutation PublicEventRegistration(
+		$email: String!
+		$password: String!
+		$name: String!
+		$position: String!
+		$organisation: String!
+		$eventName: String!
+		$eventCity: String!
+		$eventAddress: String!
+		$eventStart: String!
+		$eventEnd: String!
+		$event_ID: ID!
+	) {
+		publicEventRegistration(
+			email: $email
+			password: $password
+			name: $name
+			position: $position
+			organisation: $organisation
+			eventName: $eventName
+			eventCity: $eventCity
+			eventAddress: $eventAddress
+			eventStart: $eventStart
+			eventEnd: $eventEnd
+			event_ID: $event_ID
+		) {
 			statusCode
 			ok
-			token
+			accessToken
+			refreshToken
 			errors {
 				path
 				message

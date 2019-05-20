@@ -89,7 +89,7 @@ module.exports = {
 				return await findProfile(args, Profile);
 			},
 			profiles: async (parent, args, { user, models: { Profile } }) => {
-				if (!user) throw new AuthenticationError('Please login to get the requested response');
+				// if (!user) throw new AuthenticationError('Please login to get the requested response');
 				return await findProfiles(args, Profile);
 			},
 			searchProfilesByName: async (parent, args, { user, models: { Profile } }) => {

@@ -135,6 +135,7 @@ const PublicSuggestionPanel = () => {
 						variables={{ date: returnDateString(), limit: 3, type, price, tags: [] }}
 					>
 						{({ data }) => {
+							console.log(data);
 							if (data.mostLikedEvents && data.mostLikedEvents.body) {
 								const events = data.mostLikedEvents.body;
 								if (events.length !== 0) {

@@ -1,6 +1,6 @@
 const Validator = require('validator');
 const bcrypt = require('bcrypt');
-const { isEmpty } = require('../general');
+const { isEmpty, ValidStringRegExp } = require('../general');
 const { User } = require('../../models');
 
 const validateRegInput = async data => {
@@ -58,6 +58,87 @@ const validateLoginInput = async data => {
 		errors,
 		isValid: isEmpty(errors),
 		user
+	};
+};
+
+const validatePublicEventRegistrationInput = async data => {
+	let errors = [];
+
+	data.email = !isEmpty(data.email) ? data.email : '';
+	data.password = !isEmpty(data.password) ? data.password : '';
+	data.name = !isEmpty(data.name) ? data.name : '';
+	data.position = !isEmpty(data.position) ? data.position : '';
+
+	if (data.password.length === 0) errors.push({ path: 'password', message: 'Enter a password' });
+	if (!Validator.isEmail(data.email)) errors.push({ path: 'email', message: 'Invalid Email' });
+
+	if (!Validator.isLength(data.password, { min: 5, max: 25 }))
+		errors.push({
+			path: 'password',
+			message: 'Your password must be between 5 and 25 characters'
+		});
+
+	if (!Validator.isLength(data.name, { min: 1, max: 70 }))
+		errors.push({
+			path: 'name',
+			message: 'Your name must be between 1 and 70 characters'
+		});
+
+	if (!Validator.isLength(data.position, { min: 1, max: 70 }))
+		errors.push({
+			path: 'position',
+			message: 'Your position must be between 1 and 70 characters'
+		});
+
+	if (!Validator.isLength(data.organisation, { min: 0, max: 70 }))
+		errors.push({
+			path: 'organisation',
+			message: 'Your organisation name must be between 0 and 70 characters'
+		});
+
+	if (!data.name.match(ValidStringRegExp))
+		errors.push({
+			path: 'name',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.position.match(ValidStringRegExp))
+		errors.push({
+			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
+	if (!data.organisation.match(ValidStringRegExp))
+		errors.push({
+			path: 'organisation',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
+	if (!data.eventName.match(ValidStringRegExp))
+		errors.push({
+			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.eventCity.match(ValidStringRegExp))
+		errors.push({
+			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+	if (!data.eventAddress.match(ValidStringRegExp))
+		errors.push({
+			path: 'position',
+			message: 'Only alphanumeric characters are accepted'
+		});
+
+	const usedEmail = await User.findOne({ email: data.email });
+	if (usedEmail)
+		errors.push({
+			path: 'email',
+			message: 'A user with this email address already exist.'
+		});
+
+	return {
+		errors,
+		isValid: isEmpty(errors)
 	};
 };
 
@@ -144,6 +225,7 @@ const validateDeleteAccountInput = async data => {
 module.exports = {
 	validateRegInput,
 	validateLoginInput,
+	validatePublicEventRegistrationInput,
 	validateChangeEmailInput,
 	validateChangePasswordInput,
 	validateDeleteAccountInput

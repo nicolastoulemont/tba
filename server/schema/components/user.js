@@ -3,6 +3,7 @@ const {
 	registerUser,
 	verifyUser,
 	sendVerifyEmail,
+	publicEventRegistration,
 	registerAndLogin,
 	userLogin,
 	changeEmail,
@@ -13,6 +14,7 @@ const {
 const {
 	validateRegInput,
 	validateLoginInput,
+	validatePublicEventRegistrationInput,
 	validateChangeEmailInput,
 	validateChangePasswordInput,
 	validateDeleteAccountInput
@@ -67,6 +69,19 @@ module.exports = {
 			register(email: String!, password: String!): UserResponse!
 			verifyEmail(_id: ID!): UserResponse!
 			sendVerifyEmail(_id: ID!, email: String!): UserResponse!
+			publicEventRegistration(
+				email: String!
+				password: String!
+				name: String!
+				position: String!
+				organisation: String!
+				eventName: String!
+				eventCity: String!
+				eventAddress: String!
+				eventStart: String!
+				eventEnd: String!
+				event_ID: ID!
+			): AuthResponse!
 			registerAndLogin(email: String!, password: String!): UserResponse!
 			login(email: String!, password: String!): AuthResponse!
 			changeEmail(user_ID: ID!, email: String!, password: String!): UserResponse!
@@ -130,6 +145,11 @@ module.exports = {
 			},
 			sendVerifyEmail: async (parent, args) => {
 				return await sendVerifyEmail(args);
+			},
+			publicEventRegistration: async (parent, args, { models }) => {
+				const { errors, isValid } = await validatePublicEventRegistrationInput(args);
+				if (!isValid) return { statusCode: 400, ok: false, errors };
+				return await publicEventRegistration(args, models);
 			},
 			registerAndLogin: async (parent, args, { models: { User } }) => {
 				const { errors, isValid } = await validateRegInput(args);

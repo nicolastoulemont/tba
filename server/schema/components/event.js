@@ -145,7 +145,6 @@ module.exports = {
 				return await findEvents(args, EventItem);
 			},
 			mostLikedEvents: async (parent, args, { user, models: { EventItem } }) => {
-				if (!user) throw new AuthenticationError('Please login to get the requested response');
 				const { date, dayafter } = getDatesFromString(args.date);
 				if (args.tags.length !== 0) {
 					return await mostLikedEventsWithTags(date, dayafter, args, EventItem);

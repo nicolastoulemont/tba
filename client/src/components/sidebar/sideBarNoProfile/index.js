@@ -21,13 +21,13 @@ const SBNoProfile = () => {
 							</span>
 							<ul className="pl-2">
 								<li>
-									<small>Publish events</small>
+									<small>- Publish events</small>
 								</li>
 								<li>
-									<small>Register to and like events published on the platform</small>
+									<small>- Register to and like events published on the platform</small>
 								</li>
 								<li>
-									<small>Post comments</small>
+									<small>- Post comments</small>
 								</li>
 							</ul>
 						</div>

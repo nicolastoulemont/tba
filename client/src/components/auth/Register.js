@@ -12,7 +12,7 @@ const Register = () => {
 	const [password2, setPassword2] = useState('');
 	const [acceptTerms, setAcceptTerms] = useState(false);
 	const [errors, setErrors] = useState([]);
-	const [showSuccess, setShowSuccess] = useState(false);
+	const [success, setSuccess] = useState(false);
 
 	const onChange = e => {
 		if (errors) setErrors(errors.filter(error => error.path !== e.target.name));
@@ -47,7 +47,7 @@ const Register = () => {
 			if (!ok) {
 				setErrors(errors);
 			} else {
-				setShowSuccess(true);
+				setSuccess(true);
 			}
 		}
 	};
@@ -124,7 +124,7 @@ const Register = () => {
 										</small>
 									</div>
 								) : null}
-								{showSuccess ? (
+								{success ? (
 									<div className="text-left">
 										<small className="d-block text-success">
 											You have successfully registered, a verification email has been sent to your

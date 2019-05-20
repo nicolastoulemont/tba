@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { createTokens, sendVerificationEmail } = require('./auth');
+const { createTokens, sendVerificationEmail, sendEventPublicVerificationEmail } = require('./auth');
 
 const registerUser = async (args, User) => {
 	try {
@@ -48,6 +48,65 @@ const sendVerifyEmail = async args => {
 	} catch (err) {
 		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
+};
+
+const publicEventRegistration = async (args, { User, Profile, Registration }) => {
+	let user;
+	try {
+		// Register User
+		const hashedPwd = await bcrypt.hash(args.password, 12);
+		user = await new User({
+			email: args.email,
+			password: hashedPwd,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		}).save();
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		// Create User profile
+		await new Profile({
+			user_ID: user.id,
+			name: args.name,
+			position: args.position,
+			organisation: args.organisation,
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			tags: []
+		}).save();
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		// Create Event registration
+		await new Registration({
+			user_ID: user.id,
+			event_ID: args.event_ID,
+			eventName: args.eventName,
+			eventCity: args.eventCity,
+			eventAddress: args.eventAddress,
+			eventStart: new Date(args.eventStart),
+			eventEnd: new Date(args.eventEnd),
+			createdAt: new Date(),
+			updatedAt: new Date()
+		}).save();
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+	try {
+		// Send verifical email?
+		const event = {
+			id: args.event_ID,
+			name: args.eventName
+		};
+		sendEventPublicVerificationEmail(user, event);
+	} catch (err) {
+		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
+	}
+
+	const { accessToken, refreshToken } = createTokens(user);
+	return { statusCode: 200, ok: true, accessToken, refreshToken };
 };
 
 const registerAndLogin = async (args, User) => {
@@ -200,6 +259,7 @@ module.exports = {
 	registerUser,
 	verifyUser,
 	sendVerifyEmail,
+	publicEventRegistration,
 	registerAndLogin,
 	userLogin,
 	changeEmail,
