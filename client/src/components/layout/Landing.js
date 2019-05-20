@@ -12,12 +12,6 @@ const Landing = props => {
 	const Auth = useContext(AuthContext);
 	const [showLogIn, setShowLogIn] = useState(false);
 
-	useEffect(() => {
-		if (props.location.state && props.location.state.verified) {
-			setShowLogIn(true);
-		}
-	});
-
 	const notAuth = () => {
 		return (
 			<Fragment>

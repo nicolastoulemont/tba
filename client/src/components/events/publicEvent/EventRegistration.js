@@ -182,8 +182,8 @@ const EventRegistration = () => {
 							) : null}
 						</div>
 						{success ? (
-							<div className="text-left">
-								<small className="d-block text-success">
+							<div class="alert alert-success" role="alert">
+								<small>
 									You have successfully registered, a confirmation email has been sent to your email
 									address
 								</small>

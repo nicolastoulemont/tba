@@ -124,15 +124,13 @@ const Register = () => {
 										</small>
 									</div>
 								) : null}
-								{success ? (
-									<div className="text-left">
-										<small className="d-block text-success">
-											You have successfully registered, a verification email has been sent to your
-											email address
-										</small>
-									</div>
-								) : null}
 							</div>
+							{success ? (
+								<div class="alert alert-success" role="alert">
+									You have successfully registered, a verification email has been sent to your email
+									address
+								</div>
+							) : null}
 							<input type="submit" className="btn bg-blue text-white btn-block my-4" />
 						</form>
 					)}
