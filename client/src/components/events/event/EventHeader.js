@@ -21,7 +21,7 @@ const EventHeader = () => {
 					)}
 				</div>
 				<div className="row p-1">
-					<div className="col-md-10">
+					<div className="col-md-9">
 						<div className="text-center text-md-left my-2">
 							<div className="title">
 								<h4 className="font-weight-bold text-uppercase">
@@ -84,9 +84,26 @@ const EventHeader = () => {
 							</div>
 						</div>
 					</div>
-					<div className="d-none d-md-block col-md-2">
-						<div className="d-inline align-bottom">
-							{id === event.user_ID ? <EventMenu /> : null}
+					<div className="d-none d-md-block col-md-3">
+						<div className="text-right">
+							{id === event.user_ID ? (
+								<Fragment>
+									<EventMenu />
+									<small>
+										Your{' '}
+										<Link
+											to={`/event-public-link/${event.id}`}
+											className="font-weight-bold text-blue"
+											data-togggle="tooltip"
+											data-placement="bottom"
+											title="Share this link with anyone who doesn't have a MyEU account"
+										>
+											event public link
+										</Link>{' '}
+										for people not yet on MyEU
+									</small>
+								</Fragment>
+							) : null}
 						</div>
 					</div>
 				</div>
