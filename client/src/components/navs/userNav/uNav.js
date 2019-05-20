@@ -109,16 +109,24 @@ const UNav = () => {
 								<i className="fas fa-chevron-down align-middle ml-4" />
 							</Link>
 							<div className="dropdown-menu dropdown-menu-right text-right">
-								{user.profile[0] && user.profile[0].picture_URL ? (
+								{user.profile[0] ? (
 									<Link
 										to={`/home/profile/${user.id}`}
 										className="dropdown-item py-2 px-4 drop-link"
 									>
-										<img
-											className="rounded-circle ultra-small-avatar"
-											src={user.profile[0].picture_URL}
-											alt="User Avatar"
-										/>
+										{user.profile[0].picture_URL ? (
+											<img
+												className="rounded-circle ultra-small-avatar"
+												src={user.profile[0].picture_URL}
+												alt="User Avatar"
+											/>
+										) : (
+											<img
+												className="rounded-circle ultra-small-avatar"
+												src={DefaultAvatar}
+												alt="User Avatar"
+											/>
+										)}
 										<h6 className="d-inline align-middle ml-2">Your Profile</h6>
 									</Link>
 								) : (
