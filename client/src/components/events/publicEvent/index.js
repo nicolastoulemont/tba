@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import DefaultNav from '../../navs/userNav/defNav';
-import Footer from '../../layout/Footer';
 import PublicSideBar from '../../sidebar/publicSideBar';
 import { Spring } from 'react-spring/renderprops';
 import { EventContext } from '../../contexts';
@@ -44,7 +43,6 @@ const PublicEvent = ({ match }) => {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</Fragment>
 	);
 };

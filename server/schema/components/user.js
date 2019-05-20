@@ -1,7 +1,7 @@
 const { gql, AuthenticationError } = require('apollo-server');
 const {
 	registerUser,
-	verifyUser,
+	verifyEmail,
 	sendVerifyEmail,
 	publicEventRegistration,
 	registerAndLogin,
@@ -67,7 +67,7 @@ module.exports = {
 
 		extend type Mutation {
 			register(email: String!, password: String!): UserResponse!
-			verifyEmail(_id: ID!): UserResponse!
+			verifyEmail(_id: ID!): AuthResponse!
 			sendVerifyEmail(_id: ID!, email: String!): UserResponse!
 			publicEventRegistration(
 				email: String!
@@ -141,7 +141,7 @@ module.exports = {
 				return await registerUser(args, User);
 			},
 			verifyEmail: async (parent, args, { models: { User } }) => {
-				return await verifyUser(args, User);
+				return await verifyEmail(args, User);
 			},
 			sendVerifyEmail: async (parent, args) => {
 				return await sendVerifyEmail(args);

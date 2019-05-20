@@ -20,9 +20,9 @@ const registerUser = async (args, User) => {
 	}
 };
 
-const verifyUser = async (args, User) => {
+const verifyEmail = async (args, User) => {
 	try {
-		await User.findByIdAndUpdate(
+		const user = await User.findByIdAndUpdate(
 			args._id,
 			{ verified: true },
 			{
@@ -30,7 +30,9 @@ const verifyUser = async (args, User) => {
 			}
 		);
 
-		return { statusCode: 201, ok: true };
+		const { accessToken, refreshToken } = createTokens(user);
+
+		return { statusCode: 200, ok: true, accessToken, refreshToken };
 	} catch (err) {
 		return { statusCode: 500, ok: false, errors: [{ path: err.path, message: err.message }] };
 	}
@@ -257,7 +259,7 @@ const deleteAccount = async (
 
 module.exports = {
 	registerUser,
-	verifyUser,
+	verifyEmail,
 	sendVerifyEmail,
 	publicEventRegistration,
 	registerAndLogin,

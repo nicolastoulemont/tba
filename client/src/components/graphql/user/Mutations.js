@@ -51,6 +51,8 @@ export const VERIFY_EMAIL = gql`
 		verifyEmail(_id: $_id) {
 			statusCode
 			ok
+			accessToken
+			refreshToken
 			errors {
 				path
 				message
