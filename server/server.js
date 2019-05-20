@@ -1,10 +1,13 @@
 require('dotenv').config();
-const { ApolloServer } = require('apollo-server');
+const express = require('express');
+const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema/schema');
 const models = require('./models');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Loaders = require('./utils/DataLoaders');
+
+const app = express();
 
 const DB_URI = `${process.env.DB_NAME}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${
 	process.env.DB_HOST
@@ -59,8 +62,10 @@ const server = new ApolloServer({
 	playground: true
 });
 
+server.applyMiddleware({ app });
+
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () =>
+app.listen(PORT, () =>
 	console.log(`Server running on http://localhost:${process.env.PORT}/graphql?`)
 );
