@@ -61,7 +61,7 @@ const ManageActivities = ({ match }) => {
 					errors={errors}
 					setErrors={setErrors}
 				/>
-				<div className="border-top">
+				<div>
 					<CQuery
 						query={chooseQuery()}
 						variables={{

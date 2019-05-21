@@ -11,7 +11,7 @@ import { UserContext, EventContext } from '../../contexts';
 const EventSocialSelector = () => {
 	const user = useContext(UserContext);
 	const event = useContext(EventContext);
-	const [commentDisplay, setCommentDisplay] = useState(event.showComments);
+	const [commentDisplay, setCommentDisplay] = useState(false);
 	const [registreeDisplay, setRegistreeDisplay] = useState(false);
 	const [reportsDisplay, setReportsDisplay] = useState(false);
 	const [numberOfParticipant, setNumberOfParticipant] = useState(0);

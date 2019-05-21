@@ -137,6 +137,7 @@ export const GET_EVENT = gql`
 				name
 				eventHost
 				banner_URL
+				abstract
 				description
 				city
 				address
