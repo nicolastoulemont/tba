@@ -1,6 +1,33 @@
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
+const AuthUser = req => {
+	const accessToken = req.headers.accesstoken || '';
+	const refreshToken = req.headers.refreshtoken || '';
+
+	if (!accessToken && !refreshToken) return;
+
+	if (accessToken) {
+		try {
+			const user = jwt.verify(accessToken, process.env.SECRET);
+			return user;
+		} catch {
+			if (!refreshToken) return;
+
+			let data;
+			try {
+				data = jwt.verify(refreshToken, process.env.SECRET2);
+				return {
+					needTokens: true,
+					...data
+				};
+			} catch {
+				return;
+			}
+		}
+	}
+};
+
 const createTokens = user => {
 	const accessToken = jwt.sign(
 		{
@@ -169,4 +196,9 @@ const sendEventPublicVerificationEmail = (user, event) => {
 	});
 };
 
-module.exports = { createTokens, sendVerificationEmail, sendEventPublicVerificationEmail };
+module.exports = {
+	AuthUser,
+	createTokens,
+	sendVerificationEmail,
+	sendEventPublicVerificationEmail
+};
