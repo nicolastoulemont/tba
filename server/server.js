@@ -9,15 +9,21 @@ const Loaders = require('./utils/DataLoaders');
 
 const app = express();
 
-const DB_URI = `${process.env.DB_NAME}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${
-	process.env.DB_HOST
-}:${process.env.DB_DEPLOYMENT}`;
+if (process.env.NODE_ENV === 'development') {
+	mongoose
+		.connect(process.env.DEV_DB_URI, { useNewUrlParser: true, useFindAndModify: false })
+		.then(() => console.log('Dev DB connected'))
+		.catch(err => console.log(err));
+	mongoose.set('useCreateIndex', true);
+}
 
-mongoose
-	.connect(DB_URI, { useNewUrlParser: true, useFindAndModify: false })
-	.then(() => console.log('DB connected'))
-	.catch(err => console.log(err));
-mongoose.set('useCreateIndex', true);
+if (process.env.NODE_ENV === 'production') {
+	mongoose
+		.connect(process.env.PROD_DB_URI, { useNewUrlParser: true, useFindAndModify: false })
+		.then(() => console.log('Prod DB connected'))
+		.catch(err => console.log(err));
+	mongoose.set('useCreateIndex', true);
+}
 
 const AuthUser = req => {
 	const accessToken = req.headers.accesstoken || '';
