@@ -10,7 +10,6 @@ import { AuthContext, AuthContextValue } from './components/contexts';
 import Home from './components/home';
 import Landing from './components/layout/Landing';
 import About from './components/layout/About';
-import Contact from './components/layout/Contact';
 import ConfirmEmail from './components/auth/ConfirmEmail';
 import PublicEvent from './components/events/publicEvent';
 
@@ -39,7 +38,6 @@ const App = () => (
 						<Switch>
 							<Route exact path="/" component={Landing} />
 							<Route exact path="/about" component={About} />
-							<Route exact path="/contact" component={Contact} />
 							<PrivateRoute path="/home" component={Home} />
 							<Route path="/confirmation/:emailToken" component={ConfirmEmail} />
 							<Route path="/event-public-link/:id" component={PublicEvent} />

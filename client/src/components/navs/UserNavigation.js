@@ -148,7 +148,7 @@ const UserNav = () => {
 										className="dropdown-item py-2 px-4 drop-link"
 									>
 										<i className="d-inline align-middle fas fa-plus" />
-										<h6 className="d-inline align-middle ml-2">Host an Event</h6>
+										<h6 className="d-inline align-middle ml-2">Publish an Event</h6>
 									</Link>
 								) : null}
 								<Link to={`/home/account/${user.id}`} className="dropdown-item py-2 px-4 drop-link">

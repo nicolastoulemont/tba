@@ -23,33 +23,46 @@ const Landing = props => {
 								<div className="col-lg text-center bg-white">
 									<div className="row">
 										<div className="col">
-											<h3 className="py-3">MyEU</h3>
+											<h4 className="py-3 text-blue">MyEU</h4>
 										</div>
 									</div>
 									<div className="row">
 										<div className="col p-4">
-											<h6 className="text-left pb-2">
-												MyEU tracks all EU Public Affairs news and events, allowing you to :
-											</h6>
-											<h6 className="text-left py-2">
-												- Monitor the news from all the EU institutions and stakeholders at a
-												glance, at any time.
-											</h6>
-											<h6 className="text-left py-2">
-												- Never miss EU related events happening in the EU Affairs district.
-											</h6>
-											<h6 className="text-left pt-2 pb-1">
-												- Publish EU related events on the plateform to :
-											</h6>
-											<h6 className="text-left py-0 pl-3">
-												- Manage your events registrations and Q&A easily.
-											</h6>
-											<h6 className="text-left py-0 pl-3">
-												- A quick and easy registration process.
-											</h6>
-											<h6 className="text-left py-0 pl-3">
-												- Gain more visibility and increase engagement levels.
-											</h6>
+											<p className="text-justify ">
+												MyEU tracks EU Public Affairs news and events, allowing you to :
+											</p>
+											<p className="text-justify">
+												<span className="font-weight-bold text-blue">Quickly monitor</span> news
+												from all the EU institutions and stakeholders at a glance,{' '}
+												<span className="font-weight-bold text-blue">at any time</span>.
+											</p>
+											<p className="text-justify">
+												<span className="font-weight-bold text-blue">Never miss</span> EU related
+												events happening in the EU Affairs district.
+											</p>
+											<div className="d-block">
+												<p className="text-justify p-0 m-0">
+													<span className="font-weight-bold text-blue">Publish</span> EU related
+													events on the plateform to :
+												</p>
+												<ul>
+													<li className="text-justify">
+														{' '}
+														- <span className="font-weight-bold text-blue">Gain</span> more
+														visibility and increase engagement levels.
+													</li>
+													<li className="text-justify">
+														{' '}
+														- <span className="font-weight-bold text-blue">Easily</span> manage your
+														events registrations and Q&A.
+													</li>
+													<li className="text-justify">
+														{' '}
+														- <span className="font-weight-bold text-blue">Enjoy</span> a quick and
+														easy registration process.
+													</li>
+												</ul>
+											</div>
 										</div>
 									</div>
 								</div>

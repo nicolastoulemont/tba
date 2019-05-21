@@ -12,7 +12,7 @@ const About = () => {
 						<div className="row p-4 mt-2 bg-white">
 							<div className="px-4">
 								<h4 className="text-left">
-									About <span className="font-weight-bold text-blue">MyEU</span>
+									About <span className="text-blue">MyEU</span>
 								</h4>
 							</div>
 						</div>
@@ -22,8 +22,11 @@ const About = () => {
 									Who <i class="fas fa-male ml-2 text-blue" />
 								</h5>
 								<p className="text-justify">
-									I am Nicolas, founder of MyEU - I am passionate about European public affairs and
-									tech and love to build tools to improve how we work and save time.
+									I am Nicolas, the founder of MyEU. I am passionate about{' '}
+									<span className="font-weight-bold text-blue">European public affairs</span>
+									{` `}
+									and <span className="font-weight-bold text-blue">tech</span> and love to build
+									tools to improve how we work and save time.
 								</p>
 							</div>
 							<div className="d-block px-4">

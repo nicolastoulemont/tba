@@ -29,7 +29,7 @@ const DefaultNav = () => {
 								<h6 className="d-inline">About</h6>
 							</Link>
 						</li>
-						<li className="nav-item mt-1">
+						{/* <li className="nav-item mt-1">
 							<Link
 								className="nav-link"
 								to="/contact"
@@ -39,7 +39,7 @@ const DefaultNav = () => {
 							>
 								<h6 className="d-inline">Contact</h6>
 							</Link>
-						</li>
+						</li> */}
 					</ul>
 				</div>
 			</nav>
