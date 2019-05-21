@@ -283,7 +283,7 @@ const CreateProfile = ({
 											secondary="Will allow you to quickly find the informations you are interested in"
 										/>
 
-										<input type="submit" className="btn btn-blue btn-block mt-4 mb-2" />
+										<input type="submit" className="btn bg-blue text-white btn-block mt-4 mb-2" />
 									</div>
 								</div>
 							</form>
