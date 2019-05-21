@@ -59,8 +59,7 @@ a:hover {
 
 .link-menu:hover {
 	text-decoration: none;
-	color: #5a6268;
-	border-bottom: 3px solid var(--main-blue-color);
+	color: var(--main-blue-color);
 }
 
 .nav-link {

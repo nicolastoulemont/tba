@@ -7,7 +7,7 @@ const DefaultNav = () => {
 			<nav className="navbar sticky-top navbar-expand-sm bg-white py-1">
 				<div className="container px-0">
 					<Link className="navbar-brand font-bold align-middle" to="/">
-						<h4 className="text-muted">MyEU</h4>
+						<h4>MyEU</h4>
 					</Link>
 					<button
 						className="navbar-toggler"

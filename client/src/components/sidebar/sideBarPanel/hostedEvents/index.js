@@ -17,7 +17,7 @@ export default function HEEventsPanel({ user }) {
 						title="Upcoming events"
 						onClick={e => setTarget('future')}
 					>
-						<small className="d-inline font-weight-bold text-muted">Next 5</small>{' '}
+						<small className="d-inline font-weight-bold">Next 5</small>
 					</Link>
 					<Link
 						to="#"
@@ -27,7 +27,7 @@ export default function HEEventsPanel({ user }) {
 						title="Past events"
 						onClick={e => setTarget('past')}
 					>
-						<small className="d-inline font-weight-bold text-muted">Last 5</small>{' '}
+						<small className="d-inline font-weight-bold">Last 5</small>
 					</Link>
 				</div>
 			</div>
