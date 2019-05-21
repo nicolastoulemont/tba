@@ -23,31 +23,31 @@ const Landing = props => {
 								<div className="col-lg text-center bg-white">
 									<div className="row">
 										<div className="col">
-											<h3 className="text-muted brand">MyEU</h3>
+											<h3 className="py-3">MyEU</h3>
 										</div>
 									</div>
 									<div className="row">
 										<div className="col p-4">
-											<h6 className="text-left text-muted pb-2">
+											<h6 className="text-left pb-2">
 												MyEU tracks all EU Public Affairs news and events, allowing you to :
 											</h6>
-											<h6 className="text-left text-muted py-2">
-												- Monitor the news from all the EU institutions and EU Public Affairs actors
-												at a glance, at any time.
+											<h6 className="text-left py-2">
+												- Monitor the news from all the EU institutions and stakeholders at a
+												glance, at any time.
 											</h6>
-											<h6 className="text-left text-muted py-2">
+											<h6 className="text-left py-2">
 												- Never miss EU related events happening in the EU Affairs district.
 											</h6>
-											<h6 className="text-left text-muted pt-2 pb-1">
+											<h6 className="text-left pt-2 pb-1">
 												- Publish EU related events on the plateform to :
 											</h6>
-											<h6 className="text-left text-muted py-0 pl-3">
+											<h6 className="text-left py-0 pl-3">
 												- Manage your events registrations and Q&A easily.
 											</h6>
-											<h6 className="text-left text-muted py-0 pl-3">
+											<h6 className="text-left py-0 pl-3">
 												- A quick and easy registration process.
 											</h6>
-											<h6 className="text-left text-muted py-0 pl-3">
+											<h6 className="text-left py-0 pl-3">
 												- Gain more visibility and increase engagement levels.
 											</h6>
 										</div>

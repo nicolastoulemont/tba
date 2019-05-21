@@ -22,11 +22,8 @@ const About = () => {
 									Who <i class="fas fa-male ml-2 text-blue" />
 								</h5>
 								<p className="text-justify">
-									We are David and Dan, founders of EU Insider - we have years of lobbying and tech
-									experience and love to build new things to help us work better. We started writing
-									a weekly health policy newsletter in 2015 which quickly became very successful and
-									proved to us that there is a strong demand for well crafted, curated policy news
-									reports.
+									I am Nicolas, founder of MyEU - I am passionate about European public affairs and
+									tech and love to build tools to improve how we work and save time.
 								</p>
 							</div>
 							<div className="d-block px-4">
@@ -34,31 +31,68 @@ const About = () => {
 									Why <i class="fas fa-lightbulb ml-2 text-blue" />
 								</h5>
 								<p className="text-justify">
-									As policy consultants we became increasingly frustrated with monitoring. It’s an
-									essential part of our work but it’s also very dull and time-consuming. We also
-									feel that the sector needs a shake-up and embrace new technology. That’s why we
-									built EU Insider - to help policy professionals like us to save time and ensure
-									they are up-to-date with the latest developments in their sector.
+									As a European public affairs professional I became increasingly frustrated with
+									how repetitive and time-consuming monitoring is. I also knew that technology could
+									enhance the monitoring experience. That why I built{' '}
+									<span className="font-weight-bold text-blue">MyEU</span> - to help professionals
+									and EU citizens to be easily informed of the latest developments in European
+									public affairs and <span className="font-weight-bold text-blue">save time</span>.
 								</p>
 							</div>
 							<div className="d-block px-4">
 								<h5>
 									How <i class="fas fa-cogs  ml-2 text-blue" />
 								</h5>
+								<p className="text-justify">
+									MyEU monitor thousands of carefully selected institutional and stakeholders
+									sources and use our algorithm to appropriately categorize information and events
+									to{' '}
+									<span className="font-weight-bold text-blue">
+										transform hours worth of tedious monitoring into minutes of easily accessible
+										informations
+									</span>
+									. Our monitoring and information processing is carried out{' '}
+									<span className="font-weight-bold text-blue">in real time</span>, allowing you to
+									access relevant informations at{' '}
+									<span className="font-weight-bold text-blue">at your convenience</span>.
+								</p>
+								<p className="text-justify p-0 m-0">
+									MyEU also allow you to{' '}
+									<span className="font-weight-bold text-blue">publish your events</span> on our
+									platform for you to :
+								</p>
 								<ul>
 									<li>
 										{' '}
-										- <span className="font-weight-bold text-blue">Neutrality</span> : we make no
-										selection or filtering to any of the events and information gathered.{' '}
-									</li>
-									<li>
-										- <span className="font-weight-bold text-blue">Completeness</span> : we strive
-										for ensuring the widest range of events relevant to our mission.{' '}
+										- <span className="font-weight-bold text-blue">Gain</span> more visibilty
 									</li>
 									<li>
 										{' '}
-										- <span className="font-weight-bold text-blue">Timeliness</span> : we apply our
-										best efforts to upload and promote the events with a reasonable advance.
+										- <span className="font-weight-bold text-blue">Enjoy</span> a quick and easy
+										registration process. Set up your profile{' '}
+										<span className="font-weight-bold text-blue">once</span>, and register to any
+										events in <span className="font-weight-bold text-blue">one click</span>.
+									</li>
+									<li>
+										{' '}
+										- <span className="font-weight-bold text-blue">Easily</span> manage your event
+										registrations and Q&A without the burden of tracking your registrations. Just
+										download the participants list{' '}
+										<span className="font-weight-bold text-blue">at any time</span>.
+									</li>
+								</ul>
+								<p className="text-justify p-0 m-0">Our principles :</p>
+								<ul>
+									<li>
+										{' '}
+										- <span className="font-weight-bold text-blue">Neutrality</span> : we do not
+										select or filter any of the informations gathered.{' '}
+									</li>
+									<li>
+										{' '}
+										- <span className="font-weight-bold text-blue">Swiftness</span> : we give our
+										best efforts to ensure that informations are aggretated on platform as soon as
+										possible after their publication, keeping you as up to date as possible.
 									</li>
 								</ul>
 							</div>
